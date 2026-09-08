@@ -247,7 +247,9 @@ def rank_bases(bugs: list[BugRef], window_days: int = 730,
     windows = [(b.intro_date, b.date) for b in bugs
                if b.intro_date and b.date and b.intro_date < b.date]
     fixes = [b.date for b in bugs if b.date]
-    pool = [(b.resolved, b.date) for b in bugs if b.resolved and b.date]
+    # One commit can close several OSS-Fuzz issues, so the fix list has repeats.
+    pool = list({b.resolved: (b.resolved, b.date) for b in bugs
+                 if b.resolved and b.date}.values())
 
     def bound(ts: int) -> int:
         live = sum(1 for lo, hi in windows if lo <= ts < hi)
@@ -255,9 +257,9 @@ def rank_bases(bugs: list[BugRef], window_days: int = 730,
         return live + revertible
 
     return sorted(
-        ((sha, ts) for sha, ts in pool if sha),
+        ((sha, ts) for sha, ts in pool if sha and ts),
         key=lambda p: bound(p[1]), reverse=True,
-    )[:n]
+    )[:n]  # type: ignore[misc]
 
 
 def plan_group(project: str, harness: str | None, repo_url: str,
