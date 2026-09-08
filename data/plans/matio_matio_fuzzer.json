@@ -1,0 +1,617 @@
+{
+ "project": "matio",
+ "harness": "matio_fuzzer",
+ "repo": "https://github.com/tbeu/matio.git",
+ "n_bugs": 29,
+ "n_resolved": 21,
+ "n_missing_commit": 8,
+ "n_intro_estimated": 12,
+ "missing": [
+  42477888,
+  42491954,
+  42493036,
+  42500334,
+  42501136,
+  42501851,
+  42503163,
+  42518516
+ ],
+ "windows": {
+  "42477601": {
+   "intro": "f08ac698b95d",
+   "intro_date": 1154204095,
+   "fix": "651a8e28099e",
+   "fix_date": 1567149686,
+   "label": "heap-oob-read"
+  },
+  "42477621": {
+   "intro": "30730d8d181c",
+   "intro_date": 1567446756,
+   "fix": "7a9958485036",
+   "fix_date": 1567455311,
+   "label": "heap-oob-write"
+  },
+  "42477894": {
+   "intro": "ff6634993e53",
+   "intro_date": 1568404336,
+   "fix": "8b3ee30a8d9c",
+   "fix_date": 1573388828,
+   "label": "stack-oob-read"
+  },
+  "42479773": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "1ce8f2d1845e",
+   "fix_date": 1610233065,
+   "label": "heap-oob-read"
+  },
+  "42489565": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "1ce8f2d1845e",
+   "fix_date": 1610233065,
+   "label": "heap-oob-write"
+  },
+  "42491640": {
+   "intro": "39ea249af1e4",
+   "intro_date": 1611265066,
+   "fix": "8195e5d3e3c6",
+   "fix_date": 1611526276,
+   "label": "heap-oob-read"
+  },
+  "42491649": {
+   "intro": "8195e5d3e3c6",
+   "intro_date": 1611526276,
+   "fix": "36b8c01b1091",
+   "fix_date": 1612644269,
+   "label": "heap-oob-read"
+  },
+  "42491667": {
+   "intro": "54163c44a02c",
+   "intro_date": 1267409481,
+   "fix": "2f19958fade0",
+   "fix_date": 1612103990,
+   "label": "heap-oob-read"
+  },
+  "42491698": {
+   "intro": "8195e5d3e3c6",
+   "intro_date": 1611526276,
+   "fix": "b8156d287254",
+   "fix_date": 1612102029,
+   "label": "heap-oob-write"
+  },
+  "42491737": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "29e986fb1cfe",
+   "fix_date": 1711962940,
+   "label": "heap-oob-read"
+  },
+  "42492295": {
+   "intro": "54163c44a02c",
+   "intro_date": 1267409481,
+   "fix": "2f19958fade0",
+   "fix_date": 1612103990,
+   "label": "stack-oob-write"
+  },
+  "42492483": {
+   "intro": "8195e5d3e3c6",
+   "intro_date": 1611526276,
+   "fix": "36b8c01b1091",
+   "fix_date": 1612644269,
+   "label": "heap-oob-read"
+  },
+  "42493030": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "711128127c47",
+   "fix_date": 1711406195,
+   "label": "heap-oob-read"
+  },
+  "42529484": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "29e986fb1cfe",
+   "fix_date": 1711962940,
+   "label": "heap-oob-read"
+  },
+  "42530069": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "29e986fb1cfe",
+   "fix_date": 1711962940,
+   "label": "heap-oob-read"
+  },
+  "42530705": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "711128127c47",
+   "fix_date": 1711406195,
+   "label": "heap-oob-read"
+  },
+  "42532885": {
+   "intro": "d94792d5e722",
+   "intro_date": 1698337610,
+   "fix": "1565241343f0",
+   "fix_date": 1710098460,
+   "label": "stack-oob-write"
+  },
+  "42534195": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "a9bfd9ffc1ce",
+   "fix_date": 1713936512,
+   "label": "heap-oob-read"
+  },
+  "42534305": {
+   "intro": "",
+   "intro_date": null,
+   "fix": "a9bfd9ffc1ce",
+   "fix_date": 1713936512,
+   "label": "heap-oob-read"
+  },
+  "42534483": {
+   "intro": "7edb5a937cd4",
+   "intro_date": 1455567009,
+   "fix": "3384795512c1",
+   "fix_date": 1713203167,
+   "label": "heap-oob-read"
+  },
+  "42535678": {
+   "intro": "03995e13b612",
+   "intro_date": 1615128612,
+   "fix": "4b0475661d9f",
+   "fix_date": 1729366502,
+   "label": "heap-oob-read"
+  }
+ },
+ "bases": [
+  {
+   "base": "8195e5d3e3c6",
+   "base_date": 1611526276,
+   "present": 7,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 3,
+   "revert_conflict": 2,
+   "revert_skipped": 0,
+   "stacked": 3,
+   "candidates": 17,
+   "ids": {
+    "present": [
+     42491640,
+     42491649,
+     42491667,
+     42491698,
+     42492295,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894
+    ]
+   }
+  },
+  {
+   "base": "b8156d287254",
+   "base_date": 1612102029,
+   "present": 6,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 3,
+   "revert_conflict": 3,
+   "revert_skipped": 0,
+   "stacked": 3,
+   "candidates": 16,
+   "ids": {
+    "present": [
+     42491649,
+     42491667,
+     42491698,
+     42492295,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894,
+     42491640
+    ]
+   }
+  },
+  {
+   "base": "36b8c01b1091",
+   "base_date": 1612644269,
+   "present": 3,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 6,
+   "revert_conflict": 3,
+   "revert_skipped": 0,
+   "stacked": 6,
+   "candidates": 16,
+   "ids": {
+    "present": [
+     42491649,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42491667,
+     42492295,
+     42491698,
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894,
+     42491640
+    ]
+   }
+  },
+  {
+   "base": "2f19958fade0",
+   "base_date": 1612103990,
+   "present": 5,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 4,
+   "revert_conflict": 3,
+   "revert_skipped": 0,
+   "stacked": 4,
+   "candidates": 16,
+   "ids": {
+    "present": [
+     42491649,
+     42491667,
+     42492295,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42491698,
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894,
+     42491640
+    ]
+   }
+  },
+  {
+   "base": "2f19958fade0",
+   "base_date": 1612103990,
+   "present": 5,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 4,
+   "revert_conflict": 3,
+   "revert_skipped": 0,
+   "stacked": 4,
+   "candidates": 16,
+   "ids": {
+    "present": [
+     42491649,
+     42491667,
+     42492295,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42491698,
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894,
+     42491640
+    ]
+   }
+  },
+  {
+   "base": "36b8c01b1091",
+   "base_date": 1612644269,
+   "present": 3,
+   "intro_unknown": 7,
+   "not_yet": 2,
+   "revert_ok": 6,
+   "revert_conflict": 3,
+   "revert_skipped": 0,
+   "stacked": 6,
+   "candidates": 16,
+   "ids": {
+    "present": [
+     42491649,
+     42492483,
+     42534483
+    ],
+    "stacked": [
+     42491667,
+     42492295,
+     42491698,
+     42479773,
+     42489565,
+     42477601
+    ],
+    "unknown": [
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894,
+     42491640
+    ]
+   }
+  },
+  {
+   "base": "1ce8f2d1845e",
+   "base_date": 1610233065,
+   "present": 3,
+   "intro_unknown": 9,
+   "not_yet": 6,
+   "revert_ok": 1,
+   "revert_conflict": 2,
+   "revert_skipped": 0,
+   "stacked": 1,
+   "candidates": 13,
+   "ids": {
+    "present": [
+     42491667,
+     42492295,
+     42534483
+    ],
+    "stacked": [
+     42477601
+    ],
+    "unknown": [
+     42479773,
+     42489565,
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894
+    ]
+   }
+  },
+  {
+   "base": "1ce8f2d1845e",
+   "base_date": 1610233065,
+   "present": 3,
+   "intro_unknown": 9,
+   "not_yet": 6,
+   "revert_ok": 1,
+   "revert_conflict": 2,
+   "revert_skipped": 0,
+   "stacked": 1,
+   "candidates": 13,
+   "ids": {
+    "present": [
+     42491667,
+     42492295,
+     42534483
+    ],
+    "stacked": [
+     42477601
+    ],
+    "unknown": [
+     42479773,
+     42489565,
+     42491737,
+     42493030,
+     42529484,
+     42530069,
+     42530705,
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42477621,
+     42477894
+    ]
+   }
+  },
+  {
+   "base": "3384795512c1",
+   "base_date": 1713203167,
+   "present": 2,
+   "intro_unknown": 2,
+   "not_yet": 0,
+   "revert_ok": 4,
+   "revert_conflict": 2,
+   "revert_skipped": 11,
+   "stacked": 4,
+   "candidates": 8,
+   "ids": {
+    "present": [
+     42534483,
+     42535678
+    ],
+    "stacked": [
+     42491737,
+     42529484,
+     42530069,
+     42532885
+    ],
+    "unknown": [
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42493030,
+     42530705
+    ]
+   }
+  },
+  {
+   "base": "4b0475661d9f",
+   "base_date": 1729366502,
+   "present": 1,
+   "intro_unknown": 0,
+   "not_yet": 0,
+   "revert_ok": 6,
+   "revert_conflict": 3,
+   "revert_skipped": 11,
+   "stacked": 6,
+   "candidates": 7,
+   "ids": {
+    "present": [
+     42535678
+    ],
+    "stacked": [
+     42534195,
+     42534305,
+     42491737,
+     42529484,
+     42530069,
+     42532885
+    ],
+    "unknown": [],
+    "conflict": [
+     42493030,
+     42530705,
+     42534483
+    ]
+   }
+  },
+  {
+   "base": "a9bfd9ffc1ce",
+   "base_date": 1713936512,
+   "present": 1,
+   "intro_unknown": 2,
+   "not_yet": 0,
+   "revert_ok": 4,
+   "revert_conflict": 3,
+   "revert_skipped": 11,
+   "stacked": 4,
+   "candidates": 7,
+   "ids": {
+    "present": [
+     42535678
+    ],
+    "stacked": [
+     42491737,
+     42529484,
+     42530069,
+     42532885
+    ],
+    "unknown": [
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42493030,
+     42530705,
+     42534483
+    ]
+   }
+  },
+  {
+   "base": "a9bfd9ffc1ce",
+   "base_date": 1713936512,
+   "present": 1,
+   "intro_unknown": 2,
+   "not_yet": 0,
+   "revert_ok": 4,
+   "revert_conflict": 3,
+   "revert_skipped": 11,
+   "stacked": 4,
+   "candidates": 7,
+   "ids": {
+    "present": [
+     42535678
+    ],
+    "stacked": [
+     42491737,
+     42529484,
+     42530069,
+     42532885
+    ],
+    "unknown": [
+     42534195,
+     42534305
+    ],
+    "conflict": [
+     42493030,
+     42530705,
+     42534483
+    ]
+   }
+  }
+ ]
+}

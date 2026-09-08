@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+logs/
+data/census/arvo_candidates.json
+*.tar
+*.sqlite
+build/
+out/
