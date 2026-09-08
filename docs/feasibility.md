@@ -67,7 +67,33 @@ matio 的 8 个 commit 缺失值得单独查：可能是上游 force-push 或 AR
 镜像仓库的哈希。SZZ 估不出引入点的（纯新增代码、只改非源码文件）需要回退到
 bisect 或直接按 `unknown` 送去 PoC 验证。
 
-## 4. 尚未验证的（决定最终产出的关键一环）
+## 4. PoC 获取：不需要拉镜像
+
+ARVO 镜像 `n132/arvo:<id>-vul` 平均 1.9 GB，26 个漏洞就是 50 GB。
+但实测（`42486052-vul`，33 层）表明**需要的东西全在倒数第三层**：
+
+| 层 | 大小 | 内容 |
+|---|---:|---|
+| `[31]` | 17 MB | `tmp/poc`（本例 8 字节）+ `out/assimp_fuzzer`（预建 ASan 二进制） |
+| `[32]` | 735 B | `bin/arvo` 运行脚本 |
+
+用 registry API 直接取单层 blob，**1.9 GB → 17 MB，降 110 倍**。
+不需要 `docker pull`，不需要 docker daemon。附带两个白拿的好处：
+
+- `out/<harness>` 是漏洞版本的**参考 ASan 二进制**，可直接用来产出 D4 条件 2 的参考指纹，无需自己构建。
+- config blob（几 KB）的 history 里记着 `git reset --hard <sha>` —— 即**精确的漏洞版本 commit**。
+  `arvo.db` 只有 fix_commit，这个字段是白送的补充。
+
+`bin/arvo` 还固化了 OSS-Fuzz 的 sanitizer 配置，oracle build 必须对齐才能复现指纹：
+
+```
+ASAN_OPTIONS=alloc_dealloc_mismatch=0:allocator_may_return_null=1:
+  check_malloc_usable_size=0:detect_container_overflow=1:detect_odr_violation=0:
+  detect_leaks=0:detect_stack_use_after_return=1:fast_unwind_on_fatal=0:
+  max_uar_stack_size_log=16:quarantine_size_mb=10:strict_memcmp=1:dedup_token_length=3
+```
+
+## 5. 尚未验证的（决定最终产出的关键一环）
 
 上面全部是 git 层的**上界**。真正的产出要过 [design.md](design.md) D4 的六条闸门，
 其中三条只能靠构建 + 运行才能知道：
