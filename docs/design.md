@@ -62,38 +62,45 @@ ARVO 的漏洞按构造就已经是 sanitizer 验证过的，所以这一层基�
 其余分类信息（空间/时效、CWE、oracle 矩阵）全部保留并随漏洞发布，
 让使用者可以按需要做子集切分。
 
-### D3：密度化 = 修复回退（fix-reversal），逐个验证
+### D3：密度化 = 文件级时间 pin
 
 ARVO 每个镜像 1 个 bug。要拿到 Magma 级密度，需要把同一 (project, harness)
 下的 N 个历史漏洞塞进同一个 build。
 
-不采用 Magma 的手工前向移植（正是它 silent bug 的来源），改用**机械回退修复补丁**：
+**原设计的"机械回退修复补丁"已被实测否定**：assimp 上 12/12 补丁干净应用，
+但只有 3/14 真正复现（21%），而同一基线上天然潜伏的漏洞是 6/6。
+补丁能否应用完全不能预测漏洞能否重现——因为漏洞不是补丁的逆运算，
+而是某个文件在某一时刻的整体形态。
 
-```
-选定基线 commit B
-  for each bug i:  apply  revert(fix_commit_i)  onto B
-  求最大兼容集（互不冲突的 revert 子集）→ 一个 slice
-```
+改用唯一原语 `pin(F, C)`：把文件 F 固定到上游 commit C 的 blob。
+切片 = 基线 `B` + pin 表。由此得到一条可机械复验的**保真不变式**：
 
-回退补丁比前向移植可靠得多：安全修复通常是小而局部的改动，且 `git revert`
-的成败是机械可判定的。真正的保证来自**逐个验证**（见 D4），不来自人工判断。
+> 切片中每个参与编译的源文件都逐字节等于某个上游 commit 的 blob。
 
-冲突不可避免。做法是把一个 (project, harness) 切成若干 **slice**，每个 slice
-内部的 revert 互相兼容；slice 是评测的基本单位。
+"考古"（pin 表为空）与"合成"（pin 认领文件到窗口内 commit）统一为同一操作，
+回退则被彻底废弃——它是唯一会生成非上游文件的操作。
+
+完整方法论见 **[methodology.md](methodology.md)**：认领集与扩张阶梯、
+开关即换 pin、冲突图与切片构造、拼装预算、存活窗口的实测。
 
 ### D4：准入闸门（每个漏洞必须全过）
 
-一个漏洞 i 进入 slice S（基线 B）当且仅当：
+一个漏洞 i 进入 slice S（基线 B + pin 表）当且仅当：
 
-1. **构建通过**：`B + reverts(S)` 能编译出所有 oracle 变体。
-2. **PoC 复现**：`poc_i` 在 oracle build 上产出的报告指纹匹配 ARVO 参考指纹
+1. **构建通过**：`B + pins(S)` 能编译出所有 oracle 变体。
+2. **保真**：每个源文件逐字节等于记录的上游 blob（tier-2 则每个 pin 函数逐字节等价）。
+3. **PoC 复现**：`poc_i` 在 oracle build 上产出的报告指纹匹配 ARVO 参考指纹
    （crash_type + 崩溃函数 + 源文件；行号允许漂移）。
-3. **对照阴性**：`poc_i` 在**未回退**的干净基线 B 上**不崩溃**。
-   → 证明是 revert 重新引入了漏洞，而不是碰巧触发了别的东西。
-   Magma 缺的就是这一条。
-4. **确定性**：5 次重放 5 次一致（ASLR 关闭、单线程、固定 allocator 选项）。
-5. **共驻不失效**：在完整 slice 二进制上 `poc_i` 仍然复现 bug i。
+4. **负对照**：把漏洞 i 切到 OFF（认领文件换成 fix-pin）、其余不变，`poc_i` **不崩溃**。
+   → 证明崩的确实是这个漏洞。Magma 缺的就是这一条。
+5. **隔离对照**：`poc_i` 在只开漏洞 i 的构建上同样复现；与条件 3 的差异记为**干扰量**。
 6. **崩溃点可区分**：指纹与 slice 内其他漏洞不冲突（否则合并为同一 bug ID）。
+
+条件 4、5 由开关机制免费提供（同一棵源码树，configure 阶段选装文件），
+不需要单独维护干净树。
+
+**确定性闸门本轮暂缓**（设计见 [determinism.md](determinism.md)），
+待搬运方法论跑通后再接入。
 
 任何一条不过 → 该漏洞出局，并记录失败原因（产出物之一：**移植失败率分析**）。
 
@@ -129,17 +136,17 @@ oracle build，导出每个漏洞的 reached / triggered 时刻。
 
 ```
 MemVulBench/
-├── docs/            design.md（本文）/ schema.md / protocol.md / adr/
-├── memvul/          Python 包：ingest / select / build / verify / attribute / report
+├── docs/            design.md（本文）/ methodology.md / schema.md / determinism.md / adr/
+├── memvul/          Python 包：sweep / base / pin / slice / verify / emit / attribute
 ├── catalog/         漏洞真值（进 git，纯文本）
 │   └── <project>/<harness>/<BUGID>/
-│       ├── bug.yaml           元数据 + oracle 矩阵 + 指纹
-│       ├── reintroduce.patch  revert(fix_commit) 的落地版本
+│       ├── bug.yaml           元数据 + 窗口 + pin 对 + oracle 矩阵 + 指纹
 │       ├── probe.patch        自动生成的 reached 探针
 │       ├── poc/               触发输入
 │       └── oracle/            各 oracle 的参考报告
 ├── targets/<project>/
 │   ├── memvul.yaml   基线 commit、harness、slice 定义
+│   ├── pins.yaml     切片的完整 pin 表（文件 → 上游 commit），保真复验的依据
 │   ├── Dockerfile
 │   └── build.sh
 └── data/            普查与实验结果（大文件不进 git）
@@ -161,8 +168,10 @@ MemVulBench/
 
 | 风险 | 缓解 |
 |---|---|
-| revert 冲突率高，slice 太碎 | 按 (project, harness) 分片；接受多 slice；把失败率本身作为结果报告 |
-| 回退后漏洞不可达（Magma 病） | D4 条件 2/3 强制拦截 |
-| 多漏洞互相掩蔽（先崩的挡住后面的） | oracle build 用 `-fsanitize-recover` + `halt_on_error=0` |
+| 拼装树是历史上不存在的程序 | 量化并公布 `mosaic_ratio` / `temporal_spread`；提供零 pin 的 `pure` 档 |
+| pin 后漏洞不可达（Magma 病） | D4 条件 3/4 强制拦截；认领集按 [methodology.md](methodology.md) §3 阶梯扩张 |
+| 认领集扩张导致冲突、slice 太碎 | 接受多 slice；把冲突率与扩张层级本身作为结果报告 |
+| 单体架构项目冲突率高、密度上限低 | 把模块化程度写进选片打分（methodology.md §5），不强行拉高密度 |
+| 多漏洞互相掩蔽（先崩的挡住后面的） | oracle build 用 `-fsanitize-recover` + `halt_on_error=0`；掩蔽率由 D4 条件 5 直接测出 |
 | 崩溃点重合导致归因歧义 | D4 条件 6：指纹冲突则合并为同一 bug |
 | 仅重放"保存过的输入"会低估 R/T | 明确口径：主指标 D 完整无偏；R/T 标为诊断量。另提供 Magma 兼容的在线探针模式 |
