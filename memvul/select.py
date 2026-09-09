@@ -14,10 +14,17 @@ once, or the density estimate is fiction.
 
 from __future__ import annotations
 
+import os
+import re
 from collections import Counter
 from dataclasses import dataclass, field
 
 from .arvo import Candidate
+
+_BUILD_NOISE = re.compile(
+    r"^/(?:src|work|build|usr)(?:/[^/]+)*/"
+    r"(?=(?:code|src|include|contrib|fuzz|test)/)"
+)
 
 
 @dataclass
@@ -61,12 +68,34 @@ class Group:
         n = len(self.buildable)
         return 1.0 - (self.n_sites / n) if n else 0.0
 
+    @property
+    def modularity(self) -> float:
+        """1 − share of the single hottest crash-file directory.
+
+        Plugin-style trees (assimp's AssetLib/*) score high; a flat ``src/``
+        (harfbuzz, matio) scores low. Methodology.md §5: conflict rate is
+        an architectural property, so this is a first-class ranking term.
+        """
+        dirs: list[str] = []
+        seen: set[str] = set()
+        for c in self.buildable:
+            if c.site_key in seen:
+                continue
+            seen.add(c.site_key)
+            path = _BUILD_NOISE.sub("", c.crash_file or "")
+            dirs.append(os.path.dirname(path) or "?")
+        if not dirs:
+            return 0.0
+        hottest = Counter(dirs).most_common(1)[0][1]
+        return 1.0 - hottest / len(dirs)
+
     def score(self) -> float:
         """Expected benchmark value of a slice built from this group.
 
-        Density dominates. Temporal bugs and OOB writes are up-weighted:
-        they are scarcer than OOB reads and they are what separates
-        detection mechanisms from each other.
+        Density dominates. Temporal bugs and OOB writes are up-weighted.
+        Modularity is the third term: a high-site flat tree will still
+        fragment at pin time, so it must not outrank a slightly smaller
+        but plugin-structured one.
         """
         if self.n_sites < 2:
             return 0.0
@@ -76,6 +105,7 @@ class Group:
             + 0.5 * self.n_temporal
             + 0.3 * self.n_write
             + 1.5 * diversity
+            + 8.0 * self.modularity
         )
 
 

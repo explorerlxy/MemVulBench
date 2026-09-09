@@ -2,6 +2,9 @@ __pycache__/
 *.pyc
 logs/
 data/census/arvo_candidates.json
+data/sweeps/
+data/pins/
+data/slices/
 *.tar
 *.sqlite
 build/
