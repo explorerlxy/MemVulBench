@@ -1,6 +1,16 @@
 # MemVulBench 设计
 
-面向 C/C++ **内存安全**漏洞挖掘研究的高密度、崩溃可验证 benchmark。
+面向 C/C++ **内存安全**漏洞挖掘研究的高密度、崩溃可验证评测平台。
+
+## 0. 定位
+
+**这不是一个要独立发表的 benchmark artifact，而是支撑 fuzzing 技术研究的评测平台。**
+唯一的成功判据是能不能可信地支撑"本方法比 baseline 发现更多漏洞"这个主张。
+
+因此凡是为了"benchmark 本身作为科学工件站得住"而付出的成本——难度标定、密度失真量化、
+未知漏洞普查、确定性契约——一律不做，放弃的理由与代价记在
+[methodology.md](methodology.md) §10。构建路线是**纯考古**：目标即上游某个未经修改的
+commit，漏洞即该 commit 上 PoC 实际开火的那批。
 
 ## 1. 为什么现有测试集不够用
 
@@ -62,95 +72,98 @@ ARVO 的漏洞按构造就已经是 sanitizer 验证过的，所以这一层基�
 其余分类信息（空间/时效、CWE、oracle 矩阵）全部保留并随漏洞发布，
 让使用者可以按需要做子集切分。
 
-### D3：密度化 = 文件级时间 pin
+### D3：密度化 = 纯考古，不做任何源码改动
 
-ARVO 每个镜像 1 个 bug。要拿到 Magma 级密度，需要把同一 (project, harness)
-下的 N 个历史漏洞塞进同一个 build。
+ARVO 每个镜像 1 个 bug，一次战役只产出 1 个二元结果，统计功效不足。
+提高密度是为了解决这个问题——但**不是靠把漏洞搬到一起，而是靠找到它们本来就在一起的时刻**。
 
-**原设计的"机械回退修复补丁"已被实测否定**：assimp 上 12/12 补丁干净应用，
-但只有 3/14 真正复现（21%），而同一基线上天然潜伏的漏洞是 6/6。
-补丁能否应用完全不能预测漏洞能否重现——因为漏洞不是补丁的逆运算，
-而是某个文件在某一时刻的整体形态。
+两条被实测淘汰的路线：
 
-改用唯一原语 `pin(F, C)`：把文件 F 固定到上游 commit C 的 blob。
-切片 = 基线 `B` + pin 表。由此得到一条可机械复验的**保真不变式**：
+- **修复回退**：assimp 上 12/12 补丁干净应用，只有 3/14 真正复现（21%）。
+  补丁能否应用完全不能预测漏洞能否重现，因为漏洞不是补丁的逆运算。**已废弃。**
+- **文件级时间 pin**：未被否定，但为了把单目标密度从 8 推到 26，需要认领集扩张阶梯、
+  冲突图、最大独立集、保真 manifest、存活窗口实测——工程量是十倍，收益是边际的。
+  **降级为可选增量**（[methodology.md](methodology.md) §9），本轮搁置。
 
-> 切片中每个参与编译的源文件都逐字节等于某个上游 commit 的 blob。
+同一试点的第三行才是结论：**不做任何改动时，天然潜伏漏洞的复现率是 6/6（100%）。**
 
-"考古"（pin 表为空）与"合成"（pin 认领文件到窗口内 commit）统一为同一操作，
-回退则被彻底废弃——它是唯一会生成非上游文件的操作。
+于是唯一的构建操作是选一个 commit：
 
-完整方法论见 **[methodology.md](methodology.md)**：认领集与扩张阶梯、
-开关即换 pin、冲突图与切片构造、拼装预算、存活窗口的实测。
+```
+target = 上游某个 commit C，未经任何修改
+bugs   = 在 C 上构建后 PoC 实际开火、且指纹匹配的那批漏洞
+```
 
-### D4：准入闸门（每个漏洞必须全过）
+单目标密度因此受历史支配（预期 6–12），总漏洞数改由**目标数量**提供：
+12 个目标 × 8–10 个 ≈ 100+ 个已验证可观测漏洞，是 Magma 可观测数（45）的两倍以上。
+本质是用算力换工程量——算力可以排队，写求解器的时间不能。
 
-一个漏洞 i 进入 slice S（基线 B + pin 表）当且仅当：
+找基线的方法见 [methodology.md](methodology.md) §4：OSS-Fuzz 接入初期的**批量修复日**
+就是天然密度的局部峰值，候选基线可纯靠元数据算出，零构建成本。
 
-1. **构建通过**：`B + pins(S)` 能编译出所有 oracle 变体。
-2. **保真**：每个源文件逐字节等于记录的上游 blob（tier-2 则每个 pin 函数逐字节等价）。
-3. **PoC 复现**：`poc_i` 在 oracle build 上产出的报告指纹匹配 ARVO 参考指纹
-   （crash_type + 崩溃函数 + 源文件；行号允许漂移）。
-4. **负对照**：把漏洞 i 切到 OFF（认领文件换成 fix-pin）、其余不变，`poc_i` **不崩溃**。
-   → 证明崩的确实是这个漏洞。Magma 缺的就是这一条。
-5. **隔离对照**：`poc_i` 在只开漏洞 i 的构建上同样复现；与条件 3 的差异记为**干扰量**。
-6. **崩溃点可区分**：指纹与 slice 内其他漏洞不冲突（否则合并为同一 bug ID）。
+### D4：准入闸门（三条）
 
-条件 4、5 由开关机制免费提供（同一棵源码树，configure 阶段选装文件），
-不需要单独维护干净树。
+一个漏洞 i 进入目标（基线 C）当且仅当：
 
-**确定性闸门本轮暂缓**（设计见 [determinism.md](determinism.md)），
-待搬运方法论跑通后再接入。
+1. **开火**：`poc_i` 在基线二进制上产生 ASan 报告或信号。
+2. **指纹匹配**：报告指纹匹配 ARVO 参考指纹（`kind` + `access` + 崩溃函数 + 源文件；
+   行号允许漂移）。**这是防 Magma 病的唯一一道，也是必需的一道**——崩了不等于崩的是那个漏洞。
+3. **可区分**：指纹在本目标内唯一；与其他漏洞相同则合并为一个 bug ID。
 
-任何一条不过 → 该漏洞出局，并记录失败原因（产出物之一：**移植失败率分析**）。
+原设计的**负对照、隔离对照、保真闸门全部取消**：目标就是上游 commit 的原貌，
+漏洞本来就在树上，不存在"崩溃是不是我的改动造成的"这个问题，保真也平凡满足。
+这是纯考古路线相对 pin 路线最大的成本下降。
+
+**确定性闸门不接入**（设计见 [determinism.md](determinism.md)）。
+关 ASLR + 固定 `ASAN_OPTIONS` 对 TTD 统计已经足够。
+
+任何一条不过 → 该漏洞出局并记录原因。
 
 ### D5：双构建，测量不污染被测工具
 
 Magma 把探针编进被测二进制，同时改变了覆盖率反馈和吞吐。MemVulBench 分离：
 
 - **eval build**：被测工具实际跑的二进制。**不含任何 MemVulBench 探针**，
-  sanitizer 配置由实验设定。零测量偏差。
-- **oracle build**：同源同 commit，`asan-recover` + 全漏洞点探针 +
-  `halt_on_error=0`，确定性配置。**只在战役结束后离线重放用**。
+  标准 ASan 配置。零测量偏差。
+- **recover build**：同源同 commit，`-fsanitize-recover=address` + `halt_on_error=0`。
+  **只在战役结束后离线重放用**，不参与战役。
 
-战役结束后，把工具保存过的**全部输入**（queue + crashes，带时间戳）灌进
-oracle build，导出每个漏洞的 reached / triggered 时刻。
+recover build 的作用是**补捞被掩蔽的漏洞**：一个输入同时踩中 3 号和 7 号时，
+正常 ASan 只报 3 号。战役结束后把工具存下的全部输入（queue + crashes，带时间戳）
+灌一遍 recover build，就能还原完整的触发集合。这一步很便宜，但直接提高可报告的漏洞数。
 
-### D6：R → T → D 漏斗
+### D6：T → D 两层
 
 | 层 | 定义 | 如何测 |
 |---|---|---|
-| **Reached** | 漏洞点代码被执行 | 探针，位置**自动**从 fix patch 的 hunk 推导 |
-| **Triggered** | 内存违规真的发生了 | oracle build 的 ASan-recover 报告匹配指纹。**无需人写谓词** |
+| **Triggered** | 内存违规真的发生了 | recover build 的报告匹配指纹。**无需人写谓词** |
 | **Detected** | 被测工具自己的 oracle 报出来了 | 工具 `crashes/` 里的输入归因到 bug ID |
 
-恒有 `R ⊇ T ⊇ D`。Magma 只有 R 和（不可靠的）T。
+恒有 `T ⊇ D`。`T \ D` 是真的越界了但工具没报，即**检测机制强弱的度量**。
 
-两个 gap 本身就是可发表的观测量：
-
-- `R \ T`：路径到了但没打穿 —— 输入生成精度的度量。
-- `T \ D`：真的越界了但工具没报 —— **检测机制（sanitizer）强弱的度量**。
-  这正是 BoostFuzz / rangesanitizer 需要的靶场。
+**Reached 层（探针）本轮不做。** 它需要从 fix patch 的 hunk 自动推导探针位置并插桩，
+是纯粹的工程成本，且只在研究方向明确关心"路径可达性"时才有价值。
+需要时再按 Magma 的方式补，不影响其余设计。
 
 ## 3. 产出物结构
 
 ```
 MemVulBench/
 ├── docs/            design.md（本文）/ methodology.md / schema.md / determinism.md / adr/
-├── memvul/          Python 包：sweep / base / pin / slice / verify / emit / attribute
-├── catalog/         漏洞真值（进 git，纯文本）
-│   └── <project>/<harness>/<BUGID>/
-│       ├── bug.yaml           元数据 + 窗口 + pin 对 + oracle 矩阵 + 指纹
-│       ├── probe.patch        自动生成的 reached 探针
-│       ├── poc/               触发输入
-│       └── oracle/            各 oracle 的参考报告
+├── memvul/          Python 包：census / candidates / sweep / base / verify / emit
 ├── targets/<project>/
-│   ├── memvul.yaml   基线 commit、harness、slice 定义
-│   ├── pins.yaml     切片的完整 pin 表（文件 → 上游 commit），保真复验的依据
-│   ├── Dockerfile
-│   └── build.sh
-└── data/            普查与实验结果（大文件不进 git）
+│   ├── target.yaml            基线 commit、harness、漏洞清单
+│   ├── Dockerfile             基于 ARVO 镜像，checkout 到基线
+│   ├── replay.sh              回放与归因
+│   └── bugs/<BUGID>/
+│       ├── bug.yaml           元数据 + oracle 矩阵 + 指纹
+│       ├── poc/               触发输入
+│       └── oracle/            参考 ASan 报告
+└── data/            普查、候选基线、sweep 结果（大文件不进 git）
 ```
+
+目标的完整定义就是 `target.yaml` 里的一个 commit sha —— 任何人 `git checkout` 即可复验，
+不需要 pin 表、manifest 或保真论证。
 
 漏洞 ID：`<PROJ3>-<NNN>`，如 `HFB-001`（harfbuzz）。稳定不复用，
 并保留到 OSS-Fuzz issue id / ARVO id / CVE 的映射。
@@ -159,19 +172,21 @@ MemVulBench/
 
 - **主指标**：预算内发现的不同漏洞数；每漏洞首次发现时间 TTD。
 - **统计**：≥10 次重复、24h；Kaplan-Meier 生存曲线 + 每漏洞 TTD 的
-  Mann-Whitney U（遵循 Klees et al. 的口径）。
-- **诊断指标**：`R\T`、`T\D` 两个 gap；崩溃归因的 precision/recall；
-  去重负担（唯一崩溃簇数 / 真实漏洞数）。
+  Mann-Whitney U 与 Vargha-Delaney Â₁₂（遵循 Klees et al. 的口径）。
+- **种子集统一，且绝不含任何 PoC 或其变体。** 种子选择是已知的头号混淆因素。
+- **归因**：工具 `crashes/` 里的输入灌进 recover build，按指纹映射到 bug ID；
+  归不到任何已知漏洞的崩溃簇单独报出，不计入主指标。
+- **对外主张必须同时附 Magma 或 FuzzBench 的结果**：自建集是补充证据，不是唯一证据。
 - **落盘约束**：NTFS 分区只放代码和元数据；构建与战役工作目录必须在 ext4。
 
 ## 5. 已知风险
 
 | 风险 | 缓解 |
 |---|---|
-| 拼装树是历史上不存在的程序 | 量化并公布 `mosaic_ratio` / `temporal_spread`；提供零 pin 的 `pure` 档 |
-| pin 后漏洞不可达（Magma 病） | D4 条件 3/4 强制拦截；认领集按 [methodology.md](methodology.md) §3 阶梯扩张 |
-| 认领集扩张导致冲突、slice 太碎 | 接受多 slice；把冲突率与扩张层级本身作为结果报告 |
-| 单体架构项目冲突率高、密度上限低 | 把模块化程度写进选片打分（methodology.md §5），不强行拉高密度 |
-| 多漏洞互相掩蔽（先崩的挡住后面的） | oracle build 用 `-fsanitize-recover` + `halt_on_error=0`；掩蔽率由 D4 条件 5 直接测出 |
-| 崩溃点重合导致归因歧义 | D4 条件 6：指纹冲突则合并为同一 bug |
-| 仅重放"保存过的输入"会低估 R/T | 明确口径：主指标 D 完整无偏；R/T 标为诊断量。另提供 Magma 兼容的在线探针模式 |
+| 天然密度不够，单目标只有 3–5 个漏洞 | 先跑数据再判断；不够时按 [methodology.md](methodology.md) §9 补机会主义 pin |
+| 崩了但崩的不是那个漏洞（Magma 病） | D4 条件 2 指纹匹配强制拦截 |
+| 多漏洞互相掩蔽（先崩的挡住后面的） | 战役后用 recover build 离线补捞（D5） |
+| 崩溃点重合导致归因歧义 | D4 条件 3：指纹冲突则合并为同一 bug |
+| 基线上存在未编目的未知漏洞，败坏归因分母 | 未归因崩溃簇单独报出；sweep 产量并列时取时间较晚的基线 |
+| 漏洞难度未标定，等权计数可能分辨率不足 | 报每漏洞 TTD 曲线而非只报总数，分布交给读者判断 |
+| 语料全部来自 OSS-Fuzz 已发现的漏洞，难度天花板被封死 | **无解**，写进论文局限性（测的是速度，不是能力边界） |
