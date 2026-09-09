@@ -8,7 +8,7 @@ id: HFB-007                      # 稳定，不复用
 status: admitted                 # admitted | rejected | pending
 reject_reason: null              # 被拒时必填，见 §3
 
-tier: A                          # A = native/ASan 可观测；B = 需更强 oracle
+                                 # 准入要求 oracle.native 或 oracle.asan 开火
 
 class:
   group: spatial                 # spatial | temporal
@@ -71,13 +71,15 @@ verified:
 如果 slice 内两个漏洞的 signature 相同，它们**在评测中不可区分**，
 按 D4 条件 6 合并为同一个 ID（`merged_from` 记录被合并的 OSS-Fuzz issue）。
 
-## 2. `tier` 由 `oracle` 推导，不手填
+## 2. 准入由 `oracle` 推导，不手填
 
 ```
-tier A  ⟸  oracle.native.fired 或 oracle.asan.fired
-tier B  ⟸  非 A，但 oracle.msan/valgrind/子对象检查器 中有 fired
-拒收    ⟸  全部 oracle 沉默
+admitted  ⟸  oracle.native.fired 或 oracle.asan.fired
+excluded  ⟸  其余，按拒收原因分流到 data/excluded/
 ```
+
+ASan 沉默但 MSan/Valgrind 开火的，记 `reject_reason: not_observable`
+并保留完整 oracle 矩阵 —— 它们不进主目录，但是后续做检测器研究的现成素材。
 
 ## 3. 拒收原因（这些数据本身是结果）
 
@@ -90,6 +92,7 @@ tier B  ⟸  非 A，但 oracle.msan/valgrind/子对象检查器 中有 fired
 | `control_positive` | 干净基线上 PoC 也崩 → 崩的不是这个漏洞 |
 | `nondeterministic` | 5 次重放不一致 |
 | `signature_clash` | 与 slice 内其他漏洞不可区分，已合并 |
+| `not_observable` | 确属内存违规，但 native 与 ASan 都沉默，超出可发现性口径 |
 | `all_oracles_silent` | 无任何 oracle 见证 → Magma 的 `canary_only` 类 |
 
 各原因的占比是论文里"为什么前向移植不可靠"的直接证据。

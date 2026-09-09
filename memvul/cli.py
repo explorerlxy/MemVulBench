@@ -7,7 +7,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from . import arvo, reintroduce, select
+from . import arvo, fetch, reintroduce, select
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "census"
@@ -148,6 +148,41 @@ def cmd_plan(args) -> None:
           "negative control decide admission.")
 
 
+def cmd_fetch(args) -> None:
+    root = Path(args.dest)
+    ids = args.ids
+    if args.plan:
+        plan = json.loads(Path(args.plan).read_text())
+        best = plan["bases"][0]
+        ids = sorted(best["ids"]["present"] + best["ids"]["stacked"])
+        print(f"base {best['base']}: {len(ids)} bugs from {args.plan}")
+
+    ok, failed, total = [], [], 0
+    for i, oss_id in enumerate(ids, 1):
+        dest = root / str(oss_id)
+        if (dest / "poc").exists() and not args.refresh:
+            print(f"[{i}/{len(ids)}] {oss_id} cached")
+            ok.append(oss_id)
+            continue
+        try:
+            r = fetch.extract(oss_id, dest, want_binary=args.binary)
+            total += r["fetched_bytes"]
+            print(f"[{i}/{len(ids)}] {oss_id} poc={r['poc']['size']}B "
+                  f"vul={r['vuln_commit'] or '?'} "
+                  f"(fetched {r['fetched_bytes'] / 1e6:.0f}MB of "
+                  f"{r['image_size'] / 1e9:.1f}GB image)", flush=True)
+            (dest / "meta.json").write_text(json.dumps(r, indent=1))
+            ok.append(oss_id)
+        except Exception as e:  # noqa: BLE001 - report and keep going
+            print(f"[{i}/{len(ids)}] {oss_id} FAILED: {type(e).__name__}: {e}",
+                  flush=True)
+            failed.append(oss_id)
+
+    print(f"\nfetched {len(ok)}/{len(ids)}, {total / 1e9:.2f} GB transferred")
+    if failed:
+        print(f"failed: {failed}")
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="memvul")
     p.add_argument("--db", default=str(arvo.DEFAULT_DB), help="ARVO-Meta sqlite")
@@ -172,6 +207,15 @@ def main(argv: list[str] | None = None) -> int:
     q.add_argument("--window", type=int, default=730,
                    help="max age in days of a fix still worth reverting")
     q.set_defaults(func=cmd_plan)
+
+    f = sub.add_parser("fetch", help="pull PoCs from ARVO images via the registry")
+    f.add_argument("ids", nargs="*", type=int)
+    f.add_argument("--plan", help="take the bug list from a plan JSON's best base")
+    f.add_argument("--dest", default="/tmp/memvul/pocs")
+    f.add_argument("--binary", action="store_true",
+                   help="also save the prebuilt reference ASan harness")
+    f.add_argument("--refresh", action="store_true")
+    f.set_defaults(func=cmd_fetch)
 
     args = p.parse_args(argv)
     args.func(args)

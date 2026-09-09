@@ -44,19 +44,23 @@ MemVulBench = **Magma 的密度 × ARVO 的严谨**。
 ARVO 的漏洞按构造就已经是 sanitizer 验证过的，所以这一层基本自动通过 ——
 这正是相对 Magma 的结构性优势。
 
-### D2：三档可观测性分层
+### D2：只收实际可观测的漏洞
 
-用户的核心诉求是"不可发现的漏洞对测试没有意义"。但直接用"ASan 必须开火"
-做准入门槛会误删一类高价值样本：**真实的内存违规但 ASan 看不见**
-（子对象/结构体内越界、intra-object overflow）——这恰恰是 rangesanitizer /
-SoftBoundCETS 这类检测器研究的靶心。所以不做删除，做**分层标注**：
+准入的硬门槛是**可发现性**：漏洞必须在 native 或 ASan 下确定性地开火。
+理由是研究口径的一致性 —— 一个现成工具在真实测试场景下根本看不见的漏洞，
+放进测试集只会稀释指标、制造不可比的数字，这正是 Magma 138 条里
+89 条 `canary_only` 造成的问题。
 
-- **Tier-A（主赛道，评测 fuzzer）**：native 崩溃 或 ASan 开火。可被现成工具发现。
-- **Tier-B（检测器赛道）**：确属内存违规，但仅被更强 oracle（Valgrind /
-  子对象检查器 / MSan）捕获，ASan 沉默。**这是没有任何现有 benchmark 提供的集合。**
-- **Tier-C（拒收）**：无任何 oracle 能给出内存违规见证 —— 即 Magma 的 `canary_only`。
+被排除的两类，各自的排除理由不同，都要记账（见 [schema.md](schema.md) §3）：
 
-Tier-A 满足"可发现性"，Tier-B 是差异化贡献且直接服务本人的 sanitizer 研究。
+- `all_oracles_silent`：无任何 oracle 见证 —— 根本没有证据表明发生了内存违规。
+- ASan 沉默但更强 oracle（Valgrind / MSan / 子对象检查器）有见证：
+  确属内存违规，但不在本测试集的可发现性口径内。
+  **单独记入 `data/excluded/`，不进主目录。** 这批样本对检测器（sanitizer）
+  研究有价值，留作后续扩展的素材，但不参与任何主赛道指标。
+
+其余分类信息（空间/时效、CWE、oracle 矩阵）全部保留并随漏洞发布，
+让使用者可以按需要做子集切分。
 
 ### D3：密度化 = 修复回退（fix-reversal），逐个验证
 
