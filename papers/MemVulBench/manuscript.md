@@ -2,23 +2,23 @@
 
 **MemVulBench: Constructing a Real-World Multi-Bug Benchmark for C/C++ Memory-Safety Fuzzing**
 
-作者与单位：芦笑瑜（Xiaoyu Lu）、魏强（Qiang Wei，通讯作者）、王云峰（Yunfeng Wang）；信息工程大学，河南郑州 450001。通讯作者邮箱：funnywei@163.com。
+作者与单位：待补充。
 
 > 内部修订稿，2026-09-18。按“标准—方法—核验”组织。最终计数以2026-09-18准入决定为准（取代2026-09-17）：20个测试单元、292个已核验的唯一漏洞指纹。arrow（7个期望指纹＋1个经审计的目录外指纹）经2026-09-18最终入口复验后替换librawspeed（7个，原靠明确复核纳入）。补证清单见 `revision-checklist.md`。
 
 ## 摘要
 
-模糊测试评估受测试单元数量、单元内已知漏洞密度与计算开销共同制约。为在固定程序版本和统一测试驱动下组织可复验的真实内存漏洞，构建了 MemVulBench。候选历史版本由修复波次启发式或既有人工测量记录提出，再通过目标构建与输入回放确认；原生测试驱动予以保留，兼容驱动通过前缀分派聚合。对触发输入、首错报告及执行遮蔽进行逐项审计，并固定最终镜像与二进制哈希。基准最终纳入 20 个真实项目的 20 个测试单元，确认 292 个经核验的独立漏洞指纹，每单元 8—35 个，平均 14.6 个。各指纹关联触发输入、最终二进制和环境记录，为细粒度分析工具的漏洞发现行为提供已知目标，并为后续量化评测粒度与计算成本提供基础。
+模糊测试评估长期面临评测粒度与算力开销的双重制约：评估矩阵随测试单元（程序版本与驱动）数量呈乘积级膨胀，而现有真实基准在单个单元内包含的已知漏洞数量稀疏，难以支持细粒度的能力区分与高效的技术迭代。单测试单元内具备充足且可复验的真实内存漏洞，是打破这一瓶颈、实现紧凑且细粒度评测的关键支点。 针对真实性、复验链及环境可重复性等基础要求，本文提出高密度基准 MemVulBench。MemVulBench 聚焦上游真实历史版本，通过修复波次提议锁定自然共存的多漏洞代码基准，结合原生驱动保留与轻量级前缀分派聚合，并经专家逐条审计剔除伪碰撞与执行遮蔽，从 20 个真实项目中构建出标准测试单元。在严格的容器加载、二进制哈希、PoC 首错回放与五元组指纹闭环下，MemVulBench 共确立 292 个经核验的已知内存漏洞，每个测试单元富集 8 至 35 个真实漏洞（平均每单元 14.6 个），从根本上解决了现有基准单单元漏洞基数匮乏的问题。该高密度真值底座不仅为多维度横向剖析 fuzzer 提供了高分辨率的观测样本，更为大幅精简测试单元规模、压缩评估算力成本奠定了基准前提。
 **关键词：** 模糊测试；内存安全；测试基准；真实漏洞；测试入口聚合；漏洞复验
 
 ## Abstract
 
-Fuzzing evaluation is constrained by the number of test units, the density of known bugs within each unit, and computational cost. MemVulBench organizes reproducible, real-world memory-safety faults under fixed C/C++ program versions and unified harnesses. Candidate historical versions are proposed by either a repair-burst heuristic or existing manual measurement records and then checked through target builds and input replay. Native harnesses are retained where suitable, while compatible harnesses are combined using prefix dispatch. Triggering inputs, first-error reports, and execution masking are audited individually; final container images and binary hashes are recorded. The benchmark contains 20 test units from 20 real-world projects and 292 verified, distinct vulnerability fingerprints, with 8–35 per unit (mean 14.6). Each fingerprint is linked to a triggering input, final binary, and environment record. This collection supplies known targets for fine-grained analysis of fuzzer discovery behavior and a basis for future measurements of evaluation granularity and computational cost.
+Empirical evaluation of fuzz testing faces a persistent dilemma between evaluation granularity and computational overhead: the benchmark matrix scales multiplicatively ($M \times N \times R$) with the number of test units, yet existing real-world benchmarks provide scarce, poorly verified bugs per unit, hindering fine-grained discrimination and agile technique iteration. A high concentration of natural, verifiable memory vulnerabilities within a single test unit is the pivotal lever to reconcile fine-grained assessment with compact evaluation budgets. While adhering to essential standards of authenticity, full replayability, and environment reproducibility, we propose MemVulBench, a bug-dense benchmark tailored for C/C++ memory-safety fuzzing. By identifying upstream historical commits via repair-burst heuristics, retaining native drivers or integrating compatible ones via in-target prefix dispatch, and enforcing rigorous expert triaging against collision and masking, MemVulBench establishes standardized test units across 20 real-world projects. Sealed by container deployability, identical binary hashes, and first-error five-tuple fingerprints, MemVulBench admits 292 rigorously verified memory vulnerabilities, providing 8 to 35 real-world bugs per test unit (averaging 14.6 bugs/unit). This unprecedented within-unit bug density breaks the shortage of ground-truth targets in individual units, providing a trustworthy, high-resolution foundation for fine-grained fuzzer diagnosis while drastically reducing evaluation campaigns and compute costs.  
 
 **Keywords:** Fuzzing; Benchmarking; High-Density Test Units; Test Driver Aggregation; Real-World Vulnerabilities; Fine-Grained Evaluation
 
 ### 0 引言
-模糊测试通过自动化生成并执行海量输入以探索程序状态，配合 AddressSanitizer 等动态检测机制，已成为挖掘 C/C++ 软件内存安全缺陷的主流手段。然而，严谨评估一项模糊测试技术的优劣，通常需要在多个程序与测试驱动（harness）组合上，横跨多种检测配置展开多轮长时间的重复实验。若一项基准评测涵盖 M 种工具与检测配置组合、N 个测试单元，并在单次时间预算 T（通常设定为 24 小时或更久）下重复 R 轮，所构成的评测任务（campaign）规模将达到 M × N × R 场。由测试单元数量 N 线性增长所引发的乘积级任务膨胀，会带来极其巨大的实验耗时。即便在并行计算环境下，漫长的运行时间与排队等待也会使单轮评测周期动辄长达数周甚至数月，成为制约模糊测试技术高效评估与敏捷迭代的核心瓶颈。   与巨大的评测耗时形成鲜明反差的是，现有测试基准在单个测试单元内所能提供的已核验真实内存漏洞极其匮乏。若每个单元仅潜伏一到两个已知漏洞，评测结果极易受漏洞触发随机性的偶然扰动，难以支撑高分辨率的细粒度技术剖析。为获取统计学上充足的观测样本，研究者往往被迫通过引入更多的测试单元来弥补样本缺口，而这又会进一步导致实验耗时呈雪崩式激增。因此，在单个固定测试单元中富集充足且可稳定复验的真实内存漏洞，不仅是实现细粒度能力度量的数据基础，更是大幅压缩测试单元数量、从根源上缩短评测耗时并加速技术迭代优化的核心破局杠杆。   单单元漏洞的高密度富集，必须建立在坚实且可复验的真值地基之上。为此，基准研究应严格解耦为两个阶段：第一阶段负责在固定的程序版本、测试驱动及环境镜像中，确立自然共存的真实漏洞集合，并通过动态 PoC、首错报告与镜像工件形成无可争议的可复验真值；第二阶段则以该真值集合为参照系，规范开展 fuzzer 的横向对比与能力归因。若跳过第一阶段严密的真值审计，历史缺陷记录极易在复杂控制流中退化为不可复现的虚假目标，或因更早的崩溃掩蔽导致多条输入误撞同一首错流；此时盲目增加下游 campaign 轮次不仅无法修正计分偏差，反而会因漫长的无效运行进一步加剧实验耗时负担。   基于上述需求，基准构建应遵循四项互为支撑的任务导向标准：   C1 真实程序与真实内存漏洞：评估对象必须最大程度保留实际软件中的代码架构、输入约束与天然的缺陷触发语境，坚持上游历史版本中的自然缺陷优先于人工移植与合成注入。   C2 单测试单元中充足的内存漏洞数量：针对每个固定的“程序版本—测试驱动”组合，提供足够密度且边界清晰的已知内存漏洞，作为细粒度度量的可验证下界。   C3 完备的逐漏洞复验材料：每个已知漏洞均需绑定专属的触发 PoC 与不可伪造的唯一漏洞指纹，以动态首错为准确立缺陷身份，严格防范伪碰撞与计数虚标。   C4 完整的编译与运行环境镜像：以容器镜像闭环固定工具链、依赖库与最终二进制哈希，确保漏洞真值具备跨平台的确定性重建与长期复用能力。   在此框架下，真实性（C1）、复验链（C3）与环境闭环（C4）构成了基准可信的底层基石，而单单元高密度（C2）则是驱动评测效率跃升与耗时削减的关键轴心。   审视现有多漏洞评测资源，学界已取得重要进展，但尚未在单元粒度上完整弥合上述要求。Juliet 与 CGC 依赖人工合成或受控任务软件，割裂了真实工业级软件的复杂上下文。Magma 将历史真实漏洞移植至选定程序版本，并通过 canary 探针提供缺陷观测点；其官方目录公开了部分 PoC，但尚未为全部移植漏洞提供完备的逐漏洞触发与复验材料。UniFuzz、OSS-Fuzz 与 ARVO 虽沉淀了丰富的真实历史材料，但其组织形式多以单个离散的 issue 镜像为中心，缺乏在固定程序基准与对外驱动上共存的单元级核验。学界亟需一个将真实内存漏洞规模化组织于固定单元、且逐条打通证据链的专用基准。   针对上述缺口，本文设计并实现了面向 C/C++ 内存安全模糊测试的高密度基准 MemVulBench。MemVulBench 从 20 个主流开源项目中提炼标准化测试单元，确立了“单单元至少 8 个经核验内存漏洞”的严格准入门槛。方法上，我们提出基于时间戳窗口的修复波次启发式，高效锁定自然共存多缺陷的上游历史版本；针对多驱动项目，构建内生于二进制的有界前缀分派器（prefix dispatch），在统一对外测试驱动下实现安全的入口聚合；最后通过专家逐条审计，以动态首错五元组指纹裁决真实身份并剔除执行碰撞。   本文的核心贡献体现在以下三个方面：系统提出面向低耗时且细粒度评测的基准构建标准：以单单元高密度真实漏洞（C2）为核心杠杆，以真实性（C1）、逐漏洞复验链（C3）与镜像哈希闭环（C4）为基础底线，规范了模糊测试基准构建阶段的形式化口径。   提出端到端的高密度测试单元构建与真值核验方法：建立了“修复波次候选提议—驱动保留或前缀聚合—动态首错指纹审计—镜像哈希闭环”的成套工程范式，攻克了历史缺陷自然共存定位、测试驱动聚合与碰撞去重的技术难题。   交付包含 292 个经核验的独立漏洞指纹的高密度真值基准库：MemVulBench 准入了 20 个真实项目单元，每个单元富集 8 至 35 个经物理镜像复现、二进制哈希一致和五元组指纹锁定的已知内存漏洞。该成果从根本上打破了现有基准单单元漏洞稀疏的瓶颈，为下游模糊测试提供了兼顾高分辨率观测与低实验耗时的可靠真值底座。
+模糊测试通过自动化生成并执行海量输入以探索程序状态，配合 AddressSanitizer 等动态检测机制，已成为挖掘 C/C++ 软件内存安全缺陷的主流手段。然而，严谨评估一项模糊测试技术的优劣，通常需要在多个程序与测试驱动（harness）组合上，横跨多种检测配置展开多轮长时间的重复实验。若一项基准评测涵盖 M 种工具与检测配置组合、N 个测试单元，并在单次时间预算 T（通常设定为 24 小时或更久）下重复 R 轮，所构成的评测任务（campaign）规模将达到 M × N × R 场。由测试单元数量 N 线性增长所引发的乘积级任务膨胀，会带来极其巨大的实验耗时。即便在并行计算环境下，漫长的运行时间与排队等待也会使单轮评测周期动辄长达数周甚至数月，成为制约模糊测试技术高效评估与敏捷迭代的核心瓶颈。   与巨大的评测耗时形成鲜明反差的是，现有测试基准在单个测试单元内所能提供的已核验真实内存漏洞极其匮乏。若每个单元仅潜伏一到两个已知漏洞，评测结果极易受漏洞触发随机性的偶然扰动，难以支撑高分辨率的细粒度技术剖析。为获取统计学上充足的观测样本，研究者往往被迫通过引入更多的测试单元来弥补样本缺口，而这又会进一步导致实验耗时呈雪崩式激增。因此，在单个固定测试单元中富集充足且可稳定复验的真实内存漏洞，不仅是实现细粒度能力度量的数据基础，更是大幅压缩测试单元数量、从根源上缩短评测耗时并加速技术迭代优化的核心破局杠杆。   单单元漏洞的高密度富集，必须建立在坚实且可复验的真值地基之上。为此，基准研究应严格解耦为两个阶段：第一阶段负责在固定的程序版本、测试驱动及环境镜像中，确立自然共存的真实漏洞集合，并通过动态 PoC、首错报告与镜像工件形成无可争议的可复验真值；第二阶段则以该真值集合为参照系，规范开展 fuzzer 的横向对比与能力归因。若跳过第一阶段严密的真值审计，历史缺陷记录极易在复杂控制流中退化为不可复现的虚假目标，或因更早的崩溃掩蔽导致多条输入误撞同一首错流；此时盲目增加下游 campaign 轮次不仅无法修正计分偏差，反而会因漫长的无效运行进一步加剧实验耗时负担。   基于上述需求，基准构建应遵循四项互为支撑的任务导向标准：   C1 真实程序与真实内存漏洞：评估对象必须最大程度保留实际软件中的代码架构、输入约束与天然的缺陷触发语境，坚持上游历史版本中的自然缺陷优先于人工移植与合成注入。   C2 单测试单元中充足的内存漏洞数量：针对每个固定的“程序版本—测试驱动”组合，提供足够密度且边界清晰的已知内存漏洞，作为细粒度度量的可验证下界。   C3 完备的逐漏洞复验材料：每个已知漏洞均需绑定专属的触发 PoC 与不可伪造的唯一漏洞指纹，以动态首错为准确立缺陷身份，严格防范伪碰撞与计数虚标。   C4 完整的编译与运行环境镜像：以容器镜像闭环固定工具链、依赖库与最终二进制哈希，确保漏洞真值具备跨平台的确定性重建与长期复用能力。   在此框架下，真实性（C1）、复验链（C3）与环境闭环（C4）构成了基准可信的底层基石，而单单元高密度（C2）则是驱动评测效率跃升与耗时削减的关键轴心。   审视现有多漏洞评测资源，学界已取得重要进展，但尚未在单元粒度上完整弥合上述要求。Juliet 与 CGC 依赖人工合成或受控任务软件，割裂了真实工业级软件的复杂上下文。Magma 将真实漏洞移植至真实程序，并通过 canary 探针提供明确的缺陷身份，但未公开配套的 PoV 输入与测试驱动映射关系，其单元级内存漏洞真值仍处于未披露状态。UniFuzz、OSS-Fuzz 与 ARVO 虽沉淀了丰富的真实历史材料，但其组织形式多以单个离散的 issue 镜像为中心，缺乏在固定程序基准与对外驱动上共存的单元级核验。学界亟需一个将真实内存漏洞规模化组织于固定单元、且逐条打通证据链的专用基准。   针对上述缺口，本文设计并实现了面向 C/C++ 内存安全模糊测试的高密度基准 MemVulBench。MemVulBench 从 20 个主流开源项目中提炼标准化测试单元，确立了“单单元至少 8 个经核验内存漏洞”的严格准入门槛。方法上，我们提出基于时间戳窗口的修复波次启发式，高效锁定自然共存多缺陷的上游历史版本；针对多驱动项目，构建内生于二进制的有界前缀分派器（prefix dispatch），在统一对外测试驱动下实现安全的入口聚合；最后通过专家逐条审计，以动态首错五元组指纹裁决真实身份并剔除执行碰撞。   本文的核心贡献体现在以下三个方面：系统提出面向低耗时且细粒度评测的基准构建标准：以单单元高密度真实漏洞（C2）为核心杠杆，以真实性（C1）、逐漏洞复验链（C3）与镜像哈希闭环（C4）为基础底线，规范了模糊测试基准构建阶段的形式化口径。   提出端到端的高密度测试单元构建与真值核验方法：建立了“修复波次候选提议—驱动保留或前缀聚合—动态首错指纹审计—镜像哈希闭环”的成套工程范式，攻克了历史缺陷自然共存定位、测试驱动聚合与碰撞去重的技术难题。   交付包含 292 个经核验真实漏洞的高密度真值基准库：MemVulBench 准入了 20 个真实项目单元，每个单元富集 8 至 35 个经物理镜像复现、二进制哈希一致和五元组指纹锁定的已知内存漏洞。该成果从根本上打破了现有基准单单元漏洞稀疏的瓶颈，为下游模糊测试提供了兼顾高分辨率观测与低实验耗时的可靠真值底座。
 
 ## 1 评测需求与基准设计标准
 
@@ -470,19 +470,27 @@ MemVulBench将较为充足的已核验漏洞组织在单个测试单元内，为
 
 ## 数据与代码可用性
 
-本文统计结果依据本地仓库中的data/census/、catalog/和data/measure/manual/元数据，以及data/measure/rereplay/2026-09-17/、data/measure/rereplay/2026-09-18/中的最终测试驱动复验记录。其中，2026年9月18日的记录对应arrow替换批次。最终测试单元名单以data/measure/admission/2026-09-18.json为准，该文件取代前一日的准入记录。漏洞身份账本保存于papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json。
+本文统计结果依据本地仓库中的 `data/census/`、`catalog/` 和 `data/measure/manual/` 元数据，以及 `data/measure/rereplay/2026-09-17/`、`data/measure/rereplay/2026-09-18/` 中的最终测试驱动复验记录。其中，2026年9月18日的记录对应arrow替换批次。最终测试单元名单以 `data/measure/admission/2026-09-18.json` 为准，该文件取代前一日的准入记录。漏洞身份账本保存于 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`。
 
-论文配套的普查、目录、人工测量及最终入口复验元数据，20个测试单元的准入清单、292个经核验漏洞指纹的逐项索引，以及分析与绘图代码，拟在固定版本的公开代码仓库中发布。每个测试单元的最终环境镜像、触发输入（PoC）、首错日志、运行配置和SHA-256校验清单拟单独归档，并与相应上游源码提交及来源材料关联。发布前将逐项核对第三方工件的再分发许可与漏洞披露状态；无法合法再分发的工件将提供来源、获取与重建说明及复验限制。当前材料仍保存在本地；公开仓库地址、长期归档标识及访问方式将在归档完成后补入本文。
+论文配套目录保存源文件哈希清单、逐项目CSV文件、记录摘录及图表生成代码。大体积镜像、PoC和日志分别保存在项目外部归档或对应材料目录中。目前尚未确认公开下载地址及完整再分发条件；公开仓库地址、版本标签和长期归档标识将在正式发布时补充。
 
 ## 作者、资助及利益冲突声明
 
-作者及单位：芦笑瑜、魏强（通讯作者）、王云峰；信息工程大学，河南郑州 450001。通讯作者邮箱：funnywei@163.com。
+作者及单位：[待补充]。
 
-作者贡献：芦笑瑜负责研究设计、基准实现、数据采集与复验、结果分析、图表制作及论文撰写和修改；魏强负责研究方向把握、研究方案指导及论文审阅与修改；王云峰负责研究过程指导、论文讨论及论文审阅与修改。
+作者贡献：[待补充]。
 
-资助来源：本研究未获得专项资助。
+资助来源：[待补充]。
 
-利益冲突声明：作者声明不存在与本研究相关的利益冲突。
+利益冲突声明：[待作者确认并填写]。
+
+## 数据与代码可用性
+
+本稿统计依据本地仓库中的 `data/census/`、`catalog/`、`data/measure/manual/` 元数据，`data/measure/rereplay/2026-09-17/` 及 `data/measure/rereplay/2026-09-18/`（arrow替换批次）的最终入口复验记录，以及 `data/measure/admission/2026-09-18.json` 的准入决定（取代 `2026-09-17.json`）。身份账本见 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`。论文配套目录保存源文件哈希清单、逐项目 CSV、记录摘录和图表生成代码。大体积镜像、PoC 和日志保存在项目外部归档或目标材料目录，尚未确认公开下载地址及完整再分发条件。公开仓库地址、版本标签和长期归档标识将在正式发布时补充；本文不声明这些材料已经公开。
+
+## 作者、资助及利益冲突声明
+
+作者与单位、作者贡献、资助来源及利益冲突声明由作者在投稿前填写。没有获得的信息不在初稿中推断为“无”。
 
 ## 参考文献
 

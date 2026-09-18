@@ -1,0 +1,9 @@
+The data, catalog records, measurement metadata, evidence indices and
+documentation in this repository (catalog/, data/, docs/, papers/, benchmark/
+metadata) are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+    https://creativecommons.org/licenses/by/4.0/
+
+Test-unit images embed upstream project sources, which remain under their
+original upstream licenses.
