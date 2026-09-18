@@ -45,7 +45,7 @@ README.md                                   # this card
 
 ```bash
 pip install -U "huggingface_hub[hf_xet]"
-huggingface-cli download explorerlxy/MemVulBench --repo-type dataset \
+huggingface-cli download Fisho0/MemVulBench --repo-type dataset \
     --include "units/arrow/*" --local-dir memvulbench
 
 docker load -i memvulbench/units/arrow/arrow-8b09ecc5c690-v1.0.0.tar  # inside the tar
@@ -76,6 +76,6 @@ export HF_ENDPOINT=https://hf-mirror.com
   author = {Lu, Xiaoyu and Wei, Qiang and Wang, Yunfeng},
   year   = {2026},
   version= {v1.0.0},
-  url    = {https://huggingface.co/datasets/explorerlxy/MemVulBench}
+  url    = {https://huggingface.co/datasets/Fisho0/MemVulBench}
 }
 ```

@@ -27,7 +27,7 @@ from huggingface_hub import HfApi  # noqa: E402
 
 BENCH = ROOT / "benchmark"
 STAGE = Path("/tmp/memvul/release-upload/hf-stage")
-DEFAULT_REPO = "explorerlxy/MemVulBench"
+DEFAULT_REPO = "Fisho0/MemVulBench"
 
 
 def stage_unit(repo_layout: Path, project: str) -> Path:
