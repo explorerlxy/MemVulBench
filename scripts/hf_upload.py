@@ -6,7 +6,7 @@ Usage (token once):   hf auth login          # write token
     python3 scripts/hf_upload.py --public               # flip to public when done
     python3 scripts/hf_upload.py --unit arrow --keep-tar  # keep the tar (default deletes)
 
-Default repo: explorerlxy/MemVulBench (override with --repo).
+Default repo: Fisho0/MemVulBench (override with --repo).
 Uploads resume safely: rerun any command; unchanged files are skipped.
 Packaging only: no compile, no replay, no admission.
 """

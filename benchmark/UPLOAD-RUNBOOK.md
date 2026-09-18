@@ -51,14 +51,14 @@ BibTeX）。
 
 ```bash
 HF_ENDPOINT=https://hf-mirror.com huggingface-cli download \
-    explorerlxy/MemVulBench --repo-type dataset \
+    Fisho0/MemVulBench --repo-type dataset \
     --include "units/arrow/*" --local-dir /tmp/hf-check
 ```
 
 ## C. 回填（发布后）
 
 1. 仓库根 `README.md` 与 `papers/MemVulBench/manuscript.md` 数据可用性声明
-   写入数据集地址 `https://huggingface.co/datasets/explorerlxy/MemVulBench`
+   写入数据集地址 `https://huggingface.co/datasets/Fisho0/MemVulBench`
    （及 hf-mirror 提示）；HF 卡片的 Citation 指回 GitHub 与论文。
 2. `git add <涉及文件> && git commit -m "回填 v1.0.0 数据集地址" && git push`。
    **不要移动 `memvulbench-v1.0.0` 标签**。
