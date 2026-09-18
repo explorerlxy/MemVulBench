@@ -1,69 +1,75 @@
-# MemVulBench v1.0.0 上传执行手册
+# MemVulBench v1.0.0 上传执行手册（ScienceDB 为主）
 
-共 22 条归档记录：**1 个软件仓库（GitHub）+ 20 个单元记录 + 1 个索引记录（Zenodo）**。
-每条 Zenodo 记录 3 个文件（1 个单元 tar + manifest.json + run-config.json），
-远低于单记录 50 GB / 100 文件上限。
+状态：**软件层已完成**——GitHub `explorerlxy/MemVulBench`（master + 标签
+`memvulbench-v1.0.0` 已推送）。剩余：ScienceDB 21 条记录 + DOI 回填。
+Zenodo 作为可选国际镜像，流程附在末尾。
 
-## A. 软件层：GitHub（约 10 MB，先做）
+## A. 软件层（已完成 ✅）
+
+- 仓库：<https://github.com/explorerlxy/MemVulBench>
+- 冻结标签：`memvulbench-v1.0.0`
+- 可选补充：在该标签上建 GitHub Release，附件挂
+  `benchmark/fingerprint-index.json`；国内访问可再推一份 Gitee 镜像
+  （仓库 ~10 MB，低于 500 MB 限制；开源仓库需实名审核 1–2 天；
+  Release 附件限 100 MB，不放镜像）。
+
+## B. ScienceDB：21 条记录（20 单元 + 1 索引）
+
+**一次性准备**
+
+1. 注册/登录 <https://www.scidb.cn>（sciencedb.cn，中科院通行证可登）。
+2. 先传一个最小单元（如 libxml2）试探单文件上限；帮助中心确认 GB 级
+   单文件可直传。若有上限：改分卷压缩，或把 logs/ 与 image 拆成两条记录。
+3. 生成全部 21 张提交卡片（标题/摘要/关键词/许可逐字段可复制）：
 
 ```bash
-# 1. 在 GitHub 网页上新建空仓库 MemVulBench（不要初始化 README）
-# 2. 本仓库根目录：
-git remote add origin git@github.com:<你的用户名>/MemVulBench.git
-git push -u origin master --tags        # 推送 master 与 memvulbench-v1.0.0
-# 3. （可选）在 tag memvulbench-v1.0.0 上建 GitHub Release，
-#    附件挂 benchmark/fingerprint-index.json（<2 MiB，远低于 2 GiB 资产上限）
+python3 scripts/make_unit_tars.py --cards
+ls benchmark/checks/sciencedb-metadata/   # 20 张单元卡 + _index.md
 ```
 
-> GitHub Release 不放镜像（单文件 <2 GiB 限制）；镜像走 Zenodo。
-
-## B. 单元层：Zenodo（20 条，按单元逐个执行）
-
-准备：Zenodo 账号 → Profile → Applications → Personal access token
-（勾选 `deposit:actions` 与 `deposit:write`），然后：
+**逐单元执行**（一条记录约 10 分钟操作 + 上传时间）：
 
 ```bash
-export ZENODO_TOKEN=<你的token>
+# 1. 生成该单元的 tar（放 /tmp/memvul/release-upload/，最大 6.1 GB）
+python3 scripts/make_unit_tars.py --unit ghostpdl
 
-# 强烈建议先在沙箱空跑一条，熟悉流程（不产生正式 DOI，可随便删）：
-python3 scripts/zenodo_upload.py --unit libxml2 --sandbox
+# 2. 网页操作：提交数据 → 按卡片 benchmark/checks/sciencedb-metadata/ghostpdl.md
+#    逐字段粘贴（标题/作者/摘要/关键词 CC BY 4.0 / 版本 v1.0.0），
+#    上传 3 个文件：tar + benchmark/units/ghostpdl/manifest.json + run-config.json
+#    → 提交审核 → 通过后发布，记下 DOI/CSTR
 
-# 正式上传（每条命令：打 tar → 传镜像 → 传 manifest/run-config → 生成草稿）：
-for p in arrow assimp espeak-ng fluent-bit ghostpdl gpac hdf5 libavc libdwarf \
-         libraw libxml2 ndpi openh264 opensc openvswitch PcapPlusPlus pcl \
-         selinux sleuthkit upx; do
-    python3 scripts/zenodo_upload.py --unit $p
-done
+# 3. 删除本地 tar，释放空间
+python3 scripts/make_unit_tars.py --clean ghostpdl
 ```
 
-每条完成后到 `https://zenodo.org/deposit/<id>` 检查页面（文件齐全、
-描述里的提交号正确），确认无误后在网页上点 **Publish**（或
-`python3 scripts/zenodo_upload.py --unit <p> --deposit-id <id> --publish`）。
+20 个单元依次：arrow assimp espeak-ng fluent-bit ghostpdl gpac hdf5 libavc
+libdwarf libraw libxml2 ndpi openh264 opensc openvswitch PcapPlusPlus pcl
+selinux sleuthkit upx。最后传**索引记录**（卡片 `_index.md`，文件为
+`benchmark/fingerprint-index.json` + `manifest.json` + `README.md`）。
 
-注意：
+**登记 DOI**：每条发布后在 `benchmark/checks/zenodo-dois.json` 同级新建
+`benchmark/checks/sciencedb-dois.json`，格式：
 
-- 逐单元串行做；tar 临时占 `/tmp/memvul/release-upload/`（最大单元
-  6.1 GB），上传校验通过后可 `rm /tmp/memvul/release-upload/*.tar` 回收。
-- 全量 66.56 GB，上传耗时取决于家宽上行（如 30 Mbps ≈ 每吉比特 5 分钟，
-  全量约 5–6 小时；Zenodo 断点可续：`--deposit-id` 恢复同一草稿重传）。
-- 脚本自动把每个 deposit id 记到 `benchmark/checks/zenodo-dois.json`。
+```json
+{ "<记录标识>": {"record": "ghostpdl", "doi": "10.11922/…", "cstr": "…"} }
+```
 
-## C. 索引记录：第 21 条
+## C. 回填（全部发布后）
+
+1. `benchmark/manifest.json` 增加 `unit_dois` 字段；仓库根 `README.md` 与
+   `papers/MemVulBench/manuscript.md` 数据可用性声明写入 ScienceDB DOI
+   （投国际 venue 可并列 Zenodo 镜像 DOI）。
+2. ScienceDB 各记录描述里已含 GitHub 链接，无需回改。
+3. `git add <涉及文件> && git commit -m "回填 v1.0.0 ScienceDB DOI"` 并
+   `git push`。**不要移动 `memvulbench-v1.0.0` 标签**——回填进 master。
+
+## 附：Zenodo 可选镜像
 
 ```bash
+export ZENODO_TOKEN=<token>
+python3 scripts/zenodo_upload.py --unit libxml2 --sandbox   # 演练
+python3 scripts/zenodo_upload.py --unit <p>                 # 正式（支持 --deposit-id 续传）
 python3 scripts/zenodo_upload.py --index
 ```
 
-上传 `fingerprint-index.json` + `manifest.json` + README，让只看 Zenodo 的
-读者也能按指纹定位到各单元记录。
-
-## D. 回填（发布完成后）
-
-1. 把各正式 DOI 填进 `benchmark/manifest.json`（加 `unit_dois` 字段）与
-   `benchmark/checks/zenodo-dois.json` 的 `published: true`。
-2. 仓库根 `README.md` 和 `papers/MemVulBench/manuscript.md` 的数据与代码
-   可用性声明：把"尚未确认公开下载地址"替换为 GitHub 地址 + 各 DOI；
-   Zenodo 记录描述里回填 GitHub 链接（脚本已写入 tag 号，补仓库 URL 即可）。
-3. `git add -A && git commit -m "回填 v1.0.0 公开地址与 DOI"` 并推送。
-   **不要移动 memvulbench-v1.0.0 标签**——回填进 master 即可，标签保持
-   指向冻结内容。
+软件仓库地址已在脚本元数据中指向 `explorerlxy/MemVulBench`。
