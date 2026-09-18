@@ -1,0 +1,337 @@
+project: PcapPlusPlus
+repo: "https://github.com/seladb/PcapPlusPlus"
+n_sites: 20
+n_issues: 20
+harnesses: [FuzzTarget, FuzzTargetNg, FuzzWriterNg]
+base:
+  commit: 65974d73c33aaede1bf3c18a353ea2209d1912a0
+  date: 2023-08-02
+  method: measured_sweep
+  n_latent: 8
+  n_latent_upper: 8
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2023-08-24
+    n: 5
+    eve: 843765f594a3d0c494c2c64e5c2b786f02122ccc
+    n_latent_upper: 17
+    oss_ids: [42525129, 42525139, 42525202, 42525350, 42526050]
+  - day: 2023-08-02
+    n: 2
+    eve: 65974d73c33aaede1bf3c18a353ea2209d1912a0
+    n_latent_upper: 20
+    oss_ids: [42525370, 42526031]
+  - day: 2023-11-22
+    n: 2
+    eve: 5f1895a7b496fa78a2927bd5fe610ab619a3f49b
+    n_latent_upper: 8
+    oss_ids: [42530108, 42530195]
+  - day: 2023-08-04
+    n: 1
+    eve: 59bb2d12ec7e0b90b6fc4746da0a44f4dc64825b
+    n_latent_upper: 18
+    oss_ids: [42525135]
+  - day: 2023-11-13
+    n: 1
+    eve: 641232e657ea712d8a94b9816b2fa97f388edb5c
+    n_latent_upper: 12
+    oss_ids: [42530105]
+  - day: 2023-11-14
+    n: 1
+    eve: 98143666674d8d50ffed878d8d91c48c9567706c
+    n_latent_upper: 11
+    oss_ids: [42530090]
+  - day: 2023-11-15
+    n: 1
+    eve: 452a53a6c385e0caae91026e2008c9014f8f55a7
+    n_latent_upper: 10
+    oss_ids: [42530091]
+  - day: 2023-11-21
+    n: 1
+    eve: 762c7fd488d0bc6ce81d105fcb4f07ba2c9e6bc4
+    n_latent_upper: 9
+    oss_ids: [42530230]
+  - day: 2024-11-08
+    n: 1
+    eve: 849c69d2af6e5bd412d0a3b384c6a552725f7a95
+    n_latent_upper: 6
+    oss_ids: [42536117]
+  - day: 2025-01-11
+    n: 1
+    eve: 680cfd77656a53aab19a2b83515524dd6356604d
+    n_latent_upper: 5
+    oss_ids: [42534378]
+  - day: 2025-02-03
+    n: 1
+    eve: 66ccbe8f4e515d4e44781c8270482f6925140ccd
+    n_latent_upper: 4
+    oss_ids: [42534584]
+  - day: 2025-03-25
+    n: 1
+    eve: b9ee9d613be2e30698f3c47c61184bde547c5fd5
+    n_latent_upper: 3
+    oss_ids: [42530184]
+bugs:
+  - oss_id: 42525129
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6986e81f6fa441a56c4effe2bf2f177ca892255e
+    fix_date: 2023-08-24
+    crash_func: "pcpp::IPv6Extension::getExtensionLen() const"
+    crash_file: Packet++/header/IPv6Extensions.h
+    signature: [heap-buffer-overflow, READ, "pcpp::IPv6Extension::getExtensionLen", IPv6Extensions.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525129"
+  - oss_id: 42525135
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0725fa175ab2a7cb78a6c48d3b4d113eb7221810
+    fix_date: 2023-08-04
+    crash_func: getDstIPv4Address
+    crash_file: Packet++/header/IPv4Layer.h
+    signature: [heap-buffer-overflow, READ, getDstIPv4Address, IPv4Layer.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525135"
+  - oss_id: 42525139
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6986e81f6fa441a56c4effe2bf2f177ca892255e
+    fix_date: 2023-08-24
+    crash_func: "pcpp::GreLayer::getGREVersion(unsigned char*, unsigned long)"
+    crash_file: src/GreLayer.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::GreLayer::getGREVersion", GreLayer.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525139"
+  - oss_id: 42525202
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6986e81f6fa441a56c4effe2bf2f177ca892255e
+    fix_date: 2023-08-24
+    crash_func: "pcpp::IDnsResource::IDnsResource(pcpp::DnsLayer*, unsigned long)"
+    crash_file: src/DnsResource.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::IDnsResource::IDnsResource", DnsResource.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525202"
+  - oss_id: 42525350
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6986e81f6fa441a56c4effe2bf2f177ca892255e
+    fix_date: 2023-08-24
+    crash_func: "pcpp::SSLClientHelloMessage::SSLClientHelloMessage(unsigned char*, unsigned long, pcpp::SSLHandshakeLayer*)"
+    crash_file: src/SSLHandshake.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::SSLClientHelloMessage::SSLClientHelloMessage", SSLHandshake.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525350"
+  - oss_id: 42525370
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 59bb2d12ec7e0b90b6fc4746da0a44f4dc64825b
+    fix_date: 2023-08-02
+    crash_func: "pcpp::SipResponseFirstLine::SipResponseFirstLine(pcpp::SipResponseLayer*)"
+    crash_file: src/SipLayer.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::SipResponseFirstLine::SipResponseFirstLine", SipLayer.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525370"
+  - oss_id: 42526031
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 59bb2d12ec7e0b90b6fc4746da0a44f4dc64825b
+    fix_date: 2023-08-02
+    crash_func: "pcpp::SSLHandshakeMessage::getMessageLength() const"
+    crash_file: src/SSLHandshake.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::SSLHandshakeMessage::getMessageLength", SSLHandshake.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42526031"
+  - oss_id: 42526050
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6986e81f6fa441a56c4effe2bf2f177ca892255e
+    fix_date: 2023-08-24
+    crash_func: "pcpp::DnsResource::getDataLength() const"
+    crash_file: src/DnsResource.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::DnsResource::getDataLength", DnsResource.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42526050"
+  - oss_id: 42530090
+    harness: FuzzTarget
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a0ecc6dad71f445c95936697c7ee15997d5761b2
+    fix_date: 2023-11-14
+    crash_func: "pcpp::GREv1Layer::computeCalculateFields()"
+    crash_file: src/GreLayer.cpp
+    signature: [heap-buffer-overflow, WRITE, "pcpp::GREv1Layer::computeCalculateFields", GreLayer.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530090"
+  - oss_id: 42530091
+    harness: FuzzTargetNg
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9fbc712003baf498635675388a79a76755446b91
+    fix_date: 2023-11-15
+    crash_func: "pcpp::RawPacket::insertData(int, unsigned char const*, unsigned long)"
+    crash_file: src/RawPacket.cpp
+    signature: [negative-size-param, -, "pcpp::RawPacket::insertData", RawPacket.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530091"
+  - oss_id: 42530105
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 98143666674d8d50ffed878d8d91c48c9567706c
+    fix_date: 2023-11-13
+    crash_func: getCipherSuiteID
+    crash_file: src/SSLHandshake.cpp
+    signature: [heap-buffer-overflow, READ, getCipherSuiteID, SSLHandshake.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530105"
+  - oss_id: 42530108
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6a5cb61eba4f082f7dcd4e87031520102e1babdf
+    fix_date: 2023-11-22
+    crash_func: getTtl
+    crash_file: src/SomeIpSdLayer.cpp
+    signature: [heap-buffer-overflow, READ, getTtl, SomeIpSdLayer.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530108"
+  - oss_id: 42530184
+    harness: FuzzTarget
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 52d25b56a46a64543d91e6d6ce925e174b0c2608
+    fix_date: 2025-03-25
+    crash_func: "pcpp::Packet::computeCalculateFields()"
+    crash_file: src/Packet.cpp
+    signature: [heap-buffer-overflow, WRITE, "pcpp::Packet::computeCalculateFields", Packet.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530184"
+  - oss_id: 42530195
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f112d0adcae6b75531894b3c1cb29f97bfdad171
+    fix_date: 2023-11-22
+    crash_func: getTotalSize
+    crash_file: Packet++/header/TcpLayer.h
+    signature: [heap-buffer-overflow, READ, getTotalSize, TcpLayer.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530195"
+  - oss_id: 42530230
+    harness: FuzzTarget
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5f1895a7b496fa78a2927bd5fe610ab619a3f49b
+    fix_date: 2023-11-21
+    crash_func: "pcpp::NtpLayer::getReferenceIdentifierString() const"
+    crash_file: src/NtpLayer.cpp
+    signature: [stack-buffer-overflow, READ, "pcpp::NtpLayer::getReferenceIdentifierString", NtpLayer.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530230"
+  - oss_id: 42532853
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 98d36de8b5eb7981dc5a1a759b12c8c4e6675c14
+    fix_date: 2025-04-14
+    crash_func: IPv6Address
+    crash_file: Common++/header/IpAddress.h
+    signature: [heap-buffer-overflow, READ, IPv6Address, IpAddress.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42532853"
+  - oss_id: 42534378
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bc5c08d3df37e9d725656c345d3991ab0c982717
+    fix_date: 2025-01-11
+    crash_func: getPathAttributesLength
+    crash_file: src/BgpLayer.cpp
+    signature: [heap-buffer-overflow, READ, getPathAttributesLength, BgpLayer.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534378"
+  - oss_id: 42534584
+    harness: FuzzWriterNg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9e823951efa2aca929f09b0f842f902ce28249d
+    fix_date: 2025-02-03
+    crash_func: __parse_options
+    crash_file: src/light_pcapng.c
+    signature: [heap-buffer-overflow, READ, __parse_options, light_pcapng.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534584"
+  - oss_id: 42535137
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 132c9cf00500e691995a49e08bd68a96a095e76e
+    fix_date: 2025-03-30
+    crash_func: "pcpp::SomeIpSdEntry::SomeIpSdEntry(pcpp::SomeIpSdLayer const*, unsigned long)"
+    crash_file: src/SomeIpSdLayer.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::SomeIpSdEntry::SomeIpSdEntry", SomeIpSdLayer.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535137"
+  - oss_id: 42536117
+    harness: FuzzTarget
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0fc73bffe881eb5c3d0e160697ac2de7c9d5dc34
+    fix_date: 2024-11-08
+    crash_func: "pcpp::Asn1Record::decodeTagAndCreateRecord(unsigned char const*, unsigned long, int&)"
+    crash_file: src/Asn1Codec.cpp
+    signature: [heap-buffer-overflow, READ, "pcpp::Asn1Record::decodeTagAndCreateRecord", Asn1Codec.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42536117"
+rejected: []
+error: null

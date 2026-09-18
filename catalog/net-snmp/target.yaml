@@ -1,0 +1,308 @@
+project: net-snmp
+repo: "https://github.com/net-snmp/net-snmp.git"
+n_sites: 22
+n_issues: 22
+harnesses: [agentx_parse_fuzzer, snmp_agent_e2e_fuzzer, snmp_api_fuzzer, snmp_config_fuzzer, snmp_e2e_fuzzer, snmp_mib_fuzzer, snmp_parse_args_fuzzer, snmp_print_var_fuzzer, snmp_transport_fuzzer]
+base:
+  commit: 1e50b621f9e15de1b21d3387ce3cf3680c70343e
+  date: 2021-10-20
+  method: wave_eve
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 2
+  note: "eve of 2021-10-20 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-11-02
+    n: 3
+    eve: a360a68e20deaa48fe1a23bc57b67006f10af652
+    n_latent_upper: 6
+    oss_ids: [42503875, 42503787, 42503790]
+  - day: 2021-10-20
+    n: 2
+    eve: 1e50b621f9e15de1b21d3387ce3cf3680c70343e
+    n_latent_upper: 9
+    oss_ids: [42500607, 42500188]
+  - day: 2019-04-28
+    n: 1
+    eve: 9af3c50c84d24de06c0fa48c9fef721e2490ce49
+    n_latent_upper: 0
+    oss_ids: [42474963]
+  - day: 2021-10-22
+    n: 1
+    eve: d1d3541070e398f478ba1a8b68958e5fad2e8c00
+    n_latent_upper: 7
+    oss_ids: [42499879]
+  - day: 2021-11-06
+    n: 1
+    eve: abd1c594422eefed24c9586724d58525a7628226
+    n_latent_upper: 3
+    oss_ids: [42504086]
+  - day: 2022-10-16
+    n: 1
+    eve: 763e9cd5c005c95729c89085a854f159e88da32c
+    n_latent_upper: 2
+    oss_ids: [42517155]
+  - day: 2023-09-22
+    n: 1
+    eve: d7befa315af545c2a54443f35ede361488bad1a4
+    n_latent_upper: 8
+    oss_ids: [42528416]
+  - day: 2025-02-16
+    n: 1
+    eve: 0a08ddf75e2234ea93aed1b2bccd9e387444e69b
+    n_latent_upper: 7
+    oss_ids: [396958482]
+  - day: 2025-02-18
+    n: 1
+    eve: c87aabbfa52dd40a10698585751db04bcda685fd
+    n_latent_upper: 6
+    oss_ids: [396777457]
+  - day: 2025-02-23
+    n: 1
+    eve: b4d94476f02769a92be7d2122bc8926f39aa6980
+    n_latent_upper: 5
+    oss_ids: [398067543]
+  - day: 2025-02-24
+    n: 1
+    eve: 8305b51e4d80158052b9cc279b798c227d81b9af
+    n_latent_upper: 4
+    oss_ids: [398356443]
+  - day: 2025-02-25
+    n: 1
+    eve: a147b834d49e656f6216701b8769b4b6261e72d5
+    n_latent_upper: 3
+    oss_ids: [398053010]
+bugs:
+  - oss_id: 42474963
+    harness: agentx_parse_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7de049193ab78d9fcdc3baa2c0673bd1e300ed5b
+    fix_date: 2019-04-28
+    crash_func: agentx_parse_string
+    crash_file: agent/mibgroup/agentx/protocol.c
+    signature: [heap-buffer-overflow, READ, agentx_parse_string, protocol.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474963"
+  - oss_id: 42499879
+    harness: snmp_config_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4f4a37ee1825d8e723364af6ec84c109594cd29c
+    fix_date: 2021-10-22
+    crash_func: read_config
+    crash_file: snmplib/read_config.c
+    signature: [heap-buffer-overflow, READ, read_config, read_config.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42499879"
+  - oss_id: 42500188
+    harness: snmp_mib_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: abc8f77c6a1e57c6ba12c77d47026e8602ff93f5
+    fix_date: 2021-10-20
+    crash_func: get_token
+    crash_file: snmplib/parse.c
+    signature: [stack-buffer-overflow, WRITE, get_token, parse.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42500188"
+  - oss_id: 42500607
+    harness: snmp_api_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d9cab398b816a610bb6de98e7a0b1e71e5ebff76
+    fix_date: 2021-10-20
+    crash_func: snmp_add_var
+    crash_file: snmplib/snmp_api.c
+    signature: [heap-buffer-overflow, READ, snmp_add_var, snmp_api.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42500607"
+  - oss_id: 42503787
+    harness: snmp_api_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d814ae86802a8858286b701187040799a6f0c301
+    fix_date: 2021-11-02
+    crash_func: asn_build_string
+    crash_file: snmplib/asn1.c
+    signature: [heap-buffer-overflow, READ, asn_build_string, asn1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503787"
+  - oss_id: 42503790
+    harness: snmp_api_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d814ae86802a8858286b701187040799a6f0c301
+    fix_date: 2021-11-02
+    crash_func: asn_realloc_rbuild_string
+    crash_file: snmplib/asn1.c
+    signature: [heap-buffer-overflow, READ, asn_realloc_rbuild_string, asn1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503790"
+  - oss_id: 42503875
+    harness: snmp_mib_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e7757caf353d0af8b2d00c0bd49ea12ebf580da0
+    fix_date: 2021-11-02
+    crash_func: check_utc
+    crash_file: snmplib/parse.c
+    signature: [stack-buffer-overflow, READ, check_utc, parse.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503875"
+  - oss_id: 42504086
+    harness: snmp_mib_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9b607686437e661095a0113f2441ff0e6feeaad1
+    fix_date: 2021-11-06
+    crash_func: parse_objecttype
+    crash_file: snmplib/parse.c
+    signature: [stack-buffer-overflow, WRITE, parse_objecttype, parse.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504086"
+  - oss_id: 42517155
+    harness: snmp_api_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6cac0c842537b9b6aaa104d909a06b85192793a6
+    fix_date: 2022-10-16
+    crash_func: asn_build_header
+    crash_file: snmplib/asn1.c
+    signature: [heap-buffer-overflow, WRITE, asn_build_header, asn1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517155"
+  - oss_id: 42528416
+    harness: snmp_e2e_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 1e35e62da04e1597ecb45d2f7ec87297cb3022d9
+    fix_date: 2023-09-22
+    crash_func: __interceptor_free
+    crash_file: llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp
+    signature: [attempting, -, __interceptor_free, asan_malloc_linux.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528416"
+  - oss_id: 396777457
+    harness: snmp_parse_args_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: cbedf0cba170b967ab312ebc794eabdd6f67c6d5
+    fix_date: 2025-02-18
+    crash_func: netsnmp_hex_to_binary
+    crash_file: snmplib/tools.c
+    signature: [heap-use-after-free, READ, netsnmp_hex_to_binary, tools.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/396777457"
+  - oss_id: 396958482
+    harness: snmp_parse_args_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2342de96b4968969e2f01f3970905963053b0504
+    fix_date: 2025-02-16
+    crash_func: se_read_conf
+    crash_file: snmplib/snmp_enum.c
+    signature: [stack-buffer-overflow, READ, se_read_conf, snmp_enum.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/396958482"
+  - oss_id: 397150498
+    harness: snmp_agent_e2e_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 3c56fbdc855a3d5dfbc0f0eb8f2fe3cc32f0d16f
+    fix_date: 2025-03-06
+    crash_func: free_agent_snmp_session
+    crash_file: agent/snmp_agent.c
+    signature: [heap-use-after-free, READ, free_agent_snmp_session, snmp_agent.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/397150498"
+  - oss_id: 398053010
+    harness: snmp_parse_args_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0b49a5de9ad4c3875e42ea223ff61de7d3e26963
+    fix_date: 2025-02-25
+    crash_func: init_snmpv3_post_premib_config
+    crash_file: snmplib/snmpv3.c
+    signature: [heap-buffer-overflow, WRITE, init_snmpv3_post_premib_config, snmpv3.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/398053010"
+  - oss_id: 398067543
+    harness: snmp_parse_args_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2b3e0837830e14c7747ac1e175017c733d9d62b3
+    fix_date: 2025-02-23
+    crash_func: snmp_in_options
+    crash_file: snmplib/mib.c
+    signature: [heap-buffer-overflow, READ, snmp_in_options, mib.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/398067543"
+  - oss_id: 398356443
+    harness: snmp_parse_args_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a147b834d49e656f6216701b8769b4b6261e72d5
+    fix_date: 2025-02-24
+    crash_func: se_read_conf
+    crash_file: snmplib/snmp_enum.c
+    signature: [stack-buffer-overflow, READ, se_read_conf, snmp_enum.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/398356443"
+  - oss_id: 399458050
+    harness: snmp_parse_args_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4082593d733e2e03aaac74c62801f76449402651
+    fix_date: 2025-03-02
+    crash_func: usm_set_user_password
+    crash_file: snmplib/snmpusm.c
+    signature: [heap-buffer-overflow, WRITE, usm_set_user_password, snmpusm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/399458050"
+rejected:
+  - oss_id: 42499939
+    reason: commit_missing
+  - oss_id: 42503200
+    reason: commit_missing
+  - oss_id: 42520912
+    reason: commit_missing
+  - oss_id: 42520931
+    reason: commit_missing
+  - oss_id: 42524958
+    reason: commit_missing
+error: null

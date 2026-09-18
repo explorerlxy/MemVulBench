@@ -1,0 +1,228 @@
+project: samba
+repo: "https://gitlab.com/samba-team/samba"
+n_sites: 12
+n_issues: 12
+harnesses: [fuzz_lzxpress_round_trip, fuzz_ndr_cab_TYPE_STRUCT, fuzz_ndr_drsblobs_TYPE_STRUCT, fuzz_ndr_drsuapi_TYPE_OUT, fuzz_ndr_nbt_TYPE_STRUCT, fuzz_ndr_spoolss_TYPE_STRUCT, fuzz_ndr_witness_TYPE_OUT, fuzz_nmblib_parse_packet, fuzz_parse_lpq_entry, fuzz_sddl_access_check]
+base:
+  commit: d1277f4d02701ac77f8538af353479b52aa81157
+  date: 2020-02-07
+  method: wave_eve
+  n_latent: 3
+  n_latent_upper: 3
+  n_wave: 2
+  note: "eve of 2020-02-07 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2020-02-07
+    n: 2
+    eve: d1277f4d02701ac77f8538af353479b52aa81157
+    n_latent_upper: 3
+    oss_ids: [42481187, 42481309]
+  - day: 2019-12-18
+    n: 1
+    eve: 1141fbe9842c57fca7ee1175665638a0c1f5a181
+    n_latent_upper: 7
+    oss_ids: [42480497]
+  - day: 2019-12-20
+    n: 1
+    eve: 0bd479140c18ab79479ced4f25f366744c3afe18
+    n_latent_upper: 5
+    oss_ids: [42480411]
+  - day: 2020-01-21
+    n: 1
+    eve: a39c4d9bed2468495e0efc13620fea5a1fb650f8
+    n_latent_upper: 5
+    oss_ids: [42481268]
+  - day: 2020-03-22
+    n: 1
+    eve: a4cdfbd167488103115821534bf66dec01ff4eb8
+    n_latent_upper: 2
+    oss_ids: [42480434]
+  - day: 2021-07-08
+    n: 1
+    eve: cf1baa8be90a3f141d07da430146f06cbd2d1e09
+    n_latent_upper: 3
+    oss_ids: [42483511]
+  - day: 2022-12-19
+    n: 1
+    eve: 6f77b376d470dd318f0a9699b3528018ce8ea49a
+    n_latent_upper: 4
+    oss_ids: [42518807]
+  - day: 2023-03-15
+    n: 1
+    eve: b4a6c054ec6acefacd22cb7230a783d20cb07c05
+    n_latent_upper: 4
+    oss_ids: [42521038]
+  - day: 2023-05-05
+    n: 1
+    eve: 7dab9edca86c3ee76173eecba2c3b46869f25e64
+    n_latent_upper: 2
+    oss_ids: [42522867]
+  - day: 2023-08-08
+    n: 1
+    eve: 5c81f349354cffdf6cfd3f2983634a85da474543
+    n_latent_upper: 1
+    oss_ids: [42526759]
+  - day: 2023-11-24
+    n: 1
+    eve: cd8dcff9e9cbfffab8c502c8701c00b0c8e3512b
+    n_latent_upper: 1
+    oss_ids: [42530401]
+bugs:
+  - oss_id: 42480411
+    harness: fuzz_ndr_spoolss_TYPE_STRUCT
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f11e207e01c52566c47e350ff240fe95392de0c3
+    fix_date: 2019-12-20
+    crash_func: ndr_string_length
+    crash_file: bin/default/../../librpc/ndr/ndr_string.c
+    signature: [heap-buffer-overflow, READ, ndr_string_length, ndr_string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480411"
+  - oss_id: 42480434
+    harness: fuzz_ndr_drsblobs_TYPE_STRUCT
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c680daae6ad6bdcaf5b868a48e3f1ecaeb6b5cd2
+    fix_date: 2020-03-22
+    crash_func: ndr_push_scheduleHeader
+    crash_file: bin/default/librpc/gen_ndr/ndr_drsblobs.c
+    signature: [heap-buffer-overflow, READ, ndr_push_scheduleHeader, ndr_drsblobs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480434"
+  - oss_id: 42480497
+    harness: fuzz_ndr_nbt_TYPE_STRUCT
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 66d12eb98aba10948f829d08b4144969ead5ddbb
+    fix_date: 2019-12-18
+    crash_func: dump_data_cb
+    crash_file: bin/default/../../lib/util/util.c
+    signature: [heap-use-after-free, READ, dump_data_cb, util.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480497"
+  - oss_id: 42481187
+    harness: fuzz_ndr_drsuapi_TYPE_OUT
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 14182350f8397d27d7642dae595dc52691f0acfe
+    fix_date: 2020-02-07
+    crash_func: lzxpress_decompress
+    crash_file: bin/default/../../lib/compression/lzxpress.c
+    signature: [heap-buffer-overflow, READ, lzxpress_decompress, lzxpress.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481187"
+  - oss_id: 42481268
+    harness: fuzz_nmblib_parse_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ad236bb7590e423b4c69fe6028f2f3495977f48b
+    fix_date: 2020-01-21
+    crash_func: parse_nmb_name
+    crash_file: bin/default/../../source3/libsmb/nmblib.c
+    signature: [heap-buffer-overflow, READ, parse_nmb_name, nmblib.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481268"
+  - oss_id: 42481309
+    harness: fuzz_nmblib_parse_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3bc7acc62646b105b03fd3c65e9170a373f95392
+    fix_date: 2020-02-07
+    crash_func: handle_name_ptrs
+    crash_file: bin/default/../../source3/libsmb/nmblib.c
+    signature: [heap-buffer-overflow, READ, handle_name_ptrs, nmblib.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42481309"
+  - oss_id: 42483511
+    harness: fuzz_ndr_witness_TYPE_OUT
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8cce23acb9f9bdde8bff3c3a7ffa83361e3a64a6
+    fix_date: 2021-07-08
+    crash_func: ndr_push_witness_IPaddrInfo
+    crash_file: bin/default/librpc/gen_ndr/ndr_witness.c
+    signature: [heap-buffer-overflow, READ, ndr_push_witness_IPaddrInfo, ndr_witness.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483511"
+  - oss_id: 42518807
+    harness: fuzz_lzxpress_round_trip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e7489be7be4d05a75a7d31275654260f84a64c79
+    fix_date: 2022-12-19
+    crash_func: lzxpress_decompress
+    crash_file: bin/default/../../lib/compression/lzxpress.c
+    signature: [global-buffer-overflow, READ, lzxpress_decompress, lzxpress.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518807"
+  - oss_id: 42521038
+    harness: fuzz_parse_lpq_entry
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 795bab5629195395d512bb9a830542de6067195b
+    fix_date: 2023-03-15
+    crash_func: parse_lpq_sysv
+    crash_file: bin/default/../../source3/printing/lpq_parse.c
+    signature: [stack-buffer-overflow, WRITE, parse_lpq_sysv, lpq_parse.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521038"
+  - oss_id: 42522867
+    harness: fuzz_ndr_cab_TYPE_STRUCT
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ff2de50aa4bf086880ab8cd1c2aee7e998c2c22a
+    fix_date: 2023-05-05
+    crash_func: talloc_chunk_from_ptr
+    crash_file: bin/default/../../lib/talloc/talloc.c
+    signature: [heap-use-after-free, READ, talloc_chunk_from_ptr, talloc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522867"
+  - oss_id: 42526759
+    harness: fuzz_sddl_access_check
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c3ded9d934358260af9251c7c42e903d37a1bdd4
+    fix_date: 2023-08-08
+    crash_func: sddl_decode
+    crash_file: bin/default/../../libcli/security/sddl.c
+    signature: [heap-buffer-overflow, READ, sddl_decode, sddl.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42526759"
+  - oss_id: 42530401
+    harness: fuzz_parse_lpq_entry
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f5c76c3c814dac2b0c09026520f75c0b0e22b6b4
+    fix_date: 2023-11-24
+    crash_func: parse_lpq_bsd
+    crash_file: bin/default/../../source3/printing/lpq_parse.c
+    signature: [stack-buffer-overflow, WRITE, parse_lpq_bsd, lpq_parse.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530401"
+rejected: []
+error: null

@@ -1,0 +1,225 @@
+project: rdkit
+repo: "https://github.com/rdkit/rdkit.git"
+n_sites: 13
+n_issues: 13
+harnesses: [mol_data_stream_to_mol_fuzzer, mol_deserialization_fuzzer, smiles_string_to_mol_fuzzer]
+base:
+  commit: b603d0d97ed4ecfba9205e449ecff9ed1897e224
+  date: 2022-01-20
+  method: wave_eve
+  n_latent: 7
+  n_latent_upper: 7
+  n_wave: 2
+  note: "eve of 2022-01-22 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-04-16
+    n: 2
+    eve: f829c877d8fbbebb1f6b59983e4bc3ad563be9b8
+    n_latent_upper: 7
+    oss_ids: [42485989, 42492840]
+  - day: 2022-01-22
+    n: 2
+    eve: b603d0d97ed4ecfba9205e449ecff9ed1897e224
+    n_latent_upper: 7
+    oss_ids: [42486007, 42506490]
+  - day: 2020-05-16
+    n: 1
+    eve: 8cbce48c7dc73d6a246e704e3e175e7b355b34c2
+    n_latent_upper: 9
+    oss_ids: [42483586]
+  - day: 2020-12-12
+    n: 1
+    eve: 5075084bd2e688e2f635578b31fac022ca92b799
+    n_latent_upper: 8
+    oss_ids: [42485927]
+  - day: 2021-08-06
+    n: 1
+    eve: 6a36dcdf446e11a1536fa61b221f159073134617
+    n_latent_upper: 6
+    oss_ids: [42499547]
+  - day: 2022-01-26
+    n: 1
+    eve: be37bd7b6c96e9a733f677d015c0fab3e56be4a3
+    n_latent_upper: 5
+    oss_ids: [42506386]
+  - day: 2022-02-06
+    n: 1
+    eve: f326de01c058b3fff214e3104c1519e48e68ee0c
+    n_latent_upper: 4
+    oss_ids: [42490020]
+  - day: 2023-05-26
+    n: 1
+    eve: c996d88bcf935b048d2468d967e353c187b49b56
+    n_latent_upper: 3
+    oss_ids: [42491015]
+  - day: 2023-08-06
+    n: 1
+    eve: f5c9fb6a3144d37a0487b78781995bd8d48da795
+    n_latent_upper: 2
+    oss_ids: [42508331]
+  - day: 2023-11-21
+    n: 1
+    eve: ab7b8dd2c6ed6d96f59a9c9237d2d33d67517476
+    n_latent_upper: 1
+    oss_ids: [42527977]
+bugs:
+  - oss_id: 42483586
+    harness: smiles_string_to_mol_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1760ff4b4cede7274fd7003cf93ddd6eb15e1a24
+    fix_date: 2020-05-16
+    crash_func: "RDKit::(anonymous namespace)::smiles_parse_helper(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::vector<RDKit::RWMol*, std::__1::allocator<RDKit::RWMol*> >&, RDKit::Atom*&, RDKit::Bond*&, int)"
+    crash_file: Code/GraphMol/SmilesParse/SmilesParse.cpp
+    signature: [container-overflow, READ, "RDKit::smiles_parse_helper", SmilesParse.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483586"
+  - oss_id: 42485927
+    harness: smiles_string_to_mol_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b81e313c5177b4abcd049192f857caed8d804b18
+    fix_date: 2020-12-12
+    crash_func: "RDKit::Chirality::iterateCIPRanks(RDKit::ROMol const&, std::__1::vector<double, std::__1::allocator<double> >&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int> >&, bool)"
+    crash_file: Code/GraphMol/Chirality.cpp
+    signature: [heap-buffer-overflow, WRITE, "RDKit::Chirality::iterateCIPRanks", Chirality.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485927"
+  - oss_id: 42485989
+    harness: mol_data_stream_to_mol_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 193f27730c3b3bb5068e56858ea90a3ddcc92a8e
+    fix_date: 2021-04-16
+    crash_func: getIdx
+    crash_file: Code/GraphMol/Atom.h
+    signature: [heap-use-after-free, READ, getIdx, Atom.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485989"
+  - oss_id: 42486007
+    harness: smiles_string_to_mol_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: db15b372a13380693c9ebd33d270c6bddf394883
+    fix_date: 2022-01-22
+    crash_func: "bool SmilesParseOps::parser::read_int<std::__1::__wrap_iter<char const*> >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, unsigned int&)"
+    crash_file: Code/GraphMol/SmilesParse/CXSmilesOps.cpp
+    signature: [stack-buffer-overflow, READ, "bool SmilesParseOps::parser::read_int<std::__1::__wrap_iter<> >", CXSmilesOps.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42486007"
+  - oss_id: 42490020
+    harness: mol_deserialization_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e2b0a850d7f7087efc15181b8ab11a6b8a566228
+    fix_date: 2022-02-06
+    crash_func: "streamRead<unsigned int>"
+    crash_file: Code/RDGeneral/StreamOps.h
+    signature: [heap-buffer-overflow, WRITE, "streamRead<>", StreamOps.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490020"
+  - oss_id: 42491015
+    harness: mol_deserialization_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d4547e21165cf9cdc04ea6e0bfd1f25bbf2ed14e
+    fix_date: 2023-05-26
+    crash_func: "RDKit::streamRead(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, int)"
+    crash_file: Code/RDGeneral/StreamOps.h
+    signature: [heap-buffer-overflow, READ, "RDKit::streamRead", StreamOps.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491015"
+  - oss_id: 42492840
+    harness: mol_data_stream_to_mol_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 193f27730c3b3bb5068e56858ea90a3ddcc92a8e
+    fix_date: 2021-04-16
+    crash_func: "std::__1::allocator_traits<std::__1::allocator<std::__1::__list_node<RDKit::(anonymous namespace)::SmaState, void*> > >::deallocate(std::__1::allocator<std::__1::__list_node<RDKit::(anonymous namespace)::SmaState, void*> >&, std::__1::__list_node<RDKit::(anonymous namespace)::SmaState, void*>*, unsigned long)"
+    crash_file: include/c++/v1/__memory/allocator_traits.h
+    signature: [attempting, -, "std::__1::allocator_traits<std::__1::allocator<std::__1::__list_node<> > >::deallocate", allocator_traits.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492840"
+  - oss_id: 42499547
+    harness: mol_data_stream_to_mol_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c8c0f1b296fd2e132aee0c0355c10550da87029a
+    fix_date: 2021-08-06
+    crash_func: "RDKit::Atom::getIdx() const"
+    crash_file: Code/GraphMol/Atom.h
+    signature: [heap-use-after-free, READ, "RDKit::Atom::getIdx", Atom.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499547"
+  - oss_id: 42506386
+    harness: mol_data_stream_to_mol_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2616a929064f1ca9509813ed4c29e967c00ec824
+    fix_date: 2022-01-26
+    crash_func: "SmilesParseOps::parser::(anonymous namespace)::finalizePolymerSGroup(RDKit::RWMol&, RDKit::SubstanceGroup&)"
+    crash_file: Code/GraphMol/SmilesParse/CXSmilesOps.cpp
+    signature: [heap-buffer-overflow, READ, "SmilesParseOps::parser::finalizePolymerSGroup", CXSmilesOps.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42506386"
+  - oss_id: 42506490
+    harness: mol_data_stream_to_mol_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: db15b372a13380693c9ebd33d270c6bddf394883
+    fix_date: 2022-01-22
+    crash_func: "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > SmilesParseOps::parser::read_text_to<std::__1::__wrap_iter<char const*> >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >)"
+    crash_file: Code/GraphMol/SmilesParse/CXSmilesOps.cpp
+    signature: [heap-buffer-overflow, READ, "std::__1::basic_string<char, std::__1::char_traits<>, std::__1::allocator<> > SmilesParseOps::parser::read_text_to<std::__1::__wrap_iter<> >", CXSmilesOps.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42506490"
+  - oss_id: 42508331
+    harness: smiles_string_to_mol_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7053e97a1511f3a716d4cf8320ea9ef6518dc745
+    fix_date: 2023-08-06
+    crash_func: getChiralTag
+    crash_file: Code/GraphMol/Atom.h
+    signature: [heap-use-after-free, READ, getChiralTag, Atom.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508331"
+  - oss_id: 42527977
+    harness: smiles_string_to_mol_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ee8c35a236eb1ce7997bcd7a0c20bbb8efbe1254
+    fix_date: 2023-11-21
+    crash_func: "RDKit::Canon::(anonymous namespace)::makeBondHolder(RDKit::Bond const*, unsigned int, bool, std::__1::vector<RDKit::Canon::canon_atom, std::__1::allocator<RDKit::Canon::canon_atom> > const&)"
+    crash_file: Code/GraphMol/new_canon.cpp
+    signature: [container-overflow, READ, "RDKit::Canon::makeBondHolder", new_canon.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527977"
+rejected:
+  - oss_id: 42484819
+    reason: commit_missing
+error: null

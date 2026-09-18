@@ -9,6 +9,8 @@ the re-introduced bug must reproduce.
 
 from __future__ import annotations
 
+import os
+
 import json
 import sqlite3
 from dataclasses import asdict, dataclass
@@ -18,7 +20,10 @@ from . import asan
 from .taxonomy import VulnClass, classify
 
 DEFAULT_DB = Path(
-    "/media/hahafish/Data/ForUbuntu/BoostFuzz/benchmarks/bug-catalog/cybergym/arvo.db"
+    os.environ.get(
+        "MEMVUL_ARVO_DB",
+        "/media/hahafish/Data/ForUbuntu/BoostFuzz/benchmarks/bug-catalog/cybergym/arvo.db",
+    )
 )
 
 

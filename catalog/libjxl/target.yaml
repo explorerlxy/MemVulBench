@@ -1,0 +1,376 @@
+project: libjxl
+repo: "https://github.com/libjxl/libjxl.git"
+n_sites: 23
+n_issues: 23
+harnesses: [djxl_fuzzer, encoder_heic_fuzzer, icc_codec_fuzzer, smartcrop_fuzzer, streaming_fuzzer, transforms_fuzzer]
+base:
+  commit: 35ad5de736b3f1ea9784113e2e30ea424c251616
+  date: 2021-10-27
+  method: wave_eve
+  n_latent: 13
+  n_latent_upper: 13
+  n_wave: 2
+  note: "eve of 2021-10-28 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-10-28
+    n: 2
+    eve: 35ad5de736b3f1ea9784113e2e30ea424c251616
+    n_latent_upper: 13
+    oss_ids: [42503750, 42503809]
+  - day: 2022-03-21
+    n: 2
+    eve: 448e84d10bfec798c71338af044151e315f538e9
+    n_latent_upper: 12
+    oss_ids: [42509777, 42509789]
+  - day: 2022-06-30
+    n: 2
+    eve: ca8e276aacf63a752346a6a44ba673b0af993237
+    n_latent_upper: 9
+    oss_ids: [42512228, 42512333]
+  - day: 2022-10-18
+    n: 2
+    eve: 0c60630d16fcee56c6d8b306cd95cd4ecf0edc7d
+    n_latent_upper: 7
+    oss_ids: [42514905, 42515434]
+  - day: 2024-01-04
+    n: 2
+    eve: cdc12b32e1344381aa1e8d15ea26984789e7534f
+    n_latent_upper: 6
+    oss_ids: [42531670, 42531664]
+  - day: 2021-06-14
+    n: 1
+    eve: e1a5e2f07efe0c32364ee42bd5aef5b1f58d6a6c
+    n_latent_upper: 17
+    oss_ids: [42497951]
+  - day: 2021-06-24
+    n: 1
+    eve: a28e5f8b8bf1b0c289cf22224db0d15dfa094e99
+    n_latent_upper: 16
+    oss_ids: [42498085]
+  - day: 2021-07-23
+    n: 1
+    eve: 08973db8ae2e4f19bf57afa85089e705c50a572b
+    n_latent_upper: 15
+    oss_ids: [42499415]
+  - day: 2021-07-27
+    n: 1
+    eve: f49870935c95ac20de5f6ec939e5e4080cc189c8
+    n_latent_upper: 14
+    oss_ids: [42499409]
+  - day: 2021-11-29
+    n: 1
+    eve: d15b3481457bf16ceffa9391f924de4b4258a92b
+    n_latent_upper: 11
+    oss_ids: [42504683]
+  - day: 2021-12-30
+    n: 1
+    eve: fb8369735ac9c55fcbd19c312c41d4f288334f78
+    n_latent_upper: 10
+    oss_ids: [42506464]
+  - day: 2022-04-20
+    n: 1
+    eve: ca1aa63eb1df8d7f51641bf4c61e94f6a3367823
+    n_latent_upper: 10
+    oss_ids: [42510244]
+bugs:
+  - oss_id: 42497951
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 85aa1491b967709701d2d2293627c5cd1c7cb96d
+    fix_date: 2021-06-14
+    crash_func: StoreLE32
+    crash_file: lib/jxl/base/byte_order.h
+    signature: [heap-buffer-overflow, WRITE, StoreLE32, byte_order.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42497951"
+  - oss_id: 42498085
+    harness: djxl_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 95eea7e89d0bf4303f6e30e8148b0fc309517d6b
+    fix_date: 2021-06-24
+    crash_func: VoidRow
+    crash_file: lib/jxl/image.h
+    signature: [heap-use-after-free, READ, VoidRow, image.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498085"
+  - oss_id: 42499409
+    harness: djxl_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f134b5a31da90e743af41fb6cc227af06b91bcc2
+    fix_date: 2021-07-27
+    crash_func: "jxl::InvSqueeze(jxl::Image&, std::__1::vector<jxl::SqueezeParams, std::__1::allocator<jxl::SqueezeParams> >, jxl::ThreadPool*)"
+    crash_file: lib/jxl/modular/transform/squeeze.cc
+    signature: [container-overflow, READ, "jxl::InvSqueeze", squeeze.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499409"
+  - oss_id: 42499415
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 48e2a0ba25a7bac9ec510c48e322e5199de0583e
+    fix_date: 2021-07-23
+    crash_func: "CopyBytes<4, float, float>"
+    crash_file: third_party/highway/hwy/base.h
+    signature: [heap-buffer-overflow, WRITE, "CopyBytes<>", base.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499415"
+  - oss_id: 42503750
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 839ef3e392240fc3994b8b73e5164ac5cad4d30a
+    fix_date: 2021-10-28
+    crash_func: "jxl::JxlBoxContentDecoder::Process(unsigned char const*, unsigned long, unsigned long, unsigned char**, unsigned long*)"
+    crash_file: lib/jxl/box_content_decoder.cc
+    signature: [heap-buffer-overflow, WRITE, "jxl::JxlBoxContentDecoder::Process", box_content_decoder.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42503750"
+  - oss_id: 42503809
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 839ef3e392240fc3994b8b73e5164ac5cad4d30a
+    fix_date: 2021-10-28
+    crash_func: WriteRingBuffer
+    crash_file: third_party/brotli/c/dec/decode.c
+    signature: [heap-buffer-overflow, WRITE, WriteRingBuffer, decode.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42503809"
+  - oss_id: 42504683
+    harness: djxl_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4d7b55ab7b05b95c4fbc15e1465a09f6dc0805cb
+    fix_date: 2021-11-29
+    crash_func: xsize
+    crash_file: lib/jxl/image.h
+    signature: [container-overflow, READ, xsize, image.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504683"
+  - oss_id: 42506464
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 533444ddc1a71987f263a40fb6286c3303a54a51
+    fix_date: 2021-12-30
+    crash_func: "StoreRGBA<hwy::N_AVX2::Simd<unsigned char, 4>, hwy::N_AVX2::Vec128<unsigned char, 4> >"
+    crash_file: lib/jxl/dec_reconstruct.cc
+    signature: [heap-buffer-overflow, WRITE, "StoreRGBA<hwy::N_AVX2::Simd<>, hwy::N_AVX2::Vec128<> >", dec_reconstruct.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42506464"
+  - oss_id: 42509777
+    harness: smartcrop_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d3ccd9060bf52848970d331c4025f64fe93a3490
+    fix_date: 2022-03-21
+    crash_func: "jxl::N_AVX2::BlendingStage::ProcessRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long, unsigned long, float*) const"
+    crash_file: lib/jxl/render_pipeline/stage_blending.cc
+    signature: [heap-buffer-overflow, READ, "jxl::N_AVX2::BlendingStage::ProcessRow", stage_blending.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509777"
+  - oss_id: 42509789
+    harness: djxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: eadb9f70eb83e7f88246431d355b9bc7387fcc6f
+    fix_date: 2022-03-21
+    crash_func: "jxl::(anonymous namespace)::WriteToPixelCallbackStage::ProcessRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long, unsigned long, float*) const"
+    crash_file: lib/jxl/render_pipeline/stage_write.cc
+    signature: [heap-buffer-overflow, READ, "jxl::WriteToPixelCallbackStage::ProcessRow", stage_write.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509789"
+  - oss_id: 42510244
+    harness: djxl_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6140e82cbbf79a360adf8a75e11e8d76847dbcca
+    fix_date: 2022-04-20
+    crash_func: "jxl::N_SSE4::BlendingStage::ProcessPaddingRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long) const"
+    crash_file: lib/jxl/render_pipeline/stage_blending.cc
+    signature: [negative-size-param, -, "jxl::N_SSE4::BlendingStage::ProcessPaddingRow", stage_blending.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42510244"
+  - oss_id: 42512228
+    harness: djxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 746d1f5e8498f501238894899c301e70ea57e2aa
+    fix_date: 2022-06-30
+    crash_func: "jxl::JxlBoxContentDecoder::Process(unsigned char const*, unsigned long, unsigned long, unsigned char**, unsigned long*)"
+    crash_file: lib/jxl/box_content_decoder.cc
+    signature: [heap-buffer-overflow, READ, "jxl::JxlBoxContentDecoder::Process", box_content_decoder.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42512228"
+  - oss_id: 42512333
+    harness: djxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 746d1f5e8498f501238894899c301e70ea57e2aa
+    fix_date: 2022-06-30
+    crash_func: LoadLE64
+    crash_file: lib/jxl/base/byte_order.h
+    signature: [heap-buffer-overflow, READ, LoadLE64, byte_order.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42512333"
+  - oss_id: 42513361
+    harness: djxl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 658017a0256aab2c35cf96ed478c8339757608f4
+    fix_date: 2022-07-12
+    crash_func: "jxl::(anonymous namespace)::WriteToImageBundleStage::ProcessRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long, unsigned long, float*) const"
+    crash_file: lib/jxl/render_pipeline/stage_write.cc
+    signature: [heap-buffer-overflow, WRITE, "jxl::WriteToImageBundleStage::ProcessRow", stage_write.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513361"
+  - oss_id: 42513614
+    harness: djxl_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 66afb51bb4f132f205ba16d236993ebf8fdba89f
+    fix_date: 2022-07-19
+    crash_func: "jxl::(anonymous namespace)::WriteToPixelCallbackStage::ProcessRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long, unsigned long, unsigned long) const"
+    crash_file: lib/jxl/render_pipeline/stage_write.cc
+    signature: [heap-use-after-free, READ, "jxl::WriteToPixelCallbackStage::ProcessRow", stage_write.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513614"
+  - oss_id: 42514905
+    harness: djxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 60a019fb5bd4a119c90167662449a3224b91f629
+    fix_date: 2022-10-18
+    crash_func: "jxl::PerformBlending(float const* const*, float const* const*, float* const*, unsigned long, unsigned long, jxl::PatchBlending const&, jxl::PatchBlending const*, std::__1::vector<jxl::ExtraChannelInfo, std::__1::allocator<jxl::ExtraChannelInfo> > const&)"
+    crash_file: lib/jxl/blending.cc
+    signature: [heap-buffer-overflow, READ, "jxl::PerformBlending", blending.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514905"
+  - oss_id: 42515434
+    harness: djxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 60a019fb5bd4a119c90167662449a3224b91f629
+    fix_date: 2022-10-18
+    crash_func: "jxl::N_AVX2::BlendingStage::ProcessPaddingRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long) const"
+    crash_file: lib/jxl/render_pipeline/stage_blending.cc
+    signature: [heap-buffer-overflow, READ, "jxl::N_AVX2::BlendingStage::ProcessPaddingRow", stage_blending.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515434"
+  - oss_id: 42531664
+    harness: icc_codec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e4764a3792d8f8bb627498e7c29ced32d295e345
+    fix_date: 2024-01-04
+    crash_func: "jxl::UnpredictICC(unsigned char const*, unsigned int, jxl::PaddedBytes*)"
+    crash_file: lib/jxl/icc_codec.cc
+    signature: [heap-buffer-overflow, READ, "jxl::UnpredictICC", icc_codec.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531664"
+  - oss_id: 42531670
+    harness: djxl_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 06aec61435eab1c511c4c809e5ebd637c2551839
+    fix_date: 2024-01-04
+    crash_func: "jxl::N_AVX2::WriteToOutputStage::OutputBuffers(jxl::N_AVX2::WriteToOutputStage::Output const&, unsigned long, unsigned long, unsigned long, unsigned long, float const**) const"
+    crash_file: lib/jxl/render_pipeline/stage_write.cc
+    signature: [global-buffer-overflow, READ, "jxl::N_AVX2::WriteToOutputStage::OutputBuffers", stage_write.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531670"
+  - oss_id: 42531770
+    harness: icc_codec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f5a4d64e5f91069f76ac086984053a1264e885c1
+    fix_date: 2024-01-29
+    crash_func: "jxl::PredictICC(unsigned char const*, unsigned int, jxl::PaddedBytes*)"
+    crash_file: lib/jxl/enc_icc_codec.cc
+    signature: [heap-buffer-overflow, READ, "jxl::PredictICC", enc_icc_codec.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531770"
+  - oss_id: 42536669
+    harness: transforms_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 060080285a4fe81c9cb3a01381bbbd907c5dfea5
+    fix_date: 2024-07-04
+    crash_func: "(anonymous namespace)::FillChannel(jxl::Channel&, jxl::Rng&)"
+    crash_file: tools/transforms_fuzzer.cc
+    signature: [heap-buffer-overflow, WRITE, FillChannel, transforms_fuzzer.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536669"
+  - oss_id: 42536925
+    harness: encoder_heic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ddb303a1457899d845dc7d385b562e340d2e473
+    fix_date: 2024-07-09
+    crash_func: "HeifPixelImage::overlay(std::__1::shared_ptr<HeifPixelImage>&, int, int)"
+    crash_file: libheif/libheif/pixelimage.cc
+    signature: [heap-buffer-overflow, READ, "HeifPixelImage::overlay", pixelimage.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536925"
+  - oss_id: 432441297
+    harness: streaming_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6eb53d148df7924515ef0d700bdf2ce6505bfec0
+    fix_date: 2025-07-17
+    crash_func: FindTextLikePatches
+    crash_file: lib/jxl/enc_patch_dictionary.cc
+    signature: [heap-buffer-overflow, READ, FindTextLikePatches, enc_patch_dictionary.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/432441297"
+rejected: []
+error: null

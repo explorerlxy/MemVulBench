@@ -1,0 +1,350 @@
+project: librawspeed
+repo: "https://github.com/darktable-org/rawspeed.git"
+n_sites: 21
+n_issues: 21
+harnesses: [Cr2DecompressorFuzzer, FiffParserFuzzer-GetDecoder-Decode, FujiDecompressorFuzzer, LJpegDecompressorFuzzer, PanasonicDecompressorFuzzer, RawParserFuzzer-GetDecoder-Decode, TiffDecoderFuzzer-DngDecoder, TiffDecoderFuzzer-IiqDecoder, TiffDecoderFuzzer-NefDecoder, TiffDecoderFuzzer-SrwDecoder, TiffParserFuzzer-GetDecoder-Decode, VC5DecompressorFuzzer]
+base:
+  commit: a17791452ef33b56e59ff9f7047775cf523b63f2
+  date: 2017-09-24
+  method: wave_eve
+  n_latent: 17
+  n_latent_upper: 17
+  n_wave: 3
+  note: "eve of 2017-09-24 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2017-09-24
+    n: 3
+    eve: a17791452ef33b56e59ff9f7047775cf523b63f2
+    n_latent_upper: 17
+    oss_ids: [42497326, 42497170, 42495148]
+  - day: 2017-09-28
+    n: 2
+    eve: 4eb38fa333918ef99e699a03b35d5f3c60295de9
+    n_latent_upper: 14
+    oss_ids: [42497815, 42497736]
+  - day: 2017-12-02
+    n: 2
+    eve: 716ce90b7d4dcd52590e5a868e335a57cc71d729
+    n_latent_upper: 10
+    oss_ids: [42508330, 42508319]
+  - day: 2017-08-14
+    n: 1
+    eve: 301c84ac1fe8827c0ba5f6a291bf052f1430ea81
+    n_latent_upper: 19
+    oss_ids: [42492338]
+  - day: 2017-09-01
+    n: 1
+    eve: 84a13edad484015fe153120fc65f276f98288e65
+    n_latent_upper: 18
+    oss_ids: [42495059]
+  - day: 2017-11-15
+    n: 1
+    eve: 582bf5d0d530ff9ad26bd4372a4982e04e2a8199
+    n_latent_upper: 12
+    oss_ids: [42505766]
+  - day: 2017-11-26
+    n: 1
+    eve: 37921041822de75334e9df547fc7e2c8df83cbb3
+    n_latent_upper: 11
+    oss_ids: [42507708]
+  - day: 2017-12-03
+    n: 1
+    eve: 40bf207f78cdee81de330511ea73d447226e82a6
+    n_latent_upper: 8
+    oss_ids: [42508986]
+  - day: 2017-12-06
+    n: 1
+    eve: 26ba04cb2b9dd09e4ecc7afba0919c1065c9340f
+    n_latent_upper: 7
+    oss_ids: [42508774]
+  - day: 2017-12-27
+    n: 1
+    eve: f6a608b1a9ee4001c62515539629f18e6c7a9332
+    n_latent_upper: 6
+    oss_ids: [42512329]
+  - day: 2017-12-28
+    n: 1
+    eve: bcd1c6fa54908199b1fba6d0dd38f9bf6c51a4ce
+    n_latent_upper: 5
+    oss_ids: [42512440]
+  - day: 2018-01-11
+    n: 1
+    eve: 6af0e8550b6bb50580aeef8f14ccdff86999ca68
+    n_latent_upper: 4
+    oss_ids: [42517260]
+bugs:
+  - oss_id: 42471578
+    harness: VC5DecompressorFuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0bcf3488a4989c2724f0c4383401b0d0dcfc3dcc
+    fix_date: 2018-11-18
+    crash_func: "rawspeed::VC5Decompressor::Wavelet::HighPassBand::decode(rawspeed::VC5Decompressor::Wavelet const&)"
+    crash_file: src/librawspeed/decompressors/VC5Decompressor.cpp
+    signature: [heap-buffer-overflow, WRITE, "rawspeed::VC5Decompressor::Wavelet::HighPassBand::decode", VC5Decompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471578"
+  - oss_id: 42492338
+    harness: TiffParserFuzzer-GetDecoder-Decode
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4e3e6cbc15022fd78b214034c7dfacc719ba418c
+    fix_date: 2017-08-14
+    crash_func: "rawspeed::OrfDecoder::decodeRawInternal()"
+    crash_file: src/librawspeed/decoders/OrfDecoder.cpp
+    signature: [use-after-poison, WRITE, "rawspeed::OrfDecoder::decodeRawInternal", OrfDecoder.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492338"
+  - oss_id: 42495059
+    harness: TiffDecoderFuzzer-SrwDecoder
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7d47c5de57aa4abdc6e7426756601a0a55efc7df
+    fix_date: 2017-09-01
+    crash_func: "rawspeed::SamsungV0Decompressor::decompressStrip(unsigned int, rawspeed::ByteStream const&) const"
+    crash_file: src/librawspeed/decompressors/SamsungV0Decompressor.cpp
+    signature: [use-after-poison, READ, "rawspeed::SamsungV0Decompressor::decompressStrip", SamsungV0Decompressor.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495059"
+  - oss_id: 42495148
+    harness: TiffDecoderFuzzer-SrwDecoder
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2ea14db02b9003eed69cdf66eeaae98a70c69b03
+    fix_date: 2017-09-24
+    crash_func: "rawspeed::SrwDecoder::decodeRawInternal()"
+    crash_file: src/librawspeed/decoders/SrwDecoder.cpp
+    signature: [use-after-poison, READ, "rawspeed::SrwDecoder::decodeRawInternal", SrwDecoder.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42495148"
+  - oss_id: 42497170
+    harness: TiffDecoderFuzzer-DngDecoder
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 78846115eaaa0ad13bb36ab87b5d6be2ebd2dc02
+    fix_date: 2017-09-24
+    crash_func: "rawspeed::RawImageData::transferBadPixelsToMap()"
+    crash_file: src/librawspeed/common/RawImage.cpp
+    signature: [heap-buffer-overflow, READ, "rawspeed::RawImageData::transferBadPixelsToMap", RawImage.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42497170"
+  - oss_id: 42497326
+    harness: TiffDecoderFuzzer-NefDecoder
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 55b420a23ab58bb7dc62fb582f205e65d6445270
+    fix_date: 2017-09-24
+    crash_func: "rawspeed::NefDecoder::decodeRawInternal()"
+    crash_file: src/librawspeed/decoders/NefDecoder.cpp
+    signature: [use-after-poison, WRITE, "rawspeed::NefDecoder::decodeRawInternal", NefDecoder.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42497326"
+  - oss_id: 42497736
+    harness: TiffDecoderFuzzer-SrwDecoder
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8cfad9ca0d21986594ef2a9c05ff286a3377f001
+    fix_date: 2017-09-28
+    crash_func: "rawspeed::SamsungV2Decompressor::decompress()"
+    crash_file: src/librawspeed/decompressors/SamsungV2Decompressor.cpp
+    signature: [use-after-poison, READ, "rawspeed::SamsungV2Decompressor::decompress", SamsungV2Decompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497736"
+  - oss_id: 42497815
+    harness: FiffParserFuzzer-GetDecoder-Decode
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d505b6d818773a70c26ba6d31e6ae88beb0ecb0c
+    fix_date: 2017-09-28
+    crash_func: "void rawspeed::LJpegDecompressor::decodeN<2>()"
+    crash_file: src/librawspeed/decompressors/LJpegDecompressor.cpp
+    signature: [use-after-poison, READ, "void rawspeed::LJpegDecompressor::decodeN<>", LJpegDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497815"
+  - oss_id: 42505766
+    harness: TiffDecoderFuzzer-NefDecoder
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6e9f2d3c6ce6c4eae32b2d9c228a76e262edd52d
+    fix_date: 2017-11-15
+    crash_func: "rawspeed::NefDecoder::decodeMetaDataInternal(rawspeed::CameraMetaData const*)"
+    crash_file: src/librawspeed/decoders/NefDecoder.cpp
+    signature: [heap-buffer-overflow, READ, "rawspeed::NefDecoder::decodeMetaDataInternal", NefDecoder.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42505766"
+  - oss_id: 42507708
+    harness: RawParserFuzzer-GetDecoder-Decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2fb7cad53e051d21db0390b370bff07fcba9f2be
+    fix_date: 2017-11-26
+    crash_func: "void rawspeed::DngOpcodes::PixelOpcode::applyOP<unsigned short, rawspeed::DngOpcodes::OffsetPerRowOrCol<rawspeed::DngOpcodes::DeltaRowOrColBase::SelectX>::apply(rawspeed::RawImage const&)::{lambda(unsigned int, unsigned int, unsigned short)#1}>(rawspeed::RawImage const&, rawspeed::DngOpcodes::OffsetPerRowOrCol<rawspeed::DngOpcodes::DeltaRowOrColBase::SelectX>::apply(rawspeed::RawImage const&)::{lambda(unsigned int, unsigned int, unsigned short)#1})"
+    crash_file: src/librawspeed/common/DngOpcodes.cpp
+    signature: [segv, -, "void rawspeed::DngOpcodes::PixelOpcode::applyOP<unsigned short, rawspeed::DngOpcodes::OffsetPerRowOrCol<>::apply", DngOpcodes.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42507708"
+  - oss_id: 42508319
+    harness: LJpegDecompressorFuzzer
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 580add2219c696e425087bc61b952f4ccb295f09
+    fix_date: 2017-12-02
+    crash_func: "void rawspeed::LJpegDecompressor::decodeN<4>()::{lambda(int)#1}::operator()(int) const"
+    crash_file: src/librawspeed/decompressors/LJpegDecompressor.cpp
+    signature: [use-after-poison, WRITE, "void rawspeed::LJpegDecompressor::decodeN<>", LJpegDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508319"
+  - oss_id: 42508330
+    harness: LJpegDecompressorFuzzer
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0b5389f22c17082864de100a6efedbaa4b0d894f
+    fix_date: 2017-12-02
+    crash_func: "void rawspeed::LJpegDecompressor::decodeN<4>()"
+    crash_file: src/librawspeed/decompressors/LJpegDecompressor.cpp
+    signature: [use-after-poison, READ, "void rawspeed::LJpegDecompressor::decodeN<>", LJpegDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508330"
+  - oss_id: 42508774
+    harness: TiffParserFuzzer-GetDecoder-Decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b1f750c11bd75ac79fb5ca532aed468939f216f3
+    fix_date: 2017-12-06
+    crash_func: "rawspeed::DngOpcodes::applyOpCodes(rawspeed::RawImage const&)"
+    crash_file: src/librawspeed/common/DngOpcodes.cpp
+    signature: [heap-buffer-overflow, READ, "rawspeed::DngOpcodes::applyOpCodes", DngOpcodes.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508774"
+  - oss_id: 42508986
+    harness: PanasonicDecompressorFuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b08b150e21a096e49f56dc044537295991986fa4
+    fix_date: 2017-12-03
+    crash_func: "rawspeed::PanasonicDecompressor::PanaBitpump::getBits(int)"
+    crash_file: src/librawspeed/decompressors/PanasonicDecompressor.cpp
+    signature: [heap-buffer-overflow, WRITE, "rawspeed::PanasonicDecompressor::PanaBitpump::getBits", PanasonicDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508986"
+  - oss_id: 42512329
+    harness: FujiDecompressorFuzzer
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2d8507d1909829e9151fac73ffc0d20f691f558c
+    fix_date: 2017-12-27
+    crash_func: "void rawspeed::FujiDecompressor::copy_line<rawspeed::FujiDecompressor::copy_line_to_xtrans(rawspeed::FujiDecompressor::fuji_compressed_block*, rawspeed::FujiDecompressor::FujiStrip const&, int) const::$_7&>(rawspeed::FujiDecompressor::fuji_compressed_block*, rawspeed::FujiDecompressor::FujiStrip const&, int, rawspeed::FujiDecompressor::copy_line_to_xtrans(rawspeed::FujiDecompressor::fuji_compressed_block*, rawspeed::FujiDecompressor::FujiStrip const&, int) const::$_7&) const"
+    crash_file: src/librawspeed/decompressors/FujiDecompressor.cpp
+    signature: [use-after-poison, WRITE, "void rawspeed::FujiDecompressor::copy_line<>", FujiDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42512329"
+  - oss_id: 42512440
+    harness: FujiDecompressorFuzzer
+    label: unknown-crash
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 404b736883726778fd8d99776d0c28652394711d
+    fix_date: 2017-12-28
+    crash_func: "rawspeed::FujiDecompressor::copy_line_to_xtrans(rawspeed::FujiDecompressor::fuji_compressed_block*, rawspeed::FujiDecompressor::FujiStrip const&, int) const"
+    crash_file: src/librawspeed/decompressors/FujiDecompressor.cpp
+    signature: [unknown-crash, READ, "rawspeed::FujiDecompressor::copy_line_to_xtrans", FujiDecompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42512440"
+  - oss_id: 42517260
+    harness: RawParserFuzzer-GetDecoder-Decode
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: dbe7591e54bad5e6430d38be6bed051582da76b9
+    fix_date: 2018-01-11
+    crash_func: "rawspeed::TableLookUp::setTable(int, std::__1::vector<unsigned short, std::__1::allocator<unsigned short> > const&)"
+    crash_file: src/librawspeed/common/TableLookUp.cpp
+    signature: [heap-buffer-overflow, WRITE, "rawspeed::TableLookUp::setTable", TableLookUp.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517260"
+  - oss_id: 42517687
+    harness: TiffDecoderFuzzer-DngDecoder
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e29d15cda20e6e7c7e1122c30bff7805a2e59fbc
+    fix_date: 2022-11-01
+    crash_func: "rawspeed::DngOpcodes::OffsetPerRowOrCol<rawspeed::DngOpcodes::DeltaRowOrColBase::SelectX>::apply(rawspeed::RawImage const&)::'lambda'(unsigned int, unsigned int, unsigned short)::operator()(unsigned int, unsigned int, unsigned short) const"
+    crash_file: src/librawspeed/common/DngOpcodes.cpp
+    signature: [heap-buffer-overflow, READ, "rawspeed::DngOpcodes::OffsetPerRowOrCol<>::apply", DngOpcodes.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42517687"
+  - oss_id: 42517704
+    harness: TiffDecoderFuzzer-IiqDecoder
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3f116fa4ff59f78e1699b950e8ef348b896fc606
+    fix_date: 2018-01-14
+    crash_func: "rawspeed::Spline<unsigned short, void>::prepare()"
+    crash_file: src/librawspeed/common/Spline.h
+    signature: [container-overflow, READ, "rawspeed::Spline<>::prepare", Spline.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517704"
+  - oss_id: 42527523
+    harness: TiffDecoderFuzzer-DngDecoder
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b79d3f2ab9df07be675d262474a70f59eae55a66
+    fix_date: 2023-12-23
+    crash_func: "rawspeed::NotARational<int>::operator float<float, true>() const"
+    crash_file: src/librawspeed/adt/NotARational.h
+    signature: [heap-buffer-overflow, READ, "rawspeed::NotARational<>::operator float<>", NotARational.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527523"
+  - oss_id: 42535509
+    harness: Cr2DecompressorFuzzer
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 87c26094076a8d93e3efcbb114c6b4e1c4904254
+    fix_date: 2018-03-14
+    crash_func: "void rawspeed::Cr2Decompressor::decodeN_X_Y<4, 1, 1>()::{lambda(int)#1}::operator()(int) const"
+    crash_file: src/librawspeed/decompressors/Cr2Decompressor.cpp
+    signature: [use-after-poison, WRITE, "void rawspeed::Cr2Decompressor::decodeN_X_Y<>", Cr2Decompressor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535509"
+rejected: []
+error: null

@@ -1,0 +1,779 @@
+project: libxml2
+repo: "https://gitlab.gnome.org/GNOME/libxml2.git"
+n_sites: 54
+n_issues: 54
+harnesses: [api, html, libxml2_xml_read_memory_fuzzer, libxml2_xml_reader_for_file_fuzzer, lint, reader, schema, valid, xinclude, xml, xmlsec_fuzzer, xpath, xslt]
+base:
+  commit: 4b3452d17123631ec43d532b83dc182c1a638fed
+  date: 2023-03-15
+  method: wave_eve
+  n_latent: 30
+  n_latent_upper: 30
+  n_wave: 5
+  note: "eve of 2023-03-15 wave (5 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2023-03-15
+    n: 5
+    eve: 4b3452d17123631ec43d532b83dc182c1a638fed
+    n_latent_upper: 30
+    oss_ids: [42522273, 42522277, 42522281, 42522285, 42522315]
+  - day: 2023-03-21
+    n: 3
+    eve: 44ecefc8cc299a66ac21ffec141eb261e92638da
+    n_latent_upper: 22
+    oss_ids: [42522518, 42522530, 42522507]
+  - day: 2018-09-12
+    n: 2
+    eve: 123234f2cfcd9e9b9f83047eee1dc17b4c3f4407
+    n_latent_upper: 10
+    oss_ids: [42470339, 42470348]
+  - day: 2023-03-17
+    n: 2
+    eve: 1a91392c62e40eaa920b8a406c659da3f1ccf2f5
+    n_latent_upper: 25
+    oss_ids: [42522290, 42522360]
+  - day: 2023-06-08
+    n: 2
+    eve: 20f5c73457df065df21bf25aa081a0a4cd028046
+    n_latent_upper: 21
+    oss_ids: [42525197, 42525210]
+  - day: 2023-10-08
+    n: 2
+    eve: 36374bc9fcf6e670dc9521ac032474066521858b
+    n_latent_upper: 20
+    oss_ids: [42528947, 42528951]
+  - day: 2023-12-15
+    n: 2
+    eve: 6c8acdecd20ade73b516ea0533cf2b5c357c9aee
+    n_latent_upper: 16
+    oss_ids: [42531126, 42531203]
+  - day: 2024-03-22
+    n: 2
+    eve: 05c147c3ef2029019f4bca856a1319b14e2a0fa8
+    n_latent_upper: 12
+    oss_ids: [42533922, 42533950]
+  - day: 2017-06-05
+    n: 1
+    eve: e26630548e7d138d2c560844c43820b6767251e3
+    n_latent_upper: 5
+    oss_ids: [42480782]
+  - day: 2018-11-22
+    n: 1
+    eve: fc27759d2a5984ecf7a0d3183cafa4e828125ac6
+    n_latent_upper: 10
+    oss_ids: [42471662]
+  - day: 2019-01-07
+    n: 1
+    eve: 619534ef2ed501e5206915064a5bc36153a897f7
+    n_latent_upper: 9
+    oss_ids: [42472675]
+  - day: 2019-09-26
+    n: 1
+    eve: 99a864a1f7a9cb59865f803770d7d62fb47cad69
+    n_latent_upper: 8
+    oss_ids: [42478580]
+bugs:
+  - oss_id: 42470339
+    harness: libxml2_xml_read_memory_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8c9daf790abfc06e8ca3a44652542c577bb67d49
+    fix_date: 2018-09-12
+    crash_func: xmlSAX2AttributeNs
+    crash_file: SAX2.c
+    signature: [heap-use-after-free, READ, xmlSAX2AttributeNs, SAX2.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470339"
+  - oss_id: 42470348
+    harness: xmlsec_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8c9daf790abfc06e8ca3a44652542c577bb67d49
+    fix_date: 2018-09-12
+    crash_func: xmlStrndup
+    crash_file: xmlstring.c
+    signature: [heap-use-after-free, READ, xmlStrndup, xmlstring.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470348"
+  - oss_id: 42471662
+    harness: libxml2_xml_reader_for_file_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 1567b55b72b8366ce120ed042e03ed5b50d191d7
+    fix_date: 2018-11-22
+    crash_func: xmlFreeNode
+    crash_file: tree.c
+    signature: [attempting, -, xmlFreeNode, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42471662"
+  - oss_id: 42472675
+    harness: libxml2_xml_reader_for_file_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 26828cb3a1294e09e42064f4769d4b3c0a8623b3
+    fix_date: 2019-01-07
+    crash_func: xmlFreeID
+    crash_file: xmlreader.c
+    signature: [attempting, -, xmlFreeID, xmlreader.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42472675"
+  - oss_id: 42478580
+    harness: libxml2_xml_reader_for_file_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 664f881008f40356c0502c8cc154e17e3c80e353
+    fix_date: 2019-09-26
+    crash_func: xmlTextReaderFreeNodeList
+    crash_file: xmlreader.c
+    signature: [heap-use-after-free, READ, xmlTextReaderFreeNodeList, xmlreader.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42478580"
+  - oss_id: 42480782
+    harness: libxml2_xml_read_memory_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 932cc9896ab41475d4aa429c27d9afd175959d74
+    fix_date: 2017-06-05
+    crash_func: xmlSnprintfElementContent
+    crash_file: valid.c
+    signature: [stack-buffer-overflow, WRITE, xmlSnprintfElementContent, valid.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480782"
+  - oss_id: 42484562
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2af3c2a8b974cb5896cd3beb74561ba979de9f34
+    fix_date: 2020-06-08
+    crash_func: __xmlRaiseError
+    crash_file: error.c
+    signature: [heap-use-after-free, READ, __xmlRaiseError, error.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484562"
+  - oss_id: 42485276
+    harness: html
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 477c7f6affcb665305b333f92ce0a782325b4156
+    fix_date: 2020-07-06
+    crash_func: xmlParserPrintFileContextInternal
+    crash_file: error.c
+    signature: [heap-use-after-free, READ, xmlParserPrintFileContextInternal, error.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485276"
+  - oss_id: 42486565
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: dba82a8c0453b7d4d138167a771c1c2988b889be
+    fix_date: 2020-08-16
+    crash_func: xmlXIncludeIncludeNode
+    crash_file: xinclude.c
+    signature: [heap-use-after-free, READ, xmlXIncludeIncludeNode, xinclude.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486565"
+  - oss_id: 42486665
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 19cae17f5a2acfbd5554d145bb87cd6bf2de244f
+    fix_date: 2020-08-19
+    crash_func: xmlNodeDumpOutputInternal
+    crash_file: xmlsave.c
+    signature: [heap-use-after-free, READ, xmlNodeDumpOutputInternal, xmlsave.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486665"
+  - oss_id: 42486883
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ba589adc2f86c6be9ad7e0d771d4c9b09d059b89
+    fix_date: 2020-08-25
+    crash_func: xmlTextReaderRead
+    crash_file: xmlreader.c
+    signature: [heap-use-after-free, READ, xmlTextReaderRead, xmlreader.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486883"
+  - oss_id: 42487244
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b215c270fa3b1436314cc56654718bd12182cfec
+    fix_date: 2020-09-13
+    crash_func: xmlXPathNodeSetAdd
+    crash_file: xpath.c
+    signature: [heap-use-after-free, READ, xmlXPathNodeSetAdd, xpath.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487244"
+  - oss_id: 42487785
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 847a3a1181d59dc49c1b446d646d344d0543af3e
+    fix_date: 2020-09-28
+    crash_func: xmlStaticCopyNode
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlStaticCopyNode, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487785"
+  - oss_id: 42497161
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8f5ccada05ddd4a1ff8e399ad39fc7cd4bd33325
+    fix_date: 2022-01-25
+    crash_func: xmlAddNextSibling
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlAddNextSibling, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42497161"
+  - oss_id: 42509011
+    harness: xml
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 670701075b969962db1b869507318e81e96910d1
+    fix_date: 2022-04-21
+    crash_func: xmlFreeProp
+    crash_file: tree.c
+    signature: [attempting, -, xmlFreeProp, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509011"
+  - oss_id: 42509369
+    harness: schema
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 968495442964f3ea72499dfbdba9e2fa9d77f9b7
+    fix_date: 2022-03-22
+    crash_func: xmlFreeNodeList
+    crash_file: tree.c
+    signature: [attempting, -, xmlFreeNodeList, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509369"
+  - oss_id: 42510333
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 41afa89fc94a6b1cef0d0cb19263875ecf08adb6
+    fix_date: 2022-04-10
+    crash_func: xmlFreeNodeList
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlFreeNodeList, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510333"
+  - oss_id: 42517254
+    harness: xml
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 938105b572433e0772c507d434a8e7985e6cdf5d
+    fix_date: 2022-10-21
+    crash_func: xmlXIncludeCopyXPointer
+    crash_file: xinclude.c
+    signature: [heap-use-after-free, READ, xmlXIncludeCopyXPointer, xinclude.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42517254"
+  - oss_id: 42521059
+    harness: xml
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5d55315e32b34af7070d38060ccf9a60941b9696
+    fix_date: 2023-02-18
+    crash_func: xmlParseTryOrFinish
+    crash_file: parser.c
+    signature: [heap-buffer-overflow, READ, xmlParseTryOrFinish, parser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521059"
+  - oss_id: 42522151
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3eb6bf03869b449bbe990efe7e5101457d40f36e
+    fix_date: 2023-03-12
+    crash_func: htmlCurrentChar
+    crash_file: HTMLparser.c
+    signature: [global-buffer-overflow, READ, htmlCurrentChar, HTMLparser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522151"
+  - oss_id: 42522273
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca2bfecea9c23f8d2e11741fff7c6a5372c56bb8
+    fix_date: 2023-03-15
+    crash_func: xmlNextChar
+    crash_file: parserInternals.c
+    signature: [global-buffer-overflow, READ, xmlNextChar, parserInternals.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42522273"
+  - oss_id: 42522277
+    harness: xinclude
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca2bfecea9c23f8d2e11741fff7c6a5372c56bb8
+    fix_date: 2023-03-15
+    crash_func: xmlParseStartTag2
+    crash_file: parser.c
+    signature: [global-buffer-overflow, READ, xmlParseStartTag2, parser.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42522277"
+  - oss_id: 42522281
+    harness: xinclude
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca2bfecea9c23f8d2e11741fff7c6a5372c56bb8
+    fix_date: 2023-03-15
+    crash_func: xmlSkipBlankChars
+    crash_file: parser.c
+    signature: [global-buffer-overflow, READ, xmlSkipBlankChars, parser.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42522281"
+  - oss_id: 42522285
+    harness: schema
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca2bfecea9c23f8d2e11741fff7c6a5372c56bb8
+    fix_date: 2023-03-15
+    crash_func: xmlParseContentInternal
+    crash_file: parser.c
+    signature: [global-buffer-overflow, READ, xmlParseContentInternal, parser.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42522285"
+  - oss_id: 42522290
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8090e5856465c0b8e26e2a080f4b498f37fa83ab
+    fix_date: 2023-03-17
+    crash_func: htmlParseDocument
+    crash_file: HTMLparser.c
+    signature: [global-buffer-overflow, READ, htmlParseDocument, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522290"
+  - oss_id: 42522315
+    harness: schema
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca2bfecea9c23f8d2e11741fff7c6a5372c56bb8
+    fix_date: 2023-03-15
+    crash_func: xmlDictComputeFastKey
+    crash_file: dict.c
+    signature: [global-buffer-overflow, READ, xmlDictComputeFastKey, dict.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42522315"
+  - oss_id: 42522360
+    harness: xinclude
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3e85d7b7ab511b67d54ccf5dfd2f5953050eec83
+    fix_date: 2023-03-17
+    crash_func: xmlParseQName
+    crash_file: parser.c
+    signature: [global-buffer-overflow, READ, xmlParseQName, parser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522360"
+  - oss_id: 42522441
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 067986fa674f0811614dab4c4572f5f7ff483400
+    fix_date: 2023-03-18
+    crash_func: htmlParseTryOrFinish
+    crash_file: HTMLparser.c
+    signature: [global-buffer-overflow, READ, htmlParseTryOrFinish, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522441"
+  - oss_id: 42522507
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7fbd454d9f70f0f0c0a0c27a7d541fed4d038c2a
+    fix_date: 2023-03-21
+    crash_func: xmlStrndup
+    crash_file: xmlstring.c
+    signature: [global-buffer-overflow, READ, xmlStrndup, xmlstring.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522507"
+  - oss_id: 42522518
+    harness: schema
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 04d1bedd8c3fc5d9e41d11e2d0da08a966b732d3
+    fix_date: 2023-03-21
+    crash_func: xmlParseEntityDecl
+    crash_file: parser.c
+    signature: [global-buffer-overflow, READ, xmlParseEntityDecl, parser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522518"
+  - oss_id: 42522530
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 04d1bedd8c3fc5d9e41d11e2d0da08a966b732d3
+    fix_date: 2023-03-21
+    crash_func: htmlParsePI
+    crash_file: HTMLparser.c
+    signature: [global-buffer-overflow, READ, htmlParsePI, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522530"
+  - oss_id: 42525197
+    harness: xslt
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b236b7a588ac2973a057ec578011cdc17c26f16d
+    fix_date: 2023-06-08
+    crash_func: xmlDictAddString
+    crash_file: dict.c
+    signature: [global-buffer-overflow, READ, xmlDictAddString, dict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525197"
+  - oss_id: 42525210
+    harness: html
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b236b7a588ac2973a057ec578011cdc17c26f16d
+    fix_date: 2023-06-08
+    crash_func: htmlParseHTMLAttribute
+    crash_file: HTMLparser.c
+    signature: [global-buffer-overflow, READ, htmlParseHTMLAttribute, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525210"
+  - oss_id: 42528757
+    harness: html
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 71aae4e98b7e325463e528242ca363b0380a6c92
+    fix_date: 2023-10-02
+    crash_func: xmlDictFindEntry
+    crash_file: dict.c
+    signature: [heap-buffer-overflow, READ, xmlDictFindEntry, dict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528757"
+  - oss_id: 42528920
+    harness: xpath
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 7dfcea03c37d17ca0d05d7a54f9245a8fde735cc
+    fix_date: 2023-10-11
+    crash_func: xmlDictFindEntry
+    crash_file: dict.c
+    signature: [segv, -, xmlDictFindEntry, dict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528920"
+  - oss_id: 42528947
+    harness: xslt
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4fc5340ec55a12cd6819395030d5d132a219984a
+    fix_date: 2023-10-08
+    crash_func: xmlParseCommentComplex
+    crash_file: parser.c
+    signature: [heap-buffer-overflow, WRITE, xmlParseCommentComplex, parser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528947"
+  - oss_id: 42528951
+    harness: xpath
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4fc5340ec55a12cd6819395030d5d132a219984a
+    fix_date: 2023-10-08
+    crash_func: xmlCopyCharMultiByte
+    crash_file: parserInternals.c
+    signature: [heap-buffer-overflow, WRITE, xmlCopyCharMultiByte, parserInternals.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528951"
+  - oss_id: 42531092
+    harness: xml
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8e13133dbd2c10e8a498235a62f9beceb19b87a1
+    fix_date: 2023-12-12
+    crash_func: xmlDictHashName
+    crash_file: dict.c
+    signature: [global-buffer-overflow, READ, xmlDictHashName, dict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531092"
+  - oss_id: 42531126
+    harness: html
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 69d88566b6063b6e11f473fccddaa0174b60d6a6
+    fix_date: 2023-12-15
+    crash_func: htmlCurrentChar
+    crash_file: HTMLparser.c
+    signature: [heap-use-after-free, READ, htmlCurrentChar, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531126"
+  - oss_id: 42531203
+    harness: html
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 69d88566b6063b6e11f473fccddaa0174b60d6a6
+    fix_date: 2023-12-15
+    crash_func: htmlParseDocument
+    crash_file: HTMLparser.c
+    signature: [heap-use-after-free, READ, htmlParseDocument, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531203"
+  - oss_id: 42531532
+    harness: xinclude
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 37c6618be55935aa5cc95d2aedc35210c2190c6e
+    fix_date: 2024-01-02
+    crash_func: xmlRemoveID
+    crash_file: valid.c
+    signature: [heap-use-after-free, READ, xmlRemoveID, valid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531532"
+  - oss_id: 42532360
+    harness: valid
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ddda373eb529035db3b6b54433523853368ef05d
+    fix_date: 2024-02-06
+    crash_func: xmlValidatePopElement
+    crash_file: valid.c
+    signature: [heap-use-after-free, READ, xmlValidatePopElement, valid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532360"
+  - oss_id: 42533922
+    harness: api
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d8741b8196a84ac0a85d55c246752acf544e4664
+    fix_date: 2024-03-22
+    crash_func: xmlDOMWrapNSNormAcquireNormalizedNs
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlDOMWrapNSNormAcquireNormalizedNs, tree.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533922"
+  - oss_id: 42533950
+    harness: api
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d8741b8196a84ac0a85d55c246752acf544e4664
+    fix_date: 2024-03-22
+    crash_func: xmlCopyPropInternal
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlCopyPropInternal, tree.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533950"
+  - oss_id: 42534044
+    harness: api
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: bfb02fbca9b0aaadae6689b1dfc78dd5d1d2e71c
+    fix_date: 2024-03-28
+    crash_func: nodeGetTree
+    crash_file: fuzz/api.c
+    signature: [heap-use-after-free, READ, nodeGetTree, api.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534044"
+  - oss_id: 42536963
+    harness: html
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: aa6aec19b094bb26e75c6582de2d429a8e134688
+    fix_date: 2024-07-11
+    crash_func: htmlCurrentChar
+    crash_file: HTMLparser.c
+    signature: [heap-buffer-overflow, READ, htmlCurrentChar, HTMLparser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536963"
+  - oss_id: 42537493
+    harness: lint
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a530ff125dbf8ab4f297c0b91fc8fa34d4183bf5
+    fix_date: 2024-07-29
+    crash_func: xmlCharEncCloseFunc
+    crash_file: encoding.c
+    signature: [heap-use-after-free, READ, xmlCharEncCloseFunc, encoding.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537493"
+  - oss_id: 372547409
+    harness: api
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: bf3619c3282143fee564ca5ff0634559cce3923d
+    fix_date: 2024-10-10
+    crash_func: xmlValidateOneElement
+    crash_file: valid.c
+    signature: [heap-use-after-free, READ, xmlValidateOneElement, valid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/372547409"
+  - oss_id: 392687022
+    harness: api
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8c8753ad5280ee13aee5eec9b0f6eee2ed920f57
+    fix_date: 2025-02-18
+    crash_func: xmlSnprintfElements
+    crash_file: valid.c
+    signature: [stack-buffer-overflow, WRITE, xmlSnprintfElements, valid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/392687022"
+  - oss_id: 398060138
+    harness: html
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6dfa68ac7f3f55109e3cf6be78461a81333f445f
+    fix_date: 2025-02-22
+    crash_func: xmlSAX2Text
+    crash_file: SAX2.c
+    signature: [heap-buffer-overflow, WRITE, xmlSAX2Text, SAX2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/398060138"
+  - oss_id: 417062198
+    harness: api
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 4df8d55742718420f64dffb54f96f785b4244866
+    fix_date: 2025-05-12
+    crash_func: xmlEscapeText
+    crash_file: xmlIO.c
+    signature: [stack-use-after-scope, READ, xmlEscapeText, xmlIO.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/417062198"
+  - oss_id: 420638555
+    harness: api
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 77c583e0f7fb9e281caa775b6238a500e079b55a
+    fix_date: 2025-05-27
+    crash_func: xmlGetNsListSafe
+    crash_file: tree.c
+    signature: [heap-use-after-free, READ, xmlGetNsListSafe, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/420638555"
+  - oss_id: 424229869
+    harness: xmlsec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a3992815b3d4caa4a6709406ca085c9f93856809
+    fix_date: 2025-06-12
+    crash_func: xmlParsePubidLiteral
+    crash_file: parser.c
+    signature: [heap-buffer-overflow, WRITE, xmlParsePubidLiteral, parser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/424229869"
+  - oss_id: 435781342
+    harness: reader
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 152fbb60a9e16cce502ce541f0fa63b2097d9a12
+    fix_date: 2025-08-03
+    crash_func: xmlIsID
+    crash_file: valid.c
+    signature: [heap-use-after-free, READ, xmlIsID, valid.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/435781342"
+rejected: []
+error: null

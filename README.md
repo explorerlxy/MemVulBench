@@ -1,45 +1,32 @@
 # MemVulBench
 
-面向 C/C++ **内存安全**漏洞挖掘研究的评测平台：高密度、崩溃可验证、真值全自动。
+面向 C/C++ **内存安全**漏洞挖掘研究的评测集：真实历史漏洞、固定上游提交、最终入口五元组身份。
 
-**定位**：不是要独立发表的 benchmark artifact，而是支撑 fuzzing 技术研究的评测平台。
-唯一判据是能不能可信地支撑"本方法比 baseline 发现更多漏洞"。
+正式评测集是 **20 个测试单元**（每项目一个对外 harness）。2026-09-18 按最终入口五元组准入（取代 2026-09-17 决定），已核验已知内存漏洞 **292**（expected 287 + 额外 5）。arrow（7 expected + 1 审计过的目录外指纹，8 个）经最终入口复验后替换 librawspeed（7 个，原靠明确复核纳入）。决定见 [`data/measure/admission/2026-09-18.json`](data/measure/admission/2026-09-18.json)。
 
-- 每个漏洞都是真实的历史 OSS-Fuzz 漏洞，不是人工植入。
-- 每个漏洞的真值是**实测的 sanitizer 崩溃见证 + PoC**，不是手写谓词。
-  Magma 138 条里只有 45 条（32.6%）在真实测试场景下可观测；这里是 100%。
-- 每个目标就是**上游某个未经修改的 commit**，`git checkout` 即可复验。
-  零补丁、零 pin、零手写代码。
-- 全部限定为内存安全（空间 + 时效），并按 oracle 可见性分层标注。
+- 每个漏洞来自真实 OSS-Fuzz / ARVO 历史材料，不是人工植入。
+- 身份是指定 \(S,E\) 下的首错五元组：类型、方向、文件、行号、三帧哈希。PoC 只作存在性见证。
+- 核心源码是上游某个未经修改的 commit；聚合包装器单独保存，不写入核心树。
+- 编译、PoC 回放、指纹裁决和准入由操作者逐条执行，仓库脚本不代替这些步骤。
 
-设计见 [docs/design.md](docs/design.md)，构建方法论见 [docs/methodology.md](docs/methodology.md)。
+论文修订稿见 [`papers/MemVulBench/`](papers/MemVulBench/)。早期设计备忘见 [`docs/design.md`](docs/design.md)（已加状态说明，不覆盖现行账本）。
 
 ## 现状
 
-原型阶段。已完成 ARVO 语料普查、切片候选排名、assimp 端到端闭环实验、方法论定稿。
-
-两条被淘汰的构建路线（[docs/feasibility.md](docs/feasibility.md)）：
-
-- **修复回退**——已被实测否定。补丁 12/12 干净应用，漏洞只有 3/14 复现。
-- **文件级时间 pin**——未被否定，但为把密度从 8 推到 26 要付十倍工程量，降级为可选增量。
-
-同一实验的第三行是现行方案的依据：**同基线上天然潜伏的漏洞复现率 6/6（100%）**。
-现行路线是**纯考古**——找到漏洞本来就共存的那个 commit，不做任何改动。
-单目标密度 6–12，总量靠目标数量：12 个目标 ≈ 100+ 个可观测漏洞，是 Magma 的两倍以上。
+第一阶段考古目录仍覆盖 ARVO 中去重核心内存漏洞 > 10 的项目，总表见 [`catalog/index.md`](catalog/index.md)。现行评测集从中选出 20 席（含 espeak-ng、ndpi；arrow 于 2026-09-18 替换 librawspeed 复席；lwan 已归档）。下载与战役日志见 [`docs/build-progress.md`](docs/build-progress.md)。
 
 ```bash
 python3 -m memvul census                          # ARVO 6138 条的分类普查
-python3 -m memvul slices --by harness --labels    # 候选项目排名
-python3 -m memvul candidates --project assimp     # fix 日期直方图 → 候选基线（零构建）
-python3 -m memvul sweep --project assimp --harness assimp_fuzzer \
-        --container memvul-assimp                 # 各候选基线的天然产量实测
-python3 -m memvul base   --project assimp --harness assimp_fuzzer   # 取 argmax
-python3 -m memvul verify --project assimp --harness assimp_fuzzer   # 三道闸门
-python3 -m memvul emit   --project assimp --harness assimp_fuzzer   # 物化目标
+python3 -m memvul slices --by project --labels    # 按项目排名
+python3 -m memvul candidates --project assimp     # 批量修复日 → 候选基线
+python3 -m memvul catalog                         # 遍历全部 >10 站点的项目，写 catalog/
+python3 -m memvul measure --project assimp         # 准备 PoC 与 ARVO builder，之后人工操作
+python3 -m memvul base --project assimp            # 分析已有的人工测量记录
 ```
 
-`memvul pin` / `memvul slice` 属于可选增量（[methodology.md](docs/methodology.md) §9），
-本轮搁置，代码保留。
+搁置的 pin / slice / emit 在 `memvul.deferred`，不注册到 `python3 -m memvul`。
+
+进入前台编译和回放的项目必须在项目级（跨 harness）拥有至少 8 个 PoC；少于 6 个直接 pass，6–7 个暂缓除非明确复核。最终准入计数是 unique expected 五元组 + unique `known_real` 五元组。
 
 普查结果（ARVO-Meta v3，6138 条）：
 
@@ -48,18 +35,20 @@ python3 -m memvul emit   --project assimp --harness assimp_fuzzer   # 物化目�
 | 核心内存安全（空间 + 时效） | 3685 (60.0%) |
 | 其中可构建（有 fix commit + 仓库，非 submodule） | 3670 |
 | 去重后的**不同崩溃点** | 2833 |
-| 去重后 ≥10 个崩溃点的 (项目, harness) 组 | 62 |
+| 去重后 >10 个崩溃点的**项目** | 64 |
+| 去重后 >10 个崩溃点的 (项目, harness) 组 | 55 |
 
 ## 布局
 
 | 路径 | 内容 |
 |---|---|
-| `docs/` | 设计、构建方法论、`bug.yaml` 契约、确定性契约（搁置） |
-| `memvul/` | Python 工具链：普查 / 选片 / 候选基线 / sweep / 验证 / 物化 |
-| `targets/` | 每目标一个基线 commit + 漏洞清单 + PoC |
-| `data/` | 普查、候选基线、sweep 结果 |
+| `docs/` | 目录契约、战役日志、早期设计备忘 |
+| `memvul/` | 普查 / 候选基线 / 考古目录 / 目录分析 |
+| `catalog/` | 第一阶段：每项目基线 + 潜伏漏洞清单 |
+| `targets/` | 评测集物化结果（镜像、PoC、日志不进 Git） |
+| `data/` | 普查、人工测量、复验与准入记录 |
+| `papers/MemVulBench/` | v4 论文修订稿与证据 |
 
 ## 运行约束
 
-仓库本身在 NTFS 上，**只放代码和元数据**。
-克隆、构建、模糊测试战役一律落在 ext4（默认 `/tmp/memvul`）。
+仓库只放代码和元数据。克隆、构建、模糊测试战役落在 ext4（默认 `/tmp/memvul`）或外部归档，不进 Git。

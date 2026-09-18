@@ -1,0 +1,236 @@
+project: kamailio
+repo: "https://github.com/kamailio/kamailio"
+n_sites: 13
+n_issues: 13
+harnesses: [fuzz_parse_msg]
+base:
+  commit: 95fb987bd402432996c616c6582ef430e9441d93
+  date: 2024-10-11
+  method: measured_sweep
+  n_latent: 6
+  n_latent_upper: 6
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-09-08
+    n: 3
+    eve: 96656e0dfe66aba44ec5fceb27ce5f1e088a78a4
+    n_latent_upper: 6
+    oss_ids: [42501143, 42501148, 42501162]
+  - day: 2024-10-11
+    n: 2
+    eve: 95fb987bd402432996c616c6582ef430e9441d93
+    n_latent_upper: 6
+    oss_ids: [372515090, 372510377]
+  - day: 2021-09-06
+    n: 1
+    eve: f1e87166d097bde903594aecfff2e562c1496e4f
+    n_latent_upper: 7
+    oss_ids: [42501146]
+  - day: 2021-09-09
+    n: 1
+    eve: f624e1701088a94465a06f36a2ef27804b16ec0e
+    n_latent_upper: 3
+    oss_ids: [42501179]
+  - day: 2021-09-14
+    n: 1
+    eve: 685817088ff9c72c055e72091fa6f923b824c206
+    n_latent_upper: 2
+    oss_ids: [42501431]
+  - day: 2021-12-12
+    n: 1
+    eve: 1b5756ae9f67c3907c134eb725f19c875cccd913
+    n_latent_upper: 1
+    oss_ids: [42505797]
+  - day: 2024-10-26
+    n: 1
+    eve: 3e5f8deced0cb05710e631601e9098505f1d230a
+    n_latent_upper: 4
+    oss_ids: [375237153]
+  - day: 2025-01-20
+    n: 1
+    eve: 6750e2e2f1d6c10f6b5e66897d38657a576a9732
+    n_latent_upper: 3
+    oss_ids: [376100377]
+  - day: 2025-01-23
+    n: 1
+    eve: 8d1b60bc7f21fe9d0fadd1df926fee931966f34e
+    n_latent_upper: 2
+    oss_ids: [391689728]
+  - day: 2025-01-26
+    n: 1
+    eve: 65e51b776290a1981e9ac27fbe6b47813516bc8b
+    n_latent_upper: 1
+    oss_ids: [391975654]
+bugs:
+  - oss_id: 42501143
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 20db418f1e35f31d7a90d7cabbd22ae989b7266c
+    fix_date: 2021-09-08
+    crash_func: trim_leading
+    crash_file: src/core/parser/contact/../../trim.h
+    signature: [heap-buffer-overflow, READ, trim_leading, trim.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501143"
+  - oss_id: 42501146
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: baed515e8aed8e5b505ff716eb57d0c60e582632
+    fix_date: 2021-09-06
+    crash_func: parse_content_length
+    crash_file: src/core/parser/parse_content.c
+    signature: [heap-buffer-overflow, READ, parse_content_length, parse_content.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501146"
+  - oss_id: 42501148
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 20db418f1e35f31d7a90d7cabbd22ae989b7266c
+    fix_date: 2021-09-08
+    crash_func: parse_param_name
+    crash_file: src/core/parser/parse_param.c
+    signature: [heap-buffer-overflow, READ, parse_param_name, parse_param.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501148"
+  - oss_id: 42501162
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 20db418f1e35f31d7a90d7cabbd22ae989b7266c
+    fix_date: 2021-09-08
+    crash_func: q_memchr
+    crash_file: src/core/parser/../ut.h
+    signature: [heap-buffer-overflow, READ, q_memchr, ut.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501162"
+  - oss_id: 42501179
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 17a2eec2a8e47939782c1352ddb0fa4d3e73f9d8
+    fix_date: 2021-09-09
+    crash_func: parse_to_param
+    crash_file: src/core/parser/parse_addr_spec.c
+    signature: [heap-buffer-overflow, READ, parse_to_param, parse_addr_spec.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501179"
+  - oss_id: 42501431
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1d3fde1205440296c1d6a54feee5a9d637055bee
+    fix_date: 2021-09-14
+    crash_func: parse_via_param
+    crash_file: src/core/parser/parse_via.c
+    signature: [heap-buffer-overflow, READ, parse_via_param, parse_via.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501431"
+  - oss_id: 42505797
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b83810eb1eb70f326698db874a1f67cf6a8d06cf
+    fix_date: 2021-12-12
+    crash_func: find_sdp_line_delimiter
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, find_sdp_line_delimiter, sdp_helpr_funcs.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42505797"
+  - oss_id: 372510377
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d4bbde619bbf808edebb31e131b3783ba2a4b34d
+    fix_date: 2024-10-11
+    crash_func: parse_mixed_content
+    crash_file: src/core/parser/sdp/sdp.c
+    signature: [heap-buffer-overflow, READ, parse_mixed_content, sdp.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/372510377"
+  - oss_id: 372515090
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fc4817064f81ef9a82b1b1468b1b8a4ae352c1f2
+    fix_date: 2024-10-11
+    crash_func: extract_sendrecv_mode
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, extract_sendrecv_mode, sdp_helpr_funcs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/372515090"
+  - oss_id: 375237153
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d10257fbfdbb3e3e73c0fe60a224585822bdd7b3
+    fix_date: 2024-10-26
+    crash_func: extract_fmtp
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, extract_fmtp, sdp_helpr_funcs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/375237153"
+  - oss_id: 376100377
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b96bc11a54f11ec688429c057bf5a90c40c147b3
+    fix_date: 2025-01-20
+    crash_func: extract_ice_option
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, extract_ice_option, sdp_helpr_funcs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/376100377"
+  - oss_id: 391689728
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3198b66aa5dbda1c6a03f46a610073671cbd5157
+    fix_date: 2025-01-23
+    crash_func: extract_candidate
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, extract_candidate, sdp_helpr_funcs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/391689728"
+  - oss_id: 391975654
+    harness: fuzz_parse_msg
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 200cdb318569191cd012dfe99b252f98fe9623b9
+    fix_date: 2025-01-26
+    crash_func: extract_mediaip
+    crash_file: src/core/parser/sdp/sdp_helpr_funcs.c
+    signature: [heap-buffer-overflow, READ, extract_mediaip, sdp_helpr_funcs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/391975654"
+rejected: []
+error: null

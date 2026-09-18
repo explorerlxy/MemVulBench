@@ -1,0 +1,285 @@
+project: leptonica
+repo: "https://github.com/DanBloomberg/leptonica.git"
+n_sites: 16
+n_issues: 16
+harnesses: [adaptmap_fuzzer, barcode_fuzzer, ccbord_fuzzer, colorquant_fuzzer, enhance_fuzzer, finditalic_fuzzer, fpix2_fuzzer, graphics_fuzzer, morph_fuzzer, pix3_fuzzer, pix_rotate_shear_fuzzer, pixa_recog_fuzzer]
+base:
+  commit: 091ee190146b8caf5112165add220b7e7ee80311
+  date: 2020-10-25
+  method: wave_eve
+  n_latent: 7
+  n_latent_upper: 7
+  n_wave: 2
+  note: "eve of 2020-10-25 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2020-10-25
+    n: 2
+    eve: 091ee190146b8caf5112165add220b7e7ee80311
+    n_latent_upper: 7
+    oss_ids: [42488049, 42488057]
+  - day: 2019-12-28
+    n: 1
+    eve: 50c3c353f75b0a5c97b645b3c050dab66243ee20
+    n_latent_upper: 13
+    oss_ids: [42480786]
+  - day: 2020-03-30
+    n: 1
+    eve: 7274a4a0cd69d20f4e8eec524ef3482852cb340d
+    n_latent_upper: 14
+    oss_ids: [42482689]
+  - day: 2020-05-08
+    n: 1
+    eve: 56315e1081efde6e14b88840d53876816fb2a7ca
+    n_latent_upper: 13
+    oss_ids: [42483440]
+  - day: 2020-05-11
+    n: 1
+    eve: 25861d32f3807946f6411f85ee2a6ff1cef25e0f
+    n_latent_upper: 12
+    oss_ids: [42483473]
+  - day: 2020-05-18
+    n: 1
+    eve: d4084b47d0a04165ccc8d0f1b2b40449173f4cf2
+    n_latent_upper: 11
+    oss_ids: [42483644]
+  - day: 2020-05-29
+    n: 1
+    eve: 6cfc0d9da471499a9881a42a41cfa06b8d97405e
+    n_latent_upper: 10
+    oss_ids: [42484161]
+  - day: 2020-06-15
+    n: 1
+    eve: 20e1a048e61df966dbef86cdbdfb46e8baf25f04
+    n_latent_upper: 9
+    oss_ids: [42484909]
+  - day: 2020-06-23
+    n: 1
+    eve: ab66d051d8fd57584c350d687a8cc2424565c33c
+    n_latent_upper: 8
+    oss_ids: [42485153]
+  - day: 2020-11-04
+    n: 1
+    eve: 8d7717457caf7960a8b6cbac762c69b5001039c2
+    n_latent_upper: 5
+    oss_ids: [42488833]
+  - day: 2021-01-07
+    n: 1
+    eve: db15a2136cdfc9108fe60cb7fe847310bcc057d8
+    n_latent_upper: 4
+    oss_ids: [42491223]
+  - day: 2021-01-27
+    n: 1
+    eve: 0665ff28f9e9df91565ee09438a30d47232ad2eb
+    n_latent_upper: 3
+    oss_ids: [42492002]
+bugs:
+  - oss_id: 42480786
+    harness: pix_rotate_shear_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7a74abcd7b574109d8ad29b0dd5583f3963a6939
+    fix_date: 2019-12-28
+    crash_func: pixReadMemBmp
+    crash_file: src/bmpio.c
+    signature: [heap-buffer-overflow, READ, pixReadMemBmp, bmpio.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480786"
+  - oss_id: 42482689
+    harness: pix_rotate_shear_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 06b279a676ce5928f86e61329c27d22b957c1374
+    fix_date: 2020-03-30
+    crash_func: pixReadFromTiffStream
+    crash_file: src/tiffio.c
+    signature: [heap-buffer-overflow, WRITE, pixReadFromTiffStream, tiffio.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482689"
+  - oss_id: 42483440
+    harness: colorquant_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a523d9bb1aaf91e758eb8d2ece55a33a877544cb
+    fix_date: 2020-05-08
+    crash_func: pixcmapDestroy
+    crash_file: src/colormap.c
+    signature: [heap-use-after-free, READ, pixcmapDestroy, colormap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483440"
+  - oss_id: 42483473
+    harness: colorquant_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ee24b398bb67666f6d173763eaaedd9c36fb1e5
+    fix_date: 2020-05-11
+    crash_func: pixFewColorsOctcubeQuantMixed
+    crash_file: src/colorquant1.c
+    signature: [heap-buffer-overflow, READ, pixFewColorsOctcubeQuantMixed, colorquant1.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483473"
+  - oss_id: 42483644
+    harness: enhance_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 33e0c892ff0036da5d23dce834f384df786c91bb
+    fix_date: 2020-05-18
+    crash_func: pixGetRGBComponentCmap
+    crash_file: src/pix2.c
+    signature: [heap-buffer-overflow, READ, pixGetRGBComponentCmap, pix2.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483644"
+  - oss_id: 42484161
+    harness: barcode_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7b5ba2afc759b7a44f6776a53030b494c6d985c3
+    fix_date: 2020-05-29
+    crash_func: pixAverageRasterScans
+    crash_file: src/readbarcode.c
+    signature: [heap-use-after-free, READ, pixAverageRasterScans, readbarcode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484161"
+  - oss_id: 42484909
+    harness: ccbord_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8d6e1755518cfb98536d6c3daf0601f226d16842
+    fix_date: 2020-06-15
+    crash_func: findNextBorderPixel
+    crash_file: src/ccbord.c
+    signature: [heap-buffer-overflow, READ, findNextBorderPixel, ccbord.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484909"
+  - oss_id: 42485153
+    harness: pix_rotate_shear_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ba34b1fe741d69d43a6c8cf767756997eadd87c
+    fix_date: 2020-06-23
+    crash_func: pixReadFromTiffStream
+    crash_file: src/tiffio.c
+    signature: [heap-buffer-overflow, READ, pixReadFromTiffStream, tiffio.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485153"
+  - oss_id: 42488049
+    harness: fpix2_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7d0c940768fa3f7d07396dbae1d668cfded6bf05
+    fix_date: 2020-10-25
+    crash_func: fpixChangeRefcount
+    crash_file: src/fpix1.c
+    signature: [heap-use-after-free, READ, fpixChangeRefcount, fpix1.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42488049"
+  - oss_id: 42488057
+    harness: graphics_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 20b8d16e4f3fa4d94b606a7f7804ee56c776768b
+    fix_date: 2020-10-25
+    crash_func: pixFindHorizontalRuns
+    crash_file: src/runlength.c
+    signature: [heap-buffer-overflow, WRITE, pixFindHorizontalRuns, runlength.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42488057"
+  - oss_id: 42488833
+    harness: adaptmap_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f61f9234eac0cc6729ab15c7f395874c6a65abff
+    fix_date: 2020-11-04
+    crash_func: pixChangeRefcount
+    crash_file: src/pix1.c
+    signature: [heap-use-after-free, READ, pixChangeRefcount, pix1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488833"
+  - oss_id: 42491223
+    harness: finditalic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c3b2f15c4316b1d76243df6588c86a1bfa6f54fe
+    fix_date: 2021-01-07
+    crash_func: substituteObjectNumbers
+    crash_file: src/pdfio2.c
+    signature: [heap-buffer-overflow, READ, substituteObjectNumbers, pdfio2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491223"
+  - oss_id: 42492002
+    harness: morph_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a0b59604bcf24b13af168fa45d54bbedab1d3d5d
+    fix_date: 2021-01-27
+    crash_func: fdilate_1_56
+    crash_file: src/fmorphgenlow.1.c
+    signature: [heap-buffer-overflow, READ, fdilate_1_56, fmorphgenlow.1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492002"
+  - oss_id: 42507578
+    harness: pix3_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 748723a795e48ce0ec0ce2fa78082ef0c62aac9c
+    fix_date: 2022-01-22
+    crash_func: pixCountPixels
+    crash_file: src/pix3.c
+    signature: [stack-buffer-overflow, READ, pixCountPixels, pix3.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42507578"
+  - oss_id: 42507762
+    harness: pix3_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f694a026b400a5f501f055e536eff2bfaa3c1bc1
+    fix_date: 2022-01-24
+    crash_func: pixCountArbInRect
+    crash_file: src/pix3.c
+    signature: [heap-buffer-overflow, READ, pixCountArbInRect, pix3.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42507762"
+  - oss_id: 42532498
+    harness: pixa_recog_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f86cdab8d685ce5d2ea0d133c076611e3394c6c8
+    fix_date: 2024-01-29
+    crash_func: bmfGetWidth
+    crash_file: src/bmf.c
+    signature: [heap-use-after-free, READ, bmfGetWidth, bmf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532498"
+rejected: []
+error: null

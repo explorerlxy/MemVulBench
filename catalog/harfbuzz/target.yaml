@@ -1,0 +1,781 @@
+project: harfbuzz
+repo: "https://github.com/harfbuzz/harfbuzz.git"
+n_sites: 55
+n_issues: 55
+harnesses: [hb-draw-fuzzer, hb-fuzzer, hb-set-fuzzer, hb-shape-fuzzer, hb-subset-fuzzer, hb-subset-get-codepoints-fuzzer]
+base:
+  commit: a26806801005c28115ae9e48bdcf3bbbc1bcd767
+  date: 2018-08-26
+  method: wave_eve
+  n_latent: 29
+  n_latent_upper: 29
+  n_wave: 3
+  note: "eve of 2018-08-28 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-08-28
+    n: 3
+    eve: a26806801005c28115ae9e48bdcf3bbbc1bcd767
+    n_latent_upper: 29
+    oss_ids: [42470093, 42470094, 42470096]
+  - day: 2022-01-31
+    n: 3
+    eve: 98da3306384044c6c73904d9a2a5996da16504ea
+    n_latent_upper: 12
+    oss_ids: [42507972, 42508038, 42508045]
+  - day: 2018-09-14
+    n: 2
+    eve: ca746f261e1e54cec2f9c8bc7a6f930491e19418
+    n_latent_upper: 26
+    oss_ids: [42470379, 42470383]
+  - day: 2021-02-16
+    n: 2
+    eve: ae860db893f74a7025b7656697a10c017e38e261
+    n_latent_upper: 16
+    oss_ids: [42493112, 42493213]
+  - day: 2022-11-23
+    n: 2
+    eve: 2c0afde7370a27d1aa26983751a422f61924580c
+    n_latent_upper: 9
+    oss_ids: [42518543, 42518552]
+  - day: 2017-11-10
+    n: 1
+    eve: b68fba4dc81ce2e7552c5d50a93013281889a65b
+    n_latent_upper: 21
+    oss_ids: [42504287]
+  - day: 2018-03-27
+    n: 1
+    eve: 6f46883f5b74b206a3b77246891ab2ac57a27c4e
+    n_latent_upper: 27
+    oss_ids: [42537566]
+  - day: 2018-10-10
+    n: 1
+    eve: be2f148da474d6dd30132c22dd467ea33a942edf
+    n_latent_upper: 24
+    oss_ids: [42470972]
+  - day: 2018-10-23
+    n: 1
+    eve: f33ad6d69216a983624e832177895481549bdc07
+    n_latent_upper: 23
+    oss_ids: [42471192]
+  - day: 2018-11-03
+    n: 1
+    eve: f074da8c2b6a7061c71d12213a6c494c119eb20e
+    n_latent_upper: 22
+    oss_ids: [42471374]
+  - day: 2018-11-05
+    n: 1
+    eve: 252632c477b963f305116d69fcafacd8bf7b97bf
+    n_latent_upper: 21
+    oss_ids: [42471394]
+  - day: 2018-12-05
+    n: 1
+    eve: 8394a6cb252dd8b4230c2b59e8c346ec5403bf88
+    n_latent_upper: 20
+    oss_ids: [42471867]
+bugs:
+  - oss_id: 42470093
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2dde6c803a9e50c5bff74095187b0cb2e12eebdd
+    fix_date: 2018-08-28
+    crash_func: "OT::LigatureSubstFormat1::closure(OT::hb_closure_context_t*) const"
+    crash_file: src/./hb-ot-layout-gsub-table.hh
+    signature: [heap-buffer-overflow, READ, "OT::LigatureSubstFormat1::closure", hb-ot-layout-gsub-table.hh]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42470093"
+  - oss_id: 42470094
+    harness: hb-subset-fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 2dde6c803a9e50c5bff74095187b0cb2e12eebdd
+    fix_date: 2018-08-28
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/./hb-machinery.hh
+    signature: [stack-use-after-return, READ, "BEInt<>::operator unsigned short", hb-machinery.hh]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42470094"
+  - oss_id: 42470096
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2dde6c803a9e50c5bff74095187b0cb2e12eebdd
+    fix_date: 2018-08-28
+    crash_func: "OT::Coverage::intersects(hb_set_t const*) const"
+    crash_file: src/./hb-ot-layout-common.hh
+    signature: [heap-buffer-overflow, READ, "OT::Coverage::intersects", hb-ot-layout-common.hh]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42470096"
+  - oss_id: 42470379
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 67449c39331babb88f7d29d737895d786cd5da33
+    fix_date: 2018-09-14
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/./hb-machinery.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb-machinery.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470379"
+  - oss_id: 42470383
+    harness: hb-subset-get-codepoints-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f8ccb545c47abe8f0f4ed318ff7b5bf176913893
+    fix_date: 2018-09-14
+    crash_func: "OT::TableRecord::cmp(OT::Tag) const"
+    crash_file: src/./hb-open-file.hh
+    signature: [segv, -, "OT::TableRecord::cmp", hb-open-file.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470383"
+  - oss_id: 42470972
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 210f899acad1959d60892538ac1968a36dbbb51b
+    fix_date: 2018-10-10
+    crash_func: "BEInt<unsigned int, 4>::operator unsigned int() const"
+    crash_file: src/./hb-machinery.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned int", hb-machinery.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470972"
+  - oss_id: 42471192
+    harness: hb-subset-fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: aa5af8d041521507f8bc8ded8a365ee56098388c
+    fix_date: 2018-10-23
+    crash_func: "BEInt<unsigned short, 2>::set(unsigned short)"
+    crash_file: src/./hb-machinery.hh
+    signature: [heap-buffer-overflow, WRITE, "BEInt<>::set", hb-machinery.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471192"
+  - oss_id: 42471374
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8d98c51d133b058a845ed7a84bfe8a43083bbb03
+    fix_date: 2018-11-03
+    crash_func: "BEInt<unsigned char, 1>::operator unsigned char() const"
+    crash_file: src/./hb-machinery.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned char", hb-machinery.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471374"
+  - oss_id: 42471394
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6482fda519ca7d173e3bcb3717aa30e237f04b25
+    fix_date: 2018-11-05
+    crash_func: "OT::post::accelerator_t::cmp_gids(void const*, void const*, void*)"
+    crash_file: src/./hb-ot-post-table.hh
+    signature: [heap-buffer-overflow, READ, "OT::post::accelerator_t::cmp_gids", hb-ot-post-table.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471394"
+  - oss_id: 42471867
+    harness: hb-shape-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6dcfda92c17a7701479118751a8290246e9a3c05
+    fix_date: 2018-12-05
+    crash_func: "CFF::BlendArg::set_blends(unsigned int, unsigned int, unsigned int, CFF::BlendArg const*)"
+    crash_file: src/./hb-cff2-interp-cs.hh
+    signature: [global-buffer-overflow, READ, "CFF::BlendArg::set_blends", hb-cff2-interp-cs.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471867"
+  - oss_id: 42471892
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c31092ab34641072606f854408eb1bea18ed2507
+    fix_date: 2018-12-06
+    crash_func: "CFF::CFF2VariationStore::serialize(hb_serialize_context_t*, CFF::CFF2VariationStore const*)"
+    crash_file: src/./hb-ot-cff2-table.hh
+    signature: [heap-buffer-overflow, READ, "CFF::CFF2VariationStore::serialize", hb-ot-cff2-table.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471892"
+  - oss_id: 42472107
+    harness: hb-shape-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8d2d41025619e24160ed80edd1c413168a2dda36
+    fix_date: 2018-12-18
+    crash_func: "hb_array_t<char const>::cmp(hb_array_t<char const> const&) const"
+    crash_file: src/./hb-array.hh
+    signature: [stack-buffer-overflow, READ, "hb_array_t<>::cmp", hb-array.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472107"
+  - oss_id: 42472478
+    harness: hb-subset-fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 3b81442cd5c11099ae9245074d24ef679b4473fa
+    fix_date: 2018-12-24
+    crash_func: "hb_vector_t<CFF::OpStr, 8u>::fini()"
+    crash_file: src/./hb-vector.hh
+    signature: [attempting, -, "hb_vector_t<>::fini", hb-vector.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472478"
+  - oss_id: 42472801
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cc8e9a436fa408a1c63f4b9afb7643cea76a079c
+    fix_date: 2019-01-17
+    crash_func: "AAT::KerxSubTableFormat4<AAT::KerxSubTableHeader>::driver_context_t::transition(AAT::StateTableDriver<AAT::ExtendedTypes, AAT::KerxSubTableFormat4<AAT::KerxSubTableHeader>::EntryData>*, AAT::Entry<AAT::KerxSubTableFormat4<AAT::KerxSubTableHeader>::EntryData> const*)"
+    crash_file: src/./hb-aat-layout-kerx-table.hh
+    signature: [heap-buffer-overflow, READ, "AAT::KerxSubTableFormat4<>::driver_context_t::transition", hb-aat-layout-kerx-table.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472801"
+  - oss_id: 42474135
+    harness: hb-subset-fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bcb4e505d6ffe33e3268a06698e75d6be0e64957
+    fix_date: 2019-03-15
+    crash_func: "BEInt<unsigned char, 1>::set(unsigned char)"
+    crash_file: src/./hb-machinery.hh
+    signature: [heap-buffer-overflow, WRITE, "BEInt<>::set", hb-machinery.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474135"
+  - oss_id: 42475136
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 503748d8a80dd5db450c8c4dc109f2b97049d989
+    fix_date: 2019-05-08
+    crash_func: "OT::UnsizedArrayOf<OT::IntType<unsigned char, 1u> >::copy(hb_serialize_context_t*, unsigned int) const"
+    crash_file: src/./hb-open-type.hh
+    signature: [heap-buffer-overflow, READ, "OT::UnsizedArrayOf<OT::IntType<> >::copy", hb-open-type.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475136"
+  - oss_id: 42475301
+    harness: hb-subset-fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: b7be59311f27112791e9b9c6356464e1c3ff92c1
+    fix_date: 2019-05-16
+    crash_func: "bool OT::Coverage::serialize<hb_map_iter_t<hb_map_iter_t<hb_filter_iter_t<OT::Coverage::iter_t, hb_set_t const&, $_7&, (void*)0>, OT::SingleSubstFormat1::subset(hb_subset_context_t*) const::'lambda'(unsigned int), (hb_function_sortedness_t)1, (void*)0>, $_20&, (hb_function_sortedness_t)1, (void*)0>, (void*)0>(hb_serialize_context_t*, hb_map_iter_t<hb_map_iter_t<hb_filter_iter_t<OT::Coverage::iter_t, hb_set_t const&, $_7&, (void*)0>, OT::SingleSubstFormat1::subset(hb_subset_context_t*) const::'lambda'(unsigned int), (hb_function_sortedness_t)1, (void*)0>, $_20&, (hb_function_sortedness_t)1, (void*)0>)"
+    crash_file: src/./hb-ot-layout-common.hh
+    signature: [stack-use-after-return, READ, "bool OT::Coverage::serialize<hb_map_iter_t<hb_map_iter_t<hb_filter_iter_t<>, OT::SingleSubstFormat1::subset", hb-ot-layout-common.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475301"
+  - oss_id: 42475345
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3efb7af7e28061f8cd138eb2ed5261bf521abc63
+    fix_date: 2019-05-20
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/./hb.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475345"
+  - oss_id: 42479443
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: defe9b6da018bc85750c999454c51fde0cadb9b2
+    fix_date: 2019-10-25
+    crash_func: "hb_array_t<OT::IntType<unsigned short, 2u> const> hb_array_t<OT::IntType<unsigned short, 2u> const>::copy<hb_serialize_context_t>(hb_serialize_context_t*) const"
+    crash_file: src/./hb-array.hh
+    signature: [heap-buffer-overflow, READ, "hb_array_t<OT::IntType<> const> hb_array_t<OT::IntType<> const>::copy<>", hb-array.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479443"
+  - oss_id: 42481044
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 257a197ae723b55d26c3254dbe1edd8b0509af1b
+    fix_date: 2020-01-09
+    crash_func: "OT::VarRegionList::serialize(hb_serialize_context_t*, OT::VarRegionList const*, hb_bimap_t const&)"
+    crash_file: src/./hb-ot-layout-common.hh
+    signature: [heap-buffer-overflow, READ, "OT::VarRegionList::serialize", hb-ot-layout-common.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481044"
+  - oss_id: 42481330
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 684ff3e0cd77dfa5e83c2110ea613b8b9678d4f5
+    fix_date: 2020-01-23
+    crash_func: "OT::HintingDevice* hb_serialize_context_t::embed<OT::HintingDevice>(OT::HintingDevice const*)"
+    crash_file: src/./hb-serialize.hh
+    signature: [heap-buffer-overflow, READ, "OT::HintingDevice* hb_serialize_context_t::embed<>", hb-serialize.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481330"
+  - oss_id: 42481371
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8614a30bc9763ba7f8b452df5527d806bacf4fd9
+    fix_date: 2020-01-22
+    crash_func: "hb_array_t<OT::IntType<unsigned char, 1u> const> hb_array_t<OT::IntType<unsigned char, 1u> const>::copy<hb_serialize_context_t>(hb_serialize_context_t*) const"
+    crash_file: src/./hb-array.hh
+    signature: [heap-buffer-overflow, READ, "hb_array_t<OT::IntType<> const> hb_array_t<OT::IntType<> const>::copy<>", hb-array.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481371"
+  - oss_id: 42481452
+    harness: hb-subset-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0e4b2676bdffeef3cb79b235bc9624f2a49dccad
+    fix_date: 2020-01-24
+    crash_func: "hb_array_t<OT::IntType<unsigned char, 1u> const> hb_array_t<OT::IntType<unsigned char, 1u> const>::copy<hb_serialize_context_t>(hb_serialize_context_t*) const"
+    crash_file: src/./hb-array.hh
+    signature: [global-buffer-overflow, READ, "hb_array_t<OT::IntType<> const> hb_array_t<OT::IntType<> const>::copy<>", hb-array.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481452"
+  - oss_id: 42481822
+    harness: hb-set-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 97229244ebd2e50ec0021ecd442e3c1c27156a5c
+    fix_date: 2020-02-12
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: test/fuzzing/hb-set-fuzzer.cc
+    signature: [heap-buffer-overflow, READ, LLVMFuzzerTestOneInput, hb-set-fuzzer.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481822"
+  - oss_id: 42482101
+    harness: hb-draw-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8eba66c1c6d19bcc779a3b4e7b68251511986ee8
+    fix_date: 2020-02-27
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/./hb.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482101"
+  - oss_id: 42482121
+    harness: hb-draw-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 61208401f41f5d41f32d436cee500c630706f6be
+    fix_date: 2020-02-28
+    crash_func: "BEInt<short, 2>::operator short() const"
+    crash_file: src/./hb.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator short", hb.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482121"
+  - oss_id: 42482850
+    harness: hb-subset-fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 57b7de032f60d0499ae2debb293d0f8456acfdfb
+    fix_date: 2020-04-05
+    crash_func: "BEInt<unsigned short, 2>::operator=(unsigned short)"
+    crash_file: src/./hb.hh
+    signature: [heap-buffer-overflow, WRITE, "BEInt<>::operator=", hb.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482850"
+  - oss_id: 42483059
+    harness: hb-shape-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 22f7c61acf8073cb8db8db47e92aef18864a85c6
+    fix_date: 2020-04-18
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/./hb.hh
+    signature: [global-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483059"
+  - oss_id: 42486098
+    harness: hb-draw-fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: efd716de3f4c7616aedd5c449bf8d27d565d4ab6
+    fix_date: 2020-07-31
+    crash_func: "OT::VarData::get_scalars(int const*, unsigned int, OT::VarRegionList const&, float*, unsigned int) const"
+    crash_file: src/hb-ot-layout-common.hh
+    signature: [global-buffer-overflow, WRITE, "OT::VarData::get_scalars", hb-ot-layout-common.hh]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486098"
+  - oss_id: 42493112
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ca353a2d026f655af61ae159adcaeace1fdb09c
+    fix_date: 2021-02-16
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/hb.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493112"
+  - oss_id: 42493213
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ca353a2d026f655af61ae159adcaeace1fdb09c
+    fix_date: 2021-02-16
+    crash_func: "OT::OffsetTo<OT::Anchor, OT::IntType<unsigned short, 2u>, true>* hb_serialize_context_t::embed<OT::OffsetTo<OT::Anchor, OT::IntType<unsigned short, 2u>, true> >(OT::OffsetTo<OT::Anchor, OT::IntType<unsigned short, 2u>, true> const*)"
+    crash_file: src/hb-serialize.hh
+    signature: [heap-buffer-overflow, READ, "OT::OffsetTo<OT::Anchor, OT::IntType<>, true>* hb_serialize_context_t::embed<OT::OffsetTo<OT::Anchor, OT::IntType<>, true> >", hb-serialize.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493213"
+  - oss_id: 42495043
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: adca4ce071d12998deea6bb53b223daa3aa163c5
+    fix_date: 2021-03-30
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/hb-algs.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495043"
+  - oss_id: 42495573
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9dc9f0385dce05456d48730bf5dc7cac52eaa4da
+    fix_date: 2021-04-09
+    crash_func: "OT::AnchorFormat1* hb_serialize_context_t::embed<OT::AnchorFormat1>(OT::AnchorFormat1 const*)"
+    crash_file: src/hb-serialize.hh
+    signature: [heap-buffer-overflow, READ, "OT::AnchorFormat1* hb_serialize_context_t::embed<>", hb-serialize.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495573"
+  - oss_id: 42498363
+    harness: hb-subset-fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 48edbef96f41a1ace04232af72bb2d55003614d9
+    fix_date: 2021-07-19
+    crash_func: "OT::VarRegionList* hb_serialize_context_t::allocate_size<OT::VarRegionList>(unsigned int)"
+    crash_file: src/./hb-serialize.hh
+    signature: [negative-size-param, -, "OT::VarRegionList* hb_serialize_context_t::allocate_size<>", hb-serialize.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498363"
+  - oss_id: 42498506
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7416faceeb7a875ba7316cee124edee2d59ea8d0
+    fix_date: 2021-07-08
+    crash_func: "OT::CPALV1Tail::serialize(hb_serialize_context_t*, unsigned int, unsigned int, void const*, hb_map_t const*) const"
+    crash_file: src/hb-ot-color-cpal-table.hh
+    signature: [heap-buffer-overflow, READ, "OT::CPALV1Tail::serialize", hb-ot-color-cpal-table.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498506"
+  - oss_id: 42500367
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 34e0b28faef0f4157a47cc3e2feb7360f82232fd
+    fix_date: 2021-08-20
+    crash_func: "hb_array_t<OT::IntType<unsigned int, 4u> const> hb_array_t<OT::IntType<unsigned int, 4u> const>::copy<hb_serialize_context_t>(hb_serialize_context_t*) const"
+    crash_file: src/hb-array.hh
+    signature: [heap-buffer-overflow, READ, "hb_array_t<OT::IntType<> const> hb_array_t<OT::IntType<> const>::copy<>", hb-array.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42500367"
+  - oss_id: 42501484
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a75b96f7e5833c9206f6a15d11168a757a85ee59
+    fix_date: 2021-11-16
+    crash_func: "operator unsigned short"
+    crash_file: src/hb-algs.hh
+    signature: [heap-buffer-overflow, READ, "operator unsigned short", hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42501484"
+  - oss_id: 42502063
+    harness: hb-subset-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 74f96d9d4b359fc138d21709c975a09ba933fb3d
+    fix_date: 2021-09-19
+    crash_func: "hb_resolve_overflows(hb_vector_t<hb_serialize_context_t::object_t*> const&, hb_serialize_context_t*)"
+    crash_file: src/hb-repacker.hh
+    signature: [heap-use-after-free, READ, hb_resolve_overflows, hb-repacker.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42502063"
+  - oss_id: 42504287
+    harness: hb-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8eed9cb11e28728a58e265fde5c13f519ccbdb4e
+    fix_date: 2017-11-10
+    crash_func: "OT::BEInt<short, 2>::operator short() const"
+    crash_file: src/./hb-open-type-private.hh
+    signature: [segv, -, "OT::BEInt<>::operator short", hb-open-type-private.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42504287"
+  - oss_id: 42507972
+    harness: hb-subset-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4e2f409bce77b97de2d098365977beeeb4447b1e
+    fix_date: 2022-01-31
+    crash_func: next
+    crash_file: src/hb-bit-set-invertible.hh
+    signature: [heap-use-after-free, READ, next, hb-bit-set-invertible.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507972"
+  - oss_id: 42508038
+    harness: hb-subset-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4e2f409bce77b97de2d098365977beeeb4447b1e
+    fix_date: 2022-01-31
+    crash_func: as_array
+    crash_file: src/hb-vector.hh
+    signature: [heap-use-after-free, READ, as_array, hb-vector.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508038"
+  - oss_id: 42508045
+    harness: hb-subset-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4e2f409bce77b97de2d098365977beeeb4447b1e
+    fix_date: 2022-01-31
+    crash_func: "hb_bit_set_invertible_t::next(unsigned int*) const"
+    crash_file: src/hb-bit-set-invertible.hh
+    signature: [heap-use-after-free, READ, "hb_bit_set_invertible_t::next", hb-bit-set-invertible.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508045"
+  - oss_id: 42518543
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4c49daf7cd961fb47126baf04240243736cae606
+    fix_date: 2022-11-23
+    crash_func: check_glyph_property
+    crash_file: src/OT/Layout/GPOS/../../../hb-ot-layout-gsubgpos.hh
+    signature: [heap-buffer-overflow, READ, check_glyph_property, hb-ot-layout-gsubgpos.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518543"
+  - oss_id: 42518552
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4c49daf7cd961fb47126baf04240243736cae606
+    fix_date: 2022-11-23
+    crash_func: "OT::hb_ot_apply_context_t::check_glyph_property(hb_glyph_info_t const*, unsigned int) const"
+    crash_file: src/OT/Layout/GPOS/../../../hb-ot-layout-gsubgpos.hh
+    signature: [heap-buffer-overflow, READ, "OT::hb_ot_apply_context_t::check_glyph_property", hb-ot-layout-gsubgpos.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518552"
+  - oss_id: 42519396
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 40342c9437712cd51e37dc54f1f535bb24ae7529
+    fix_date: 2022-12-21
+    crash_func: "impl<(lambda at ../../src/harfbuzz/src/hb-ot-hdmx-table.hh:134:16), const unsigned int &>"
+    crash_file: src/hb-algs.hh
+    signature: [heap-buffer-overflow, READ, "impl<>", hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519396"
+  - oss_id: 42520290
+    harness: hb-shape-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b63159e8bf579345a6f56d04ad1b2c28eee66bac
+    fix_date: 2023-01-21
+    crash_func: "BEInt<unsigned int, 3>::operator unsigned int() const"
+    crash_file: src/hb-algs.hh
+    signature: [heap-buffer-overflow, READ, "BEInt<>::operator unsigned int", hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520290"
+  - oss_id: 42521586
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2d33a6b4dfdcd751eba242637c863d810a4a803c
+    fix_date: 2023-02-28
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: test/fuzzing/hb-subset-fuzzer.cc
+    signature: [heap-buffer-overflow, READ, LLVMFuzzerTestOneInput, hb-subset-fuzzer.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521586"
+  - oss_id: 42521970
+    harness: hb-draw-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 552290f60437ceaa5aa299a2db726046c0385f80
+    fix_date: 2023-03-08
+    crash_func: "BEInt<unsigned short, 2>::operator unsigned short() const"
+    crash_file: src/hb-algs.hh
+    signature: [global-buffer-overflow, READ, "BEInt<>::operator unsigned short", hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521970"
+  - oss_id: 42522138
+    harness: hb-subset-fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 3d05b96181b259593047f592df4df33a3658e472
+    fix_date: 2023-03-13
+    crash_func: hb_free_impl
+    crash_file: src/failing-alloc.c
+    signature: [attempting, -, hb_free_impl, failing-alloc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522138"
+  - oss_id: 42523382
+    harness: hb-subset-fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 647b024784e1346f6886565f570cdf940d7b82b4
+    fix_date: 2023-04-18
+    crash_func: operator=
+    crash_file: src/OT/name/../../hb-open-type.hh
+    signature: [heap-buffer-overflow, WRITE, operator=, hb-open-type.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523382"
+  - oss_id: 42524037
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 86658df5d29308d66ddead03f1112442df04ec27
+    fix_date: 2023-05-05
+    crash_func: sort_r_swap
+    crash_file: src/hb-algs.hh
+    signature: [heap-buffer-overflow, READ, sort_r_swap, hb-algs.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524037"
+  - oss_id: 42537566
+    harness: hb-subset-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07851aae9d28fed751663c543799f2b59369f892
+    fix_date: 2018-03-27
+    crash_func: "_write_glyf_and_loca_prime(hb_subset_plan_t*, OT::glyf::accelerator_t const&, char const*, bool, hb_prealloced_array_t<unsigned int, 16u>&, unsigned int, char*, unsigned int, char*)"
+    crash_file: src/hb-subset-glyf.cc
+    signature: [heap-buffer-overflow, READ, _write_glyf_and_loca_prime, hb-subset-glyf.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42537566"
+  - oss_id: 394371778
+    harness: hb-subset-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 601dd1a7483cae70c0007c6a3ae90c5fb516c61e
+    fix_date: 2025-02-05
+    crash_func: get_population
+    crash_file: src/hb-map.hh
+    signature: [heap-use-after-free, READ, get_population, hb-map.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/394371778"
+  - oss_id: 399142890
+    harness: hb-draw-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e450552d07b7c99f607d56da6820870c88881ae6
+    fix_date: 2025-02-25
+    crash_func: "push_has_room<const int &>"
+    crash_file: src/OT/Var/VARC/../../../hb-vector.hh
+    signature: [stack-buffer-overflow, READ, "push_has_room<>", hb-vector.hh]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/399142890"
+rejected:
+  - oss_id: 42502450
+    reason: commit_missing
+error: null

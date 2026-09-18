@@ -1,0 +1,36 @@
+{
+ "release": "memvulbench-v1.0.0",
+ "created": "2026-09-18",
+ "admission_decision": "data/measure/admission/2026-09-18.json",
+ "units": 20,
+ "verified_memory_bug_count": 292,
+ "unique_expected": 287,
+ "unique_extra_known_real": 5,
+ "unit_manifests": [
+  "units/ghostpdl/manifest.json",
+  "units/gpac/manifest.json",
+  "units/assimp/manifest.json",
+  "units/PcapPlusPlus/manifest.json",
+  "units/ndpi/manifest.json",
+  "units/opensc/manifest.json",
+  "units/libdwarf/manifest.json",
+  "units/openh264/manifest.json",
+  "units/selinux/manifest.json",
+  "units/upx/manifest.json",
+  "units/fluent-bit/manifest.json",
+  "units/hdf5/manifest.json",
+  "units/openvswitch/manifest.json",
+  "units/pcl/manifest.json",
+  "units/libavc/manifest.json",
+  "units/sleuthkit/manifest.json",
+  "units/espeak-ng/manifest.json",
+  "units/libxml2/manifest.json",
+  "units/libraw/manifest.json",
+  "units/arrow/manifest.json"
+ ],
+ "layers": {
+  "software": "git repository at tag memvulbench-v1.0.0",
+  "unit_data": "benchmark/units/<project>/ (per-unit Zenodo records)",
+  "process_archive": "benchmark/process-archive/README.md"
+ }
+}

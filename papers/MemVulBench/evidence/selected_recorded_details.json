@@ -1,0 +1,1673 @@
+[
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:38:00+08:00",
+      "binary": "/out/pcap_agg_fuzzer",
+      "binary_sha256": "39c14786df90181a5a55fd3ddcfa4bd7687296192c4a7cbe9982e4dc02bf835a",
+      "coverage": "dispatcher and four original harness TUs compiled with -fsanitize=address,fuzzer-no-link (2242 inline 8-bit counters including header inlines)",
+      "image": "pcapplusplus:65974d7-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/PcapPlusPlus/images/PcapPlusPlus-65974d7-agg.tar",
+      "image_archive_sha256": "2347257a0286ba701424383479e08a4eaf30f6fdb40ac036103ae7a59c700164",
+      "image_id": "sha256:b625b26795ceb13e417cd360ce121fc7fe61b507f46f05bdc37097b885692090",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/PcapPlusPlus/logs/65974d7-agg",
+      "mapping": {
+        "0": "FuzzTarget",
+        "1": "FuzzTargetCoverage-followup",
+        "2": "FuzzTargetNg",
+        "3": "FuzzWriterNg"
+      },
+      "match_basis": "same crash site as measure JSON; some JSON function names omit the pcpp::Class:: qualifier; 42530184 SUMMARY is PPP_PPTPLayer::computeCalculateFields in GreLayer.cpp (parser first-project-frame is the Packet.cpp caller because #0 has no line number)",
+      "method": "prefix_mod_4",
+      "pocs": "/work/agg-pocs and targets/PcapPlusPlus/pocs/agg",
+      "source": "/work/agg/pcap_agg_fuzzer.cc",
+      "source_sha256": "a0a5f8b3f8a16f0c53c58256be5eb00f525835bc5ed33e12467cc43420bf481d",
+      "verified_expected": 18,
+      "verified_expected_matched": 18
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/PcapPlusPlus/65974d73c33aaede1bf3c18a353ea2209d1912a0.json",
+    "project": "PcapPlusPlus",
+    "recorded_verdict_counts": {
+      "clean": 2,
+      "expected_asan": 18
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=18 (expected 18 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 20,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 2,
+      "expected_signature_count": 18,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 20,
+      "replayed_poc_count": 20,
+      "unique_expected_count": 18,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 18,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 18,
+      "verified_vulnerability_count": 18
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:19:00+08:00",
+      "binary": "/out/assimp_agg_fuzzer",
+      "binary_sha256": "a388535d51c0d7b22ed6db1c98b09d02779091734e9daf16a2ed683642dc9b60",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "assimp:d34cd103-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/images/assimp-d34cd103-agg.tar",
+      "image_archive_sha256": "68a4dde4da3afa7c3a0fe0bc69fed01c0a13c9256c0cad4e5d424a0a9fdf8a90",
+      "image_id": "sha256:4dac3c83f58114d241189183334904911810d0dd1586042d7ede0c6f3aef9431",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/logs/d34cd103-agg",
+      "mapping": {
+        "0": "assimp_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "identity_single_source",
+      "note": "Single in-tree harness. No prefix dispatcher. Campaign binary is fuzz/assimp_fuzzer.cc rebuilt with -fsanitize=address,fuzzer-no-link against ASan libassimp.a + libzlibstatic.a at d34cd103. PoCs are unprefixed. 26/26 parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/assimp/pocs/agg",
+      "source": "/work/agg/assimp_fuzzer.cc",
+      "source_sha256": "1b99dda61eb8660b93680a1dd7285006367ce0449309d1b1e25796fd5abaecd4",
+      "verified_expected": 26,
+      "verified_expected_matched": 26
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/assimp/d34cd103f477fba496f09e3daf49d3ce671eb21a.json",
+    "project": "assimp",
+    "recorded_verdict_counts": {
+      "clean": 9,
+      "collides_with_expected": 2,
+      "expected_asan": 26,
+      "unmatched": 3
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=26 (expected 26 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 40,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T20:40:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8; 6-7 deferred unless explicitly reviewed",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 9,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 2,
+      "expected_signature_count": 26,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 40,
+      "replayed_poc_count": 40,
+      "unique_expected_count": 26,
+      "unmatched_crash_count": 3,
+      "verified_expected_five_tuples": 26,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 26,
+      "verified_vulnerability_count": 26
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T01:25:35+08:00",
+      "binary": "/out/espeak_agg_fuzzer",
+      "binary_sha256": "b3c5c6af807c652b6e0b1c309e8adda129cabb67ca80ed1994a951d5468d643d",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "espeak-ng:ccb1c31-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/espeak-ng/images/espeak-ng-ccb1c31-agg.tar",
+      "image_archive_sha256": "b1253b1415676d790af43be555577df373f8ef8c25287ccac44a899a16ce539c",
+      "image_id": "sha256:3a620df4a0f59f3136667f3a77d514ae66124279c0ceb390c3e6e5a44a500188",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/espeak-ng/logs/ccb1c31-agg",
+      "mapping": {
+        "0": "ssml-fuzzer"
+      },
+      "match_basis": "parser signature equal to catalog_signature",
+      "method": "identity_single_source",
+      "note": "Single live expected harness. No prefix. 10/11 parse() equal to catalog signatures. 42508338 clean.",
+      "pocs": "/work/agg-pocs and targets/espeak-ng/pocs/agg",
+      "source": "/work/agg/ssml-fuzzer.c",
+      "source_sha256": "6be38fc1b2a787912d8976f47f973a5df305d9f645244bb26ef326ee777dbc01",
+      "verified_expected": 11,
+      "verified_expected_matched": 10
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/espeak-ng/ccb1c31ba3cfa785d27c5974f3be65df2967e7a0.json",
+    "project": "espeak-ng",
+    "recorded_verdict_counts": {
+      "clean": 2,
+      "expected_asan": 10
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=10 (expected 10 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 12,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-16T01:25:35+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 2,
+      "expected_signature_count": 11,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_unique_count": 0,
+      "project_poc_count": 12,
+      "replayed_poc_count": 12,
+      "unique_expected_count": 10,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 10,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 10,
+      "verified_vulnerability_count": 10
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:55:00+08:00",
+      "binary": "/out/flb_agg_fuzzer",
+      "binary_sha256": "0748370114392675b08772912527fc28b17a70c5f53d9b04370237ff27a63b0f",
+      "cores": [
+        "/work/agg/parser_fuzzer.c",
+        "/work/agg/msgpack_to_gelf_fuzzer.c",
+        "/work/agg/msgpack_parse_fuzzer.c",
+        "/work/agg/utils_fuzzer.c",
+        "/work/agg/config_map_fuzzer.c",
+        "/work/agg/strp_fuzzer.c"
+      ],
+      "coverage": "library + plugins + six harness TUs + wrapper compiled with -fsanitize=fuzzer-no-link",
+      "image": "fluent-bit:e5289e606-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/fluent-bit/images/fluent-bit-e5289e606-agg.tar",
+      "image_archive_sha256": "bc0a0dbad3394dd4309f5d33a2498c9de62b459ed342b97145818bc0a12ddf31",
+      "image_id": "sha256:6187bb1e52e53189efdd6022c8ab833f5fa6b2351ff0005107dff51d48e9da52",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/fluent-bit/logs/e5289e606-agg",
+      "mapping": {
+        "0": "flb-it-fuzz-parser_fuzzer_OSSFUZZ",
+        "1": "flb-it-fuzz-msgpack_to_gelf_fuzzer_OSSFUZZ",
+        "2": "flb-it-fuzz-msgpack_parse_fuzzer_OSSFUZZ",
+        "3": "flb-it-fuzz-utils_fuzzer_OSSFUZZ",
+        "4": "flb-it-fuzz-config_map_fuzzer_OSSFUZZ",
+        "5": "flb-it-fuzz-strp_fuzzer_OSSFUZZ"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_6",
+      "note": "Live expected harnesses only. cmake OSS-Fuzz plugin-off set plus -DFLB_OUT_LOKI=OFF -DMBEDTLS_FATAL_WARNINGS=OFF at e5289e606. Library, plugins, and harness TUs compiled with -fsanitize=address,fuzzer-no-link -fcommon. Wrapper + StandaloneFuzzTargetMain linked to libfluent-bit.a and the same leftover in/out/filter plugin archives as the original OSSFUZZ binaries. 12/12 parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/fluent-bit/pocs/agg",
+      "source": "/work/agg/flb_agg_fuzzer.cc",
+      "source_sha256": "7256777616cb9bab0bdb760f297d1c794a1dc236987444b362bea67d2e0ab772",
+      "verified_expected": 12,
+      "verified_expected_matched": 12
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/fluent-bit/e5289e606c4b55b0fac29046c8343958248189e7.json",
+    "project": "fluent-bit",
+    "recorded_verdict_counts": {
+      "clean": 19,
+      "collides_with_expected": 3,
+      "expected_asan": 12
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=12 (expected 12 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 34,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T15:25:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8; 6-7 deferred unless explicitly reviewed",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 19,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 3,
+      "expected_signature_count": 12,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 4,
+      "missing_poc_count": 0,
+      "project_poc_count": 34,
+      "replayed_poc_count": 34,
+      "unique_expected_count": 12,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 12,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 12,
+      "verified_vulnerability_count": 12
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:27:00+08:00",
+      "binary": "/out/gs_agg_fuzzer",
+      "binary_sha256": "2a0441e6de1e9bcbb5e168fc10ab2545b1a376370f8409011aed35a17946d815",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "ghostpdl:991a95ff-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ghostpdl/images/ghostpdl-991a95ff-agg.tar",
+      "image_archive_sha256": "1cc8dca8c8990fd213bd3ebacd5f6cced488041f883d31172dd36352cd2ef780",
+      "image_id": "sha256:6de61d4e3351bcf9c67227ffd732e5073d7cb7c48d1d4859914f61fe9f385a1d",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ghostpdl/logs/991a95ff-agg",
+      "mapping": {
+        "0": "gstoraster_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "identity_single_source",
+      "note": "Single in-tree harness on 991a95ff (later gs_device_* fuzzers absent). No prefix dispatcher. Campaign binary is /src/gstoraster_fuzzer.cc rebuilt with -fsanitize=address,fuzzer-no-link against existing ASan gs.a. PoCs are unprefixed. 34/34 expected + 1/1 unique known_real parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/ghostpdl/pocs/agg",
+      "source": "/work/agg/gstoraster_fuzzer.cc",
+      "source_sha256": "07c50996c2921ea616dc59bfeeec6e659cb25eded7761862cc750d83de33f23b",
+      "verified_expected": 34,
+      "verified_expected_matched": 34,
+      "verified_known_real": 1,
+      "verified_known_real_matched": 1
+    },
+    "known_real_records": [
+      {
+        "basis": "Zero-page SEGV at i_free_object via show_cache_setup/pdfi_Tj. Fingerprint is outside the 34 expected signatures. Catalog pdfwrite gp_fflush fix c43a98a5 is not a close for this site.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "gp_fflush",
+          "gp.h"
+        ],
+        "classification": "SEGV-zeropage-ifree",
+        "fingerprint_id": "ghostpdl-ifree-zeropage",
+        "fix_commit_reviewed": null,
+        "oss_ids": [
+          42514830
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "segv",
+          "-",
+          "i_free_object",
+          "gsalloc.c"
+        ],
+        "status": "known_real",
+        "unique_outside_expected": true
+      },
+      {
+        "basis": "Fingerprint already present in this baseline's expected set.",
+        "fingerprint_id": "ghostpdl-search-table-1-collision",
+        "oss_ids": [
+          42506037,
+          42506416,
+          42507648,
+          42511753,
+          42513027,
+          42513896,
+          42514903,
+          42516356,
+          42518256,
+          42521685,
+          42529575,
+          42535696,
+          401846983
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "global-buffer-overflow",
+          "READ",
+          "search_table_1",
+          "pdf_int.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "basis": "Fingerprint already present in this baseline's expected set.",
+        "fingerprint_id": "ghostpdl-set-input-stream-collision",
+        "oss_ids": [
+          42506527,
+          42513023,
+          42515230,
+          42525587,
+          402451731,
+          414383025
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "memcpy-param-overlap",
+          "-",
+          "pdfi_set_input_stream",
+          "ghostpdf.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "basis": "Fingerprint already present in this baseline's expected set.",
+        "fingerprint_id": "ghostpdl-dict-get-collision",
+        "oss_ids": [
+          42506941
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "global-buffer-overflow",
+          "READ",
+          "pdfi_dict_get",
+          "pdf_dict.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "basis": "Fingerprint already present in this baseline's expected set.",
+        "fingerprint_id": "ghostpdl-repair-file-collision",
+        "oss_ids": [
+          42518437
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "heap-buffer-overflow",
+          "WRITE",
+          "pdfi_repair_file",
+          "pdf_repair.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      }
+    ],
+    "metadata_path": "data/measure/manual/ghostpdl/991a95ff4c4ffd6114f0ae5b9ecb7887ba775d50.json",
+    "project": "ghostpdl",
+    "recorded_verdict_counts": {
+      "clean": 34,
+      "collides_with_expected": 21,
+      "expected_asan": 34,
+      "known_real": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=35 (expected 34 + extra 1). Type is the five-tuple kind.",
+      "available_poc_count": 90,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 34,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 21,
+      "expected_signature_count": 34,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "known_real_count": 1,
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_poc_count": 1,
+      "known_real_unique_count": 1,
+      "missing_harness_source_count": 11,
+      "missing_poc_count": 0,
+      "project_poc_count": 90,
+      "replayed_poc_count": 90,
+      "unique_expected_count": 34,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 34,
+      "verified_extra_five_tuples": 1,
+      "verified_memory_bug_count": 35,
+      "verified_vulnerability_count": 35
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:05:00+08:00",
+      "binary": "/out/gpac_agg_fuzzer",
+      "binary_sha256": "9d4d9c1ce510b94c35e192b1d63ea64d1e957fe206dd4b787490349939ecb1bb",
+      "coverage": "wrapper compiled with -fsanitize=fuzzer-no-link; harness objects keep original instrumentation",
+      "image": "gpac:b890f1c-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/gpac/images/gpac-b890f1c-agg.tar",
+      "image_archive_sha256": "e15c2cd68ba7b8c2334fe6a3914c1f93c72ae98b72b2cfe837d195663745b442",
+      "image_id": "sha256:ff186b20c4211596c82685407249284ca88fc1987400397b3af142d3b3cc1a2f",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/gpac/logs/b890f1c-agg",
+      "mapping": {
+        "0": "fuzz_parse",
+        "1": "fuzz_probe_analyze",
+        "2": "fuzz_m2ts_probe"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs, or measure JSON when original log is missing/",
+      "method": "prefix_mod_3",
+      "note": "Live expected harnesses only. fuzz_route recovered but all its catalog inputs were clean. Aggregator reused the already-verified manual objects from the route-missing image (objcopy rename) plus wrapper compiled with -fsanitize=fuzzer-no-link, linked to libgpac_static.a. 29/29 same walks: parse() equal to original logs where those logs exist; 42532226/42532326/42532396/42532406/42536591/368076877/372994344/415855132 compared to measure JSON (original logs were under missing/). 42532171 memcpy-param-overlap in mpgviddmx_process (parse() reports unknown on both old and new logs).",
+      "pocs": "/work/agg-pocs and targets/gpac/pocs/agg",
+      "source": "/work/agg/gpac_agg_fuzzer.cc",
+      "source_sha256": "efc3c6b045182bfbd68db2fda25a0a67e28f0dc5b2a33875d3fa42a77b1c8c10",
+      "verified_expected": 29,
+      "verified_expected_matched": 29
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/gpac/b890f1c443dbe1f941cd326d4473ce7ddef8e256.json",
+    "project": "gpac",
+    "recorded_verdict_counts": {
+      "clean": 20,
+      "expected_asan": 29
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=28 (expected 28 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 49,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 20,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 29,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 49,
+      "replayed_poc_count": 49,
+      "unique_expected_count": 27,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 28,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 28,
+      "verified_vulnerability_count": 27
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:28:00+08:00",
+      "binary": "/out/h5_agg_fuzzer",
+      "binary_sha256": "0e294724e174908a09fb6b5121e29d71535b5dba1da91bfb84515c56902e92b1",
+      "coverage": "dispatcher and both original harness TUs compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "hdf5:bd7616-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/hdf5/images/hdf5-bd7616-agg.tar",
+      "image_archive_sha256": "2312c65378da7cb0c887283d424fdebcc55cc3b7fb3e0c31af18a8d70198c1c8",
+      "image_id": "sha256:91afd49e41056dc144772a23765c6b9af3b497491566362af21c051939e28204",
+      "mapping": {
+        "0": "h5_read_fuzzer",
+        "1": "h5_extended_fuzzer"
+      },
+      "method": "prefix_mod_2",
+      "pocs": "/work/agg-pocs and targets/hdf5/pocs/agg",
+      "source": "/work/agg/h5_agg_fuzzer.c",
+      "source_sha256": "fef4585df9e6e59f112c3e09828ee59bec968cd4a1118b5b100258875682d5cd",
+      "verified_expected": 12,
+      "verified_expected_matched": 12
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/hdf5/bd7616cf98ae52e77f710a16fb4d334be3cb5ce9.json",
+    "project": "hdf5",
+    "recorded_verdict_counts": {
+      "clean": 2,
+      "expected_asan": 12
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=12 (expected 12 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 14,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 2,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 12,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 14,
+      "replayed_poc_count": 14,
+      "unique_expected_count": 12,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 12,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 12,
+      "verified_vulnerability_count": 12
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:15:00+08:00",
+      "binary": "/out/avc_agg_fuzzer",
+      "binary_sha256": "de7fea86b397a1be2b14db70163a110cd73d58654ba6cb0cd5a0c32739825c7e",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "libavc:764ab7b-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libavc/images/libavc-764ab7b-agg.tar",
+      "image_archive_sha256": "a3d36d4c05a33a2cf2c3950c80cfb95680cd29f2d652267ed4b465224f393b11",
+      "image_id": "sha256:59bdfc9363fdd4fb9a6e0d924d9bb64fad78c5cd20191771ecdf9f781b46d5c9",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libavc/logs/764ab7b-agg",
+      "mapping": {
+        "0": "svc_dec_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "identity_single_source",
+      "note": "All 10 expected and both unique known_real PoCs fire on svc_dec_fuzzer. avc_dec / mvc_dec / svc_enc are in-tree but only produced clean catalog inputs on this base. No prefix dispatcher. Campaign binary is svc_dec_fuzzer.cpp rebuilt with -fsanitize=address,fuzzer-no-link against the existing ASan libsvcdec.a. PoCs are unprefixed. 10/10 expected + 2/2 known_real parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/libavc/pocs/agg",
+      "source": "/work/agg/svc_dec_fuzzer.cpp",
+      "source_sha256": "d582448a190174e7f90eb12c2452d28fae006f432218f9b281617af563eec317",
+      "verified_expected": 10,
+      "verified_expected_matched": 10,
+      "verified_known_real": 2,
+      "verified_known_real_matched": 2
+    },
+    "known_real_records": [
+      {
+        "basis": "Both exact-baseline runs deterministically reach the malformed SVC state and call the null dispatch at isvcd_parse_epslice.c:1908. The later e49a9150 fix hardens the same malformed-state family, but the replay does not reach either catalogued heap-overflow site.",
+        "catalog_signatures": [
+          [
+            "heap-buffer-overflow",
+            "READ",
+            "isvcd_process_residual_resample_mb",
+            "isvcd_process_epslice.c"
+          ],
+          [
+            "heap-buffer-overflow",
+            "READ",
+            "ih264d_motion_compensate_bp",
+            "ih264d_inter_pred.c"
+          ]
+        ],
+        "classification": "SEGV-null-function-dispatch",
+        "fingerprint_id": "libavc-svc-null-dispatch",
+        "fix_commit_reviewed": "e49a9150a3b1cfc3fb9097ca02dd042e35226129",
+        "oss_ids": [
+          42530559,
+          42530568
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "SEGV",
+          "READ",
+          "null",
+          "isvcd_parse_epslice.c:isvcd_parse_inter_slice_data_cavlc_enh_lyr"
+        ],
+        "status": "known_real",
+        "unique_outside_expected": true
+      }
+    ],
+    "metadata_path": "data/measure/manual/libavc/764ab7b702142762bfa9c4e93427c6e494ff7940.json",
+    "project": "libavc",
+    "recorded_verdict_counts": {
+      "clean": 18,
+      "expected_asan": 10,
+      "known_real": 2
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=11 (expected 10 + extra 1). Type is the five-tuple kind.",
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 18,
+      "expected_signature_count": 10,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_fingerprint_count": 1,
+      "known_real_poc_count": 2,
+      "known_real_unique_count": 1,
+      "poc_count": 30,
+      "unique_expected_count": 10,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 10,
+      "verified_extra_five_tuples": 1,
+      "verified_memory_bug_count": 11,
+      "verified_vulnerability_count": 11
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:08:00+08:00",
+      "binary": "/out/dwarf_agg_fuzzer",
+      "binary_sha256": "c5ac987c5ead5acf85442a72cf58c1aab63cafe8a10da8e4a4eae2efcc82fe94",
+      "coverage": "ten harness TUs + wrapper compiled with -fsanitize=fuzzer-no-link",
+      "image": "libdwarf:2ee326ba-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libdwarf/images/libdwarf-2ee326ba-agg.tar",
+      "image_archive_sha256": "cf5a6621c08131e5450b207f87901f17c8169bdcdbfc6ba705f247ff7cc92853",
+      "image_id": "sha256:b4589896b3bfc1b5ee9c250e100dc3751b7a3a26049adaa2f4d514e04f3e4f98",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libdwarf/logs/2ee326ba-agg",
+      "mapping": {
+        "0": "fuzz_die_cu_attrs",
+        "1": "fuzz_die_cu_offset",
+        "2": "fuzz_globals",
+        "3": "fuzz_macro_dwarf5",
+        "4": "fuzz_srcfiles",
+        "5": "fuzz_set_frame_all",
+        "6": "fuzz_die_cu_attrs_loclist",
+        "7": "fuzz_stack_frame_access",
+        "8": "fuzz_findfuncbypc",
+        "9": "fuzz_die_cu_print"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_10",
+      "note": "Live expected harnesses only (fuzz_gdbindex / fuzz_init_path / fuzz_rng in-tree but no expected fingerprints). cmake ASan + fuzzer-no-link at 2ee326ba, linked libdwarf.a -lz. 14/14 parse() equal to original standalone logs. 383170474 still missing (not in this persist).",
+      "pocs": "/work/agg-pocs and targets/libdwarf/pocs/agg",
+      "source": "/work/agg/dwarf_agg_fuzzer.cc",
+      "source_sha256": "5c7e42427a40e8b463aac5a0478ce466c3f3a2c20b6c40f2d570405e231da127",
+      "verified_expected": 14,
+      "verified_expected_matched": 14
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/libdwarf/2ee326bad2b4286ca19a2d007d2bb0e77adcdcff.json",
+    "project": "libdwarf",
+    "recorded_verdict_counts": {
+      "clean": 9,
+      "collides_with_expected": 1,
+      "expected_asan": 14,
+      "missing_poc": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=14 (expected 14 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 24,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T19:55:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8; 6-7 deferred unless explicitly reviewed",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 9,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 1,
+      "expected_signature_count": 14,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 1,
+      "project_poc_count": 25,
+      "replayed_poc_count": 24,
+      "unique_expected_count": 14,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 14,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 14,
+      "verified_vulnerability_count": 14
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:43:00+08:00",
+      "binary": "/out/libraw_agg_fuzzer",
+      "binary_sha256": "048d71dab76591df6abf4c62b6e863170f2540c353aa93d3910b4a6337d9aae5",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "libraw:371161a-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libraw/images/libraw-371161a-agg.tar",
+      "image_archive_sha256": "37b0a3754a3667239d94925731425b40aa4c85b7d893f7bc9a64a1e817d41e10",
+      "image_id": "sha256:c73d7292e06cfdbdf827ff925deb4b9baa7c45ed484aad7b63b9fc73633dc070",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libraw/logs/371161a-agg",
+      "mapping": {
+        "0": "libraw_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "identity_single_source",
+      "note": "OSS-Fuzz names cr2/nef/raf/generic all compile the same /src/libraw_fuzzer.cc; the four manual binaries share sha256 4e6c31c1…. No prefix dispatcher. Campaign binary is that one source rebuilt with -fsanitize=address,fuzzer-no-link (11 inline 8-bit counters). PoCs are unprefixed.",
+      "pocs": "/work/agg-pocs and targets/libraw/pocs/agg",
+      "source": "/work/agg/libraw_fuzzer.cc",
+      "source_sha256": "c0397fc6b678bbc2184695aefbc292fa954d8149562e4c3957292daa251e702e",
+      "verified_expected": 8,
+      "verified_expected_matched": 8
+    },
+    "known_real_records": [
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "The exact baseline reaches the same unchecked libraw_sget4_static primitive from parseAdobeRAFMakernote. The malformed offset is unmapped in this run, so ASan reports SEGV rather than heap-buffer-overflow; the later fix adds offset checks to the corresponding checked-buffer reads.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "libraw_sget4_static",
+          "read_utils.cpp"
+        ],
+        "classification": "SEGV-unchecked-read",
+        "fingerprint_id": "libraw-adobe-raf-sget4-unchecked-read",
+        "fix_commit_reviewed": "e58e8e43ae9fb349563c954cd56e922c59e1fde2",
+        "oss_ids": [
+          42534178
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "SEGV",
+          "READ",
+          "libraw_sget4_static",
+          "read_utils.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      }
+    ],
+    "metadata_path": "data/measure/manual/libraw/371161a06d7f98f231a001dad4af2dfb463e270a.json",
+    "project": "libraw",
+    "recorded_verdict_counts": {
+      "clean": 8,
+      "expected_asan": 7,
+      "expected_crash": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=8 (expected 8 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 16,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 8,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 8,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_fingerprint_count": 1,
+      "known_real_poc_count": 1,
+      "known_real_unique_count": 0,
+      "missing_poc_count": 0,
+      "poc_count": 16,
+      "project_poc_count": 16,
+      "unique_expected_count": 8,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 8,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 8,
+      "verified_vulnerability_count": 8
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:52:00+08:00",
+      "binary": "/out/xml_agg_fuzzer",
+      "binary_sha256": "4ad4e9173adbdbf9fa5ee217034af523c02ac705ab26324d410c7548c00b10c5",
+      "cores": [
+        "/work/agg/html.c",
+        "/work/agg/xinclude.c",
+        "/work/agg/schema.c",
+        "/work/agg/fuzz.c"
+      ],
+      "coverage": "library + html/xinclude/schema/fuzz + wrapper compiled with -fsanitize=fuzzer-no-link",
+      "image": "libxml2:4b3452d-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libxml2/images/libxml2-4b3452d-agg.tar",
+      "image_archive_sha256": "4d547db534ad3bc5735c0d2de7ff6bd3bc59fc1989db5f85ccb097988a45e77b",
+      "image_id": "sha256:933dfb226d0fa4c324248e4acf5cf1d0300c3cd2eb0aed2616d7e1560048e511",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libxml2/logs/4b3452d-agg",
+      "mapping": {
+        "0": "html",
+        "1": "xinclude",
+        "2": "schema"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_3",
+      "note": "Live expected harnesses only (xml/xpath/valid/regexp/uri in-tree but no expected fingerprints on 4b3452d). autogen --disable-shared --without-debug --without-ftp --without-http --without-legacy --without-python. Library and harness TUs compiled with -fsanitize=address,fuzzer-no-link; wrapper + StandaloneFuzzTargetMain linked to libxml2.a -lz -llzma. ~52533 inline 8-bit counters (library+harnesses). 9/9 parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/libxml2/pocs/agg",
+      "source": "/work/agg/xml_agg_fuzzer.cc",
+      "source_sha256": "f36ae5e72a3ed83181c9af8a5ef8a15b701f997cf5969b1a48e193d84f822a8f",
+      "verified_expected": 9,
+      "verified_expected_matched": 9
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/libxml2/4b3452d17123631ec43d532b83dc182c1a638fed.json",
+    "project": "libxml2",
+    "recorded_verdict_counts": {
+      "clean": 45,
+      "expected_asan": 9
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=8 (expected 8 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 54,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T09:06:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 45,
+      "expected_signature_count": 9,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 7,
+      "missing_poc_count": 0,
+      "project_poc_count": 54,
+      "replayed_poc_count": 54,
+      "unique_expected_count": 9,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 8,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 8,
+      "verified_vulnerability_count": 9
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T02:32:00+08:00",
+      "binary": "/out/ndpi_agg_fuzzer",
+      "binary_sha256": "6310c8828bfa9779d45393277d63d98c8480cf131371531a4b8d5ae77f8cc279",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "ndpi:65d526d8-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ndpi/images/ndpi-65d526d8-agg.tar",
+      "image_archive_sha256": "caff14366a4bf93848e729d5ccafbae7148d6a3a60520c6c95455fbc69c0305e",
+      "image_id": "sha256:32fff287dafa5d4dcac8d220364a3d2906eb6c0109c9e0b6c13cdea2b105d69e",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ndpi/logs/65d526d8-agg",
+      "mapping": {
+        "0": "fuzz_process_packet"
+      },
+      "match_basis": "parser signature equal to catalog_signature",
+      "method": "identity_on_densest",
+      "note": "Densest live expected harness only. No prefix. Reader / filecfg / serialization grammars excluded. 15/20 parse() equal to catalog signatures. 42481886 42483342 42487587 42492641 42497205 clean.",
+      "pocs": "targets/ndpi/pocs/agg",
+      "source": "/work/agg/fuzz_process_packet.c",
+      "source_sha256": "b576ad98f5b6b8fa65667597cc78a5edd5b7e2fbb497e45fb7dbdcb720388cf5",
+      "verified_expected": 20,
+      "verified_expected_matched": 15
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/ndpi/65d526d8f6ae75f8d1a3f5c8dd19bf40ec03f320.json",
+    "project": "ndpi",
+    "recorded_verdict_counts": {
+      "clean": 21,
+      "collides_with_expected": 1,
+      "expected_asan": 15
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=15 (expected 15 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 69,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-16T02:32:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 21,
+      "collides_with_expected_count": 1,
+      "expected_signature_count": 20,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-16T02:32:00+08:00",
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "project_poc_count": 69,
+      "replayed_poc_count": 37,
+      "unique_expected_count": 15,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 15,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 15,
+      "verified_vulnerability_count": 15
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T01:16:34+08:00",
+      "binary": "/out/openh264_agg_fuzzer",
+      "binary_sha256": "3e2668e97efd69ead7c0b0170ed9cc4fc411e75608af69a1d080d7bbf6cab3d4",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "openh264:83a0eae9-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openh264/images/openh264-83a0eae9-agg.tar",
+      "image_archive_sha256": "bc345f93d3f213e491f5df5045b919b387f71e063ef2bb628a65edb3e765afe1",
+      "image_id": "sha256:3e69d8148d3c6677a60685f414425630afa425bdf87c7196359f6c80703425c7",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openh264/logs/83a0eae9-agg",
+      "mapping": {
+        "0": "decoder_fuzzer"
+      },
+      "match_basis": "parser signature equal to catalog_signature",
+      "method": "identity_single_source",
+      "note": "Single live expected harness. No prefix dispatcher. Campaign binary is /src/decoder_fuzzer.cpp rebuilt with -fsanitize=address,fuzzer-no-link against ASan libopenh264.a at 83a0eae9. PoCs are unprefixed. 12/12 parse() equal to catalog signatures.",
+      "pocs": "/work/agg-pocs and targets/openh264/pocs/agg",
+      "source": "/work/agg/decoder_fuzzer.cpp",
+      "source_sha256": "3d8e56674167d9b49edc0b5fed62f37b9152e95f1f7c2b4dd7d53264a134f210",
+      "verified_expected": 12,
+      "verified_expected_matched": 12
+    },
+    "known_real_records": [
+      {
+        "basis": "ASan site on catalog base is outside the 12 expected fingerprints.",
+        "fingerprint_id": "openh264-UpdateP16x16DirectCabac",
+        "oss_ids": [
+          42491572
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "heap-buffer-overflow",
+          "WRITE",
+          "WelsDec::UpdateP16x16DirectCabac",
+          "parse_mb_syn_cabac.cpp"
+        ],
+        "status": "known_real",
+        "unique_outside_expected": true
+      },
+      {
+        "basis": "ASan site on catalog base is outside the 12 expected fingerprints.",
+        "fingerprint_id": "openh264-DecodeCurrentAccessUnit",
+        "oss_ids": [
+          42493060
+        ],
+        "same_as_catalogued": false,
+        "signature": [
+          "heap-use-after-free",
+          "READ",
+          "WelsDec::DecodeCurrentAccessUnit",
+          "decoder_core.cpp"
+        ],
+        "status": "known_real",
+        "unique_outside_expected": true
+      }
+    ],
+    "metadata_path": "data/measure/manual/openh264/83a0eae9bbbda5bfe802438109a025a3d7caee10.json",
+    "project": "openh264",
+    "recorded_verdict_counts": {
+      "clean": 8,
+      "collides_with_expected": 1,
+      "expected_asan": 12,
+      "known_real": 2,
+      "unmatched_crash": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=14 (expected 12 + extra 2). Type is the five-tuple kind.",
+      "available_poc_count": 24,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-16T01:16:34+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 8,
+      "collides_with_expected_count": 1,
+      "expected_signature_count": 12,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-16T01:16:34+08:00",
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_poc_count": 2,
+      "known_real_unique_count": 2,
+      "project_poc_count": 24,
+      "replayed_poc_count": 24,
+      "unique_expected_count": 12,
+      "unmatched_crash_count": 1,
+      "verified_expected_five_tuples": 12,
+      "verified_extra_five_tuples": 2,
+      "verified_memory_bug_count": 14,
+      "verified_vulnerability_count": 14
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:12:00+08:00",
+      "binary": "/out/sc_agg_fuzzer",
+      "binary_sha256": "92116da998ae54b1c7f75c2d778d86cb63d3d7eaae9738a8f76d5edaa407e462",
+      "coverage": "three harness TUs + fuzzer_reader + wrapper compiled with -fsanitize=fuzzer-no-link",
+      "image": "opensc:2c9dddc-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/opensc/images/opensc-2c9dddc-agg.tar",
+      "image_archive_sha256": "ecce00b27c5db83ea3cf8c5fcee436dcf89ec02035b37df7382258eb9a795aee",
+      "image_id": "sha256:1e8470e3df4fa623ed2b8bcb56fb77477399d9a1db6b635139c94869ef208248",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/opensc/logs/2c9dddc-agg",
+      "mapping": {
+        "0": "fuzz_pkcs15init",
+        "1": "fuzz_card",
+        "2": "fuzz_pkcs15_encode"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_3",
+      "note": "Live expected harnesses only (fuzz_asn1_print / fuzz_asn1_sig_value / fuzz_pkcs15_decode / fuzz_pkcs15_reader / fuzz_scconf_parse_string in-tree but no expected fingerprints; fuzz_pkcs11 / fuzz_pkcs15_crypt / fuzz_pkcs15_tool absent on 2c9dddc). ASan remake at 2c9dddc after checkout from image HEAD 3d1acdf7. Harness TUs + fuzzer_reader + wrapper compiled with -fsanitize=fuzzer-no-link; library remains ASan-only as the original standalone remake. 15/15 parse() equal to original standalone logs. 42509841 unmatched SEGV not in this persist.",
+      "pocs": "/work/agg-pocs and targets/opensc/pocs/agg",
+      "source": "/work/agg/sc_agg_fuzzer.cc",
+      "source_sha256": "79362567ba3f1ec75c62ce12a7af08f846bd11554130e0ffcf9aa134b403967e",
+      "verified_expected": 15,
+      "verified_expected_matched": 15
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/opensc/2c9dddc7386dbb57844cf17688859e735a783fd8.json",
+    "project": "opensc",
+    "recorded_verdict_counts": {
+      "clean": 60,
+      "expected_asan": 15,
+      "unmatched": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=15 (expected 15 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 76,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T10:15:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 60,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 0,
+      "expected_signature_count": 15,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 3,
+      "missing_poc_count": 0,
+      "project_poc_count": 76,
+      "replayed_poc_count": 76,
+      "unique_expected_count": 15,
+      "unmatched_crash_count": 1,
+      "verified_expected_five_tuples": 15,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 15,
+      "verified_vulnerability_count": 15
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:01:00+08:00",
+      "binary": "/out/ovs_agg_fuzzer",
+      "binary_sha256": "9fe4ab656a7449d012b0a6802848e2fc4d824b1518758ef92ab4c7f49a71589c",
+      "coverage": "six harness TUs + wrapper compiled with -fsanitize=fuzzer-no-link; library is the NDEBUG ASan remake",
+      "image": "openvswitch:f5129153-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openvswitch/images/openvswitch-f5129153-agg.tar",
+      "image_archive_sha256": "79de11d6bbba6377da4c33b3d3a285b7047cbcdd5d8f282357c07662b1d0a635",
+      "image_id": "sha256:8147839d06189fe718b933b2fd508734f44ab62680ac3c17d35634a2ae0f0424",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openvswitch/logs/f5129153-agg",
+      "mapping": {
+        "0": "flow_extract_fuzzer",
+        "1": "ofp_print_fuzzer/ofp_print_target",
+        "2": "odp_target",
+        "3": "ofctl_parse_target",
+        "4": "ofctl_parse_target_preleak",
+        "5": "expr_parse_target"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_6",
+      "note": "ofp_print_fuzzer and ofp_print_target share one source/binary (identity). Linked against the image's last remake, which is --enable-ndebug ASan libopenvswitch.a (required for 42470938). ofctl 42471555 uses the historical preleak TU (index.json still says ofctl_parse_target). Harness TUs + wrapper compiled with -fsanitize=address,fuzzer-no-link. 12/12 parse() equal to original standalone logs (42470938 vs ndebug log, 42471555 vs preleak log).",
+      "pocs": "/work/agg-pocs and targets/openvswitch/pocs/agg",
+      "source": "/work/agg/ovs_agg_fuzzer.cc",
+      "source_sha256": "5f6212544e438bcb465556d14cdff710d061871657c3c783e303ade5d8909f12",
+      "verified_expected": 12,
+      "verified_expected_matched": 12
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/openvswitch/f5129153e3b12c0b9ca6b355f9062d91a67d2942.json",
+    "project": "openvswitch",
+    "recorded_verdict_counts": {
+      "clean": 1,
+      "expected_asan": 12
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=12 (expected 12 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 13,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 1,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 12,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 13,
+      "replayed_poc_count": 13,
+      "unique_expected_count": 12,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 12,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 12,
+      "verified_vulnerability_count": 12
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:31:00+08:00",
+      "binary": "/out/pcl_agg_fuzzer",
+      "binary_sha256": "6b821aa4a016db82146b4ebbb25daee9ca62bd4244400bcdbad3166da3d7f858",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "pcl:09e914b0-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/pcl/images/pcl-09e914b0-agg.tar",
+      "image_archive_sha256": "359cc2c8f7a136564049c02670c476dd4586b7a1313eeba1736fa6795a22d929",
+      "image_id": "sha256:0815694612d026aaa03f1543c6a49f3f9f9fcc9a49028de31647819d4ab47f88",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/pcl/logs/09e914b0-agg",
+      "mapping": {
+        "0": "ply_reader_fuzzer"
+      },
+      "match_basis": "signatures_match against catalog_signature (original standalone logs gone)",
+      "method": "identity_single_source",
+      "note": "Single in-tree harness. No prefix dispatcher. Campaign binary is test/fuzz/ply_reader_fuzzer.cpp rebuilt with -fsanitize=address,fuzzer-no-link against the existing RelWithDebInfo ASan libc++ libraries. PoCs are unprefixed. 12/12 signatures_match catalog_signature (original standalone logs under /tmp are gone; JSON function names were human-shortened vs parse()).",
+      "pocs": "/work/agg-pocs and targets/pcl/pocs/agg",
+      "source": "/work/agg/ply_reader_fuzzer.cpp",
+      "source_sha256": "1add820f583e518528f10b964bea571d1b06211930b8d5385791426ac276fc14",
+      "verified_expected": 12,
+      "verified_expected_matched": 12
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/pcl/09e914b0b3b13c07710e814d71df3ff958945ba3.json",
+    "project": "pcl",
+    "recorded_verdict_counts": {
+      "clean": 1,
+      "expected_asan": 12
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=8 (expected 8 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 13,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 1,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 12,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "missing_poc_count": 0,
+      "poc_count": 13,
+      "project_poc_count": 13,
+      "unique_expected_count": 12,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 8,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 8,
+      "verified_vulnerability_count": 12
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-16T00:23:00+08:00",
+      "binary": "/out/selinux_agg_fuzzer",
+      "binary_sha256": "d92be1294f76829a130eca158aa3cdce9f2e540335bafe518ffadce3dd36aa83",
+      "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+      "image": "selinux:38a09b74-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/selinux/images/selinux-38a09b74-agg.tar",
+      "image_archive_sha256": "c0b0eb4bf456e291c4a75cbea7886ac8a569a73ed6f2d067c9434089c706d100",
+      "image_id": "sha256:8c21f4271bb616ab5e1f7c47a809f5808e6988a623f11544113882c11757a2b1",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/selinux/logs/38a09b74-agg",
+      "mapping": {
+        "0": "secilc-fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "identity_single_source",
+      "note": "Single live expected harness. binpolicy-fuzzer absent on 38a09b74. No prefix dispatcher. Campaign binary is /src/secilc-fuzzer.c rebuilt with -fsanitize=address,fuzzer-no-link against DESTDIR libsepol.a. PoCs are unprefixed. 13/13 parse() equal to original standalone logs.",
+      "pocs": "/work/agg-pocs and targets/selinux/pocs/agg",
+      "source": "/work/agg/secilc-fuzzer.c",
+      "source_sha256": "e822702ffd822b84208921348c1641d2bb2da361d70d46a13a0d466053bafd08",
+      "verified_expected": 13,
+      "verified_expected_matched": 13
+    },
+    "known_real_records": [],
+    "metadata_path": "data/measure/manual/selinux/38a09b74024bbe1c78639821f3cff3a5ceb73d0d.json",
+    "project": "selinux",
+    "recorded_verdict_counts": {
+      "clean": 6,
+      "collides_with_expected": 1,
+      "expected_asan": 13
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=13 (expected 13 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 20,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-15T20:00:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8; 6-7 deferred unless explicitly reviewed",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 6,
+      "clean_with_leak_count": 0,
+      "collides_with_expected_count": 1,
+      "expected_signature_count": 13,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 1,
+      "missing_poc_count": 0,
+      "project_poc_count": 20,
+      "replayed_poc_count": 20,
+      "unique_expected_count": 13,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 13,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 13,
+      "verified_vulnerability_count": 13
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:35:00+08:00",
+      "binary": "/out/tsk_agg_fuzzer",
+      "binary_sha256": "698d18b1e5f9b6644a67c01e34b85739b22c6564f5b6de7f09fbec7d611b899a",
+      "coverage": "dispatcher and six FSTYPE-renamed copies of sleuthkit_fls_fuzzer.cc compiled with -fsanitize=address,fuzzer-no-link (83 inline 8-bit counters)",
+      "fstype": {
+        "0": "TSK_FS_TYPE_EXT_DETECT",
+        "1": "TSK_FS_TYPE_HFS",
+        "2": "TSK_FS_TYPE_NTFS",
+        "3": "TSK_FS_TYPE_ISO9660",
+        "4": "TSK_FS_TYPE_FAT_DETECT",
+        "5": "TSK_FS_TYPE_APFS_DETECT"
+      },
+      "image": "sleuthkit:5eabe4d5-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/sleuthkit/images/sleuthkit-5eabe4d5-agg.tar",
+      "image_archive_sha256": "1b3ab0394b04cc8c8daabb1775531440153a38033377d1c3c0727d2c3f700682",
+      "image_id": "sha256:d9dc64aa9334a833f531e46c6380b53b0e05d5dd985b5a1027e457fd84512e1c",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/sleuthkit/logs/5eabe4d5-agg",
+      "mapping": {
+        "0": "sleuthkit_fls_ext_fuzzer",
+        "1": "sleuthkit_fls_hfs_fuzzer",
+        "2": "sleuthkit_fls_ntfs_fuzzer",
+        "3": "sleuthkit_fls_iso9660_fuzzer",
+        "4": "sleuthkit_fls_fat_fuzzer",
+        "5": "sleuthkit_fls_apfs_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs",
+      "method": "prefix_mod_6",
+      "pocs": "/work/agg-pocs and targets/sleuthkit/pocs/agg",
+      "source": "/work/agg/tsk_agg_fuzzer.cc",
+      "source_sha256": "18b6f212c8775c96d9d8880c3c7650a17d98f9dce7e716386dcc6bd605887177",
+      "verified_expected": 11,
+      "verified_expected_matched": 11
+    },
+    "known_real_records": [
+      {
+        "basis": "Same NTFS $IDX_ALLOC walk; ASan aborts at tsk_malloc before catalog memcpy-overlap.",
+        "catalog_signature": [
+          "memcpy-param-overlap",
+          "-",
+          "tsk_fs_load_file_action",
+          "fs_load.c"
+        ],
+        "fingerprint_id": "sleuthkit-ntfs-idx-alloc-size",
+        "fix_commit_reviewed": "b105bc4a5cb01f0a21f191739eab63d832a7cc5d",
+        "oss_ids": [
+          42534995
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "allocation-size-too-big",
+          "tsk_malloc",
+          "ntfs_dir_open_meta",
+          "ntfs_dent.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      }
+    ],
+    "metadata_path": "data/measure/manual/sleuthkit/5eabe4d554f09bf31f8a375735c096b1df4de0e8.json",
+    "project": "sleuthkit",
+    "recorded_verdict_counts": {
+      "catalog_earlier_abort": 1,
+      "clean": 5,
+      "expected_asan": 11
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=11 (expected 11 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 17,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "catalog_earlier_abort_count": 1,
+      "clean_count": 5,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 11,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "known_real_count": 0,
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_poc_count": 0,
+      "known_real_unique_count": 0,
+      "missing_harness_source_count": 0,
+      "missing_poc_count": 0,
+      "project_poc_count": 17,
+      "replayed_poc_count": 17,
+      "unique_expected_count": 11,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 11,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 11,
+      "verified_vulnerability_count": 11
+    }
+  },
+  {
+    "aggregation": {
+      "audited_at": "2026-09-15T23:32:00+08:00",
+      "binary": "/out/upx_agg_fuzzer",
+      "binary_sha256": "6161eedbbad32b6554e1146061edfdbc40199f028f6388b955c62912c710a257",
+      "coverage": "dispatcher and three original harness TUs compiled with clang -fsanitize=address,fuzzer-no-link (20 inline 8-bit counters); libupx remains the GCC ASan archive from the baseline (Clang frontend crash on util.cpp)",
+      "image": "upx:09c5e383-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/upx/images/upx-09c5e383-agg.tar",
+      "image_archive_sha256": "163b730b2289b46466814a8e753307960e3751337e3e190a73e084638c3be05f",
+      "image_id": "sha256:378e5015a8b974e2af5f7740d898915c595b906ddbd2b563bed21ccf866cf890",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/upx/logs/09c5e383-agg",
+      "mapping": {
+        "0": "test_packed_file_fuzzer",
+        "1": "list_packed_file_fuzzer",
+        "2": "decompress_packed_file_fuzzer"
+      },
+      "match_basis": "parser signature equal to original standalone-harness logs; JSON function names for 42531669/383194079/397728078/42531927 were already human-shortened vs parse()",
+      "method": "prefix_mod_3",
+      "pocs": "/work/agg-pocs and targets/upx/pocs/agg",
+      "source": "/work/agg/upx_agg_fuzzer.cpp",
+      "source_sha256": "199704ea90141257dbe43c6d5e0651ec4e9d2b8e92ccef1ad4b1dc9e0259cf53",
+      "verified_expected": 14,
+      "verified_expected_matched": 14
+    },
+    "known_real_records": [
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same UCL decoder and right-redzone boundary; sanitizer class drift only.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "ucl_nrv2b_decompress_safe_le32",
+          "n2b_d.c"
+        ],
+        "classification": "unknown-crash-ucl-nrv2b",
+        "fingerprint_id": "upx-ucl-nrv2b-boundary",
+        "fix_commit_reviewed": "f310ce376ea1c8deb542b0746344f27251f7eadc",
+        "oss_ids": [
+          42531654
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "unknown-crash",
+          "READ",
+          "ucl_nrv2b_decompress_safe_le32",
+          "n2b_d.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same malformed b_info recovery and local peek_arr stack boundary fixed by the catalog commit; observed frame is the enclosing unpack path.",
+        "catalog_signature": [
+          "stack-buffer-overflow",
+          "READ",
+          "unsigned int get_ne32<>",
+          "bele.h"
+        ],
+        "classification": "unknown-crash-elf64-peek-array",
+        "fingerprint_id": "upx-elf64-binfo-recovery-boundary",
+        "fix_commit_reviewed": "d549c2b5c9a2880ba03b6522e055bbe673fa7753",
+        "oss_ids": [
+          42531668
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "unknown-crash",
+          "READ",
+          "PackLinuxElf64::unpack",
+          "p_lx_elf.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same Mach-O command-count/size boundary fixed by the added ncmds and file-size checks.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "unsigned int get_ne32<>",
+          "bele.h"
+        ],
+        "classification": "heap-buffer-overflow-mach-canunpack",
+        "fingerprint_id": "upx-mach-header-sizeofcmds-boundary",
+        "fix_commit_reviewed": "c0e40da2ab6f072ceaff780308756b1e9e1fb6a2",
+        "oss_ids": [
+          42531669
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "PackMachBase::canUnpack",
+          "p_mach.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same invalid empty dynamic-table/index condition fixed before the get_te64 read; runtime report is a plain SEGV without UAF allocator evidence.",
+        "catalog_signature": [
+          "heap-use-after-free",
+          "READ",
+          "unsigned long long get_ne64<>",
+          "bele.h"
+        ],
+        "classification": "SEGV-elf-dynamic-table",
+        "fingerprint_id": "upx-elf-empty-dynamic-table",
+        "fix_commit_reviewed": "d615985b8a1b68bbdc0f31e0e6e648f93c434095",
+        "oss_ids": [
+          42531927
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "SEGV",
+          "READ",
+          "N_BELE_RTP::LEPolicy::get64",
+          "bele_policy.h"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same UCL decoder and right-redzone boundary; sanitizer class drift only.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "ucl_nrv2e_decompress_safe_le32",
+          "n2e_d.c"
+        ],
+        "classification": "unknown-crash-ucl-nrv2e",
+        "fingerprint_id": "upx-ucl-nrv2e-boundary",
+        "fix_commit_reviewed": "2767ec54e11ac516e4a2233f183c61843d9789f0",
+        "oss_ids": [
+          42532037
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "unknown-crash",
+          "READ",
+          "ucl_nrv2e_decompress_safe_le32",
+          "n2e_d.c"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same malformed ELF b_info interpretation and local peek_arr stack boundary fixed by the catalog commit.",
+        "catalog_signature": [
+          "stack-buffer-overflow",
+          "READ",
+          "get_ne32<>",
+          "bele.h"
+        ],
+        "classification": "unknown-crash-elf32-peek-array",
+        "fingerprint_id": "upx-elf32-binfo-recovery-boundary",
+        "fix_commit_reviewed": "10807ebdc212c44db366131e71b3e358643eae51",
+        "oss_ids": [
+          42532364
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "unknown-crash",
+          "READ",
+          "PackLinuxElf32::unpack",
+          "p_lx_elf.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      },
+      {
+        "audit_reason": "same_as_catalogued_already_in_expected",
+        "basis": "Same Mach-O command-length/recovery boundary fixed by catalogued bounds checks.",
+        "catalog_signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "get_ne32<>",
+          "bele.h"
+        ],
+        "classification": "heap-buffer-overflow-mach-canunpack",
+        "fingerprint_id": "upx-mach-command-length-boundary",
+        "fix_commit_reviewed": "a49d023bd04c585ac4c342c90d214c9aef2c8b08",
+        "oss_ids": [
+          383194079
+        ],
+        "same_as_catalogued": true,
+        "signature": [
+          "heap-buffer-overflow",
+          "READ",
+          "PackMachBase::canUnpack",
+          "p_mach.cpp"
+        ],
+        "status": "rejected_not_unique",
+        "unique_outside_expected": false
+      }
+    ],
+    "metadata_path": "data/measure/manual/upx/09c5e383223e6f70222b8b04fffdb79919f9c40a.json",
+    "project": "upx",
+    "recorded_verdict_counts": {
+      "clean": 2,
+      "expected_asan": 13,
+      "expected_crash": 1
+    },
+    "summary": {
+      "admission_audited_at": "2026-09-17T22:35:00+08:00",
+      "admission_note": "Operator admitted 2026-09-17. Identity is the final-entry five-tuple. verified_memory_bug_count=14 (expected 14 + extra 0). Type is the five-tuple kind.",
+      "available_poc_count": 16,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_audited_at": "2026-09-16T08:41:00+08:00",
+      "catalog_admission": "admitted",
+      "clean_count": 2,
+      "clean_with_leak_count": 0,
+      "expected_signature_count": 14,
+      "fingerprint_admission_rule": "kind|access|file|line|H3",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_fingerprint_count": 7,
+      "known_real_poc_count": 7,
+      "known_real_unique_count": 0,
+      "missing_poc_count": 0,
+      "poc_count": 16,
+      "project_poc_count": 16,
+      "unique_expected_count": 13,
+      "unmatched_crash_count": 0,
+      "verified_expected_five_tuples": 14,
+      "verified_extra_five_tuples": 0,
+      "verified_memory_bug_count": 14,
+      "verified_vulnerability_count": 13
+    }
+  },
+  {
+    "aggregation": {
+      "method": "prefix_mod_3",
+      "binary": "/out/arrow_agg_fuzzer",
+      "binary_sha256": "dcff97121d44ba1adf9626ee4f2143ae51bd7011600378502910b30e37c9390c",
+      "source": "/work/agg/arrow_agg_fuzzer.cc",
+      "source_sha256": "bf07a12261524fab29ceb7e0ee0dd1c25028b638f7b9cf186fd4a2f0852e8cc6",
+      "mapping": {
+        "0": "arrow-ipc-file-fuzz",
+        "1": "arrow-ipc-stream-fuzz",
+        "2": "parquet-arrow-fuzz"
+      },
+      "coverage": "dispatcher and three harness TUs compiled with -fsanitize=address,fuzzer-no-link against the parquet-enabled compat archives (1077 inline 8-bit counters)",
+      "verified_expected": 7,
+      "verified_expected_matched": 7,
+      "verified_known_real": 2,
+      "verified_known_real_matched": 2,
+      "match_basis": "parser signature equal to original logs except 42481229: original SEGV CountSetBits bit_util.cc becomes heap-buffer-overflow GetBit bit_util.h inlined into CountSetBits (same GetNullCount walk)",
+      "pocs": "/work/agg-pocs and targets/arrow/pocs/agg",
+      "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/arrow/logs/8b09ecc-agg",
+      "image": "arrow:8b09ecc-agg",
+      "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/arrow/images/arrow-8b09ecc-agg.tar",
+      "image_archive_sha256": "6274a5aad0a0baf097dea9a72b457cd222c6b6739e6e54cbb20b7a135bba1e49",
+      "image_id": "sha256:92af9b0bcb5baae397a8b0bb964733f8e2d7daddab619697e4c78dc1c90b17a5",
+      "audited_at": "2026-09-15T23:40:00+08:00"
+    },
+    "known_real_records": [
+      {
+        "fingerprint_id": "arrow-parquet-leveldecoder-negative-size",
+        "oss_ids": [
+          42504313,
+          42504668
+        ],
+        "classification": "negative-size-param",
+        "signature": [
+          "negative-size-param",
+          "-",
+          "arrow::BitUtil::BitReader::BitReader",
+          "bit_stream_utils.h"
+        ],
+        "catalog_signatures": [
+          [
+            "memcpy-param-overlap",
+            "-",
+            "parquet::DeltaByteArrayDecoder::GetInternal",
+            "encoding.cc"
+          ],
+          [
+            "heap-buffer-overflow",
+            "WRITE",
+            "parquet::DeltaByteArrayDecoder::GetInternal",
+            "encoding.cc"
+          ]
+        ],
+        "fix_commits_reviewed": [
+          "35cc9d1409ed4bab07a40af704a13a6b2011f691",
+          "587ce1dc5fcf4172591bdfdcb8882d47507d7daa"
+        ],
+        "status": "known_real",
+        "same_as_catalogued": false,
+        "basis": "Both PoCs reproducibly pass a negative RLE level length into LevelDecoder::SetData and BitReader::BitReader before DeltaByteArrayDecoder::GetInternal. This is a genuine baseline memory-safety failure, but neither catalogued DeltaByteArray fix touches this earlier code path.",
+        "unique_outside_expected": true
+      }
+    ],
+    "metadata_path": "data/measure/manual/arrow/8b09ecc5c690dd270dea83490f292c2e00eef75b.json",
+    "project": "arrow",
+    "recorded_verdict_counts": {
+      "expected_asan": 6,
+      "expected_crash": 1,
+      "clean": 15,
+      "unmatched_abort": 3,
+      "known_real": 2
+    },
+    "summary": {
+      "project_poc_count": 27,
+      "available_poc_count": 27,
+      "replayed_poc_count": 27,
+      "expected_signature_count": 7,
+      "known_real_poc_count": 2,
+      "known_real_fingerprint_count": 1,
+      "clean_count": 15,
+      "clean_with_leak_count": 0,
+      "unmatched_crash_count": 3,
+      "missing_poc_count": 0,
+      "missing_harness_source_count": 0,
+      "catalog_admission": "admitted",
+      "admission_note": "Operator admitted 2026-09-18, replacing librawspeed (released the same day; its 7 five-tuples sat in the 6-7 deferred band under explicit review). Identity is the final-entry five-tuple. verified_memory_bug_count=8 (expected 7 + known_real 1); meets the >=8 gate without explicit review.",
+      "known_real_unique_count": 1,
+      "known_real_definition": "unique_outside_expected_2026-09-14",
+      "known_real_audited_at": "2026-09-14T11:05:00+08:00",
+      "unique_expected_count": 7,
+      "verified_vulnerability_count": 8,
+      "benchmark_gate": "eligible",
+      "benchmark_gate_rule": "unique_expected + unique_known_real >= 8",
+      "benchmark_gate_audited_at": "2026-09-14T11:20:00+08:00",
+      "benchmark_seat": "in_set",
+      "benchmark_seat_reason": "Readmitted 2026-09-18 to the official 20, replacing librawspeed: gate-exact 8 (7 expected + 1 known_real) with full persisted evidence chain; materials moved back to targets/arrow.",
+      "benchmark_seat_audited_at": "2026-09-18T11:12:00+08:00"
+    }
+  }
+]

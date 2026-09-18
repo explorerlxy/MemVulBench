@@ -1,0 +1,259 @@
+project: file
+repo: "https://github.com/file/file.git"
+n_sites: 14
+n_issues: 14
+harnesses: [magic_fuzzer, magic_fuzzer_fd, magic_fuzzer_loaddb]
+base:
+  commit: 6382574724f99e4fd2e3b10580d83c9cb103ec5a
+  date: 2018-08-11
+  method: measured_sweep
+  n_latent: 3
+  n_latent_upper: 3
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-09-20
+    n: 2
+    eve: 598b330050a94bbe6bdc804d969d216f351261a0
+    n_latent_upper: 3
+    oss_ids: [42516204, 42516199]
+  - day: 2017-03-24
+    n: 1
+    eve: 95798ce4100fcc3bd4357cdabcab7ca6ac64f1c8
+    n_latent_upper: 4
+    oss_ids: [42524189]
+  - day: 2018-08-13
+    n: 1
+    eve: 6382574724f99e4fd2e3b10580d83c9cb103ec5a
+    n_latent_upper: 5
+    oss_ids: [42541581]
+  - day: 2018-08-17
+    n: 1
+    eve: 473e039b48fd72660dd00f4b52a2880cc0dd5632
+    n_latent_upper: 4
+    oss_ids: [42541665]
+  - day: 2019-02-20
+    n: 1
+    eve: f3a4b9ada3ca99e62c62b9aa78eee4935a8094fe
+    n_latent_upper: 3
+    oss_ids: [42473565]
+  - day: 2019-08-23
+    n: 1
+    eve: 07d847a8d4c440da564fbef4992bca2531fe676f
+    n_latent_upper: 2
+    oss_ids: [42477355]
+  - day: 2020-06-04
+    n: 1
+    eve: 2b66ae67281848c411000005936bbbbf5acb459e
+    n_latent_upper: 2
+    oss_ids: [42484477]
+  - day: 2021-09-17
+    n: 1
+    eve: a9c8d2a9493c4e0cd201db57801f3502e65c686c
+    n_latent_upper: 6
+    oss_ids: [42502085]
+  - day: 2022-06-11
+    n: 1
+    eve: 87060b287acdc06297bb73e668445e57023f3a75
+    n_latent_upper: 5
+    oss_ids: [42512152]
+  - day: 2022-07-06
+    n: 1
+    eve: 441ac2b15508909e82ad467960df4ac0adf9644c
+    n_latent_upper: 4
+    oss_ids: [42513013]
+  - day: 2023-05-31
+    n: 1
+    eve: 010240c20874aa8bebff72645893d64d95de439c
+    n_latent_upper: 3
+    oss_ids: [42524899]
+  - day: 2024-12-05
+    n: 1
+    eve: f7d05cade99ff4819b4de70445511037000f6b14
+    n_latent_upper: 2
+    oss_ids: [377955861]
+bugs:
+  - oss_id: 42473565
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ecca6e54f49f251bb4c16fe145d04c2b45923dc3
+    fix_date: 2019-02-20
+    crash_func: looks_ucs32
+    crash_file: src/encoding.c
+    signature: [heap-buffer-overflow, READ, looks_ucs32, encoding.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42473565"
+  - oss_id: 42477355
+    harness: magic_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 06de62c022138f63de9bcd04074491945eaa8662
+    fix_date: 2019-08-23
+    crash_func: cdf_read_property_info
+    crash_file: src/cdf.c
+    signature: [heap-buffer-overflow, WRITE, cdf_read_property_info, cdf.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477355"
+  - oss_id: 42484477
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c6b51d4a1f5682f8144fef1553b0357d3d83aaf
+    fix_date: 2020-06-04
+    crash_func: file_strncmp
+    crash_file: src/softmagic.c
+    signature: [heap-buffer-overflow, READ, file_strncmp, softmagic.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42484477"
+  - oss_id: 42502085
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 46df39b68e51fd803d382348c0059fcb2e40b5ef
+    fix_date: 2021-09-17
+    crash_func: cdf_read_property_info
+    crash_file: src/cdf.c
+    signature: [heap-buffer-overflow, READ, cdf_read_property_info, cdf.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42502085"
+  - oss_id: 42512152
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 46976e05f97e4b2bc77476a16f7107ff0be12df1
+    fix_date: 2022-06-11
+    crash_func: json_parse_array
+    crash_file: src/is_json.c
+    signature: [use-after-poison, READ, json_parse_array, is_json.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42512152"
+  - oss_id: 42513013
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 16756ff9286df9a43b4b6e21824975a1c6809835
+    fix_date: 2022-07-06
+    crash_func: json_parse
+    crash_file: src/is_json.c
+    signature: [heap-buffer-overflow, READ, json_parse, is_json.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42513013"
+  - oss_id: 42516199
+    harness: magic_fuzzer_loaddb
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 66efe2fa6abc233011a58965d6de2bb0f91328bd
+    fix_date: 2022-09-20
+    crash_func: file_magwarn
+    crash_file: src/print.c
+    signature: [heap-buffer-overflow, READ, file_magwarn, print.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516199"
+  - oss_id: 42516204
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 411ec5bf0708dcd5ec99e4d0961740fca30a6bc7
+    fix_date: 2022-09-20
+    crash_func: uncompressgzipped
+    crash_file: src/compress.c
+    signature: [heap-buffer-overflow, READ, uncompressgzipped, compress.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516204"
+  - oss_id: 42524189
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5307c95dc4fd1ca3947e3ff95daef403827e96fe
+    fix_date: 2017-03-24
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524189"
+  - oss_id: 42524899
+    harness: magic_fuzzer
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c7eddddfd5d99821ea52e52e24468b43282c8f90
+    fix_date: 2023-05-31
+    crash_func: getlen
+    crash_file: src/is_simh.c
+    signature: [use-after-poison, READ, getlen, is_simh.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524899"
+  - oss_id: 42541581
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 473e039b48fd72660dd00f4b52a2880cc0dd5632
+    fix_date: 2018-08-13
+    crash_func: json_parse_object
+    crash_file: src/is_json.c
+    signature: [heap-buffer-overflow, READ, json_parse_object, is_json.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42541581"
+  - oss_id: 42541665
+    harness: magic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 87f27958cfbb05d262504976f66db70c24d5061f
+    fix_date: 2018-08-17
+    crash_func: json_parse_string
+    crash_file: src/is_json.c
+    signature: [heap-buffer-overflow, READ, json_parse_string, is_json.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42541665"
+  - oss_id: 376515517
+    harness: magic_fuzzer_loaddb
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 81a0cbd10c347496bdee7dde78f7e47a16b4e79f
+    fix_date: 2025-01-22
+    crash_func: parse
+    crash_file: src/apprentice.c
+    signature: [heap-buffer-overflow, READ, parse, apprentice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/376515517"
+  - oss_id: 377955861
+    harness: magic_fuzzer_fd
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b3384a1fbfa1fee99986e5750ab8e700de4f24ad
+    fix_date: 2024-12-05
+    crash_func: dophn_exec
+    crash_file: src/readelf.c
+    signature: [stack-buffer-overflow, WRITE, dophn_exec, readelf.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/377955861"
+rejected: []
+error: null

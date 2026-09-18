@@ -1,0 +1,285 @@
+project: libraw
+repo: "https://github.com/libraw/libraw"
+n_sites: 16
+n_issues: 16
+harnesses: [libraw_cr2_fuzzer, libraw_fuzzer, libraw_nef_fuzzer, libraw_raf_fuzzer]
+base:
+  commit: 371161a06d7f98f231a001dad4af2dfb463e270a
+  date: 2021-07-27
+  method: wave_eve
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 2
+  note: "eve of 2021-07-29 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-07-29
+    n: 2
+    eve: 371161a06d7f98f231a001dad4af2dfb463e270a
+    n_latent_upper: 9
+    oss_ids: [42492565, 42493517]
+  - day: 2020-06-15
+    n: 1
+    eve: 895b6667e1b3b245d9d1d92e5bf8c903ebc3ad1f
+    n_latent_upper: 5
+    oss_ids: [42484853]
+  - day: 2020-11-30
+    n: 1
+    eve: 999caaeea7b58d9466cbd3fbfd12347985fedf1f
+    n_latent_upper: 8
+    oss_ids: [42484403]
+  - day: 2020-12-03
+    n: 1
+    eve: 539d07dcaa64aed706c5bb4ada7213e3e1cd07d6
+    n_latent_upper: 7
+    oss_ids: [42484402]
+  - day: 2022-07-12
+    n: 1
+    eve: 53c83c16e6adac220715d3f2bdd1b6e8b8bc90cf
+    n_latent_upper: 10
+    oss_ids: [42505653]
+  - day: 2022-10-24
+    n: 1
+    eve: cbc04368bf834dc7ed82be00c7570b6a8b1a06cf
+    n_latent_upper: 9
+    oss_ids: [42517385]
+  - day: 2022-10-29
+    n: 1
+    eve: 63794a2471b426ff4268de6982e8a6f711163e2e
+    n_latent_upper: 8
+    oss_ids: [42517409]
+  - day: 2022-10-31
+    n: 1
+    eve: 19849976cb575cb709cfc6d9c517094d1fd76876
+    n_latent_upper: 7
+    oss_ids: [42517640]
+  - day: 2023-02-21
+    n: 1
+    eve: 35a6d3615b69cc05b990c7afe5c55eafb3c88963
+    n_latent_upper: 6
+    oss_ids: [42521260]
+  - day: 2023-07-09
+    n: 1
+    eve: 4e597e4e9d7b1bdeff2dbfb4bdc68fde03b9afae
+    n_latent_upper: 6
+    oss_ids: [42517291]
+  - day: 2023-07-20
+    n: 1
+    eve: eaf63bf5f7b98a607c2d3d0849827669c1b443ea
+    n_latent_upper: 5
+    oss_ids: [42526333]
+  - day: 2023-12-14
+    n: 1
+    eve: 41506ef73e33c5e0c3b94608cce2481d92003d5d
+    n_latent_upper: 4
+    oss_ids: [42531108]
+bugs:
+  - oss_id: 42484402
+    harness: libraw_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e70ded8b0bc231f7ed3fd5d2e83d61bd18ef5e94
+    fix_date: 2020-12-03
+    crash_func: "LibRaw_buffer_datastream::gets(char*, int)"
+    crash_file: src/libraw_datastream.cpp
+    signature: [stack-buffer-overflow, WRITE, "LibRaw_buffer_datastream::gets", libraw_datastream.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484402"
+  - oss_id: 42484403
+    harness: libraw_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 539d07dcaa64aed706c5bb4ada7213e3e1cd07d6
+    fix_date: 2020-11-30
+    crash_func: "__libcpp_strchr(char const*, int)"
+    crash_file: include/c++/v1/string.h
+    signature: [stack-buffer-overflow, READ, __libcpp_strchr, string.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484403"
+  - oss_id: 42484853
+    harness: libraw_cr2_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 783bbcf044321a200185221cd69b34f49966ba72
+    fix_date: 2020-06-15
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: libraw_fuzzer.cc
+    signature: [global-buffer-overflow, READ, LLVMFuzzerTestOneInput, libraw_fuzzer.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484853"
+  - oss_id: 42492565
+    harness: libraw_cr2_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 363e91ea656f4ce46584b4b0af6285030f236b7e
+    fix_date: 2021-07-29
+    crash_func: "LibRaw_buffer_datastream::read(void*, unsigned long, unsigned long)"
+    crash_file: src/libraw_datastream.cpp
+    signature: [heap-buffer-overflow, WRITE, "LibRaw_buffer_datastream::read", libraw_datastream.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42492565"
+  - oss_id: 42493517
+    harness: libraw_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 363e91ea656f4ce46584b4b0af6285030f236b7e
+    fix_date: 2021-07-29
+    crash_func: "LibRaw::kodak_c330_load_raw()"
+    crash_file: src/decoders/kodak_decoders.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::kodak_c330_load_raw", kodak_decoders.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42493517"
+  - oss_id: 42505653
+    harness: libraw_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 20d0f3fd2f690d7d97068c412f5d97cf494aa74d
+    fix_date: 2022-07-12
+    crash_func: "LibRaw::parseCR3(long long, long long, short&, char*, short&, short&)"
+    crash_file: src/metadata/cr3_parser.cpp
+    signature: [stack-buffer-overflow, WRITE, "LibRaw::parseCR3", cr3_parser.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42505653"
+  - oss_id: 42517291
+    harness: libraw_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a14574080aa902fa8d6a982adc169429610bd3ea
+    fix_date: 2023-07-09
+    crash_func: "LibRaw::hat_transform(float*, float*, int, int, int)"
+    crash_file: src/postprocessing/postprocessing_aux.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::hat_transform", postprocessing_aux.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517291"
+  - oss_id: 42517385
+    harness: libraw_nef_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: dc0c984edfc9b36089f86f6068ee7805e9cd9efc
+    fix_date: 2022-10-24
+    crash_func: "LibRaw::kodak_rgb_load_raw()"
+    crash_file: src/decoders/kodak_decoders.cpp
+    signature: [heap-buffer-overflow, WRITE, "LibRaw::kodak_rgb_load_raw", kodak_decoders.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517385"
+  - oss_id: 42517409
+    harness: libraw_nef_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 59721b08cfcec3d425d4a9ae5a53bbc8e938fedd
+    fix_date: 2022-10-29
+    crash_func: "LibRaw::raw2image()"
+    crash_file: src/preprocessing/raw2image.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::raw2image", raw2image.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517409"
+  - oss_id: 42517640
+    harness: libraw_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a50a568b786da111a0406e4861813949c0058bf4
+    fix_date: 2022-10-31
+    crash_func: "LibRaw::raw2image()"
+    crash_file: src/preprocessing/raw2image.cpp
+    signature: [heap-buffer-overflow, WRITE, "LibRaw::raw2image", raw2image.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517640"
+  - oss_id: 42521260
+    harness: libraw_cr2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 443b7fb51e1ca89a1178180258a0f10ed353617d
+    fix_date: 2023-02-21
+    crash_func: "LibRaw_buffer_datastream::scanf_one(char const*, void*)"
+    crash_file: src/libraw_datastream.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw_buffer_datastream::scanf_one", libraw_datastream.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521260"
+  - oss_id: 42526333
+    harness: libraw_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3baa51068767ae2070c4661e00a3b77d5c3139b7
+    fix_date: 2023-07-20
+    crash_func: "LibRaw::xtrans_interpolate(int)"
+    crash_file: src/demosaic/xtrans_demosaic.cpp
+    signature: [stack-buffer-overflow, WRITE, "LibRaw::xtrans_interpolate", xtrans_demosaic.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526333"
+  - oss_id: 42531108
+    harness: libraw_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6f212a4a1fe19dce1f83c83384f171fd7babb0a
+    fix_date: 2023-12-14
+    crash_func: "libraw_tagtype_dataunit_bytes(int)"
+    crash_file: src/tables/wblists.cpp
+    signature: [global-buffer-overflow, READ, libraw_tagtype_dataunit_bytes, wblists.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531108"
+  - oss_id: 42534178
+    harness: libraw_nef_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e58e8e43ae9fb349563c954cd56e922c59e1fde2
+    fix_date: 2024-04-03
+    crash_func: "libraw_sget4_static(short, unsigned char*)"
+    crash_file: src/utils/read_utils.cpp
+    signature: [heap-buffer-overflow, READ, libraw_sget4_static, read_utils.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534178"
+  - oss_id: 42535042
+    harness: libraw_raf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c9facb4b7a64f8d0417fbbc5f0707b2162f8db75
+    fix_date: 2024-05-03
+    crash_func: "LibRaw::xtrans_interpolate(int)"
+    crash_file: src/demosaic/xtrans_demosaic.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::xtrans_interpolate", xtrans_demosaic.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535042"
+  - oss_id: 399138502
+    harness: libraw_nef_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 09bea31181b43e97959ee5452d91e5bc66365f1f
+    fix_date: 2025-03-02
+    crash_func: "LibRaw::phase_one_correct()"
+    crash_file: src/decoders/load_mfbacks.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::phase_one_correct", load_mfbacks.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/399138502"
+rejected: []
+error: null

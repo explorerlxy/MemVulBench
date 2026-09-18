@@ -2,12 +2,11 @@
 
 > **状态：不接入，本文为存档设计稿。**
 >
-> 现行的纯考古路线定位为 fuzzing 研究的评测平台，而非独立发表的 benchmark artifact
-> （[methodology.md](methodology.md) §0、§10）。这个定位下，**关 ASLR + 固定
-> `ASAN_OPTIONS` 已经足够支撑 TTD 统计**，D1–D4 的完备性论证与准入测试不是必需成本。
+> 现行定位见 `papers/MemVulBench/manuscript.md` 与 [catalog.md](catalog.md)；design.md 亦为存档备忘。
+> 准入与计分只要求崩溃稳定和最终入口五元组一致；**关 ASLR + 固定
+> `ASAN_OPTIONS` 已经足够支撑 TTD 统计**，D1–D4 的完备性论证不是现行准入成本。
 >
-> 本文的分级、通道闭合论证与准入测试设计保持有效，留待两种情况下重新启用：
-> 目标要服务符号执行 / 记录重放类工作，或本项目升级为独立发表的 artifact。
+> 本文的分级、通道闭合论证与准入测试设计保持有效，留待符号执行 / 记录重放类工作启用。
 > 届时同步启用 `bug.yaml` 的 `nondeterministic` 拒收原因。
 
 **目标程序的行为必须是模糊输入的纯函数。** 除测试接口外的一切数据交互，

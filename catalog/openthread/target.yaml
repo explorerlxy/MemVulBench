@@ -1,0 +1,519 @@
+project: openthread
+repo: "https://github.com/openthread/openthread"
+n_sites: 34
+n_issues: 34
+harnesses: [cli-uart-received-fuzzer, ip6-send-fuzzer, ncp-uart-received-fuzzer, ot-cli-received-fuzzer, ot-ncp-hdlc-received-fuzzer, radio-receive-done-fuzzer]
+base:
+  commit: 639b58eae7628d0aa61e947a2be82704f4dd555e
+  date: 2018-02-02
+  method: wave_eve
+  n_latent: 21
+  n_latent_upper: 21
+  n_wave: 2
+  note: "eve of 2018-02-02 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-02-02
+    n: 2
+    eve: 639b58eae7628d0aa61e947a2be82704f4dd555e
+    n_latent_upper: 21
+    oss_ids: [42524012, 42524123]
+  - day: 2019-01-25
+    n: 2
+    eve: 993f537a03273e69ade90a38a653e367cb1a6c30
+    n_latent_upper: 20
+    oss_ids: [42472923, 42472963]
+  - day: 2019-02-26
+    n: 2
+    eve: d912393c7f055333378ba80ba5ae3ddcf0e4be02
+    n_latent_upper: 19
+    oss_ids: [42473688, 42473689]
+  - day: 2019-06-21
+    n: 2
+    eve: ea9a6d2b14f794c756575bbbea668ac029acb1bb
+    n_latent_upper: 12
+    oss_ids: [42475962, 42475964]
+  - day: 2019-09-20
+    n: 2
+    eve: 4916f1c0c57430f325bfec48f670f8ab9ee4f66d
+    n_latent_upper: 9
+    oss_ids: [42478091, 42478129]
+  - day: 2017-07-28
+    n: 1
+    eve: 7a37d079d5909d5ae504f6df44e22971a35cab32
+    n_latent_upper: 23
+    oss_ids: [42489503]
+  - day: 2017-08-08
+    n: 1
+    eve: 22ab6f26a66e6a65635001e79bede6e7d8fea5f5
+    n_latent_upper: 22
+    oss_ids: [42490592]
+  - day: 2017-09-06
+    n: 1
+    eve: 768f6af14869f5e868d7f7b6d34e4b871cac2ada
+    n_latent_upper: 21
+    oss_ids: [42495315]
+  - day: 2017-09-15
+    n: 1
+    eve: 0139cc4195e77fe15ee5f684745d16aa990d01f6
+    n_latent_upper: 20
+    oss_ids: [42496381]
+  - day: 2017-12-20
+    n: 1
+    eve: ea75fe719f5aed282f22fa72d8ab4cbf2933a25d
+    n_latent_upper: 22
+    oss_ids: [42510384]
+  - day: 2018-02-05
+    n: 1
+    eve: d0c983f0a4c845cfbbf2808b4e2f7b8a1433af41
+    n_latent_upper: 19
+    oss_ids: [42524167]
+  - day: 2018-05-07
+    n: 1
+    eve: 664d9832e5f4b26612bff7e654fe3aaac37dc135
+    n_latent_upper: 19
+    oss_ids: [42539272]
+bugs:
+  - oss_id: 42471519
+    harness: radio-receive-done-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bf72fd8f8d4a898c019f279c8605e66fc0b42878
+    fix_date: 2018-11-15
+    crash_func: "ot::MeshForwarder::GetFramePriority(unsigned char*, unsigned char, ot::Mac::Address const&, ot::Mac::Address const&, unsigned char&)"
+    crash_file: src/core/thread/mesh_forwarder.cpp
+    signature: [heap-buffer-overflow, READ, "ot::MeshForwarder::GetFramePriority", mesh_forwarder.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471519"
+  - oss_id: 42472863
+    harness: ncp-uart-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a00c53883001654444f45db8c15aff38e15b4a04
+    fix_date: 2019-01-24
+    crash_func: "ot::NetworkData::PrefixTlv::Init(unsigned char, unsigned char, unsigned char const*)"
+    crash_file: src/core/./thread/network_data_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::PrefixTlv::Init", network_data_tlvs.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472863"
+  - oss_id: 42472923
+    harness: cli-uart-received-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 249bc598748ad08a98b08995698669613594e54b
+    fix_date: 2019-01-25
+    crash_func: "ot::Cli::Interpreter::ProcessService(int, char**)"
+    crash_file: src/cli/cli.cpp
+    signature: [stack-buffer-overflow, WRITE, "ot::Cli::Interpreter::ProcessService", cli.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472923"
+  - oss_id: 42472963
+    harness: cli-uart-received-fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: cb5e076a3e0a8daa7ee3576e1962c5388f2002ca
+    fix_date: 2019-01-25
+    crash_func: "ot::Cli::CoapSecure::Process(int, char**)"
+    crash_file: src/cli/cli_coap_secure.cpp
+    signature: [memcpy-param-overlap, -, "ot::Cli::CoapSecure::Process", cli_coap_secure.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472963"
+  - oss_id: 42473688
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a3548df579617e737b075be4a88591e68195e115
+    fix_date: 2019-02-26
+    crash_func: "ot::NetworkData::NetworkData::PrefixMatch(unsigned char const*, unsigned char const*, unsigned char)"
+    crash_file: src/core/thread/network_data.cpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::NetworkData::PrefixMatch", network_data.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473688"
+  - oss_id: 42473689
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a3548df579617e737b075be4a88591e68195e115
+    fix_date: 2019-02-26
+    crash_func: "ot::NetworkData::NetworkData::GetNextOnMeshPrefix(unsigned int*, unsigned short, otBorderRouterConfig*)"
+    crash_file: src/core/thread/network_data.cpp
+    signature: [stack-buffer-overflow, WRITE, "ot::NetworkData::NetworkData::GetNextOnMeshPrefix", network_data.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473689"
+  - oss_id: 42474005
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e82531507b7bd1efe6c70ebf4741d5c05c05c6ab
+    fix_date: 2019-03-12
+    crash_func: "ot::MeshCoP::ChannelMaskEntry::GetMask() const"
+    crash_file: src/core/meshcop/meshcop_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::ChannelMaskEntry::GetMask", meshcop_tlvs.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474005"
+  - oss_id: 42474141
+    harness: ip6-send-fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: fab45352f5d6b2f516fed8a86c0d197bb7c27958
+    fix_date: 2019-03-16
+    crash_func: "ot::MeshCoP::ChannelMaskEntryBase::GetChannelPage() const"
+    crash_file: src/core/meshcop/meshcop_tlvs.hpp
+    signature: [stack-use-after-return, READ, "ot::MeshCoP::ChannelMaskEntryBase::GetChannelPage", meshcop_tlvs.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474141"
+  - oss_id: 42475341
+    harness: cli-uart-received-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8bb50d4ccde667295f892f976ee5ff90ba4a4a2f
+    fix_date: 2019-05-21
+    crash_func: "ot::Ip6::Address::FromString(char const*)"
+    crash_file: src/core/net/ip6_address.cpp
+    signature: [stack-buffer-overflow, WRITE, "ot::Ip6::Address::FromString", ip6_address.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475341"
+  - oss_id: 42475377
+    harness: ncp-uart-received-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bcfa791912dd7bd3dd7432f9f6313b6dd5ca358b
+    fix_date: 2019-05-22
+    crash_func: "ot::Ip6::OptionPadN::Init(unsigned char)"
+    crash_file: src/core/./net/ip6_headers.hpp
+    signature: [stack-buffer-overflow, WRITE, "ot::Ip6::OptionPadN::Init", ip6_headers.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475377"
+  - oss_id: 42475955
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d1ded876f9cb09d83b904b40cf6a4f67adfe91fe
+    fix_date: 2019-06-20
+    crash_func: "ot::MeshCoP::DatasetManager::HandleSet(ot::Coap::Message&, ot::Ip6::MessageInfo const&)"
+    crash_file: src/core/meshcop/dataset_manager_ftd.cpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::DatasetManager::HandleSet", dataset_manager_ftd.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475955"
+  - oss_id: 42475962
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8224b3c49f8bd285ad5658c1b3cd9683d6627bdb
+    fix_date: 2019-06-21
+    crash_func: "ot::Message::Write(unsigned short, unsigned short, void const*)"
+    crash_file: src/core/common/message.cpp
+    signature: [stack-buffer-overflow, READ, "ot::Message::Write", message.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475962"
+  - oss_id: 42475964
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8224b3c49f8bd285ad5658c1b3cd9683d6627bdb
+    fix_date: 2019-06-21
+    crash_func: "ot::Mle::Mle::HandleParentResponse(ot::Message const&, ot::Ip6::MessageInfo const&, unsigned int)"
+    crash_file: src/core/thread/mle.cpp
+    signature: [stack-buffer-overflow, READ, "ot::Mle::Mle::HandleParentResponse", mle.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475964"
+  - oss_id: 42476618
+    harness: ncp-uart-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a211901f62b96fb6fb0ee792dab4007c64b44e18
+    fix_date: 2019-07-22
+    crash_func: "ot::NetworkData::Leader::IsStableUpdated(unsigned char*, unsigned char, unsigned char*, unsigned char)"
+    crash_file: src/core/thread/network_data_leader_ftd.cpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::Leader::IsStableUpdated", network_data_leader_ftd.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476618"
+  - oss_id: 42478091
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8be8bf1fdff6181453a2c5e946618186b8b64c54
+    fix_date: 2019-09-20
+    crash_func: "ot::NetworkData::Leader::SendCommissioningGetResponse(ot::Coap::Message const&, ot::Ip6::MessageInfo const&, unsigned char const*, unsigned char)"
+    crash_file: src/core/thread/network_data_leader_ftd.cpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::Leader::SendCommissioningGetResponse", network_data_leader_ftd.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478091"
+  - oss_id: 42478129
+    harness: ip6-send-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8be8bf1fdff6181453a2c5e946618186b8b64c54
+    fix_date: 2019-09-20
+    crash_func: "ot::Message::Read(unsigned short, unsigned short, void*) const"
+    crash_file: src/core/common/message.cpp
+    signature: [stack-buffer-overflow, WRITE, "ot::Message::Read", message.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478129"
+  - oss_id: 42480412
+    harness: ncp-uart-received-fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b8c3161281f8e15873f8decabd8eac461717aefe
+    fix_date: 2019-12-16
+    crash_func: "ot::MeshCoP::Commissioner::GeneratePskc(char const*, char const*, ot::Mac::ExtendedPanId const&, ot::Pskc&)"
+    crash_file: src/core/meshcop/commissioner.cpp
+    signature: [stack-buffer-overflow, WRITE, "ot::MeshCoP::Commissioner::GeneratePskc", commissioner.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480412"
+  - oss_id: 42481955
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 167d616bc2eefe9e4712da5a65681502de5851c0
+    fix_date: 2020-02-21
+    crash_func: "ot::ExtendedTlv::GetLength() const"
+    crash_file: src/core/./common/tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::ExtendedTlv::GetLength", tlvs.hpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481955"
+  - oss_id: 42486900
+    harness: ncp-uart-received-fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: e507e24ffb6ed326e48d9cf287cabc90260c2a8b
+    fix_date: 2020-08-26
+    crash_func: "ot::Message::Write(unsigned short, unsigned short, void const*)"
+    crash_file: src/core/common/message.cpp
+    signature: [memcpy-param-overlap, -, "ot::Message::Write", message.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486900"
+  - oss_id: 42489503
+    harness: radio-receive-done-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0d356d11bd3c6831b01951065337e84b8b110da0
+    fix_date: 2017-07-28
+    crash_func: "ot::Lowpan::Lowpan::DecompressBaseHeader(ot::Ip6::Header&, ot::Mac::Address const&, ot::Mac::Address const&, unsigned char const*, unsigned short)"
+    crash_file: src/core/thread/lowpan.cpp
+    signature: [heap-buffer-overflow, READ, "ot::Lowpan::Lowpan::DecompressBaseHeader", lowpan.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489503"
+  - oss_id: 42490332
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 02f7dbb42be7f75355436ec43bc82d0b2b4caad6
+    fix_date: 2020-12-10
+    crash_func: "ot::MeshCoP::ChannelMaskEntryBase::GetEntrySize() const"
+    crash_file: src/core/./meshcop/meshcop_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::ChannelMaskEntryBase::GetEntrySize", meshcop_tlvs.hpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490332"
+  - oss_id: 42490592
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e2d027c8a53b42bf5451e8c6fbf1abacd7e73c4a
+    fix_date: 2017-08-08
+    crash_func: "ot::Coap::Header::FromMessage(ot::Message const&, unsigned short)"
+    crash_file: src/core/coap/coap_header.cpp
+    signature: [stack-buffer-overflow, READ, "ot::Coap::Header::FromMessage", coap_header.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490592"
+  - oss_id: 42490599
+    harness: cli-uart-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 02aab7041915b603eb3d36d55fe7960013bae591
+    fix_date: 2020-12-12
+    crash_func: "ot::MeshCoP::ChannelMaskEntry::GetMask() const"
+    crash_file: src/core/./meshcop/meshcop_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::ChannelMaskEntry::GetMask", meshcop_tlvs.hpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490599"
+  - oss_id: 42490739
+    harness: cli-uart-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b3fc7bc453034aa61cd27d5208f08ead9c7789e0
+    fix_date: 2020-12-17
+    crash_func: "ot::IsValidUtf8String(char const*, unsigned long)"
+    crash_file: src/core/common/string.cpp
+    signature: [stack-buffer-overflow, READ, "ot::IsValidUtf8String", string.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490739"
+  - oss_id: 42493128
+    harness: cli-uart-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 159efe77c07abbd38f3afc754d6a644f1a14d64e
+    fix_date: 2021-02-12
+    crash_func: "ot::Coap::Message::AppendUintOption(unsigned short, unsigned int)"
+    crash_file: src/core/coap/coap_message.cpp
+    signature: [stack-buffer-overflow, READ, "ot::Coap::Message::AppendUintOption", coap_message.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493128"
+  - oss_id: 42495315
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cb03cd607a3a7919ce9279559cb6b15d4551ce83
+    fix_date: 2017-09-06
+    crash_func: "ot::NetworkData::Leader::AddHasRoute(ot::NetworkData::PrefixTlv&, ot::NetworkData::HasRouteTlv&)"
+    crash_file: src/core/thread/network_data_leader_ftd.cpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::Leader::AddHasRoute", network_data_leader_ftd.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495315"
+  - oss_id: 42496381
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ba148cf5bf7fa7cc445fb53c4aa88886d01e76d0
+    fix_date: 2017-09-15
+    crash_func: "ot::MeshCoP::CommissionerSessionIdTlv::GetCommissionerSessionId() const"
+    crash_file: src/core/./meshcop/meshcop_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::CommissionerSessionIdTlv::GetCommissionerSessionId", meshcop_tlvs.hpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42496381"
+  - oss_id: 42510384
+    harness: radio-receive-done-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 44a7ba393a98da67969f775c8dac5d69f8e6c270
+    fix_date: 2017-12-20
+    crash_func: "ot::Mle::RouteTlv::GetRouteCost(unsigned char) const"
+    crash_file: src/core/./thread/mle_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::Mle::RouteTlv::GetRouteCost", mle_tlvs.hpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510384"
+  - oss_id: 42524012
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1318d7942ed6256665b5d83b62ce51ec8893f5c7
+    fix_date: 2018-02-02
+    crash_func: "ot::NetworkData::ServiceTlv::GetServiceDataLength()"
+    crash_file: src/core/./thread/network_data_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::ServiceTlv::GetServiceDataLength", network_data_tlvs.hpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42524012"
+  - oss_id: 42524123
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1318d7942ed6256665b5d83b62ce51ec8893f5c7
+    fix_date: 2018-02-02
+    crash_func: "ot::NetworkData::ServiceTlv::IsThreadEnterprise() const"
+    crash_file: src/core/./thread/network_data_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::ServiceTlv::IsThreadEnterprise", network_data_tlvs.hpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42524123"
+  - oss_id: 42524167
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9ec07205cc17c2de80b06a8b1e181abde4fdbb1e
+    fix_date: 2018-02-05
+    crash_func: "ot::NetworkData::ServerTlv::GetServer16() const"
+    crash_file: src/core/./thread/network_data_tlvs.hpp
+    signature: [stack-buffer-overflow, READ, "ot::NetworkData::ServerTlv::GetServer16", network_data_tlvs.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42524167"
+  - oss_id: 42539272
+    harness: ip6-send-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3af0bda8b79ed775d3b243bfb794ebdeb51378e2
+    fix_date: 2018-05-07
+    crash_func: "ot::KeyManager::SetMasterKey(otMasterKey const&)"
+    crash_file: src/core/thread/key_manager.cpp
+    signature: [stack-buffer-overflow, READ, "ot::KeyManager::SetMasterKey", key_manager.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539272"
+  - oss_id: 385180600
+    harness: ot-ncp-hdlc-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 151444f7dd808aa8fb1431804a6f5649e0569b17
+    fix_date: 2024-12-27
+    crash_func: "ot::MeshCoP::Dataset::ReadTimestamp(ot::MeshCoP::Dataset::Type, ot::MeshCoP::Timestamp&) const"
+    crash_file: src/core/meshcop/dataset.cpp
+    signature: [stack-buffer-overflow, READ, "ot::MeshCoP::Dataset::ReadTimestamp", dataset.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/385180600"
+  - oss_id: 411460530
+    harness: ot-cli-received-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b0176443cc91c2f63ae1950c3ec391c6d7166c4c
+    fix_date: 2025-04-23
+    crash_func: "ot::Cli::OutputImplementer::OutputV(char const*, __va_list_tag*)"
+    crash_file: src/cli/cli_utils.cpp
+    signature: [stack-buffer-overflow, READ, "ot::Cli::OutputImplementer::OutputV", cli_utils.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/411460530"
+rejected: []
+error: null

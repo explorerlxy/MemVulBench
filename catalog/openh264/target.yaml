@@ -1,0 +1,374 @@
+project: openh264
+repo: "https://github.com/cisco/openh264.git"
+n_sites: 24
+n_issues: 24
+harnesses: [decoder_fuzzer]
+base:
+  commit: 83a0eae9bbbda5bfe802438109a025a3d7caee10
+  date: 2020-09-29
+  method: measured_sweep
+  n_latent: 12
+  n_latent_upper: 12
+  n_wave: 7
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-02-20
+    n: 10
+    eve: 992c1c147175126c3fe7ab78216aa0395f9e6c71
+    n_latent_upper: 10
+    oss_ids: [42488076, 42488088, 42488096, 42488097, 42488124, 42488393, 42488563, 42491174, 42491572, 42493060]
+  - day: 2020-10-12
+    n: 7
+    eve: 83a0eae9bbbda5bfe802438109a025a3d7caee10
+    n_latent_upper: 18
+    oss_ids: [42487672, 42487684, 42487716, 42487835, 42487846, 42487979, 42488005]
+  - day: 2019-03-15
+    n: 1
+    eve: bc3e56b5cd90a3eae1dda31dc14ff27b1ee7f9ea
+    n_latent_upper: 24
+    oss_ids: [42473818]
+  - day: 2019-04-03
+    n: 1
+    eve: 8159a25f20df4baec6b420201da846a26f7e6bca
+    n_latent_upper: 23
+    oss_ids: [42474468]
+  - day: 2019-07-23
+    n: 1
+    eve: c2e4abc16641a2c14cec48aef92940503116f4bb
+    n_latent_upper: 22
+    oss_ids: [42474899]
+  - day: 2019-10-25
+    n: 1
+    eve: c185ac351eff0ae277bfe14a3b2ad52e9ed8ab81
+    n_latent_upper: 21
+    oss_ids: [42479359]
+  - day: 2019-12-23
+    n: 1
+    eve: 1feb533b3d5e5656762934a8c1282b4c5b840d3f
+    n_latent_upper: 21
+    oss_ids: [42479702]
+  - day: 2020-06-07
+    n: 1
+    eve: f43dddc641f3e6935fb280d2ce8282ae29aa7df9
+    n_latent_upper: 19
+    oss_ids: [42481640]
+  - day: 2020-10-11
+    n: 1
+    eve: 83a0eae9bbbda5bfe802438109a025a3d7caee10
+    n_latent_upper: 18
+    oss_ids: [42487729]
+bugs:
+  - oss_id: 42473818
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f8687facbba0b1cf6aa786c5cf7e7685e07bf624
+    fix_date: 2019-03-15
+    crash_func: "WelsDec::ResetRefPicReferences(WelsDec::TagWelsDecoderContext* const&, WelsDec::SPicture* const&)"
+    crash_file: src/decoder.cpp
+    signature: [heap-use-after-free, READ, "WelsDec::ResetRefPicReferences", decoder.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42473818"
+  - oss_id: 42474468
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 3999b227fc2255371b786ccec62cba3f47af37f5
+    fix_date: 2019-04-03
+    crash_func: "WelsDec::MapColToList0(WelsDec::TagWelsDecoderContext*&, signed char const&, int const&)"
+    crash_file: src/mv_pred.cpp
+    signature: [heap-use-after-free, READ, "WelsDec::MapColToList0", mv_pred.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42474468"
+  - oss_id: 42474899
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 901b92c7f3a8295a7335f9be447e667a7eec8075
+    fix_date: 2019-07-23
+    crash_func: "WelsDec::DecreasePicBuff(WelsDec::TagWelsDecoderContext*, WelsDec::TagPicBuff**, int, int, int, int)"
+    crash_file: src/decoder.cpp
+    signature: [heap-use-after-free, READ, "WelsDec::DecreasePicBuff", decoder.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42474899"
+  - oss_id: 42479359
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: aef502aca2b912fe24764b02161a61eacdf249ba
+    fix_date: 2019-10-25
+    crash_func: "WelsDec::SetUnRef(WelsDec::SPicture*)"
+    crash_file: src/manage_dec_ref.cpp
+    signature: [heap-use-after-free, WRITE, "WelsDec::SetUnRef", manage_dec_ref.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42479359"
+  - oss_id: 42479702
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8b942ee2d0b429b7ac083c4c16febbf3aa80cbf0
+    fix_date: 2019-12-23
+    crash_func: "WelsDec::CWelsDecoder::SetOption(DECODER_OPTION, void*)"
+    crash_file: src/welsDecoderExt.cpp
+    signature: [heap-use-after-free, WRITE, "WelsDec::CWelsDecoder::SetOption", welsDecoderExt.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42479702"
+  - oss_id: 42481640
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 989067645537fc54d547126adc5567b5fdc0fae2
+    fix_date: 2020-06-07
+    crash_func: "WelsDec::WelsReorderRefList(WelsDec::TagWelsDecoderContext*)"
+    crash_file: src/manage_dec_ref.cpp
+    signature: [heap-use-after-free, READ, "WelsDec::WelsReorderRefList", manage_dec_ref.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42481640"
+  - oss_id: 42487672
+    harness: decoder_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "WelsDec::NeedErrorCon(WelsDec::TagWelsDecoderContext*)"
+    crash_file: src/error_concealment.cpp
+    signature: [heap-buffer-overflow, READ, "WelsDec::NeedErrorCon", error_concealment.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487672"
+  - oss_id: 42487684
+    harness: decoder_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "WelsDec::DoErrorConSliceCopy(WelsDec::TagWelsDecoderContext*)"
+    crash_file: src/error_concealment.cpp
+    signature: [heap-buffer-overflow, READ, "WelsDec::DoErrorConSliceCopy", error_concealment.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487684"
+  - oss_id: 42487716
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "WelsDec::UpdateP16x16MotionInfo(WelsDec::TagDqLayer*, int, signed char, short*)"
+    crash_file: src/mv_pred.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::UpdateP16x16MotionInfo", mv_pred.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487716"
+  - oss_id: 42487729
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4c76c67e9b790fd40650c4e8a2a059603e8ce195
+    fix_date: 2020-10-11
+    crash_func: "WelsDec::WelsDecodeMbCabacPSlice(WelsDec::TagWelsDecoderContext*, WelsDec::TagNalUnit*, unsigned int&)"
+    crash_file: src/decode_slice.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::WelsDecodeMbCabacPSlice", decode_slice.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487729"
+  - oss_id: 42487835
+    harness: decoder_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "DeblockChromaLt42_c(unsigned char*, int, int, int, int, signed char*)"
+    crash_file: src/deblocking_common.cpp
+    signature: [heap-buffer-overflow, READ, DeblockChromaLt42_c, deblocking_common.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487835"
+  - oss_id: 42487846
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "WelsDec::UpdateP16x16RefIdx(WelsDec::TagDqLayer*, int, signed char)"
+    crash_file: src/mv_pred.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::UpdateP16x16RefIdx", mv_pred.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487846"
+  - oss_id: 42487979
+    harness: decoder_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "(anonymous namespace)::McChromaWithFragMv_c(unsigned char const*, int, unsigned char*, int, short, short, int, int)"
+    crash_file: src/mc.cpp
+    signature: [heap-buffer-overflow, READ, McChromaWithFragMv_c, mc.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487979"
+  - oss_id: 42488005
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f1bb6d3acb057785b4d89e8228e23cc4fc9caa12
+    fix_date: 2020-10-12
+    crash_func: "WelsDec::WelsCheckAndRecoverForFutureDecoding(WelsDec::TagWelsDecoderContext*)"
+    crash_file: src/manage_dec_ref.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::WelsCheckAndRecoverForFutureDecoding", manage_dec_ref.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488005"
+  - oss_id: 42488076
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::DoErrorConSliceCopy(WelsDec::TagWelsDecoderContext*)"
+    crash_file: src/error_concealment.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::DoErrorConSliceCopy", error_concealment.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488076"
+  - oss_id: 42488088
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::WelsDecodeMbCavlcBSlice(WelsDec::TagWelsDecoderContext*, WelsDec::TagNalUnit*, unsigned int&)"
+    crash_file: src/decode_slice.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::WelsDecodeMbCavlcBSlice", decode_slice.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488088"
+  - oss_id: 42488096
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::DecodeCurrentAccessUnit(WelsDec::TagWelsDecoderContext*, unsigned char**, TagBufferInfo*)"
+    crash_file: src/decoder_core.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::DecodeCurrentAccessUnit", decoder_core.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488096"
+  - oss_id: 42488097
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::WelsDecodeMbCabacISliceBaseMode0(WelsDec::TagWelsDecoderContext*, unsigned int&)"
+    crash_file: src/decode_slice.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::WelsDecodeMbCabacISliceBaseMode0", decode_slice.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488097"
+  - oss_id: 42488124
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::Update8x8RefIdx(WelsDec::TagDqLayer*&, short const&, int const&, signed char const&)"
+    crash_file: src/mv_pred.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::Update8x8RefIdx", mv_pred.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488124"
+  - oss_id: 42488393
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "ExpandPictureChroma_c(unsigned char*, int, int, int)"
+    crash_file: src/expand_pic.cpp
+    signature: [heap-buffer-overflow, WRITE, ExpandPictureChroma_c, expand_pic.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488393"
+  - oss_id: 42488563
+    harness: decoder_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::ParseIntra4x4Mode(WelsDec::TagWelsDecoderContext*, WelsDec::TagNeighborAvail*, signed char*, WelsCommon::TagBitStringAux*, WelsDec::TagDqLayer*)"
+    crash_file: src/decode_slice.cpp
+    signature: [heap-buffer-overflow, WRITE, "WelsDec::ParseIntra4x4Mode", decode_slice.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488563"
+  - oss_id: 42491174
+    harness: decoder_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsCommon::WelsFree(void*, char const*)"
+    crash_file: src/memory_align.cpp
+    signature: [attempting, -, "WelsCommon::WelsFree", memory_align.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491174"
+  - oss_id: 42491572
+    harness: decoder_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: "WelsDec::CopyRectBlock4Cols(void*, void*, int, int, int, int)"
+    crash_file: src/mv_pred.cpp
+    signature: [heap-buffer-overflow, READ, "WelsDec::CopyRectBlock4Cols", mv_pred.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491572"
+  - oss_id: 42493060
+    harness: decoder_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b52786888ddce9d6bc06b7825ba9bffc65924e0c
+    fix_date: 2021-02-20
+    crash_func: WelsFree
+    crash_file: src/memory_align.cpp
+    signature: [attempting, -, WelsFree, memory_align.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42493060"
+rejected: []
+error: null

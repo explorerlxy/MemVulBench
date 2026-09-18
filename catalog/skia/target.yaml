@@ -1,0 +1,824 @@
+project: skia
+repo: "https://skia.googlesource.com/skia.git"
+n_sites: 60
+n_issues: 60
+harnesses: ["^[[?62;c^[[>1;4000;32c^[P>|kitty(0.32.2)^[\\api_raster_n32_canvas", android_codec, animated_image_decode, api_draw_functions, api_image_filter, api_mock_gpu_canvas, api_raster_n32_canvas, api_skdescriptor, "exit\napi_path_measure", image_decode, image_filter_deserialize, image_filter_deserialize_width, path_deserialize, skdescriptor_deserialize, skottie_json, skruntimeeffect, sksl2metal, sksl2pipeline, sksl2spirv, svg_dom, textblob_deserialize]
+base:
+  commit: 86a114685267e1200fcf755ff13b3ab2ab48f12a
+  date: 2018-02-22
+  method: wave_eve
+  n_latent: 26
+  n_latent_upper: 26
+  n_wave: 2
+  note: "eve of 2018-02-22 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2022-09-27
+    n: 8
+    eve: fe6c586f1c40faa3eb8e12e6faebe2e22fb67684
+    n_latent_upper: 9
+    oss_ids: [42516508, 42516512, 42516530, 42516536, 42516555, 42516560, 42516562, 42516567]
+  - day: 2018-07-13
+    n: 3
+    eve: 1c5fd18927d5a128a12d7d5fe27f08d898be1e5b
+    n_latent_upper: 25
+    oss_ids: [42541059, 42541066, 42541071]
+  - day: 2018-12-04
+    n: 3
+    eve: 7a82edf360697609d078a414e3a9ead0c49ae070
+    n_latent_upper: 24
+    oss_ids: [42471654, 42471749, 42471774]
+  - day: 2018-02-22
+    n: 2
+    eve: 86a114685267e1200fcf755ff13b3ab2ab48f12a
+    n_latent_upper: 26
+    oss_ids: [42531089, 42529377]
+  - day: 2018-06-15
+    n: 2
+    eve: c891b102867d5af953c6a0ea68f15292bccd5035
+    n_latent_upper: 25
+    oss_ids: [42540526, 42540527]
+  - day: 2018-11-07
+    n: 2
+    eve: 5bbf790b5beeb2ed74f04551502259b54ac5556f
+    n_latent_upper: 24
+    oss_ids: [42471414, 42471425]
+  - day: 2019-12-18
+    n: 2
+    eve: 60931454f2c3bcc39727e4c6849baf20b6ea13dd
+    n_latent_upper: 21
+    oss_ids: [42480592, 42480644]
+  - day: 2021-03-08
+    n: 2
+    eve: d60ecb7b7f235ea42c10b239e81f5926cd4856a0
+    n_latent_upper: 10
+    oss_ids: [42494153, 42494155]
+  - day: 2018-02-01
+    n: 1
+    eve: e735200d34ec0b995bbc3fb67c754e5b19e466fc
+    n_latent_upper: 29
+    oss_ids: [42522146]
+  - day: 2018-02-13
+    n: 1
+    eve: ffdf3ec88065d43004100a55cffca2d0c6875b38
+    n_latent_upper: 28
+    oss_ids: [42528799]
+  - day: 2018-02-14
+    n: 1
+    eve: 3b94c06eb6c5c08aea4c0db51951751330abbcc6
+    n_latent_upper: 27
+    oss_ids: [42528843]
+  - day: 2018-08-27
+    n: 1
+    eve: 793324cf4d8d53330eec44c53f884815283b01b0
+    n_latent_upper: 25
+    oss_ids: [42470026]
+bugs:
+  - oss_id: 40096184
+    harness: android_codec
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 07afa23bd0fa74d18fb7faee898b2a876536a170
+    fix_date: 2018-10-22
+    crash_func: "swizzle_index_to_n32(void*, unsigned char const*, int, int, int, int, unsigned int const*)"
+    crash_file: src/codec/SkSwizzler.cpp
+    signature: [heap-buffer-overflow, WRITE, swizzle_index_to_n32, SkSwizzler.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/40096184"
+  - oss_id: 40096185
+    harness: image_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7a3805c348c3791f86743ab6e7d10dff23c5b98b
+    fix_date: 2018-12-07
+    crash_func: "swizzle_index_to_n32(void*, unsigned char const*, int, int, int, int, unsigned int const*)"
+    crash_file: src/codec/SkSwizzler.cpp
+    signature: [heap-buffer-overflow, READ, swizzle_index_to_n32, SkSwizzler.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/40096185"
+  - oss_id: 42470026
+    harness: animated_image_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fdd5b69feff3cf534a76e6c9855329631ebcc585
+    fix_date: 2018-08-27
+    crash_func: "swizzle_rgba16_to_bgra_premul(void*, unsigned char const*, int, int, int, int, unsigned int const*)::$_5::operator()(unsigned char const*) const"
+    crash_file: src/codec/SkSwizzler.cpp
+    signature: [heap-buffer-overflow, READ, swizzle_rgba16_to_bgra_premul, SkSwizzler.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470026"
+  - oss_id: 42470357
+    harness: api_image_filter
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8051d38358293df1e5b8a1a513f8114147ec9fa3
+    fix_date: 2018-09-13
+    crash_func: "SkPath::Iter::doNext(SkPoint*)"
+    crash_file: src/core/SkPath.cpp
+    signature: [heap-buffer-overflow, READ, "SkPath::Iter::doNext", SkPath.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470357"
+  - oss_id: 42470682
+    harness: api_raster_n32_canvas
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 78c6015cb05591819fe834b1b3abf59d229074d9
+    fix_date: 2018-09-24
+    crash_func: "void sse2::memsetT<unsigned int>(unsigned int*, unsigned int, int)"
+    crash_file: src/opts/SkUtils_opts.h
+    signature: [heap-buffer-overflow, WRITE, "void sse2::memsetT<>", SkUtils_opts.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470682"
+  - oss_id: 42471414
+    harness: api_raster_n32_canvas
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6d3cb2a81e6fecc86ff1e9cedda719b7a7e9672a
+    fix_date: 2018-11-07
+    crash_func: "void Fuzz::next<unsigned int>(unsigned int*)"
+    crash_file: fuzz/Fuzz.h
+    signature: [stack-buffer-overflow, WRITE, "void Fuzz::next<>", Fuzz.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471414"
+  - oss_id: 42471425
+    harness: api_raster_n32_canvas
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6d3cb2a81e6fecc86ff1e9cedda719b7a7e9672a
+    fix_date: 2018-11-07
+    crash_func: "sk_bzero(void*, unsigned long)"
+    crash_file: include/private/SkMalloc.h
+    signature: [stack-buffer-overflow, WRITE, sk_bzero, SkMalloc.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471425"
+  - oss_id: 42471654
+    harness: api_image_filter
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 017ac1c6d516e7a5b5c0de4001673942f54fd942
+    fix_date: 2018-12-04
+    crash_func: "make_fuzz_textblob(Fuzz*)"
+    crash_file: fuzz/FuzzCanvas.cpp
+    signature: [heap-buffer-overflow, WRITE, make_fuzz_textblob, FuzzCanvas.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471654"
+  - oss_id: 42471749
+    harness: api_mock_gpu_canvas
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 017ac1c6d516e7a5b5c0de4001673942f54fd942
+    fix_date: 2018-12-04
+    crash_func: "void SkGlyphRunListPainter::drawGlyphRunAsBMPWithPathFallback<GrTextBlob::generateFromGlyphRunList(GrGlyphCache*, GrShaderCaps const&, GrTextContext::Options const&, SkPaint const&, SkRGBA4f<(SkAlphaType)2> const&, SkScalerContextFlags, SkMatrix const&, SkSurfaceProps const&, SkGlyphRunList const&, SkGlyphRunListPainter*)::$_3, GrTextBlob::generateFromGlyphRunList(GrGlyphCache*, GrShaderCaps const&, GrTextContext::Options const&, SkPaint const&, SkRGBA4f<(SkAlphaType)2> const&, SkScalerContextFlags, SkMatrix const&, SkSurfaceProps const&, SkGlyphRunList const&, SkGlyphRunListPainter*)::$_4>(SkGlyphCacheInterface*, SkGlyphRun const&, SkPoint, SkMatrix const&, GrTextBlob::generateFromGlyphRunList(GrGlyphCache*, GrShaderCaps const&, GrTextContext::Options const&, SkPaint const&, SkRGBA4f<(SkAlphaType)2> const&, SkScalerContextFlags, SkMatrix const&, SkSurfaceProps const&, SkGlyphRunList const&, SkGlyphRunListPainter*)::$_3&&, GrTextBlob::generateFromGlyphRunList(GrGlyphCache*, GrShaderCaps const&, GrTextContext::Options const&, SkPaint const&, SkRGBA4f<(SkAlphaType)2> const&, SkScalerContextFlags, SkMatrix const&, SkSurfaceProps const&, SkGlyphRunList const&, SkGlyphRunListPainter*)::$_4&&)"
+    crash_file: src/core/SkGlyphRunPainter.cpp
+    signature: [heap-use-after-free, READ, "void SkGlyphRunListPainter::drawGlyphRunAsBMPWithPathFallback<GrTextBlob::generateFromGlyphRunList", SkGlyphRunPainter.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471749"
+  - oss_id: 42471774
+    harness: api_mock_gpu_canvas
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 017ac1c6d516e7a5b5c0de4001673942f54fd942
+    fix_date: 2018-12-04
+    crash_func: "SkGlyphRun::eachGlyphToGlyphRun(std::__1::function<void (SkGlyphRun const&)>)"
+    crash_file: src/core/SkGlyphRun.cpp
+    signature: [heap-use-after-free, READ, "SkGlyphRun::eachGlyphToGlyphRun", SkGlyphRun.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471774"
+  - oss_id: 42471950
+    harness: api_mock_gpu_canvas
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fc97f222ff1f9dc496a4b277f0a41fac51b155b8
+    fix_date: 2018-12-17
+    crash_func: "make_fuzz_textblob(Fuzz*)"
+    crash_file: fuzz/FuzzCanvas.cpp
+    signature: [heap-buffer-overflow, WRITE, make_fuzz_textblob, FuzzCanvas.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471950"
+  - oss_id: 42472034
+    harness: image_filter_deserialize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: eb82b5a3ee917654de6a60907e40ed8d3ef3d739
+    fix_date: 2018-12-14
+    crash_func: "operator-(SkPoint const&, SkPoint const&)"
+    crash_file: include/core/SkPoint.h
+    signature: [heap-buffer-overflow, READ, operator-, SkPoint.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472034"
+  - oss_id: 42473925
+    harness: image_filter_deserialize
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6e8174e9577dde0aaa3e8e3850bd5f83f5c35a8f
+    fix_date: 2019-03-05
+    crash_func: "update_tricolor_matrix(SkMatrix const&, SkPoint const*, SkRGBA4f<(SkAlphaType)2> const*, int, int, int, Matrix43*)"
+    crash_file: src/core/SkDraw_vertices.cpp
+    signature: [heap-use-after-free, READ, update_tricolor_matrix, SkDraw_vertices.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473925"
+  - oss_id: 42474151
+    harness: image_filter_deserialize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 138a06d1b1cd035daf6b6a970c75126e94777822
+    fix_date: 2019-03-15
+    crash_func: "SkMatrix* SkRecorder::copy<SkMatrix>(SkMatrix const*, unsigned long)"
+    crash_file: src/core/SkRecorder.cpp
+    signature: [heap-buffer-overflow, READ, "SkMatrix* SkRecorder::copy<>", SkRecorder.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474151"
+  - oss_id: 42477830
+    harness: sksl2spirv
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 73b8376b302ac3fd61ef4010f2bcc4fc2a48b5bc
+    fix_date: 2019-09-09
+    crash_func: "SkSL::FunctionDeclaration::determineFinalTypes(std::__1::vector<std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<SkSL::Expression> >, std::__1::allocator<std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<SkSL::Expression> > > > const&, std::__1::vector<SkSL::Type const*, std::__1::allocator<SkSL::Type const*> >*, SkSL::Type const**) const"
+    crash_file: src/sksl/ir/SkSLFunctionDeclaration.h
+    signature: [heap-buffer-overflow, READ, "SkSL::FunctionDeclaration::determineFinalTypes", SkSLFunctionDeclaration.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477830"
+  - oss_id: 42478307
+    harness: api_draw_functions
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f73ef0b84137943fce6044690d1fdb154d938e6b
+    fix_date: 2019-09-24
+    crash_func: load2
+    crash_file: src/opts/SkRasterPipeline_opts.h
+    signature: [heap-buffer-overflow, READ, load2, SkRasterPipeline_opts.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478307"
+  - oss_id: 42479418
+    harness: skdescriptor_deserialize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4a1af26f1a29268cd111d3aa445d7b465f9873cd
+    fix_date: 2019-10-24
+    crash_func: "SkDescriptor::isValid() const"
+    crash_file: src/core/SkDescriptor.cpp
+    signature: [heap-buffer-overflow, READ, "SkDescriptor::isValid", SkDescriptor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479418"
+  - oss_id: 42480592
+    harness: api_skdescriptor
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 35c64f67235db45be33a8b1e49372f5db86e1e82
+    fix_date: 2019-12-18
+    crash_func: "sk_unaligned_load<unsigned int, unsigned char>"
+    crash_file: src/core/SkUtils.h
+    signature: [heap-buffer-overflow, READ, "sk_unaligned_load<>", SkUtils.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480592"
+  - oss_id: 42480644
+    harness: api_skdescriptor
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 35c64f67235db45be33a8b1e49372f5db86e1e82
+    fix_date: 2019-12-18
+    crash_func: "SkDescriptor::addEntry(unsigned int, unsigned long, void const*)"
+    crash_file: src/core/SkDescriptor.cpp
+    signature: [segv, -, "SkDescriptor::addEntry", SkDescriptor.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480644"
+  - oss_id: 42484178
+    harness: sksl2metal
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0e041baeaa47668a0075fcb49faad24c2bdbf034
+    fix_date: 2020-08-05
+    crash_func: "SkSL::MetalCodeGenerator::getMatrixConstructHelper(SkSL::Constructor const&)"
+    crash_file: src/sksl/SkSLMetalCodeGenerator.cpp
+    signature: [heap-buffer-overflow, READ, "SkSL::MetalCodeGenerator::getMatrixConstructHelper", SkSLMetalCodeGenerator.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484178"
+  - oss_id: 42484326
+    harness: image_filter_deserialize_width
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6b3d6e92109fff606cbb3ede28574d913f40a4eb
+    fix_date: 2020-06-02
+    crash_func: "SkVertices::Attribute::Attribute(SkVertices::Attribute::Type, SkVertices::Attribute::Usage, char const*)"
+    crash_file: src/core/SkVertices.cpp
+    signature: [heap-buffer-overflow, READ, "SkVertices::Attribute::Attribute", SkVertices.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484326"
+  - oss_id: 42484866
+    harness: svg_dom
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4190f27b41ffb710e7d56fe1f1883cd8cd8b853e
+    fix_date: 2020-06-17
+    crash_func: "SkParse::FindNamedColor(char const*, unsigned long, unsigned int*)"
+    crash_file: src/utils/SkParseColor.cpp
+    signature: [global-buffer-overflow, READ, "SkParse::FindNamedColor", SkParseColor.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484866"
+  - oss_id: 42485087
+    harness: svg_dom
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 15ee455939ff8c44be22158fb6e36ae02cc5ba9e
+    fix_date: 2020-06-22
+    crash_func: "SkParse::FindNamedColor(char const*, unsigned long, unsigned int*)"
+    crash_file: src/utils/SkParseColor.cpp
+    signature: [stack-buffer-overflow, WRITE, "SkParse::FindNamedColor", SkParseColor.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485087"
+  - oss_id: 42485617
+    harness: skruntimeeffect
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c18bb51735164c8b32b30e9fc736923e60dc5f2a
+    fix_date: 2020-07-31
+    crash_func: "SkSL::StringFragment::operator==(SkSL::StringFragment) const"
+    crash_file: src/sksl/SkSLString.cpp
+    signature: [heap-use-after-free, READ, "SkSL::StringFragment::operator==", SkSLString.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485617"
+  - oss_id: 42485811
+    harness: image_filter_deserialize
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c59916a5cc0ae7574780555fe5d6cf80160cdae1
+    fix_date: 2020-07-20
+    crash_func: "SkVertices::Builder::init(SkVertices::Desc const&)"
+    crash_file: src/core/SkVertices.cpp
+    signature: [heap-buffer-overflow, WRITE, "SkVertices::Builder::init", SkVertices.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485811"
+  - oss_id: 42485858
+    harness: sksl2metal
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: db16c4845f5feca61664dc52801b43cb4b6a92aa
+    fix_date: 2020-09-09
+    crash_func: "SkSL::Compiler::scanCFG(SkSL::FunctionDefinition&)"
+    crash_file: src/sksl/SkSLCompiler.cpp
+    signature: [heap-use-after-free, READ, "SkSL::Compiler::scanCFG", SkSLCompiler.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485858"
+  - oss_id: 42486305
+    harness: sksl2spirv
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7954d6c77c1864018e4f81bf079c7efd74a97cff
+    fix_date: 2020-09-01
+    crash_func: "SkSL::VariableReference::~VariableReference()"
+    crash_file: src/sksl/ir/SkSLVariableReference.cpp
+    signature: [heap-use-after-free, READ, "SkSL::VariableReference::~VariableReference", SkSLVariableReference.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486305"
+  - oss_id: 42488409
+    harness: sksl2metal
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6f87de7c272d572e6420010bfb704bb2a15e8810
+    fix_date: 2020-10-27
+    crash_func: "SkSL::SymbolTable::~SymbolTable()"
+    crash_file: src/sksl/ir/SkSLSymbolTable.h
+    signature: [heap-use-after-free, READ, "SkSL::SymbolTable::~SymbolTable", SkSLSymbolTable.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488409"
+  - oss_id: 42489607
+    harness: sksl2metal
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 21a59d650dc8d2171cb779184af2c3a1c420c9ba
+    fix_date: 2020-11-23
+    crash_func: "float SkSL::Constructor::getVecComponent<float>(int) const"
+    crash_file: src/sksl/ir/SkSLConstructor.h
+    signature: [segv, -, "float SkSL::Constructor::getVecComponent<>", SkSLConstructor.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489607"
+  - oss_id: 42490038
+    harness: skruntimeeffect
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d7cc093f1f33136964383b576d7ce60299eaa41a
+    fix_date: 2020-11-30
+    crash_func: "SkSL::Type::typeKind() const"
+    crash_file: src/sksl/ir/SkSLType.h
+    signature: [use-after-poison, READ, "SkSL::Type::typeKind", SkSLType.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490038"
+  - oss_id: 42490863
+    harness: skruntimeeffect
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a60ac0c45c7fb940d348c72c6c4f9a19548ad569
+    fix_date: 2020-12-22
+    crash_func: "SkSL::Compiler::simplifyExpression(SkTHashMap<SkSL::Variable const*, std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<SkSL::Expression> >*, SkGoodHash>&, SkSL::BasicBlock&, std::__1::__wrap_iter<SkSL::BasicBlock::Node*>*, SkSL::Compiler::OptimizationContext*)"
+    crash_file: src/sksl/SkSLCompiler.cpp
+    signature: [use-after-poison, READ, "SkSL::Compiler::simplifyExpression", SkSLCompiler.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490863"
+  - oss_id: 42490986
+    harness: skruntimeeffect
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e64855fbfaf4a629f7eaa10ab9216690b5fc715f
+    fix_date: 2020-12-23
+    crash_func: "SkTArray<std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<SkSL::Expression> >, false>::begin() const"
+    crash_file: include/private/SkTArray.h
+    signature: [use-after-poison, READ, "SkTArray<std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<> >, false>::begin", SkTArray.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490986"
+  - oss_id: 42491296
+    harness: api_mock_gpu_canvas
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c1ac0637c597189656c02e0a7d2550641227b951
+    fix_date: 2021-01-05
+    crash_func: "make_unnormalized_half_kernel(float*, int, float)"
+    crash_file: src/gpu/effects/generated/GrCircleBlurFragmentProcessor.cpp
+    signature: [heap-buffer-overflow, WRITE, make_unnormalized_half_kernel, GrCircleBlurFragmentProcessor.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491296"
+  - oss_id: 42491387
+    harness: skruntimeeffect
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: cdde253e40829a8ec85d721cb941bb0a4f59d6a2
+    fix_date: 2021-01-06
+    crash_func: "SkSL::BasicBlock::tryRemoveExpressionBefore(std::__1::__wrap_iter<SkSL::BasicBlock::Node*>*, SkSL::Expression*)"
+    crash_file: src/sksl/SkSLCFGGenerator.cpp
+    signature: [heap-use-after-free, READ, "SkSL::BasicBlock::tryRemoveExpressionBefore", SkSLCFGGenerator.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491387"
+  - oss_id: 42492035
+    harness: sksl2pipeline
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e3a91cf31c3680d11d3678150a33024fe36eb577
+    fix_date: 2021-01-26
+    crash_func: "SkSL::Variable::initialValue() const"
+    crash_file: src/sksl/ir/SkSLVariable.cpp
+    signature: [use-after-poison, READ, "SkSL::Variable::initialValue", SkSLVariable.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492035"
+  - oss_id: 42492183
+    harness: sksl2pipeline
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1b91c0e29bc802b515f509d6a0e9396f2318b066
+    fix_date: 2021-02-11
+    crash_func: "SkSL::VariableReference::constantPropagate(SkSL::IRGenerator const&, SkTHashMap<SkSL::Variable const*, std::__1::unique_ptr<SkSL::Expression, std::__1::default_delete<SkSL::Expression> >*, SkGoodHash> const&)"
+    crash_file: src/sksl/ir/SkSLVariableReference.cpp
+    signature: [use-after-poison, READ, "SkSL::VariableReference::constantPropagate", SkSLVariableReference.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492183"
+  - oss_id: 42494153
+    harness: api_mock_gpu_canvas
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 3fa0cdada707c15d5035e75e10cf522cc2656e17
+    fix_date: 2021-03-08
+    crash_func: "GrGpuResource::release()"
+    crash_file: src/gpu/GrGpuResource.cpp
+    signature: [heap-use-after-free, READ, "GrGpuResource::release", GrGpuResource.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494153"
+  - oss_id: 42494155
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fa0cdada707c15d5035e75e10cf522cc2656e17
+    fix_date: 2021-03-08
+    crash_func: "GrResourceCache::removeFromNonpurgeableArray(GrGpuResource*)"
+    crash_file: src/gpu/GrResourceCache.cpp
+    signature: [heap-buffer-overflow, READ, "GrResourceCache::removeFromNonpurgeableArray", GrResourceCache.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494155"
+  - oss_id: 42516508
+    harness: api_image_filter
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: "SkPath::reverseAddPath(SkPath const&)"
+    crash_file: src/core/SkPath.cpp
+    signature: [heap-buffer-overflow, READ, "SkPath::reverseAddPath", SkPath.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516508"
+  - oss_id: 42516512
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: "SkPath::Iter::next(SkPoint*)"
+    crash_file: src/core/SkPath.cpp
+    signature: [heap-buffer-overflow, READ, "SkPath::Iter::next", SkPath.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516512"
+  - oss_id: 42516530
+    harness: api_raster_n32_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: Load
+    crash_file: include/private/SkVx.h
+    signature: [heap-buffer-overflow, READ, Load, SkVx.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516530"
+  - oss_id: 42516536
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: "SkTDStorage::insert(int, void const*, int, unsigned long)"
+    crash_file: src/core/SkTDArray.cpp
+    signature: [heap-buffer-overflow, READ, "SkTDStorage::insert", SkTDArray.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516536"
+  - oss_id: 42516555
+    harness: api_raster_n32_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: "void hair_path<(SkPaint::Cap)0>(SkPath const&, SkRasterClip const&, SkBlitter*, void (*)(SkPoint const*, int, SkRegion const*, SkBlitter*))"
+    crash_file: src/core/SkScan_Hairline.cpp
+    signature: [heap-buffer-overflow, READ, "void hair_path<>", SkScan_Hairline.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516555"
+  - oss_id: 42516560
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: set
+    crash_file: src/core/SkGeometry.h
+    signature: [heap-buffer-overflow, READ, set, SkGeometry.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516560"
+  - oss_id: 42516562
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: operator==
+    crash_file: include/core/SkPoint.h
+    signature: [heap-buffer-overflow, READ, operator==, SkPoint.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516562"
+  - oss_id: 42516567
+    harness: api_mock_gpu_canvas
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 652b26b1ab54dcb78f04c4b11c1f82b638031f1f
+    fix_date: 2022-09-27
+    crash_func: SkConic
+    crash_file: src/core/SkGeometry.h
+    signature: [heap-buffer-overflow, READ, SkConic, SkGeometry.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516567"
+  - oss_id: 42522146
+    harness: image_filter_deserialize
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: d2bc6207ba80c3babdb115bee7a9bbcf3c91be2e
+    fix_date: 2018-02-01
+    crash_func: "SkDraw::drawVertices(SkVertices::VertexMode, int, SkPoint const*, SkPoint const*, unsigned int const*, SkBlendMode, unsigned short const*, int, SkPaint const&) const"
+    crash_file: src/core/SkDraw_vertices.cpp
+    signature: [stack-use-after-scope, READ, "SkDraw::drawVertices", SkDraw_vertices.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522146"
+  - oss_id: 42523831
+    harness: sksl2pipeline
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f09acef2b2c900f7c76d2530c6683a637e158ecf
+    fix_date: 2023-05-01
+    crash_func: modifiers
+    crash_file: src/sksl/ir/SkSLVariable.h
+    signature: [use-after-poison, READ, modifiers, SkSLVariable.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523831"
+  - oss_id: 42528799
+    harness: textblob_deserialize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fee7cbaf44553dda1a0dd4bfc87a1dfc0d7dd369
+    fix_date: 2018-02-13
+    crash_func: "is_valid_endian_marker(unsigned char const*, bool*)"
+    crash_file: src/codec/SkCodecPriv.h
+    signature: [heap-buffer-overflow, READ, is_valid_endian_marker, SkCodecPriv.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528799"
+  - oss_id: 42528843
+    harness: image_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0be01ccecba9c330baf4ba3840e57f34f6cdf320
+    fix_date: 2018-02-14
+    crash_func: GetLE16
+    crash_file: src/demux/../utils/utils.h
+    signature: [heap-buffer-overflow, READ, GetLE16, utils.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528843"
+  - oss_id: 42529377
+    harness: animated_image_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 31476b7c942fece7d206c8d9a2e66e814592da45
+    fix_date: 2018-02-22
+    crash_func: "piex::GetFullCropDimension(piex::tiff_directory::TiffDirectory const&, unsigned int*, unsigned int*)"
+    crash_file: src/tiff_parser.cc
+    signature: [heap-buffer-overflow, READ, "piex::GetFullCropDimension", tiff_parser.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42529377"
+  - oss_id: 42531089
+    harness: path_deserialize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2c0349262132d6aa54ac6e8a4295f17c67e25907
+    fix_date: 2018-02-22
+    crash_func: "SkPath::moveTo(SkPoint const&)"
+    crash_file: include/core/SkPath.h
+    signature: [heap-buffer-overflow, READ, "SkPath::moveTo", SkPath.h]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531089"
+  - oss_id: 42540526
+    harness: skottie_json
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 587f5a9a309feebee7bf069f762f5702baf4699e
+    fix_date: 2018-06-15
+    crash_func: "skjson::(anonymous namespace)::skip_ws(char const*)"
+    crash_file: src/SkJSON.cpp
+    signature: [heap-buffer-overflow, READ, "skjson::skip_ws", SkJSON.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540526"
+  - oss_id: 42540527
+    harness: skottie_json
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0052a318680af83242d7af67acd3b055bde740c5
+    fix_date: 2018-06-15
+    crash_func: "char const* skjson::(anonymous namespace)::DOMParser::matchString<skjson::(anonymous namespace)::DOMParser::parse(char const*, unsigned long)::'lambda'(char const*, unsigned long)>(char const*, skjson::(anonymous namespace)::DOMParser::parse(char const*, unsigned long)::'lambda'(char const*, unsigned long)&&)"
+    crash_file: src/SkJSON.cpp
+    signature: [heap-buffer-overflow, READ, "char const* skjson::DOMParser::matchString<>", SkJSON.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540527"
+  - oss_id: 42541059
+    harness: api_mock_gpu_canvas
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8a6348e6d2ef095358cfc7d29d2a50d684cc719e
+    fix_date: 2018-07-13
+    crash_func: "SkFindAndPlaceGlyph::ArbitraryPositions::nextPoint()"
+    crash_file: src/core/SkFindAndPlaceGlyph.h
+    signature: [container-overflow, READ, "SkFindAndPlaceGlyph::ArbitraryPositions::nextPoint", SkFindAndPlaceGlyph.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541059"
+  - oss_id: 42541066
+    harness: api_mock_gpu_canvas
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8a6348e6d2ef095358cfc7d29d2a50d684cc719e
+    fix_date: 2018-07-13
+    crash_func: "SkColorFilter::filterColor4f(SkColor4f const&) const"
+    crash_file: src/core/SkColorFilter.cpp
+    signature: [heap-use-after-free, READ, "SkColorFilter::filterColor4f", SkColorFilter.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541066"
+  - oss_id: 42541071
+    harness: api_mock_gpu_canvas
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8a6348e6d2ef095358cfc7d29d2a50d684cc719e
+    fix_date: 2018-07-13
+    crash_func: "SkRefCntBase::unref() const"
+    crash_file: include/core/SkRefCnt.h
+    signature: [heap-use-after-free, WRITE, "SkRefCntBase::unref", SkRefCnt.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541071"
+rejected:
+  - oss_id: 42473334
+    reason: commit_missing
+  - oss_id: 42538667
+    reason: commit_missing
+  - oss_id: 42541068
+    reason: commit_missing
+error: null

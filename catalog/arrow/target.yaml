@@ -1,0 +1,428 @@
+project: arrow
+repo: "https://github.com/apache/arrow.git"
+n_sites: 27
+n_issues: 27
+harnesses: [arrow-ipc-file-fuzz, arrow-ipc-stream-fuzz, parquet-arrow-fuzz]
+base:
+  commit: 8b09ecc5c690dd270dea83490f292c2e00eef75b
+  date: 2020-01-16
+  method: wave_eve
+  n_latent: 23
+  n_latent_upper: 23
+  n_wave: 2
+  note: "eve of 2020-01-16 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2020-01-20
+    n: 4
+    eve: 92931939ac2c8c89c278c2413608c3f1d2663f91
+    n_latent_upper: 21
+    oss_ids: [42481224, 42481296, 42481301, 42481315]
+  - day: 2020-11-20
+    n: 3
+    eve: e599da2db6a22f34e94a2b44fc5f5288e89556e0
+    n_latent_upper: 7
+    oss_ids: [42489398, 42489683, 42489691]
+  - day: 2020-01-16
+    n: 2
+    eve: 8b09ecc5c690dd270dea83490f292c2e00eef75b
+    n_latent_upper: 23
+    oss_ids: [42481221, 42481229]
+  - day: 2020-07-02
+    n: 2
+    eve: 269bb7f3cc5ea6f6d958593a44a357f92561afdc
+    n_latent_upper: 17
+    oss_ids: [42485368, 42485390]
+  - day: 2020-09-29
+    n: 2
+    eve: 057a87fa0648ec29832f8deac5f5b43667b8964a
+    n_latent_upper: 12
+    oss_ids: [42487711, 42487713]
+  - day: 2020-10-01
+    n: 2
+    eve: 424bcc6ae45d0c8679d42124abd745db8d432866
+    n_latent_upper: 10
+    oss_ids: [42487832, 42487834]
+  - day: 2024-04-06
+    n: 2
+    eve: 6f6b3b49c013ab2982fbd8b50313c3b0539bc7ca
+    n_latent_upper: 3
+    oss_ids: [42531848, 42532007]
+  - day: 2020-07-08
+    n: 1
+    eve: 2b4d682be164794a8308c269b885fd67222ceb79
+    n_latent_upper: 15
+    oss_ids: [42485444]
+  - day: 2020-07-13
+    n: 1
+    eve: 8daf7560a8249b36049e88dbfae45d0b411bd78e
+    n_latent_upper: 14
+    oss_ids: [42485651]
+  - day: 2020-08-13
+    n: 1
+    eve: 525a5e96a4c460a8cd0a5c6965a39529926035aa
+    n_latent_upper: 13
+    oss_ids: [42486519]
+  - day: 2020-11-11
+    n: 1
+    eve: 00f67ac2f289fbdb26bf33e25df8f982c05d0d70
+    n_latent_upper: 8
+    oss_ids: [42488680]
+  - day: 2021-10-12
+    n: 1
+    eve: fd5865653f92cfe145b2c66cb03f272cfdd05159
+    n_latent_upper: 4
+    oss_ids: [42502950]
+bugs:
+  - oss_id: 42481221
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 724da320eaac94003a8f1229d6a820fe8c8c1816
+    fix_date: 2020-01-16
+    crash_func: Visit
+    crash_file: src/arrow/array/validate.cc
+    signature: [heap-buffer-overflow, READ, Visit, validate.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42481221"
+  - oss_id: 42481224
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a6307cc8a0127a4852b7d3d2c20940a094eed0d6
+    fix_date: 2020-01-20
+    crash_func: "arrow::UnionType::UnionType(std::__1::vector<std::__1::shared_ptr<arrow::Field>, std::__1::allocator<std::__1::shared_ptr<arrow::Field> > > const&, std::__1::vector<signed char, std::__1::allocator<signed char> > const&, arrow::UnionMode::type)"
+    crash_file: src/arrow/type.cc
+    signature: [heap-buffer-overflow, WRITE, "arrow::UnionType::UnionType", type.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481224"
+  - oss_id: 42481229
+    harness: arrow-ipc-stream-fuzz
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 724da320eaac94003a8f1229d6a820fe8c8c1816
+    fix_date: 2020-01-16
+    crash_func: "arrow::internal::CountSetBits(unsigned char const*, long, long)"
+    crash_file: src/arrow/util/bit_util.cc
+    signature: [segv, -, "arrow::internal::CountSetBits", bit_util.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42481229"
+  - oss_id: 42481296
+    harness: arrow-ipc-stream-fuzz
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6307cc8a0127a4852b7d3d2c20940a094eed0d6
+    fix_date: 2020-01-20
+    crash_func: Visit
+    crash_file: src/arrow/array/validate.cc
+    signature: [global-buffer-overflow, READ, Visit, validate.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481296"
+  - oss_id: 42481301
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6307cc8a0127a4852b7d3d2c20940a094eed0d6
+    fix_date: 2020-01-20
+    crash_func: value_offset
+    crash_file: src/arrow/array.h
+    signature: [heap-buffer-overflow, READ, value_offset, array.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481301"
+  - oss_id: 42481315
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6307cc8a0127a4852b7d3d2c20940a094eed0d6
+    fix_date: 2020-01-20
+    crash_func: "arrow::internal::CountSetBits(unsigned char const*, long, long)"
+    crash_file: src/arrow/util/bit_util.cc
+    signature: [heap-buffer-overflow, READ, "arrow::internal::CountSetBits", bit_util.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481315"
+  - oss_id: 42485368
+    harness: arrow-ipc-file-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cb2cf2f2a4714d161535837d90b025feef5bca5c
+    fix_date: 2020-07-02
+    crash_func: "arrow::ConcatenateBuffers(std::__1::vector<std::__1::shared_ptr<arrow::Buffer>, std::__1::allocator<std::__1::shared_ptr<arrow::Buffer> > > const&, arrow::MemoryPool*)"
+    crash_file: src/arrow/buffer.cc
+    signature: [heap-buffer-overflow, READ, "arrow::ConcatenateBuffers", buffer.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485368"
+  - oss_id: 42485390
+    harness: arrow-ipc-file-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cb2cf2f2a4714d161535837d90b025feef5bca5c
+    fix_date: 2020-07-02
+    crash_func: "SafeLoadAs<unsigned long>"
+    crash_file: src/arrow/util/ubsan.h
+    signature: [heap-buffer-overflow, READ, "SafeLoadAs<>", ubsan.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485390"
+  - oss_id: 42485444
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 52afc10adc0c65e3c999665fad28ce78944e23b0
+    fix_date: 2020-07-08
+    crash_func: "PutOffsets<int>"
+    crash_file: src/arrow/array/concatenate.cc
+    signature: [heap-buffer-overflow, READ, "PutOffsets<>", concatenate.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485444"
+  - oss_id: 42485651
+    harness: arrow-ipc-stream-fuzz
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 389b1535bbb40da80f441c02ff93335eb5407316
+    fix_date: 2020-07-13
+    crash_func: "arrow::ConcatenateBuffers(std::__1::vector<std::__1::shared_ptr<arrow::Buffer>, std::__1::allocator<std::__1::shared_ptr<arrow::Buffer> > > const&, arrow::MemoryPool*)"
+    crash_file: src/arrow/buffer.cc
+    signature: [negative-size-param, -, "arrow::ConcatenateBuffers", buffer.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485651"
+  - oss_id: 42486519
+    harness: arrow-ipc-stream-fuzz
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 570184b9b1aac88ea0f82a13655babe3c730c8f6
+    fix_date: 2020-08-13
+    crash_func: "arrow::(anonymous namespace)::IsEqualPrimitive(arrow::PrimitiveArray const&, arrow::PrimitiveArray const&)"
+    crash_file: src/arrow/compare.cc
+    signature: [negative-size-param, -, "arrow::IsEqualPrimitive", compare.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486519"
+  - oss_id: 42487711
+    harness: parquet-arrow-fuzz
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 571d48e007718321bca8adb5f100555fed0e1957
+    fix_date: 2020-09-29
+    crash_func: WriteRingBuffer
+    crash_file: src/brotli_ep/c/dec/decode.c
+    signature: [global-buffer-overflow, WRITE, WriteRingBuffer, decode.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487711"
+  - oss_id: 42487713
+    harness: parquet-arrow-fuzz
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 571d48e007718321bca8adb5f100555fed0e1957
+    fix_date: 2020-09-29
+    crash_func: "parquet::SerializedPageReader::DecompressPage(int, int, unsigned char const*)"
+    crash_file: src/parquet/column_reader.cc
+    signature: [negative-size-param, -, "parquet::SerializedPageReader::DecompressPage", column_reader.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487713"
+  - oss_id: 42487832
+    harness: parquet-arrow-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa441346b69ed1064aac39409731740c228319c0
+    fix_date: 2020-10-01
+    crash_func: "parquet::SerializedPageReader::DecompressPage(int, int, unsigned char const*)"
+    crash_file: src/parquet/column_reader.cc
+    signature: [heap-buffer-overflow, READ, "parquet::SerializedPageReader::DecompressPage", column_reader.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487832"
+  - oss_id: 42487834
+    harness: parquet-arrow-fuzz
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fa441346b69ed1064aac39409731740c228319c0
+    fix_date: 2020-10-01
+    crash_func: BrotliCopyBytes
+    crash_file: src/brotli_ep/c/dec/./bit_reader.h
+    signature: [negative-size-param, -, BrotliCopyBytes, bit_reader.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487834"
+  - oss_id: 42488680
+    harness: parquet-arrow-fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 64396aa487fc24cd26b62a9b92e13a952c6ecf74
+    fix_date: 2020-11-11
+    crash_func: Finish
+    crash_file: src/arrow/util/bitmap_writer.h
+    signature: [heap-buffer-overflow, WRITE, Finish, bitmap_writer.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488680"
+  - oss_id: 42489398
+    harness: arrow-ipc-stream-fuzz
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: be13bf50fe00f0f4c2d065a61db189d6c59b1f7b
+    fix_date: 2020-11-20
+    crash_func: "ValidateOffsets<arrow::ListType>"
+    crash_file: src/arrow/array/validate.cc
+    signature: [global-buffer-overflow, READ, "ValidateOffsets<>", validate.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489398"
+  - oss_id: 42489683
+    harness: arrow-ipc-file-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: be13bf50fe00f0f4c2d065a61db189d6c59b1f7b
+    fix_date: 2020-11-20
+    crash_func: "VisitStatus<(lambda at /src/arrow/cpp/src/arrow/array/validate.cc:406:9), (lambda at /src/arrow/cpp/src/arrow/array/validate.cc:413:9)>"
+    crash_file: src/arrow/visitor_inline.h
+    signature: [heap-buffer-overflow, READ, "VisitStatus<>", visitor_inline.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489683"
+  - oss_id: 42489691
+    harness: arrow-ipc-stream-fuzz
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: be13bf50fe00f0f4c2d065a61db189d6c59b1f7b
+    fix_date: 2020-11-20
+    crash_func: "void arrow::internal::TransferBitmap<(arrow::internal::TransferMode)0>(unsigned char const*, long, long, long, unsigned char*)"
+    crash_file: src/arrow/util/bitmap_ops.cc
+    signature: [global-buffer-overflow, READ, "void arrow::internal::TransferBitmap<>", bitmap_ops.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489691"
+  - oss_id: 42502950
+    harness: arrow-ipc-file-fuzz
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 157d48ccd47a488d419cc50d440a04c2796f1462
+    fix_date: 2021-10-12
+    crash_func: "FormatTwoDigits<long>"
+    crash_file: src/arrow/util/formatting.h
+    signature: [global-buffer-overflow, READ, "FormatTwoDigits<>", formatting.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502950"
+  - oss_id: 42504313
+    harness: parquet-arrow-fuzz
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 35cc9d1409ed4bab07a40af704a13a6b2011f691
+    fix_date: 2021-11-17
+    crash_func: "parquet::(anonymous namespace)::DeltaByteArrayDecoder::GetInternal(parquet::ByteArray*, int)"
+    crash_file: src/parquet/encoding.cc
+    signature: [memcpy-param-overlap, -, "parquet::DeltaByteArrayDecoder::GetInternal", encoding.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504313"
+  - oss_id: 42504581
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a36dd8cd208582316322b0dd6e7569785c8f2780
+    fix_date: 2021-11-22
+    crash_func: "ValidateOffsets<arrow::ListType>"
+    crash_file: src/arrow/array/validate.cc
+    signature: [heap-buffer-overflow, READ, "ValidateOffsets<>", validate.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504581"
+  - oss_id: 42504668
+    harness: parquet-arrow-fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 587ce1dc5fcf4172591bdfdcb8882d47507d7daa
+    fix_date: 2021-11-24
+    crash_func: "parquet::(anonymous namespace)::DeltaByteArrayDecoder::GetInternal(parquet::ByteArray*, int)"
+    crash_file: src/parquet/encoding.cc
+    signature: [heap-buffer-overflow, WRITE, "parquet::DeltaByteArrayDecoder::GetInternal", encoding.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504668"
+  - oss_id: 42529609
+    harness: arrow-ipc-stream-fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 84c15da1997559c37841dc16f9e2c70c643dd9d2
+    fix_date: 2023-11-27
+    crash_func: "swap<arrow::Buffer *>"
+    crash_file: include/c++/v1/__utility/swap.h
+    signature: [heap-buffer-overflow, WRITE, "swap<>", swap.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529609"
+  - oss_id: 42531848
+    harness: arrow-ipc-file-fuzz
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6aa33210ecd9773f18ceb775306b79de132b6c6f
+    fix_date: 2024-04-06
+    crash_func: FormatOneChar
+    crash_file: src/arrow/util/formatting.h
+    signature: [stack-buffer-overflow, WRITE, FormatOneChar, formatting.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531848"
+  - oss_id: 42532007
+    harness: arrow-ipc-stream-fuzz
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6aa33210ecd9773f18ceb775306b79de132b6c6f
+    fix_date: 2024-04-06
+    crash_func: "arrow::internal::detail::FormatOneChar(char, char**)"
+    crash_file: src/arrow/util/formatting.h
+    signature: [stack-buffer-overflow, WRITE, "arrow::internal::detail::FormatOneChar", formatting.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532007"
+  - oss_id: 429130592
+    harness: parquet-arrow-fuzz
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: aa45c12402dfd638f2e0ff7c2957c0512a3595a9
+    fix_date: 2025-07-04
+    crash_func: "parquet::(anonymous namespace)::PlainDecoder<parquet::PhysicalType<(parquet::Type::type)7>>::DecodeArrow(int, int, unsigned char const*, long, arrow::FixedSizeBinaryBuilder*)"
+    crash_file: src/parquet/decoder.cc
+    signature: [use-after-poison, READ, "parquet::PlainDecoder<parquet::PhysicalType<>>::DecodeArrow", decoder.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/429130592"
+rejected: []
+error: null

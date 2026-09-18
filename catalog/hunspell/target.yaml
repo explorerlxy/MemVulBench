@@ -1,0 +1,280 @@
+project: hunspell
+repo: "https://github.com/hunspell/hunspell.git"
+n_sites: 16
+n_issues: 16
+harnesses: [affdicfuzzer]
+base:
+  commit: 6291cac8fb85a96f7e6d5a35f1912365f3b17ae9
+  date: 2022-09-12
+  method: measured_sweep
+  n_latent: 8
+  n_latent_upper: 8
+  n_wave: 3
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-09-08
+    n: 3
+    eve: 74b08bfb8b611b7ae4bea2a6f1f74d9f73c1d0e3
+    n_latent_upper: 16
+    oss_ids: [42515643, 42515667, 42515678]
+  - day: 2022-09-16
+    n: 3
+    eve: 7d1c7d46c7a7fcd9987fc2691712b0696ab6646c
+    n_latent_upper: 7
+    oss_ids: [42516007, 42516009, 42516014]
+  - day: 2022-09-12
+    n: 2
+    eve: a51d7aa0b398f4dc2510f53debdf03c03bec458c
+    n_latent_upper: 13
+    oss_ids: [42515798, 42515836]
+  - day: 2022-09-15
+    n: 1
+    eve: 6291cac8fb85a96f7e6d5a35f1912365f3b17ae9
+    n_latent_upper: 11
+    oss_ids: [42515962]
+  - day: 2022-09-17
+    n: 1
+    eve: e7c38b0f85d65a6ad6af47753228f4b0df335c8e
+    n_latent_upper: 7
+    oss_ids: [42516081]
+  - day: 2022-10-03
+    n: 1
+    eve: 52021df98d3b5d279a68d91d6f7c34fdcf011abb
+    n_latent_upper: 6
+    oss_ids: [42516625]
+  - day: 2022-10-09
+    n: 1
+    eve: 0d2ed609cd61240e7c9e444db75e9d7acd0bca35
+    n_latent_upper: 5
+    oss_ids: [42516926]
+  - day: 2022-10-13
+    n: 1
+    eve: fd76b33223081a2ad680e23ebee7c5416d5ff9a3
+    n_latent_upper: 4
+    oss_ids: [42517080]
+  - day: 2022-10-20
+    n: 1
+    eve: c6f50ec4112232ad64ca6b33e7cd09a12c1c8e67
+    n_latent_upper: 3
+    oss_ids: [42517144]
+  - day: 2022-12-05
+    n: 1
+    eve: 07564b7d879c38b44f12fc7edee66511512316da
+    n_latent_upper: 2
+    oss_ids: [42518895]
+  - day: 2023-02-09
+    n: 1
+    eve: dbfc3656efd1217b1ae242d9f60f26ccf94b34b4
+    n_latent_upper: 1
+    oss_ids: [42520880]
+bugs:
+  - oss_id: 42515643
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5aa940a5a3b65263db809953024e9689e191868f
+    fix_date: 2022-09-08
+    crash_func: "SuggestMgr::badcharkey_utf(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, w_char const*, int, int)"
+    crash_file: src/hunspell/suggestmgr.cxx
+    signature: [heap-buffer-overflow, READ, "SuggestMgr::badcharkey_utf", suggestmgr.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515643"
+  - oss_id: 42515667
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ebf0e2ce8d903815a6e8d828286394b6f8830860
+    fix_date: 2022-09-08
+    crash_func: "AffixMgr::redundant_condition(char, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, int)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [heap-buffer-overflow, READ, "AffixMgr::redundant_condition", affixmgr.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515667"
+  - oss_id: 42515678
+    harness: affdicfuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4631c530b0afbd57ef34ffa6260899ffa6d91eb4
+    fix_date: 2022-09-08
+    crash_func: "PfxEntry::test_condition(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)"
+    crash_file: src/hunspell/affentry.cxx
+    signature: [stack-buffer-overflow, READ, "PfxEntry::test_condition", affentry.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515678"
+  - oss_id: 42515798
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 89efe61594c02706612d8555ce7d0832d8a4704d
+    fix_date: 2022-09-12
+    crash_func: "SfxEntry::add(char const*, unsigned int)"
+    crash_file: src/hunspell/affentry.cxx
+    signature: [heap-buffer-overflow, READ, "SfxEntry::add", affentry.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515798"
+  - oss_id: 42515836
+    harness: affdicfuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d6836713630f752a1ea1729c666b26afd8f1e432
+    fix_date: 2022-09-12
+    crash_func: "operator()"
+    crash_file: include/c++/v1/__algorithm/comp.h
+    signature: [heap-use-after-free, READ, operator, comp.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515836"
+  - oss_id: 42515962
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 810859c7e74830d606140a1d28d24ff02977fded
+    fix_date: 2022-09-15
+    crash_func: "PfxEntry::add(char const*, unsigned long)"
+    crash_file: src/hunspell/affentry.cxx
+    signature: [heap-buffer-overflow, READ, "PfxEntry::add", affentry.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42515962"
+  - oss_id: 42516007
+    harness: affdicfuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e7c38b0f85d65a6ad6af47753228f4b0df335c8e
+    fix_date: 2022-09-16
+    crash_func: "AffixMgr::compound_check(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, short, short, short, short, hentry**, hentry**, char, char, int*)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [stack-buffer-overflow, READ, "AffixMgr::compound_check", affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516007"
+  - oss_id: 42516009
+    harness: affdicfuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 7d1c7d46c7a7fcd9987fc2691712b0696ab6646c
+    fix_date: 2022-09-16
+    crash_func: "HashMgr::~HashMgr()"
+    crash_file: src/hunspell/hashmgr.cxx
+    signature: [attempting, -, "HashMgr::~HashMgr", hashmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516009"
+  - oss_id: 42516014
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e7c38b0f85d65a6ad6af47753228f4b0df335c8e
+    fix_date: 2022-09-16
+    crash_func: "AffixMgr::compound_check(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, short, short, short, short, hentry**, hentry**, char, char, int*)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [heap-buffer-overflow, READ, "AffixMgr::compound_check", affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516014"
+  - oss_id: 42516081
+    harness: affdicfuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 35c3cad4d70b222e7c1d73211a79a96ff7bf3651
+    fix_date: 2022-09-17
+    crash_func: hash
+    crash_file: src/hunspell/hashmgr.cxx
+    signature: [stack-buffer-overflow, READ, hash, hashmgr.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516081"
+  - oss_id: 42516625
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7357713ba5d529f3ff70c654b703429fc9cb55a4
+    fix_date: 2022-10-03
+    crash_func: "AffixMgr::cpdcase_check(char const*, int)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [heap-buffer-overflow, READ, "AffixMgr::cpdcase_check", affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516625"
+  - oss_id: 42516926
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cca31da62a61ef0fdfff47deb947c655bdb7d187
+    fix_date: 2022-10-09
+    crash_func: leftcommonsubstring
+    crash_file: src/hunspell/suggestmgr.cxx
+    signature: [heap-buffer-overflow, READ, leftcommonsubstring, suggestmgr.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516926"
+  - oss_id: 42517080
+    harness: affdicfuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f3f90ae7301595761d3445097ce111ffd5220e2d
+    fix_date: 2022-10-13
+    crash_func: "AffixMgr::suffix_check(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, int, int, int, PfxEntry*, unsigned short, unsigned short, char)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [stack-buffer-overflow, READ, "AffixMgr::suffix_check", affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42517080"
+  - oss_id: 42517144
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f384b7565bdb6b25a071ee5314a7e851e628ef00
+    fix_date: 2022-10-20
+    crash_func: "AffixMgr::suffix_check(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, int, int, int, PfxEntry*, unsigned short, unsigned short, char)"
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [stack-buffer-overflow, READ, "AffixMgr::suffix_check", affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42517144"
+  - oss_id: 42518895
+    harness: affdicfuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bf229433b9ba7131bd80b52b8c71399230e0dc12
+    fix_date: 2022-12-05
+    crash_func: isSubset
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [heap-use-after-free, READ, isSubset, affixmgr.cxx]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42518895"
+  - oss_id: 42520880
+    harness: affdicfuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1cb9ba1f695624ee0a823fac6d9dbd83b6a7066a
+    fix_date: 2023-02-09
+    crash_func: setcminmax
+    crash_file: src/hunspell/affixmgr.cxx
+    signature: [stack-buffer-underflow, READ, setcminmax, affixmgr.cxx]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520880"
+rejected: []
+error: null

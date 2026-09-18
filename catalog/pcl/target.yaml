@@ -1,0 +1,196 @@
+project: pcl
+repo: "https://github.com/PointCloudLibrary/pcl"
+n_sites: 13
+n_issues: 13
+harnesses: [ply_reader_fuzzer]
+base:
+  commit: 09e914b0b3b13c07710e814d71df3ff958945ba3
+  date: 2022-08-25
+  method: measured_sweep
+  n_latent: 12
+  n_latent_upper: 12
+  n_wave: 12
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-08-25
+    n: 12
+    eve: 09e914b0b3b13c07710e814d71df3ff958945ba3
+    n_latent_upper: 12
+    oss_ids: [42494624, 42494680, 42495779, 42496384, 42496798, 42498471, 42500027, 42500120, 42502685, 42503375, 42503445, 42504591]
+  - day: 2022-07-19
+    n: 1
+    eve: 4fe0737e913421c21744213cd22f165184bfb608
+    n_latent_upper: 13
+    oss_ids: [42494631]
+bugs:
+  - oss_id: 42494624
+    harness: ply_reader_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexListPropertyContentCallback<int>(int)"
+    crash_file: src/ply_io.cpp
+    signature: [container-overflow, WRITE, "void pcl::PLYReader::vertexListPropertyContentCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494624"
+  - oss_id: 42494631
+    harness: ply_reader_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d52b107223ef8adec990608e8685392b48d79c6
+    fix_date: 2022-07-19
+    crash_func: "pcl::PLYReader::amendProperty(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, unsigned char)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, READ, "pcl::PLYReader::amendProperty", ply_io.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494631"
+  - oss_id: 42494680
+    harness: ply_reader_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "pcl::PLYReader::read(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, pcl::PCLPointCloud2&, Eigen::Matrix<float, 4, 1, 0, 4, 1>&, Eigen::Quaternion<float, 0>&, int&, int)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, READ, "pcl::PLYReader::read", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494680"
+  - oss_id: 42495779
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "pcl::PLYReader::vertexColorCallback(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, unsigned char)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "pcl::PLYReader::vertexColorCallback", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42495779"
+  - oss_id: 42496384
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexListPropertyContentCallback<double>(double)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexListPropertyContentCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496384"
+  - oss_id: 42496798
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<unsigned int>(unsigned int)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496798"
+  - oss_id: 42498471
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<unsigned short>(unsigned short)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42498471"
+  - oss_id: 42500027
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexListPropertyContentCallback<int>(int)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexListPropertyContentCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42500027"
+  - oss_id: 42500120
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<short>(short)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42500120"
+  - oss_id: 42502685
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<double>(double)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42502685"
+  - oss_id: 42503375
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<signed char>(signed char)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42503375"
+  - oss_id: 42503445
+    harness: ply_reader_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<unsigned int>(unsigned int)"
+    crash_file: src/ply_io.cpp
+    signature: [container-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42503445"
+  - oss_id: 42504591
+    harness: ply_reader_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3f897554837966b71aa3bfd72dd7ce482e5e55ae
+    fix_date: 2022-08-25
+    crash_func: "void pcl::PLYReader::vertexScalarPropertyCallback<float>(float)"
+    crash_file: src/ply_io.cpp
+    signature: [heap-buffer-overflow, WRITE, "void pcl::PLYReader::vertexScalarPropertyCallback<>", ply_io.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42504591"
+rejected: []
+error: null

@@ -1,0 +1,223 @@
+project: openexr
+repo: "https://github.com/AcademySoftwareFoundation/openexr"
+n_sites: 12
+n_issues: 12
+harnesses: [openexr_exrcheck_fuzzer, openexr_exrcorecheck_fuzzer, openexr_scanlines_fuzzer]
+base:
+  commit: 379a2884afe9b6d81060ffbd182c8021630a55e2
+  date: 2023-05-26
+  method: measured_sweep
+  n_latent: 2
+  n_latent_upper: 2
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-07-31
+    n: 2
+    eve: c5763cfdf59ef4880dacdb11664782822a0976cd
+    n_latent_upper: 8
+    oss_ids: [42511621, 42511644]
+  - day: 2023-05-29
+    n: 2
+    eve: 379a2884afe9b6d81060ffbd182c8021630a55e2
+    n_latent_upper: 3
+    oss_ids: [42524709, 42524837]
+  - day: 2020-09-05
+    n: 1
+    eve: d6b042ad5542f1e27405735662f0174ffbf2bce0
+    n_latent_upper: 6
+    oss_ids: [42487091]
+  - day: 2020-09-10
+    n: 1
+    eve: 3c05eacda70e3ac00ca45287aa4c8de7262a0673
+    n_latent_upper: 5
+    oss_ids: [42487210]
+  - day: 2022-04-05
+    n: 1
+    eve: f09788d9dbc3f1a7a79d669c2d51e5679c492c70
+    n_latent_upper: 10
+    oss_ids: [42510317]
+  - day: 2022-05-15
+    n: 1
+    eve: 3d0a184a31549ded8be10026bc17eb80c8be5d40
+    n_latent_upper: 9
+    oss_ids: [42510454]
+  - day: 2022-10-24
+    n: 1
+    eve: d59452aa382d620ed9a903b3a9b9a920f35d9c32
+    n_latent_upper: 6
+    oss_ids: [42514081]
+  - day: 2023-02-02
+    n: 1
+    eve: 436fcd2829ae9a8965af1db15ac8531fdc8b96ce
+    n_latent_upper: 5
+    oss_ids: [42517450]
+  - day: 2023-05-24
+    n: 1
+    eve: 200613925d7920906e6edad1ba87a0b00d0f0d76
+    n_latent_upper: 4
+    oss_ids: [42524491]
+  - day: 2023-07-23
+    n: 1
+    eve: 83c57cb4b99e7755dce10262bbb584077a93c2e4
+    n_latent_upper: 1
+    oss_ids: [42524920]
+bugs:
+  - oss_id: 42487091
+    harness: openexr_scanlines_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b0bbe24152b603afa5fed50e8f2203d0a88925fe
+    fix_date: 2020-09-05
+    crash_func: readBits
+    crash_file: OpenEXR/IlmImf/ImfFastHuf.cpp
+    signature: [heap-buffer-overflow, READ, readBits, ImfFastHuf.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487091"
+  - oss_id: 42487210
+    harness: openexr_scanlines_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d80f11f4f55100d007ae80a162bf257ec291612c
+    fix_date: 2020-09-10
+    crash_func: "Imf_2_5::copyIntoFrameBuffer(char const*&, char*, char*, unsigned long, bool, double, Imf_2_5::Compressor::Format, Imf_2_5::PixelType, Imf_2_5::PixelType)"
+    crash_file: OpenEXR/IlmImf/ImfMisc.cpp
+    signature: [heap-buffer-overflow, WRITE, "Imf_2_5::copyIntoFrameBuffer", ImfMisc.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487210"
+  - oss_id: 42510317
+    harness: openexr_exrcheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36af3db60e2c4dff4c3efe51cd83a28add116871
+    fix_date: 2022-04-05
+    crash_func: "Imf_3_1::(anonymous namespace)::memstream_read(_priv_exr_context_t const*, void*, void*, unsigned long, unsigned long, int (*)(_priv_exr_context_t const*, int, char const*, ...))"
+    crash_file: src/lib/OpenEXRUtil/ImfCheckFile.cpp
+    signature: [heap-buffer-overflow, READ, "Imf_3_1::memstream_read", ImfCheckFile.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42510317"
+  - oss_id: 42510454
+    harness: openexr_exrcheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 672c77d7c923402f549371e08b39ece4552cbb85
+    fix_date: 2022-05-15
+    crash_func: unaligned_load16
+    crash_file: src/lib/OpenEXRCore/internal_xdr.h
+    signature: [heap-buffer-overflow, READ, unaligned_load16, internal_xdr.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42510454"
+  - oss_id: 42511621
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7629dad94ac310a285099f488618cbebc5eb9a85
+    fix_date: 2022-07-31
+    crash_func: unaligned_load32
+    crash_file: src/lib/OpenEXRCore/internal_xdr.h
+    signature: [heap-buffer-overflow, READ, unaligned_load32, internal_xdr.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42511621"
+  - oss_id: 42511644
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7629dad94ac310a285099f488618cbebc5eb9a85
+    fix_date: 2022-07-31
+    crash_func: uncompress_b44_impl
+    crash_file: src/lib/OpenEXRCore/internal_b44.c
+    signature: [heap-buffer-overflow, READ, uncompress_b44_impl, internal_b44.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42511644"
+  - oss_id: 42514081
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 043a50807eb19af844dd34281900b2ad8571325f
+    fix_date: 2022-10-24
+    crash_func: fasthuf_decode
+    crash_file: src/lib/OpenEXRCore/internal_huf.c
+    signature: [heap-buffer-overflow, READ, fasthuf_decode, internal_huf.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42514081"
+  - oss_id: 42517450
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 063a881e7a5cd57156dbd0c9b6ad4d30f7023e55
+    fix_date: 2023-02-02
+    crash_func: fasthuf_read_bits
+    crash_file: src/lib/OpenEXRCore/internal_huf.c
+    signature: [heap-buffer-overflow, READ, fasthuf_read_bits, internal_huf.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42517450"
+  - oss_id: 42524491
+    harness: openexr_exrcorecheck_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6f235a803c6370583891f008181f85a91eedb681
+    fix_date: 2023-05-24
+    crash_func: Classifier_read
+    crash_file: src/lib/OpenEXRCore/internal_dwa_classifier.h
+    signature: [stack-buffer-overflow, READ, Classifier_read, internal_dwa_classifier.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524491"
+  - oss_id: 42524709
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 425d4b24e08e21e7052e3163d0d69af1c1e591a6
+    fix_date: 2023-05-29
+    crash_func: libdeflate_zlib_decompress_ex
+    crash_file: work/_deps/deflate-src/lib/zlib_decompress.c
+    signature: [heap-buffer-overflow, READ, libdeflate_zlib_decompress_ex, zlib_decompress.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524709"
+  - oss_id: 42524837
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 425d4b24e08e21e7052e3163d0d69af1c1e591a6
+    fix_date: 2023-05-29
+    crash_func: readUInt
+    crash_file: src/lib/OpenEXRCore/internal_huf.c
+    signature: [heap-buffer-overflow, READ, readUInt, internal_huf.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524837"
+  - oss_id: 42524920
+    harness: openexr_exrcorecheck_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 54dd0411dd9670cc9ff0daf54d19ad277524a7b9
+    fix_date: 2023-07-23
+    crash_func: LossyDctDecoder_execute
+    crash_file: src/lib/OpenEXRCore/internal_dwa_decoder.h
+    signature: [heap-buffer-overflow, READ, LossyDctDecoder_execute, internal_dwa_decoder.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524920"
+rejected: []
+error: null

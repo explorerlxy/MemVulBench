@@ -1,16 +1,21 @@
 # MemVulBench 设计
 
+> **状态：2026-09 以前的设计备忘，保留作路线对照。**
+>
+> 现行身份是最终入口五元组 `(类型, 方向, 文件, 行号, H3)`。
+> 20 席已准入；2026-09-18 arrow 替换 librawspeed 后已核验 292。
+> 逐漏洞 `bug.yaml`、全 oracle 矩阵、负对照闸门均未物化。
+> 本文不覆盖论文、`data/measure/admission/2026-09-18.json` 或 `docs/catalog.md`。
+
 面向 C/C++ **内存安全**漏洞挖掘研究的高密度、崩溃可验证评测平台。
 
 ## 0. 定位
 
-**这不是一个要独立发表的 benchmark artifact，而是支撑 fuzzing 技术研究的评测平台。**
-唯一的成功判据是能不能可信地支撑"本方法比 baseline 发现更多漏洞"这个主张。
+**MemVulBench 是面向 C/C++ 内存安全漏洞挖掘研究的可独立发表评测基准。**
+成功判据是：在固定上游提交上，用可复现的崩溃见证和最终入口五元组，支撑“本方法比 baseline 发现更多漏洞”的主张。
 
-因此凡是为了"benchmark 本身作为科学工件站得住"而付出的成本——难度标定、密度失真量化、
-未知漏洞普查、确定性契约——一律不做，放弃的理由与代价记在
-[methodology.md](methodology.md) §10。构建路线是**纯考古**：目标即上游某个未经修改的
-commit，漏洞即该 commit 上 PoC 实际开火的那批。
+难度标定、密度失真量化、未知漏洞普查和完备确定性契约不是现行准入条件。
+构建路线是**纯考古**：目标即上游某个未经修改的 commit，漏洞即该 commit 上 PoC 实际开火、并由五元组标识的那批。
 
 ## 1. 为什么现有测试集不够用
 
@@ -83,7 +88,7 @@ ARVO 每个镜像 1 个 bug，一次战役只产出 1 个二元结果，统计�
   补丁能否应用完全不能预测漏洞能否重现，因为漏洞不是补丁的逆运算。**已废弃。**
 - **文件级时间 pin**：未被否定，但为了把单目标密度从 8 推到 26，需要认领集扩张阶梯、
   冲突图、最大独立集、保真 manifest、存活窗口实测——工程量是十倍，收益是边际的。
-  **降级为可选增量**（[methodology.md](methodology.md) §9），本轮搁置。
+  **降级为可选增量**，本轮搁置。
 
 同一试点的第三行才是结论：**不做任何改动时，天然潜伏漏洞的复现率是 6/6（100%）。**
 
@@ -96,10 +101,11 @@ bugs   = 在 C 上构建后 PoC 实际开火、且指纹匹配的那批漏洞
 
 单目标密度因此受历史支配（预期 6–12），总漏洞数改由**目标数量**提供：
 12 个目标 × 8–10 个 ≈ 100+ 个已验证可观测漏洞，是 Magma 可观测数（45）的两倍以上。
+一个项目进入最终 benchmark，当且仅当该基线上 **去重 expected 指纹 + unique
+`known_real` ≥ 8**（已知可验证的内存漏洞总数）。少于 6 直接 pass；6–7 暂缓。
 本质是用算力换工程量——算力可以排队，写求解器的时间不能。
 
-找基线的方法见 [methodology.md](methodology.md) §4：OSS-Fuzz 接入初期的**批量修复日**
-就是天然密度的局部峰值，候选基线可纯靠元数据算出，零构建成本。
+候选基线来自 OSS-Fuzz 接入初期的**批量修复日**，可纯靠元数据算出，零构建成本。
 
 ### D4：准入闸门（三条）
 
@@ -119,47 +125,34 @@ bugs   = 在 C 上构建后 PoC 实际开火、且指纹匹配的那批漏洞
 
 任何一条不过 → 该漏洞出局并记录原因。
 
-### D5：双构建，测量不污染被测工具
+人工回放可以补充一种明确标注的例外：固定基线上出现可复现的 ASan/SEGV
+内存安全故障，其指纹 **不在** 该目标本轮 expected 集合内，且源码/修复能证明
+这是独立漏洞，则登记为 `known_real`。计数单位是去重后的漏洞指纹，不是 PoC。
+同洞 sanitizer 漂移、后到 PoC 先死在已计入的 expected 洞上、同一目录走路上的
+更早 ASan 中止，都不是 `known_real`。无法完成证据闭环的异常仍按 D4 出局。
+口径与核验见 [known-real.md](known-real.md)。
 
-Magma 把探针编进被测二进制，同时改变了覆盖率反馈和吞吐。MemVulBench 分离：
+### D5：人工记录，禁止自动编排
 
-- **eval build**：被测工具实际跑的二进制。**不含任何 MemVulBench 探针**，
-  标准 ASan 配置。零测量偏差。
-- **recover build**：同源同 commit，`-fsanitize-recover=address` + `halt_on_error=0`。
-  **只在战役结束后离线重放用**，不参与战役。
-
-recover build 的作用是**补捞被掩蔽的漏洞**：一个输入同时踩中 3 号和 7 号时，
-正常 ASan 只报 3 号。战役结束后把工具存下的全部输入（queue + crashes，带时间戳）
-灌一遍 recover build，就能还原完整的触发集合。这一步很便宜，但直接提高可报告的漏洞数。
-
-### D6：T → D 两层
-
-| 层 | 定义 | 如何测 |
-|---|---|---|
-| **Triggered** | 内存违规真的发生了 | recover build 的报告匹配指纹。**无需人写谓词** |
-| **Detected** | 被测工具自己的 oracle 报出来了 | 工具 `crashes/` 里的输入归因到 bug ID |
-
-恒有 `T ⊇ D`。`T \ D` 是真的越界了但工具没报，即**检测机制强弱的度量**。
-
-**Reached 层（探针）本轮不做。** 它需要从 fix patch 的 hunk 自动推导探针位置并插桩，
-是纯粹的工程成本，且只在研究方向明确关心"路径可达性"时才有价值。
-需要时再按 Magma 的方式补，不影响其余设计。
+编译、PoC 回放、ASan 指纹分析和目录准入均由操作者逐条执行。仓库不提供批量
+编译器、回放器、sweep runner 或自动准入程序；每次结果必须连同命令、commit、
+harness、PoC ID、退出状态和原始日志一起记录。
 
 ## 3. 产出物结构
 
 ```
 MemVulBench/
-├── docs/            design.md（本文）/ methodology.md / schema.md / determinism.md / adr/
-├── memvul/          Python 包：census / candidates / sweep / base / verify / emit
-├── targets/<project>/
-│   ├── target.yaml            基线 commit、harness、漏洞清单
-│   ├── Dockerfile             基于 ARVO 镜像，checkout 到基线
-│   ├── replay.sh              回放与归因
+├── docs/            design.md（本文）/ schema.md / determinism.md / adr/
+├── memvul/          Python 包：census / candidates / catalog / base；pin / slice / emit 在 deferred/
+├── catalog/         第一阶段考古目录（进 git）：每项目一份 target.yaml + 总表
+│   ├── index.md
+│   ├── index.json
+│   └── <project>/target.yaml  基线 commit、方法、潜伏漏洞清单（见 catalog.md）
+├── targets/<project>/         评测集物化结果
+│   ├── target.yaml
+│   ├── Dockerfile
 │   └── bugs/<BUGID>/
-│       ├── bug.yaml           元数据 + oracle 矩阵 + 指纹
-│       ├── poc/               触发输入
-│       └── oracle/            参考 ASan 报告
-└── data/            普查、候选基线、sweep 结果（大文件不进 git）
+└── data/            普查与人工测量记录（大文件不进 git）
 ```
 
 目标的完整定义就是 `target.yaml` 里的一个 commit sha —— 任何人 `git checkout` 即可复验，
@@ -183,10 +176,10 @@ MemVulBench/
 
 | 风险 | 缓解 |
 |---|---|
-| 天然密度不够，单目标只有 3–5 个漏洞 | 先跑数据再判断；不够时按 [methodology.md](methodology.md) §9 补机会主义 pin |
+| 天然密度不够，单目标只有 3–5 个漏洞 | 记录为低密度项目，后续另行决策 |
 | 崩了但崩的不是那个漏洞（Magma 病） | D4 条件 2 指纹匹配强制拦截 |
-| 多漏洞互相掩蔽（先崩的挡住后面的） | 战役后用 recover build 离线补捞（D5） |
+| 多漏洞互相掩蔽（先崩的挡住后面的） | 由操作者记录并单独复核 |
 | 崩溃点重合导致归因歧义 | D4 条件 3：指纹冲突则合并为同一 bug |
-| 基线上存在未编目的未知漏洞，败坏归因分母 | 未归因崩溃簇单独报出；sweep 产量并列时取时间较晚的基线 |
+| 基线上存在未编目的未知漏洞，败坏归因分母 | 未归因崩溃簇单独记录 |
 | 漏洞难度未标定，等权计数可能分辨率不足 | 报每漏洞 TTD 曲线而非只报总数，分布交给读者判断 |
 | 语料全部来自 OSS-Fuzz 已发现的漏洞，难度天花板被封死 | **无解**，写进论文局限性（测的是速度，不是能力边界） |

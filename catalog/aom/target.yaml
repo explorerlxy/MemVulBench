@@ -1,0 +1,210 @@
+project: aom
+repo: "https://aomedia.googlesource.com/aom"
+n_sites: 11
+n_issues: 11
+harnesses: [av1_dec_fuzzer, av1_dec_fuzzer_threaded, jpegsave_file_fuzzer]
+base:
+  commit: 5d8a6c3fd57f2bb0695b09557817255a9eb20846
+  date: 2021-04-21
+  method: measured_sweep
+  n_latent: 2
+  n_latent_upper: 2
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-04-21
+    n: 2
+    eve: 5d8a6c3fd57f2bb0695b09557817255a9eb20846
+    n_latent_upper: 4
+    oss_ids: [42496071, 42496106]
+  - day: 2018-09-05
+    n: 1
+    eve: ed830191a9b18de28218786662c865ccec2c9bd0
+    n_latent_upper: 5
+    oss_ids: [42470226]
+  - day: 2018-09-14
+    n: 1
+    eve: 8ae39302e354781ba03012d4f211da97e1715f9c
+    n_latent_upper: 4
+    oss_ids: [42470283]
+  - day: 2018-11-26
+    n: 1
+    eve: 352c10bb5b6466e21c657c2ef5de53d793e26724
+    n_latent_upper: 3
+    oss_ids: [42471682]
+  - day: 2018-11-27
+    n: 1
+    eve: f48b0d22e2c1391351cb4ba75d033db1df9ad7ce
+    n_latent_upper: 3
+    oss_ids: [42471675]
+  - day: 2019-01-19
+    n: 1
+    eve: 0ec68d4fecb336ce03c5a1f4e28d0bdc57c41f20
+    n_latent_upper: 2
+    oss_ids: [42472819]
+  - day: 2020-11-25
+    n: 1
+    eve: 998ba757cc5391e9247bd452382f7dc26b1a91f0
+    n_latent_upper: 5
+    oss_ids: [42489818]
+  - day: 2022-03-01
+    n: 1
+    eve: 493cf67c62441838a56c5ea6f8dfbf6777e3cee7
+    n_latent_upper: 2
+    oss_ids: [42508710]
+  - day: 2022-08-01
+    n: 1
+    eve: 0d6bf26dff5bacdc2455778513fb6a573eec5550
+    n_latent_upper: 2
+    oss_ids: [42514031]
+  - day: 2024-03-05
+    n: 1
+    eve: cc9e46cb0da9323ecacf679772f6f5b21934a363
+    n_latent_upper: 1
+    oss_ids: [42533504]
+bugs:
+  - oss_id: 42470226
+    harness: av1_dec_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: bb5c2833051f4bc8d084bbbe8c8adbdad7dd5449
+    fix_date: 2018-09-05
+    crash_func: set_planes_to_neutral_grey
+    crash_file: av1/decoder/decodeframe.c
+    signature: [heap-use-after-free, WRITE, set_planes_to_neutral_grey, decodeframe.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42470226"
+  - oss_id: 42470283
+    harness: av1_dec_fuzzer_threaded
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 32017745b0b4cb6d69ced6250dd67d9faf6282f8
+    fix_date: 2018-09-14
+    crash_func: enqueue_lr_jobs
+    crash_file: av1/common/thread_common.c
+    signature: [heap-buffer-overflow, WRITE, enqueue_lr_jobs, thread_common.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42470283"
+  - oss_id: 42471675
+    harness: av1_dec_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fe996504f76f4204074c1f8f681925852c61b777
+    fix_date: 2018-11-27
+    crash_func: av1_highbd_dr_prediction_z1_avx2
+    crash_file: aom_dsp/x86/intrapred_avx2.c
+    signature: [stack-buffer-overflow, READ, av1_highbd_dr_prediction_z1_avx2, intrapred_avx2.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42471675"
+  - oss_id: 42471682
+    harness: av1_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0ad5c625be27d7a3622dae95e9afe5e66b112d46
+    fix_date: 2018-11-26
+    crash_func: show_existing_frame_reset
+    crash_file: av1/decoder/decodeframe.c
+    signature: [heap-buffer-overflow, READ, show_existing_frame_reset, decodeframe.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42471682"
+  - oss_id: 42472819
+    harness: av1_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b46542180d551d5e4eb666cf35dd62395ba43f3e
+    fix_date: 2019-01-19
+    crash_func: av1_convolve_2d_facade
+    crash_file: av1/common/convolve.c
+    signature: [heap-buffer-overflow, READ, av1_convolve_2d_facade, convolve.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42472819"
+  - oss_id: 42489818
+    harness: jpegsave_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7822c0665c60a95ac381953002fc710b84abedc3
+    fix_date: 2020-11-25
+    crash_func: decompress_smooth_data
+    crash_file: libjpeg-turbo/jdcoefct.c
+    signature: [heap-use-after-free, READ, decompress_smooth_data, jdcoefct.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42489818"
+  - oss_id: 42496071
+    harness: av1_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 80bd452152ec39b7d88bded3d9090fb20b1ba12f
+    fix_date: 2021-04-21
+    crash_func: av1_free_cdef_buffers
+    crash_file: av1/common/alloccommon.c
+    signature: [heap-buffer-overflow, READ, av1_free_cdef_buffers, alloccommon.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496071"
+  - oss_id: 42496106
+    harness: av1_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 80bd452152ec39b7d88bded3d9090fb20b1ba12f
+    fix_date: 2021-04-21
+    crash_func: cdef_row_mt_sync_write
+    crash_file: av1/common/thread_common.c
+    signature: [heap-buffer-overflow, READ, cdef_row_mt_sync_write, thread_common.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496106"
+  - oss_id: 42508710
+    harness: av1_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ee9dbcb018f20f16348b22bc413dec1c9d901183
+    fix_date: 2022-03-01
+    crash_func: sync_write
+    crash_file: av1/decoder/decodeframe.c
+    signature: [heap-buffer-overflow, WRITE, sync_write, decodeframe.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42508710"
+  - oss_id: 42514031
+    harness: av1_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8cc8160a5cb1e2e79db9f010896d70656981f409
+    fix_date: 2022-08-01
+    crash_func: intra_copy_frame_mvs
+    crash_file: av1/decoder/decodemv.c
+    signature: [heap-buffer-overflow, WRITE, intra_copy_frame_mvs, decodemv.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42514031"
+  - oss_id: 42533504
+    harness: av1_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 08efc1491525624dc5f5ebf0e450227524a7db4f
+    fix_date: 2024-03-05
+    crash_func: od_ec_dec_refill
+    crash_file: aom_dsp/entdec.c
+    signature: [heap-buffer-overflow, READ, od_ec_dec_refill, entdec.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42533504"
+rejected: []
+error: null

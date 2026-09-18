@@ -1,0 +1,404 @@
+project: libdwarf
+repo: "https://github.com/davea42/libdwarf-code"
+n_sites: 26
+n_issues: 26
+harnesses: [fuzz_die_cu_attrs, fuzz_die_cu_attrs_loclist, fuzz_die_cu_offset, fuzz_die_cu_print, fuzz_findfuncbypc, fuzz_gdbindex, fuzz_globals, fuzz_init_path, fuzz_macro_dwarf5, fuzz_rng, fuzz_set_frame_all, fuzz_srcfiles, fuzz_stack_frame_access]
+base:
+  commit: 2ee326bad2b4286ca19a2d007d2bb0e77adcdcff
+  date: 2023-03-20
+  method: wave_eve
+  n_latent: 21
+  n_latent_upper: 21
+  n_wave: 2
+  note: "eve of 2023-03-21 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2023-03-21
+    n: 2
+    eve: 2ee326bad2b4286ca19a2d007d2bb0e77adcdcff
+    n_latent_upper: 21
+    oss_ids: [42521581, 42521585]
+  - day: 2023-03-27
+    n: 2
+    eve: cfe5c2dfac0d4eca22cf450db770fdba2bacdd38
+    n_latent_upper: 18
+    oss_ids: [42522677, 42522684]
+  - day: 2021-11-08
+    n: 1
+    eve: 732c3509ffaa4b1aa70458c2ad568f55c6ae8e32
+    n_latent_upper: 18
+    oss_ids: [42504059]
+  - day: 2022-07-23
+    n: 1
+    eve: 436ea0d3fd7bef82679be01af8ce69e3f84e1c62
+    n_latent_upper: 20
+    oss_ids: [42511252]
+  - day: 2023-03-08
+    n: 1
+    eve: 832ee2aa1a8e30d7afe4fc99adcc2bd15af0802c
+    n_latent_upper: 23
+    oss_ids: [42521611]
+  - day: 2023-03-14
+    n: 1
+    eve: 685d4bc6589f554796f5c75cc9b4693eea0a52ed
+    n_latent_upper: 22
+    oss_ids: [42521587]
+  - day: 2023-03-24
+    n: 1
+    eve: 81ee0849b77554d93805b79a59d3e0370b1fbe16
+    n_latent_upper: 19
+    oss_ids: [42522074]
+  - day: 2023-03-28
+    n: 1
+    eve: 8bf96199a0e130483cceca6bfacfbe4127441ab1
+    n_latent_upper: 16
+    oss_ids: [42522668]
+  - day: 2023-03-30
+    n: 1
+    eve: 4eb65e7aabd5343956768cc9b7c4f7f04f4cbea5
+    n_latent_upper: 15
+    oss_ids: [42522777]
+  - day: 2023-05-19
+    n: 1
+    eve: 2783706a87420d1902c03a3ec573d7775a0d408d
+    n_latent_upper: 14
+    oss_ids: [42524514]
+  - day: 2023-06-10
+    n: 1
+    eve: e8c726e2be644df2706342b7a80633d07ecd7fb4
+    n_latent_upper: 13
+    oss_ids: [42525082]
+  - day: 2023-06-13
+    n: 1
+    eve: 44dbfe78d6586281ef76761fb6b3e6eaf18fcc21
+    n_latent_upper: 12
+    oss_ids: [42525273]
+bugs:
+  - oss_id: 42504059
+    harness: fuzz_init_path
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cd021a1311572d4f9bb37b0b808685a5ed84bcc3
+    fix_date: 2021-11-08
+    crash_func: read_gs_section_group
+    crash_file: src/lib/libdwarf/dwarf_elf_load_headers.c
+    signature: [heap-buffer-overflow, READ, read_gs_section_group, dwarf_elf_load_headers.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42504059"
+  - oss_id: 42511252
+    harness: fuzz_init_path
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 24dff940cc4c71a9c3cb5475aee231b19163a12c
+    fix_date: 2022-07-23
+    crash_func: is_full_path
+    crash_file: src/lib/libdwarf/dwarf_debuglink.c
+    signature: [global-buffer-overflow, READ, is_full_path, dwarf_debuglink.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511252"
+  - oss_id: 42521581
+    harness: fuzz_die_cu_attrs
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 680899627db6f05b8cf8d86272255563b6d81ebd
+    fix_date: 2023-03-21
+    crash_func: dwarf_dietype_offset
+    crash_file: src/lib/libdwarf/dwarf_query.c
+    signature: [stack-buffer-overflow, READ, dwarf_dietype_offset, dwarf_query.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42521581"
+  - oss_id: 42521585
+    harness: fuzz_die_cu_offset
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 680899627db6f05b8cf8d86272255563b6d81ebd
+    fix_date: 2023-03-21
+    crash_func: dwarf_get_version_of_die
+    crash_file: src/lib/libdwarf/dwarf_query.c
+    signature: [stack-buffer-overflow, READ, dwarf_get_version_of_die, dwarf_query.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42521585"
+  - oss_id: 42521587
+    harness: fuzz_gdbindex
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e564c9350c104f16eb2223d7b29082e3deb5d2fb
+    fix_date: 2023-03-14
+    crash_func: dwarf_gdbindex_cuvector_inner_attributes
+    crash_file: src/lib/libdwarf/dwarf_gdbindex.c
+    signature: [heap-buffer-overflow, READ, dwarf_gdbindex_cuvector_inner_attributes, dwarf_gdbindex.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521587"
+  - oss_id: 42521589
+    harness: fuzz_globals
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9f11f8351c85f7715144943f72cd72f011616fe8
+    fix_date: 2024-12-07
+    crash_func: _dwarf_memcpy_noswap_bytes
+    crash_file: src/lib/libdwarf/dwarf_memcpy_swap.c
+    signature: [heap-buffer-overflow, READ, _dwarf_memcpy_noswap_bytes, dwarf_memcpy_swap.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521589"
+  - oss_id: 42521611
+    harness: fuzz_rng
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bb99fe7ddb2bc6601bcb0ee30ced6a8cc8cb0564
+    fix_date: 2023-03-08
+    crash_func: read_single_rle_entry
+    crash_file: src/lib/libdwarf/dwarf_rnglists.c
+    signature: [heap-buffer-overflow, READ, read_single_rle_entry, dwarf_rnglists.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521611"
+  - oss_id: 42522074
+    harness: fuzz_macro_dwarf5
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 771cfcca1ef6a4a7eb9595d700fc72020d0ed72e
+    fix_date: 2023-03-24
+    crash_func: _dwarf_make_CU_Context
+    crash_file: src/lib/libdwarf/dwarf_die_deliv.c
+    signature: [heap-buffer-overflow, READ, _dwarf_make_CU_Context, dwarf_die_deliv.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522074"
+  - oss_id: 42522668
+    harness: fuzz_die_cu_attrs
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 2b19bc239f3cedd1b2461e4265d90633277ce704
+    fix_date: 2023-03-28
+    crash_func: ExecuteFilesOnyByOne
+    crash_file: aflplusplus/utils/aflpp_driver/aflpp_driver.c
+    signature: [attempting, -, ExecuteFilesOnyByOne, aflpp_driver.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522668"
+  - oss_id: 42522677
+    harness: fuzz_srcfiles
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: c25a14c3fd5522aff0b1d2a77d7ee66b7c529779
+    fix_date: 2023-03-27
+    crash_func: dwarf_srcfiles
+    crash_file: src/lib/libdwarf/dwarf_line.c
+    signature: [attempting, -, dwarf_srcfiles, dwarf_line.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522677"
+  - oss_id: 42522684
+    harness: fuzz_srcfiles
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: c25a14c3fd5522aff0b1d2a77d7ee66b7c529779
+    fix_date: 2023-03-27
+    crash_func: _dwarf_internal_srclines
+    crash_file: src/lib/libdwarf/dwarf_line.c
+    signature: [attempting, -, _dwarf_internal_srclines, dwarf_line.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522684"
+  - oss_id: 42522777
+    harness: fuzz_srcfiles
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36e4063ade31c9ea6ea5df973d2045b36877885b
+    fix_date: 2023-03-30
+    crash_func: operandmismatch
+    crash_file: src/lib/libdwarf/dwarf_line_table_reader_common.h
+    signature: [heap-buffer-overflow, READ, operandmismatch, dwarf_line_table_reader_common.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522777"
+  - oss_id: 42524514
+    harness: fuzz_macro_dwarf5
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4017ab8b92195641e6876b388cebe2d3307634f5
+    fix_date: 2023-05-19
+    crash_func: _dwarf_read_line_table_header
+    crash_file: src/lib/libdwarf/dwarf_line_table_reader_common.h
+    signature: [heap-buffer-overflow, READ, _dwarf_read_line_table_header, dwarf_line_table_reader_common.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42524514"
+  - oss_id: 42525052
+    harness: fuzz_set_frame_all
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e53adc90ffd6d5d0fad61546b0041990aefd970b
+    fix_date: 2023-08-29
+    crash_func: _dwarf_create_cie_from_after_start
+    crash_file: src/lib/libdwarf/dwarf_frame2.c
+    signature: [heap-buffer-overflow, READ, _dwarf_create_cie_from_after_start, dwarf_frame2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525052"
+  - oss_id: 42525082
+    harness: fuzz_die_cu_attrs_loclist
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c8c54ba5c79b0a2687f0fa2ac331479506c3210f
+    fix_date: 2023-06-10
+    crash_func: _dwarf_read_loc_expr_op
+    crash_file: src/lib/libdwarf/dwarf_locationop_read.c
+    signature: [heap-buffer-overflow, READ, _dwarf_read_loc_expr_op, dwarf_locationop_read.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525082"
+  - oss_id: 42525273
+    harness: fuzz_die_cu_attrs_loclist
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9cae1be75ec333d2b8ab8800df4850ed77a8b025
+    fix_date: 2023-06-13
+    crash_func: read_encoded_addr
+    crash_file: src/lib/libdwarf/dwarf_locationop_read.c
+    signature: [heap-buffer-overflow, READ, read_encoded_addr, dwarf_locationop_read.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525273"
+  - oss_id: 42526087
+    harness: fuzz_srcfiles
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c8c5073f35b1efdcc610ecf369c78f87fdd34714
+    fix_date: 2023-07-11
+    crash_func: read_line_table_program
+    crash_file: src/lib/libdwarf/dwarf_line_table_reader_common.h
+    signature: [heap-buffer-overflow, READ, read_line_table_program, dwarf_line_table_reader_common.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526087"
+  - oss_id: 42528352
+    harness: fuzz_stack_frame_access
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: cd741379bd0203a0875b413542d5f982606ae637
+    fix_date: 2023-09-23
+    crash_func: dwarf_dealloc
+    crash_file: src/lib/libdwarf/dwarf_alloc.c
+    signature: [heap-use-after-free, READ, dwarf_dealloc, dwarf_alloc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528352"
+  - oss_id: 42528680
+    harness: fuzz_findfuncbypc
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e8df98c5c6629b75402b8ea5e5a44797fb3ae4b3
+    fix_date: 2023-09-30
+    crash_func: _dwarf_memcpy_swap_bytes
+    crash_file: src/lib/libdwarf/dwarf_memcpy_swap.c
+    signature: [heap-buffer-overflow, READ, _dwarf_memcpy_swap_bytes, dwarf_memcpy_swap.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528680"
+  - oss_id: 42532906
+    harness: fuzz_findfuncbypc
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 812f5db1c0fd4369e4c3b6bb8b132c70b6940320
+    fix_date: 2024-02-12
+    crash_func: dwarf_global_formref_b
+    crash_file: src/lib/libdwarf/dwarf_form.c
+    signature: [heap-buffer-overflow, READ, dwarf_global_formref_b, dwarf_form.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532906"
+  - oss_id: 42533844
+    harness: fuzz_srcfiles
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2930f3121ee6b07da405103934c329bbeca0382f
+    fix_date: 2024-03-19
+    crash_func: _dwarf_decode_line_udata_form
+    crash_file: src/lib/libdwarf/dwarf_line.c
+    signature: [heap-buffer-overflow, READ, _dwarf_decode_line_udata_form, dwarf_line.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533844"
+  - oss_id: 42536234
+    harness: fuzz_die_cu_attrs_loclist
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b3d86e3e2d33d2ba1ec7e0064531010553ef056a
+    fix_date: 2024-06-15
+    crash_func: internal_load_loclists_contexts
+    crash_file: src/lib/libdwarf/dwarf_loclists.c
+    signature: [heap-use-after-free, READ, internal_load_loclists_contexts, dwarf_loclists.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536234"
+  - oss_id: 42537435
+    harness: fuzz_macro_dwarf5
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 46fa96f95e043bac9b98ca6f7a9a542dae8f46cd
+    fix_date: 2024-07-27
+    crash_func: dwarf_dealloc_die
+    crash_file: src/lib/libdwarf/dwarf_alloc.c
+    signature: [heap-use-after-free, READ, dwarf_dealloc_die, dwarf_alloc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537435"
+  - oss_id: 383170474
+    harness: fuzz_globals
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 43be4567488c8b531d1ae98fe128f5eda374098e
+    fix_date: 2024-12-10
+    crash_func: dwarf_dnames_header
+    crash_file: src/lib/libdwarf/dwarf_debugnames.c
+    signature: [heap-buffer-overflow, READ, dwarf_dnames_header, dwarf_debugnames.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/383170474"
+  - oss_id: 385742125
+    harness: fuzz_die_cu_print
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 375d102768ee1ff953f97a93345318db3f63ea3c
+    fix_date: 2024-12-26
+    crash_func: dwarf_decode_leb128
+    crash_file: src/lib/libdwarf/dwarf_leb.c
+    signature: [heap-buffer-overflow, READ, dwarf_decode_leb128, dwarf_leb.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/385742125"
+rejected:
+  - oss_id: 42521597
+    reason: commit_missing
+error: null

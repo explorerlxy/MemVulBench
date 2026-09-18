@@ -73,8 +73,8 @@ class Group:
         """1 − share of the single hottest crash-file directory.
 
         Plugin-style trees (assimp's AssetLib/*) score high; a flat ``src/``
-        (harfbuzz, matio) scores low. Methodology.md §5: conflict rate is
-        an architectural property, so this is a first-class ranking term.
+        (harfbuzz, matio) scores low. Conflict rate is an architectural
+        property, so this is a first-class ranking term.
         """
         dirs: list[str] = []
         seen: set[str] = set()
@@ -92,10 +92,8 @@ class Group:
     def score(self) -> float:
         """Expected benchmark value of a slice built from this group.
 
-        Density dominates. Temporal bugs and OOB writes are up-weighted.
-        Modularity is the third term: a high-site flat tree will still
-        fragment at pin time, so it must not outrank a slightly smaller
-        but plugin-structured one.
+        Density and type diversity dominate. Modularity is a weak hint
+        (it used to predict pin conflicts; pure archaeology does not pin).
         """
         if self.n_sites < 2:
             return 0.0
@@ -105,7 +103,7 @@ class Group:
             + 0.5 * self.n_temporal
             + 0.3 * self.n_write
             + 1.5 * diversity
-            + 8.0 * self.modularity
+            + 1.0 * self.modularity
         )
 
 

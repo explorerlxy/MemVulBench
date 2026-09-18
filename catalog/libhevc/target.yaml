@@ -1,0 +1,155 @@
+project: libhevc
+repo: "https://android.googlesource.com/platform/external/libhevc"
+n_sites: 12
+n_issues: 12
+harnesses: [hevc_dec_fuzzer]
+base:
+  commit: fbcad2ab1bd8229e95f5ea9d578701247dd8c38c
+  date: 2019-10-03
+  method: measured_sweep
+  n_latent: 6
+  n_latent_upper: 6
+  n_wave: 3
+  note: "PoC replay + signature match"
+waves:
+  - day: 2019-12-03
+    n: 5
+    eve: f74c2f62ddb38ba464655a3e4d7e1bc71936c8a2
+    n_latent_upper: 5
+    oss_ids: [42477794, 42477797, 42477823, 42478079, 42478937]
+  - day: 2019-09-04
+    n: 3
+    eve: a469393436a31721cc47533e6479ace24e81f6a4
+    n_latent_upper: 9
+    oss_ids: [42477544, 42477558, 42477586]
+  - day: 2019-10-22
+    n: 1
+    eve: fbcad2ab1bd8229e95f5ea9d578701247dd8c38c
+    n_latent_upper: 6
+    oss_ids: [42477979]
+bugs:
+  - oss_id: 42477544
+    harness: hevc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d28f2210ee8e65afdfb07a1fd6582285d3d178e0
+    fix_date: 2019-09-04
+    crash_func: ihevcd_parse_slice_data
+    crash_file: decoder/ihevcd_parse_slice.c
+    signature: [heap-buffer-overflow, READ, ihevcd_parse_slice_data, ihevcd_parse_slice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477544"
+  - oss_id: 42477558
+    harness: hevc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d28f2210ee8e65afdfb07a1fd6582285d3d178e0
+    fix_date: 2019-09-04
+    crash_func: ihevcd_sao_shift_ctb
+    crash_file: decoder/ihevcd_sao.c
+    signature: [heap-buffer-overflow, WRITE, ihevcd_sao_shift_ctb, ihevcd_sao.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477558"
+  - oss_id: 42477586
+    harness: hevc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d28f2210ee8e65afdfb07a1fd6582285d3d178e0
+    fix_date: 2019-09-04
+    crash_func: ihevcd_ctb_boundary_strength_islice
+    crash_file: decoder/ihevcd_boundary_strength.c
+    signature: [heap-buffer-overflow, WRITE, ihevcd_ctb_boundary_strength_islice, ihevcd_boundary_strength.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477586"
+  - oss_id: 42477794
+    harness: hevc_dec_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1e2d083b14478f051b9ecb436a818fad7e0d86ab
+    fix_date: 2019-12-03
+    crash_func: ihevcd_ref_list
+    crash_file: decoder/ihevcd_ref_list.c
+    signature: [stack-buffer-overflow, WRITE, ihevcd_ref_list, ihevcd_ref_list.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477794"
+  - oss_id: 42477797
+    harness: hevc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1e2d083b14478f051b9ecb436a818fad7e0d86ab
+    fix_date: 2019-12-03
+    crash_func: ihevcd_parse_slice_data
+    crash_file: decoder/ihevcd_parse_slice.c
+    signature: [heap-buffer-overflow, WRITE, ihevcd_parse_slice_data, ihevcd_parse_slice.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477797"
+  - oss_id: 42477823
+    harness: hevc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1e2d083b14478f051b9ecb436a818fad7e0d86ab
+    fix_date: 2019-12-03
+    crash_func: ihevcd_parse_coding_unit
+    crash_file: decoder/ihevcd_parse_slice.c
+    signature: [heap-buffer-overflow, READ, ihevcd_parse_coding_unit, ihevcd_parse_slice.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477823"
+  - oss_id: 42477979
+    harness: hevc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4d36db275bb4d0abc410415f6d8f5af4bc179102
+    fix_date: 2019-10-22
+    crash_func: ihevcd_mv_merge
+    crash_file: decoder/ihevcd_mv_merge.c
+    signature: [heap-buffer-overflow, READ, ihevcd_mv_merge, ihevcd_mv_merge.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477979"
+  - oss_id: 42478079
+    harness: hevc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1e2d083b14478f051b9ecb436a818fad7e0d86ab
+    fix_date: 2019-12-03
+    crash_func: ihevcd_get_mv_ctb
+    crash_file: decoder/ihevcd_get_mv.c
+    signature: [heap-buffer-overflow, WRITE, ihevcd_get_mv_ctb, ihevcd_get_mv.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42478079"
+  - oss_id: 42478937
+    harness: hevc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1e2d083b14478f051b9ecb436a818fad7e0d86ab
+    fix_date: 2019-12-03
+    crash_func: ihevcd_process
+    crash_file: decoder/ihevcd_process_slice.c
+    signature: [heap-buffer-overflow, READ, ihevcd_process, ihevcd_process_slice.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42478937"
+rejected:
+  - oss_id: 42477632
+    reason: commit_missing
+  - oss_id: 42477643
+    reason: commit_missing
+  - oss_id: 42477679
+    reason: commit_missing
+error: null

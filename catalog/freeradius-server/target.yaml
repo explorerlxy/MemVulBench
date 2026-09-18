@@ -1,0 +1,249 @@
+project: freeradius-server
+repo: "https://github.com/FreeRADIUS/freeradius-server.git"
+n_sites: 14
+n_issues: 14
+harnesses: ["^[[?62;c^[[>1;4000;32c^[P>|kitty(0.32.2)^[\\fuzzer_tacacs", fuzzer_dhcpv4, fuzzer_dhcpv6, fuzzer_dns, fuzzer_radius, fuzzer_tacacs, fuzzer_util]
+base:
+  commit: 10bc205ff66c31933260c298e29efc9981631877
+  date: 2021-10-06
+  method: wave_eve
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 3
+  note: "eve of 2021-10-06 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-10-06
+    n: 3
+    eve: 10bc205ff66c31933260c298e29efc9981631877
+    n_latent_upper: 9
+    oss_ids: [42501404, 42502932, 42502928]
+  - day: 2024-01-29
+    n: 3
+    eve: 65c8dcaf2b5f33cf172016858d918f6d2a54c4bd
+    n_latent_upper: 5
+    oss_ids: [42532511, 42532517, 42532519]
+  - day: 2021-10-07
+    n: 1
+    eve: 90284231653fc167b80572499199632511f2cd7a
+    n_latent_upper: 5
+    oss_ids: [42502963]
+  - day: 2021-10-31
+    n: 1
+    eve: 445d78187d456e26fb5b673bc34b059aa8b440cf
+    n_latent_upper: 5
+    oss_ids: [42503442]
+  - day: 2022-03-16
+    n: 1
+    eve: 715997169adb1d7b850c5e0930003293ef401872
+    n_latent_upper: 9
+    oss_ids: [42509534]
+  - day: 2022-06-16
+    n: 1
+    eve: 9f12c1ae7787707acad0e5bf4bcba8cd3ee44109
+    n_latent_upper: 8
+    oss_ids: [42512272]
+  - day: 2023-02-12
+    n: 1
+    eve: c297f3525a60da93487108c8fe1be3851827d4c8
+    n_latent_upper: 7
+    oss_ids: [42520982]
+  - day: 2023-02-14
+    n: 1
+    eve: 8e3e3144fbbb3272fd86bcf0e4f03e0e68093b4d
+    n_latent_upper: 5
+    oss_ids: [42521061]
+  - day: 2024-02-06
+    n: 1
+    eve: 1c7ca0e314cba468d4ea7964bf8aa0403e07000f
+    n_latent_upper: 2
+    oss_ids: [42532727]
+  - day: 2024-02-09
+    n: 1
+    eve: 1d46e30604d867d5fc4ae087c408c0d8e0766551
+    n_latent_upper: 1
+    oss_ids: [42532722]
+bugs:
+  - oss_id: 42501404
+    harness: fuzzer_tacacs
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3b49098069f85d9d725a7657dcd09df1ee38f25e
+    fix_date: 2021-10-06
+    crash_func: fr_is_base16_nstd
+    crash_file: src/freeradius-devel/util/base16.h
+    signature: [global-buffer-overflow, READ, fr_is_base16_nstd, base16.h]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42501404"
+  - oss_id: 42502928
+    harness: fuzzer_dns
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1def06002d0722f02e396ee83e900ee4a011ad4d
+    fix_date: 2021-10-06
+    crash_func: fr_dns_label_uncompressed_length
+    crash_file: src/lib/util/dns.c
+    signature: [heap-buffer-overflow, READ, fr_dns_label_uncompressed_length, dns.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42502928"
+  - oss_id: 42502932
+    harness: fuzzer_dns
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ac5bbfbbc5dff69d0344c9aa815669e9a3fa105
+    fix_date: 2021-10-06
+    crash_func: fr_struct_from_network
+    crash_file: src/lib/util/struct.c
+    signature: [heap-buffer-overflow, READ, fr_struct_from_network, struct.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42502932"
+  - oss_id: 42502963
+    harness: fuzzer_dns
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 66e59da0336526c1f2d2d49aa12838b26d0e8240
+    fix_date: 2021-10-07
+    crash_func: dns_label_decode
+    crash_file: src/lib/util/dns.c
+    signature: [heap-buffer-overflow, READ, dns_label_decode, dns.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502963"
+  - oss_id: 42503442
+    harness: fuzzer_util
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 35d9a658b48f73faee44fc45ce3e11b0d10bfeb1
+    fix_date: 2021-10-31
+    crash_func: fr_unix_time_from_tm
+    crash_file: src/lib/util/time.c
+    signature: [global-buffer-overflow, READ, fr_unix_time_from_tm, time.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503442"
+  - oss_id: 42509534
+    harness: fuzzer_dhcpv4
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 622489f07fd4fd4eaefdb24fa1381aab3bed3ed3
+    fix_date: 2022-03-16
+    crash_func: __covrec_1D46B478A8383196
+    crash_file: src/protocols/dhcpv4/decode.c
+    signature: [heap-buffer-overflow, READ, __covrec_1D46B478A8383196, decode.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509534"
+  - oss_id: 42512272
+    harness: fuzzer_util
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ddfd3a99268136d4c321fa9e2fc38c2d2b8e329d
+    fix_date: 2022-06-16
+    crash_func: fr_size_from_str
+    crash_file: src/lib/util/size.c
+    signature: [heap-buffer-overflow, READ, fr_size_from_str, size.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42512272"
+  - oss_id: 42520982
+    harness: "^[[?62;c^[[>1;4000;32c^[P>|kitty(0.32.2)^[\\fuzzer_tacacs"
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f186a56705574338ef3f9ea2445891be41a4b759
+    fix_date: 2023-02-12
+    crash_func: fr_tacacs_decode
+    crash_file: src/protocols/tacacs/decode.c
+    signature: [heap-buffer-overflow, READ, fr_tacacs_decode, decode.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42520982"
+  - oss_id: 42521061
+    harness: fuzzer_tacacs
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e9896af945d36f9548089164a8077cb368a4ad8f
+    fix_date: 2023-02-14
+    crash_func: fr_tacacs_decode
+    crash_file: src/protocols/tacacs/decode.c
+    signature: [stack-buffer-overflow, WRITE, fr_tacacs_decode, decode.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521061"
+  - oss_id: 42532511
+    harness: fuzzer_radius
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10089d565abbbe03db85592410eb466f85383c63
+    fix_date: 2024-01-29
+    crash_func: _fr_dbuff_safecpy
+    crash_file: src/freeradius-devel/util/dbuff.h
+    signature: [heap-buffer-overflow, READ, _fr_dbuff_safecpy, dbuff.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532511"
+  - oss_id: 42532517
+    harness: fuzzer_radius
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10089d565abbbe03db85592410eb466f85383c63
+    fix_date: 2024-01-29
+    crash_func: __covrec_BA08AAE21B0190C6
+    crash_file: src/protocols/radius/decode.c
+    signature: [heap-buffer-overflow, READ, __covrec_BA08AAE21B0190C6, decode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532517"
+  - oss_id: 42532519
+    harness: fuzzer_dhcpv6
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10089d565abbbe03db85592410eb466f85383c63
+    fix_date: 2024-01-29
+    crash_func: decode_rfc
+    crash_file: src/protocols/radius/decode.c
+    signature: [heap-buffer-overflow, READ, decode_rfc, decode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532519"
+  - oss_id: 42532722
+    harness: fuzzer_dhcpv6
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dbac50e667c70419625ce52eebb8b928f1ee6dfa
+    fix_date: 2024-02-09
+    crash_func: __covrec_13D23F7E87111AC6
+    crash_file: src/protocols/radius/decode.c
+    signature: [heap-buffer-overflow, READ, __covrec_13D23F7E87111AC6, decode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532722"
+  - oss_id: 42532727
+    harness: fuzzer_dhcpv6
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9c5e3448d7ac76fe1918cff5b99b9977ce5ce46d
+    fix_date: 2024-02-06
+    crash_func: __covrec_88E4222CA2171C30
+    crash_file: src/protocols/radius/decode.c
+    signature: [heap-buffer-overflow, READ, __covrec_88E4222CA2171C30, decode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532727"
+rejected: []
+error: null

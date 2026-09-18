@@ -1,0 +1,534 @@
+project: serenity
+repo: "https://github.com/SerenityOS/serenity"
+n_sites: 36
+n_issues: 36
+harnesses: [FuzzBMPLoader, FuzzFlacLoader, FuzzGIFLoader, FuzzICCProfile, FuzzICOLoader, FuzzILBMLoader, FuzzJBIG2Loader, FuzzJs, FuzzMarkdown, FuzzMatroskaReader, FuzzPDF, FuzzPNGLoader, FuzzRSAKeyParsing, FuzzRegexPosixExtended, FuzzShell, FuzzTTF, FuzzURL, FuzzVP9Decoder, FuzzWAVLoader]
+base:
+  commit: 84996c6567e0231b4199dc9ec597c3e2e8d88bb5
+  date: 2021-02-23
+  method: wave_eve
+  n_latent: 14
+  n_latent_upper: 14
+  n_wave: 2
+  note: "eve of 2021-02-24 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-02-14
+    n: 4
+    eve: 4d40864b9dc3837c00b1d02b567d6a648e0048f2
+    n_latent_upper: 14
+    oss_ids: [42493211, 42493212, 42493220, 42493227]
+  - day: 2021-02-24
+    n: 2
+    eve: 84996c6567e0231b4199dc9ec597c3e2e8d88bb5
+    n_latent_upper: 14
+    oss_ids: [42493228, 42493691]
+  - day: 2023-10-10
+    n: 2
+    eve: 127f6ed6eb522ff6ee9784195c413525b4456d27
+    n_latent_upper: 10
+    oss_ids: [42519389, 42524929]
+  - day: 2023-11-08
+    n: 2
+    eve: fefbbff0a5f9f9ae15507f739009d2c80a9699c9
+    n_latent_upper: 4
+    oss_ids: [42525816, 42522665]
+  - day: 2020-11-30
+    n: 1
+    eve: 7094697743479e8774dcce1c4c04b41c5992807d
+    n_latent_upper: 24
+    oss_ids: [42490094]
+  - day: 2020-12-02
+    n: 1
+    eve: d66b0683ebff04337a89f3d0f384184d3d228607
+    n_latent_upper: 22
+    oss_ids: [42490150]
+  - day: 2020-12-22
+    n: 1
+    eve: 69d7a34bc2ae1c014c702f9a5b662b30bfcab34f
+    n_latent_upper: 22
+    oss_ids: [42490247]
+  - day: 2020-12-23
+    n: 1
+    eve: 5f182746b6d7989127495dce45d21885bf2ea9c0
+    n_latent_upper: 20
+    oss_ids: [42490130]
+  - day: 2021-01-05
+    n: 1
+    eve: fdd974b7ef4fb3f38c266f0f16d9b68f84f40bca
+    n_latent_upper: 20
+    oss_ids: [42491388]
+  - day: 2021-02-08
+    n: 1
+    eve: 83c29bd8d785da029759dc354fc13810d44eb9c1
+    n_latent_upper: 19
+    oss_ids: [42491468]
+  - day: 2021-02-27
+    n: 1
+    eve: 9aa91e6c6f267c843b92cf57eeae289ccae82799
+    n_latent_upper: 12
+    oss_ids: [42492768]
+  - day: 2021-05-01
+    n: 1
+    eve: 323a408d8c13827e9e24235e186cb6f42f803c83
+    n_latent_upper: 10
+    oss_ids: [42496484]
+bugs:
+  - oss_id: 42490094
+    harness: FuzzRegexPosixExtended
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8284f878673cf2419a707c25f3eaf45aeb0229cb
+    fix_date: 2020-11-30
+    crash_func: "regex::Lexer::back(unsigned long)"
+    crash_file: Libraries/LibRegex/RegexLexer.cpp
+    signature: [heap-buffer-overflow, READ, "regex::Lexer::back", RegexLexer.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490094"
+  - oss_id: 42490130
+    harness: FuzzPNGLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 068615fe5e25ff763d84262c615ab4c1f178a708
+    fix_date: 2020-12-23
+    crash_func: "decode(state*, huffman const*)"
+    crash_file: Libraries/LibCore/puff.cpp
+    signature: [heap-buffer-overflow, READ, decode, puff.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490130"
+  - oss_id: 42490150
+    harness: FuzzBMPLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 461bdeda2b54e478cc77f13c96991949a286af30
+    fix_date: 2020-12-02
+    crash_func: "Gfx::Streamer::read_u8()"
+    crash_file: Libraries/LibGfx/BMPLoader.cpp
+    signature: [heap-buffer-overflow, READ, "Gfx::Streamer::read_u8", BMPLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490150"
+  - oss_id: 42490247
+    harness: FuzzGIFLoader
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 531c3fe72eb18615dba89bfe673b8a8336abfb89
+    fix_date: 2020-12-22
+    crash_func: "Gfx::decode_frame(Gfx::GIFLoadingContext&, unsigned long)"
+    crash_file: Libraries/LibGfx/GIFLoader.cpp
+    signature: [global-buffer-overflow, READ, "Gfx::decode_frame", GIFLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490247"
+  - oss_id: 42491388
+    harness: FuzzJs
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 51b880b0383089822f513330cd64f93b54b9f21c
+    fix_date: 2021-01-05
+    crash_func: "JS::Heap::gather_conservative_roots(AK::HashTable<JS::Cell*, AK::Traits<JS::Cell*> >&)"
+    crash_file: Libraries/LibJS/Heap/Heap.cpp
+    signature: [stack-buffer-overflow, READ, "JS::Heap::gather_conservative_roots", Heap.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491388"
+  - oss_id: 42491468
+    harness: FuzzTTF
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3e723ec1776d3734b30d0b5bf6daad86ba908a0a
+    fix_date: 2021-02-08
+    crash_func: "TTF::be_u16(unsigned char const*)"
+    crash_file: Libraries/LibTTF/Font.cpp
+    signature: [heap-buffer-overflow, READ, "TTF::be_u16", Font.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491468"
+  - oss_id: 42492768
+    harness: FuzzGIFLoader
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce5fe2a6e807b819866b4f429ca6f7a2d74445b7
+    fix_date: 2021-02-27
+    crash_func: "Gfx::decode_frame(Gfx::GIFLoadingContext&, unsigned long)"
+    crash_file: Userland/Libraries/LibGfx/GIFLoader.cpp
+    signature: [global-buffer-overflow, READ, "Gfx::decode_frame", GIFLoader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492768"
+  - oss_id: 42492823
+    harness: FuzzICOLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5e1c1eb840b764ad196e76fe489f2d1c0006b08d
+    fix_date: 2021-05-28
+    crash_func: "AK::Vector<unsigned char, 0ul>::clear_with_capacity()"
+    crash_file: Meta/Lagom/build/../../../AK/Vector.h
+    signature: [heap-buffer-overflow, READ, "AK::Vector<>::clear_with_capacity", Vector.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492823"
+  - oss_id: 42493211
+    harness: FuzzRSAKeyParsing
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fe7ac0924ada70faaf27636b6e0f40bcde24f77
+    fix_date: 2021-02-14
+    crash_func: "Crypto::der_decode_sequence(unsigned char const*, unsigned long, Crypto::ASN1::List*, unsigned long, bool)"
+    crash_file: Meta/Lagom/build/../../../Userland/Libraries/LibCrypto/ASN1/DER.h
+    signature: [heap-buffer-overflow, READ, "Crypto::der_decode_sequence", DER.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493211"
+  - oss_id: 42493212
+    harness: FuzzRSAKeyParsing
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fe7ac0924ada70faaf27636b6e0f40bcde24f77
+    fix_date: 2021-02-14
+    crash_func: "Crypto::der_decode_integer(unsigned char const*, unsigned long, Crypto::UnsignedBigInteger&)"
+    crash_file: Meta/Lagom/build/../../../Userland/Libraries/LibCrypto/ASN1/DER.h
+    signature: [heap-buffer-overflow, READ, "Crypto::der_decode_integer", DER.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493212"
+  - oss_id: 42493220
+    harness: FuzzRSAKeyParsing
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fe7ac0924ada70faaf27636b6e0f40bcde24f77
+    fix_date: 2021-02-14
+    crash_func: "void AK::__format_value<unsigned char>(AK::TypeErasedFormatParams&, AK::FormatBuilder&, AK::FormatParser&, void const*)"
+    crash_file: Meta/Lagom/build/../../../AK/Format.h
+    signature: [heap-buffer-overflow, READ, "void AK::__format_value<>", Format.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493220"
+  - oss_id: 42493227
+    harness: FuzzRSAKeyParsing
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fe7ac0924ada70faaf27636b6e0f40bcde24f77
+    fix_date: 2021-02-14
+    crash_func: "Crypto::UnsignedBigInteger::UnsignedBigInteger(unsigned char const*, unsigned long)"
+    crash_file: Userland/Libraries/LibCrypto/BigInt/UnsignedBigInteger.cpp
+    signature: [heap-buffer-overflow, READ, "Crypto::UnsignedBigInteger::UnsignedBigInteger", UnsignedBigInteger.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493227"
+  - oss_id: 42493228
+    harness: FuzzJs
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a72276407ba4a438d4e34edd0d5ebf48cd6d9b63
+    fix_date: 2021-02-24
+    crash_func: "AK::NonnullOwnPtr<JS::IndexedPropertyStorage>::operator->() const"
+    crash_file: Meta/Lagom/build/../../../AK/NonnullOwnPtr.h
+    signature: [heap-use-after-free, READ, "AK::NonnullOwnPtr<>::operator->", NonnullOwnPtr.h]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42493228"
+  - oss_id: 42493691
+    harness: FuzzMarkdown
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 42133a196a0bea83705b5947921d5c7e5b9f201d
+    fix_date: 2021-02-24
+    crash_func: "AK::StringView::operator==(char const*) const"
+    crash_file: Meta/Lagom/build/../../../AK/StringView.h
+    signature: [global-buffer-overflow, READ, "AK::StringView::operator==", StringView.h]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42493691"
+  - oss_id: 42494090
+    harness: FuzzRSAKeyParsing
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 05d49cc0cbb66e065856fd696af044d9c8a0fea9
+    fix_date: 2021-05-30
+    crash_func: "AK::ByteBuffer::overwrite(unsigned long, void const*, unsigned long)"
+    crash_file: Meta/Lagom/build/../../../AK/ByteBuffer.h
+    signature: [heap-buffer-overflow, READ, "AK::ByteBuffer::overwrite", ByteBuffer.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494090"
+  - oss_id: 42496484
+    harness: FuzzShell
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 70728b49e266e2e71fe69d675d117a2b30435bdb
+    fix_date: 2021-05-01
+    crash_func: "AK::Atomic<unsigned long, (AK::MemoryOrder)5>::load(AK::MemoryOrder) const volatile"
+    crash_file: Meta/Lagom/build/../../../AK/Atomic.h
+    signature: [heap-use-after-free, READ, "AK::Atomic<>::load", Atomic.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496484"
+  - oss_id: 42497297
+    harness: FuzzJs
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6af596d9e8a0dfd9c175b7e56b848b969af191ae
+    fix_date: 2021-05-26
+    crash_func: "AK::Atomic<unsigned long, (AK::MemoryOrder)5>::fetch_or(unsigned long, AK::MemoryOrder) volatile"
+    crash_file: Meta/Lagom/build/../../../AK/Atomic.h
+    signature: [heap-use-after-free, WRITE, "AK::Atomic<>::fetch_or", Atomic.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497297"
+  - oss_id: 42497607
+    harness: FuzzURL
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c7e775a9a4af177cd999066ec3656387d337d6a
+    fix_date: 2021-06-08
+    crash_func: "AK::StringView::StringView(char const*)"
+    crash_file: Meta/Lagom/build/../../../AK/StringView.h
+    signature: [heap-buffer-overflow, READ, "AK::StringView::StringView", StringView.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497607"
+  - oss_id: 42497661
+    harness: FuzzURL
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6704961c8250b44dc622e95821fd7e2b6bed673a
+    fix_date: 2021-09-11
+    crash_func: "AK::Utf8CodePointIterator::operator*() const"
+    crash_file: AK/Utf8View.cpp
+    signature: [heap-use-after-free, READ, "AK::Utf8CodePointIterator::operator*", Utf8View.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497661"
+  - oss_id: 42497727
+    harness: FuzzJs
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 442ef6300826816c115462f19df4c168a04415d5
+    fix_date: 2021-06-05
+    crash_func: "AK::Atomic<unsigned long, (AK::MemoryOrder)5>::fetch_or(unsigned long, AK::MemoryOrder) volatile"
+    crash_file: Meta/Lagom/build/../../../AK/Atomic.h
+    signature: [use-after-poison, WRITE, "AK::Atomic<>::fetch_or", Atomic.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497727"
+  - oss_id: 42497729
+    harness: FuzzURL
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4e8e1b7b3a2cd25ab4b69cebea32232496f4a5d3
+    fix_date: 2021-08-06
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497729"
+  - oss_id: 42499964
+    harness: FuzzJs
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9551aa17d351caefbff57463d77465918d8b4e91
+    fix_date: 2021-08-15
+    crash_func: "JS::PrimitiveString::string() const"
+    crash_file: Userland/Libraries/LibJS/Runtime/PrimitiveString.cpp
+    signature: [use-after-poison, READ, "JS::PrimitiveString::string", PrimitiveString.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42499964"
+  - oss_id: 42501741
+    harness: FuzzJs
+    label: use-after-poison
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 56c425eec1d9ff9692f9fb2433b7650bde373992
+    fix_date: 2021-12-29
+    crash_func: "AK::NonnullOwnPtr<JS::IndexedPropertyStorage>::ptr() const"
+    crash_file: Meta/Lagom/build/../../../AK/NonnullOwnPtr.h
+    signature: [use-after-poison, READ, "AK::NonnullOwnPtr<>::ptr", NonnullOwnPtr.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42501741"
+  - oss_id: 42517151
+    harness: FuzzVP9Decoder
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 396972bb695d14ac76a6fdd007c4578fc2d3a5cd
+    fix_date: 2022-11-30
+    crash_func: "Video::VP9::Decoder::ac_q(unsigned char)"
+    crash_file: Userland/Libraries/LibVideo/VP9/Decoder.cpp
+    signature: [global-buffer-overflow, READ, "Video::VP9::Decoder::ac_q", Decoder.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517151"
+  - oss_id: 42518509
+    harness: FuzzFlacLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9bece0d0da44e3f0ab384bb4e40d2a24026aa456
+    fix_date: 2023-07-04
+    crash_func: "AK::TypedTransfer<unsigned int>::copy(unsigned int*, unsigned int const*, unsigned long)"
+    crash_file: Meta/Lagom/../../AK/TypedTransfer.h
+    signature: [heap-buffer-overflow, READ, "AK::TypedTransfer<>::copy", TypedTransfer.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518509"
+  - oss_id: 42519389
+    harness: FuzzICOLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bc6638682da6d8eca8267e603dfec84b48832902
+    fix_date: 2023-10-10
+    crash_func: "Gfx::InputStreamer::read_u8()"
+    crash_file: Userland/Libraries/LibGfx/BMPLoader.cpp
+    signature: [use-after-poison, READ, "Gfx::InputStreamer::read_u8", BMPLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519389"
+  - oss_id: 42522665
+    harness: FuzzICCProfile
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c1d7a51391839e77fce4b466026353acae74ba02
+    fix_date: 2023-11-08
+    crash_func: "Gfx::ICC::TextDescriptionTagData::from_bytes(AK::Span<unsigned char const>, unsigned int, unsigned int)"
+    crash_file: Userland/Libraries/LibGfx/ICC/TagTypes.cpp
+    signature: [heap-buffer-overflow, READ, "Gfx::ICC::TextDescriptionTagData::from_bytes", TagTypes.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522665"
+  - oss_id: 42524929
+    harness: FuzzICOLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bc6638682da6d8eca8267e603dfec84b48832902
+    fix_date: 2023-10-10
+    crash_func: read_u8
+    crash_file: Userland/Libraries/LibGfx/BMPLoader.cpp
+    signature: [heap-buffer-overflow, READ, read_u8, BMPLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524929"
+  - oss_id: 42525816
+    harness: FuzzVP9Decoder
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b3d5f9748a1130f875241a4155bc88963a795346
+    fix_date: 2023-11-08
+    crash_func: fill_reservoir
+    crash_file: Userland/Libraries/LibGfx/ImageFormats/BooleanDecoder.cpp
+    signature: [heap-buffer-overflow, READ, fill_reservoir, BooleanDecoder.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525816"
+  - oss_id: 42527782
+    harness: FuzzILBMLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9e3ee0e2b589ec8b28b27a72232a76e5d57e294b
+    fix_date: 2023-10-15
+    crash_func: decode_bmhd_chunk
+    crash_file: Userland/Libraries/LibGfx/ImageFormats/ILBMLoader.cpp
+    signature: [heap-buffer-overflow, READ, decode_bmhd_chunk, ILBMLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527782"
+  - oss_id: 42527837
+    harness: FuzzPDF
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b4296e1c9b01be7c8b052ae023e0927cc6762b1b
+    fix_date: 2023-10-26
+    crash_func: dump_backtrace
+    crash_file: AK/Assertions.cpp
+    signature: [stack-buffer-overflow, WRITE, dump_backtrace, Assertions.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527837"
+  - oss_id: 42529252
+    harness: FuzzICOLoader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ec26f3b549c338ccbaf3e16889863efcf5143a2
+    fix_date: 2023-10-25
+    crash_func: "Gfx::InputStreamer::read_u8()"
+    crash_file: Userland/Libraries/LibGfx/ImageFormats/BMPLoader.cpp
+    signature: [use-after-poison, READ, "Gfx::InputStreamer::read_u8", BMPLoader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529252"
+  - oss_id: 42529718
+    harness: FuzzTTF
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6f9ad60124c4dd355084240019abc1e7d62baba
+    fix_date: 2023-10-31
+    crash_func: "OpenType::be_u32(unsigned char const*)"
+    crash_file: Userland/Libraries/LibGfx/Font/OpenType/Font.cpp
+    signature: [heap-buffer-overflow, READ, "OpenType::be_u32", Font.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529718"
+  - oss_id: 42532053
+    harness: FuzzWAVLoader
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: d186582d30a123e4f884c8d9a31c0387e019b076
+    fix_date: 2024-01-17
+    crash_func: compare
+    crash_file: Meta/Lagom/../../AK/StringView.h
+    signature: [stack-use-after-scope, READ, compare, StringView.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532053"
+  - oss_id: 42533669
+    harness: FuzzJBIG2Loader
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7740aeca29e3eaf9cb68ff0f606cc8473edf607a
+    fix_date: 2024-03-14
+    crash_func: scan_for_immediate_generic_region_size
+    crash_file: Userland/Libraries/LibGfx/ImageFormats/JBIG2Loader.cpp
+    signature: [negative-size-param, -, scan_for_immediate_generic_region_size, JBIG2Loader.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533669"
+rejected:
+  - oss_id: 42517081
+    reason: commit_missing
+error: null

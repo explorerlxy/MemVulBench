@@ -1,0 +1,229 @@
+project: hdf5
+repo: "https://github.com/HDFGroup/hdf5"
+n_sites: 14
+n_issues: 14
+harnesses: [h5_extended_fuzzer, h5_read_fuzzer]
+base:
+  commit: bd7616cf98ae52e77f710a16fb4d334be3cb5ce9
+  date: 2023-04-26
+  method: measured_sweep
+  n_latent: 12
+  n_latent_upper: 12
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2024-04-01
+    n: 7
+    eve: 875fb3e70a0d9b4e71b4fac5c31badc012359618
+    n_latent_upper: 8
+    oss_ids: [42522531, 42524740, 42525184, 42527526, 42527895, 42530550, 42534125]
+  - day: 2023-04-27
+    n: 2
+    eve: bd7616cf98ae52e77f710a16fb4d334be3cb5ce9
+    n_latent_upper: 11
+    oss_ids: [42520218, 42521522]
+  - day: 2023-05-01
+    n: 2
+    eve: a0340338e53d4b34127a7e5356b28b1640f9414c
+    n_latent_upper: 9
+    oss_ids: [42521342, 42523860]
+  - day: 2023-04-13
+    n: 1
+    eve: 65eff22348634144cd5a6e77159c27eb895d54b4
+    n_latent_upper: 13
+    oss_ids: [42520210]
+  - day: 2023-04-25
+    n: 1
+    eve: 8562645b8a0b7808bdf9f03a367aeed31a9229be
+    n_latent_upper: 12
+    oss_ids: [42521166]
+  - day: 2025-08-05
+    n: 1
+    eve: 044c04e702af438032dfa53cf85af8174587d266
+    n_latent_upper: 1
+    oss_ids: [42534222]
+bugs:
+  - oss_id: 42520210
+    harness: h5_read_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10d4a6d0941240702b5e8d77d57184a88bb69e6c
+    fix_date: 2023-04-13
+    crash_func: H5F_addr_decode_len
+    crash_file: src/H5Fint.c
+    signature: [heap-buffer-overflow, READ, H5F_addr_decode_len, H5Fint.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520210"
+  - oss_id: 42520218
+    harness: h5_read_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 14a19b8c905328344c7d33505986d340eab34933
+    fix_date: 2023-04-27
+    crash_func: H5O__prefix_deserialize
+    crash_file: src/H5Ocache.c
+    signature: [heap-buffer-overflow, READ, H5O__prefix_deserialize, H5Ocache.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520218"
+  - oss_id: 42521166
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9e765b9c43c89ad88971e8f0ecae7d610f2cd463
+    fix_date: 2023-04-25
+    crash_func: H5O__fsinfo_decode
+    crash_file: src/H5Ofsinfo.c
+    signature: [heap-buffer-overflow, READ, H5O__fsinfo_decode, H5Ofsinfo.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521166"
+  - oss_id: 42521342
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07e94155a7d456d663fe19a38851556117b5e315
+    fix_date: 2023-05-01
+    crash_func: H5FS__sect_link_size
+    crash_file: src/H5FSsection.c
+    signature: [heap-buffer-overflow, READ, H5FS__sect_link_size, H5FSsection.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521342"
+  - oss_id: 42521522
+    harness: h5_read_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 14a19b8c905328344c7d33505986d340eab34933
+    fix_date: 2023-04-27
+    crash_func: H5F_get_checksums
+    crash_file: src/H5Fio.c
+    signature: [heap-buffer-overflow, READ, H5F_get_checksums, H5Fio.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521522"
+  - oss_id: 42522531
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5G__node_cmp3
+    crash_file: src/H5Gnode.c
+    signature: [heap-buffer-overflow, READ, H5G__node_cmp3, H5Gnode.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522531"
+  - oss_id: 42523860
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07e94155a7d456d663fe19a38851556117b5e315
+    fix_date: 2023-05-01
+    crash_func: H5MM_memcpy
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_memcpy, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42523860"
+  - oss_id: 42524740
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5MM_xstrdup
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_xstrdup, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524740"
+  - oss_id: 42525184
+    harness: h5_extended_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5FS__sinfo_serialize_node_cb
+    crash_file: src/H5FScache.c
+    signature: [heap-buffer-overflow, WRITE, H5FS__sinfo_serialize_node_cb, H5FScache.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525184"
+  - oss_id: 42527526
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5O__chunk_protect
+    crash_file: src/H5Ochunk.c
+    signature: [heap-buffer-overflow, READ, H5O__chunk_protect, H5Ochunk.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527526"
+  - oss_id: 42527895
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5F__accum_free
+    crash_file: src/H5Faccum.c
+    signature: [heap-buffer-overflow, READ, H5F__accum_free, H5Faccum.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527895"
+  - oss_id: 42530550
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5O__shared_decode
+    crash_file: src/H5Oshared.c
+    signature: [heap-buffer-overflow, READ, H5O__shared_decode, H5Oshared.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530550"
+  - oss_id: 42534125
+    harness: h5_extended_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce53bc020d37e10a06a59501c45f1ab82539f0c5
+    fix_date: 2024-04-01
+    crash_func: H5MM_strndup
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_strndup, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534125"
+  - oss_id: 42534222
+    harness: h5_extended_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7cc8b5e1010a09c892bc97ac32d9515c3777ce07
+    fix_date: 2025-08-05
+    crash_func: H5FL__blk_gc_list
+    crash_file: src/H5FL.c
+    signature: [heap-use-after-free, READ, H5FL__blk_gc_list, H5FL.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534222"
+rejected: []
+error: null

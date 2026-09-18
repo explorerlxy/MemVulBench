@@ -1,0 +1,2014 @@
+project: gdal
+repo: "https://github.com/OSGeo/gdal"
+n_sites: 160
+n_issues: 160
+harnesses: [aig_fuzzer, avcbin_fuzzer, avce00_fuzzer, cad_fuzzer, dxf_fuzzer, ehdr_fuzzer, envi_fuzzer, fgb_fuzzer, gdal_filesystem_fuzzer, gdal_fuzzer, gdal_sdts_fuzzer, gdal_translate_fuzzer, gdal_vector_translate_fuzzer, gdal_vrt_fuzzer, gtiff_fuzzer, gtiff_mmap, isce_fuzzer, mitab_mif_fuzzer, mitab_tab_fuzzer, mrf_fuzzer, ogr_filesystem_fuzzer, ogr_fuzzer, ogr_sdts_fuzzer, osr_set_from_user_input_fuzzer, shape_fuzzer, srp_fuzzer, wkb_import_fuzzer]
+base:
+  commit: be4b2840cab8c40e1c656b4416a9a3d9dc05be5e
+  date: 2017-05-14
+  method: wave_eve
+  n_latent: 131
+  n_latent_upper: 131
+  n_wave: 3
+  note: "eve of 2017-05-14 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2017-05-31
+    n: 7
+    eve: 1c9ab522cb3c356cc58c995e439c5fad191c5608
+    n_latent_upper: 126
+    oss_ids: [42480748, 42480771, 42480848, 42480893, 42480937, 42480959, 42480970]
+  - day: 2017-06-23
+    n: 6
+    eve: eff3ca0d659219c1105663ac46d240c038c39572
+    n_latent_upper: 108
+    oss_ids: [42485026, 42484371, 42484382, 42484661, 42484938, 42485093]
+  - day: 2017-06-04
+    n: 5
+    eve: 5ef7cb8b3095c871ddcbe24aee2c8282355e8317
+    n_latent_upper: 113
+    oss_ids: [42481872, 42481916, 42481949, 42482060, 42482182]
+  - day: 2017-08-13
+    n: 4
+    eve: 18519c618f23c6c186b4ecc817f853532316a83e
+    n_latent_upper: 76
+    oss_ids: [42492427, 42492449, 42492482, 42492504]
+  - day: 2018-03-03
+    n: 4
+    eve: 533bc708e8c302d0f8df92744e5e25267fb5b982
+    n_latent_upper: 55
+    oss_ids: [42533577, 42533165, 42533210, 42533254]
+  - day: 2017-05-14
+    n: 3
+    eve: be4b2840cab8c40e1c656b4416a9a3d9dc05be5e
+    n_latent_upper: 131
+    oss_ids: [42476428, 42476472, 42476516]
+  - day: 2017-06-24
+    n: 3
+    eve: fb0c92974de6eaa5f427c06e8cc9f80f9571cc42
+    n_latent_upper: 102
+    oss_ids: [42485181, 42485192, 42485315]
+  - day: 2017-07-12
+    n: 3
+    eve: 0ff83529ab82fa1c30a06aec784c208f76d01233
+    n_latent_upper: 94
+    oss_ids: [42485848, 42486093, 42487581]
+  - day: 2017-07-24
+    n: 3
+    eve: d306dbb0d4365d4c8f762407e30f9f24282493c0
+    n_latent_upper: 88
+    oss_ids: [42488770, 42488825, 42488937]
+  - day: 2018-03-17
+    n: 3
+    eve: 34608d3351a78412010375c47521bc9bb22a5444
+    n_latent_upper: 48
+    oss_ids: [42536454, 42536554, 42536543]
+  - day: 2017-05-30
+    n: 2
+    eve: 05454876d1d101b2f65603825412e90cb048b0d8
+    n_latent_upper: 128
+    oss_ids: [42480250, 42480272]
+  - day: 2017-06-01
+    n: 2
+    eve: e89579408855a29f34ceb00b50bd5d34abc5fee2
+    n_latent_upper: 119
+    oss_ids: [42480993, 42481048]
+bugs:
+  - oss_id: 42470702
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f5f6591df6196296b2b8395ae726946eac1f9942
+    fix_date: 2018-09-24
+    crash_func: curl_url_get
+    crash_file: curl/lib/urlapi.c
+    signature: [heap-buffer-overflow, READ, curl_url_get, urlapi.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470702"
+  - oss_id: 42470980
+    harness: gtiff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b7daf0d6c4311f1d6e27f6fcfab0c7404b5c6441
+    fix_date: 2018-10-12
+    crash_func: TWebPDecode
+    crash_file: frmts/gtiff/libtiff/tif_webp.c
+    signature: [heap-buffer-overflow, READ, TWebPDecode, tif_webp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470980"
+  - oss_id: 42472610
+    harness: gdal_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d7e1da18851695b9c865dccbcb24560c744f9f26
+    fix_date: 2019-01-02
+    crash_func: "VSIMemHandle::Read(void*, unsigned long, unsigned long)"
+    crash_file: port/cpl_vsi_mem.cpp
+    signature: [heap-buffer-overflow, WRITE, "VSIMemHandle::Read", cpl_vsi_mem.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472610"
+  - oss_id: 42473823
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 68dd2c1dac7c7bda908a3277a036ad1947348055
+    fix_date: 2019-02-28
+    crash_func: CSLTokenizeString2
+    crash_file: port/cpl_string.cpp
+    signature: [heap-buffer-overflow, READ, CSLTokenizeString2, cpl_string.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473823"
+  - oss_id: 42473891
+    harness: gdal_vector_translate_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1175a0de53d9a22112b2cf119f653861a660f236
+    fix_date: 2019-03-10
+    crash_func: VSIFCloseL
+    crash_file: port/cpl_vsil.cpp
+    signature: [heap-use-after-free, READ, VSIFCloseL, cpl_vsil.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473891"
+  - oss_id: 42474133
+    harness: gdal_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4470ea897eda9272e9b5dd3edb00c2855b0b88e7
+    fix_date: 2019-03-15
+    crash_func: "GDALDataset::Reference()"
+    crash_file: gcore/gdaldataset.cpp
+    signature: [heap-use-after-free, READ, "GDALDataset::Reference", gdaldataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474133"
+  - oss_id: 42474998
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 35ed8bbe865ddbc6868a52789235cb2d2caab7ce
+    fix_date: 2019-04-30
+    crash_func: "OGRPDS::OGRPDSLayer::GetNextRawFeature()"
+    crash_file: ogr/ogrsf_frmts/pds/ogrpdslayer.cpp
+    signature: [heap-buffer-overflow, READ, "OGRPDS::OGRPDSLayer::GetNextRawFeature", ogrpdslayer.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474998"
+  - oss_id: 42475297
+    harness: mrf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8ce8a08e0922fa0214e4945182f13be111db9fd6
+    fix_date: 2019-05-21
+    crash_func: "ExpandPacked8ToByte1(unsigned char const*, unsigned char*, long long)"
+    crash_file: frmts/gtiff/geotiff.cpp
+    signature: [heap-buffer-overflow, WRITE, ExpandPacked8ToByte1, geotiff.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475297"
+  - oss_id: 42475421
+    harness: gdal_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 95762d18d4a7c2a975e82c67fc3dff5eb8028eb0
+    fix_date: 2019-05-13
+    crash_func: "GTiffRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/gtiff/geotiff.cpp
+    signature: [heap-buffer-overflow, WRITE, "GTiffRasterBand::IReadBlock", geotiff.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475421"
+  - oss_id: 42475699
+    harness: ogr_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 767e3a56144f676ca738ef8f700e0e56035bd05a
+    fix_date: 2019-06-06
+    crash_func: nc4_get_att
+    crash_file: netcdf-4.4.1.1/libsrc4/nc4attr.c
+    signature: [stack-buffer-overflow, WRITE, nc4_get_att, nc4attr.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475699"
+  - oss_id: 42475716
+    harness: gdal_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 767e3a56144f676ca738ef8f700e0e56035bd05a
+    fix_date: 2019-06-06
+    crash_func: "nccfdriver::attrf(int, int, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&)"
+    crash_file: frmts/netcdf/netcdfsg.cpp
+    signature: [stack-buffer-overflow, READ, "nccfdriver::attrf", netcdfsg.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475716"
+  - oss_id: 42476428
+    harness: ogr_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: c481b5ffad399404c2292aa44151e0a1988e28d3
+    fix_date: 2017-05-14
+    crash_func: "KML::unregisterLayerIfMatchingThisNode(KMLNode*)"
+    crash_file: ogr/ogrsf_frmts/kml/kml.cpp
+    signature: [memcpy-param-overlap, -, "KML::unregisterLayerIfMatchingThisNode", kml.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42476428"
+  - oss_id: 42476472
+    harness: wkb_import_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 977c0545dd6806eb49d7e85eba60f7d39aae3d0d
+    fix_date: 2017-05-14
+    crash_func: "OGRReadWKBGeometryType(unsigned char*, OGRwkbVariant, OGRwkbGeometryType*)"
+    crash_file: ogr/ogrutils.cpp
+    signature: [heap-buffer-overflow, READ, OGRReadWKBGeometryType, ogrutils.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42476472"
+  - oss_id: 42476516
+    harness: mitab_tab_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ba62303c7caca9789d71efa62be6abae1c16f9ee
+    fix_date: 2017-05-14
+    crash_func: "OGRTigerDataSource::Open(char const*, int, char**)"
+    crash_file: ogr/ogrsf_frmts/tiger/ogrtigerdatasource.cpp
+    signature: [stack-buffer-overflow, WRITE, "OGRTigerDataSource::Open", ogrtigerdatasource.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42476516"
+  - oss_id: 42476848
+    harness: ogr_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 148115fcc40f1651a5d15fa34c9a8c528e7147bb
+    fix_date: 2019-08-04
+    crash_func: poolDestroy
+    crash_file: libexpat/expat/lib/xmlparse.c
+    signature: [heap-use-after-free, READ, poolDestroy, xmlparse.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42476848"
+  - oss_id: 42477143
+    harness: gtiff_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 21674033ee246f698887604c7af7ba1962a40ddf
+    fix_date: 2019-08-15
+    crash_func: _TIFFmemcpy
+    crash_file: frmts/gtiff/libtiff/tif_vsi.c
+    signature: [negative-size-param, -, _TIFFmemcpy, tif_vsi.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42477143"
+  - oss_id: 42477257
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8c28547245cfd6264393457557a9477ca05b340a
+    fix_date: 2019-08-19
+    crash_func: "Get(GDALPDFObject*, int)"
+    crash_file: frmts/pdf/pdfdataset.cpp
+    signature: [heap-buffer-overflow, READ, Get, pdfdataset.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42477257"
+  - oss_id: 42478975
+    harness: fgb_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 826eac3e89979962587171a81652f28891ed9366
+    fix_date: 2019-10-15
+    crash_func: "OGRSimpleCurve::setPoints(int, OGRRawPoint const*, double const*)"
+    crash_file: ogr/ogrlinestring.cpp
+    signature: [heap-buffer-overflow, READ, "OGRSimpleCurve::setPoints", ogrlinestring.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42478975"
+  - oss_id: 42479083
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2d46f394fbb74c366b8195e8607f9400953b869c
+    fix_date: 2017-05-29
+    crash_func: "NTFFileReader::Open(char const*)"
+    crash_file: ogr/ogrsf_frmts/ntf/ntffilereader.cpp
+    signature: [heap-buffer-overflow, READ, "NTFFileReader::Open", ntffilereader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479083"
+  - oss_id: 42479619
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9433d1dd1951639182487582671bcc4b1256f824
+    fix_date: 2019-11-02
+    crash_func: "VICARKeywordHandler::Ingest(_IO_FILE*, unsigned char*)"
+    crash_file: frmts/pds/vicarkeywordhandler.cpp
+    signature: [heap-buffer-overflow, READ, "VICARKeywordHandler::Ingest", vicarkeywordhandler.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479619"
+  - oss_id: 42480047
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4b2753e1d8c43a6a3d6005606670c696ca3dfeab
+    fix_date: 2019-11-23
+    crash_func: "GRIB2Inventory2to7(signed char, _IO_FILE*, int, unsigned int*, char**, inventoryType*, unsigned char, unsigned short, unsigned short, unsigned char)"
+    crash_file: frmts/grib/degrib/degrib/inventory.cpp
+    signature: [heap-buffer-overflow, READ, GRIB2Inventory2to7, inventory.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480047"
+  - oss_id: 42480250
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0cb976489e93b92987fa1fd5bbdafe69d5a587d8
+    fix_date: 2017-05-30
+    crash_func: NITFReadImageBlock
+    crash_file: frmts/nitf/nitfimage.c
+    signature: [heap-buffer-overflow, READ, NITFReadImageBlock, nitfimage.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480250"
+  - oss_id: 42480272
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a0b34a732d7822734a4aa034306a0fd2d2a659e8
+    fix_date: 2017-05-30
+    crash_func: "ILI1Reader::ReadParseLine()"
+    crash_file: ogr/ogrsf_frmts/ili/ili1reader.cpp
+    signature: [heap-buffer-overflow, READ, "ILI1Reader::ReadParseLine", ili1reader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480272"
+  - oss_id: 42480429
+    harness: ogr_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2b10cb8700f8f187452f517bc82438d67714d4dd
+    fix_date: 2019-12-12
+    crash_func: VSIFSeekL
+    crash_file: port/cpl_vsil.cpp
+    signature: [heap-use-after-free, READ, VSIFSeekL, cpl_vsil.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480429"
+  - oss_id: 42480748
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6bc92a3a20fd6445a93243343496f5b8969353d2
+    fix_date: 2017-05-31
+    crash_func: ParseGrid
+    crash_file: frmts/grib/degrib18/degrib/metaparse.cpp
+    signature: [heap-buffer-overflow, READ, ParseGrid, metaparse.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480748"
+  - oss_id: 42480771
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ef7ab2e78e56b488b772d233da344821747a4f78
+    fix_date: 2017-05-31
+    crash_func: gbits
+    crash_file: frmts/grib/degrib18/g2clib-1.0.4/gbits.c
+    signature: [heap-buffer-overflow, READ, gbits, gbits.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480771"
+  - oss_id: 42480848
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f6bb36c70edc3a806a20e6421c2efc882835a13c
+    fix_date: 2017-05-31
+    crash_func: memBitRead
+    crash_file: frmts/grib/degrib18/degrib/memendian.c
+    signature: [heap-buffer-overflow, READ, memBitRead, memendian.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480848"
+  - oss_id: 42480893
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b3ec94a6f35e1efdde9210a1bc65c7b7e311c806
+    fix_date: 2017-05-31
+    crash_func: CPLStrtodDelim
+    crash_file: port/cpl_strtod.cpp
+    signature: [heap-buffer-overflow, READ, CPLStrtodDelim, cpl_strtod.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480893"
+  - oss_id: 42480937
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 090ceea45289cd6a7a14487595f4534d57d1c552
+    fix_date: 2017-05-31
+    crash_func: "RMFDataset::Open(GDALOpenInfo*)"
+    crash_file: frmts/rmf/rmfdataset.cpp
+    signature: [heap-buffer-overflow, READ, "RMFDataset::Open", rmfdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480937"
+  - oss_id: 42480959
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f109aaed60955f835c3dd61f077afa790186ce61
+    fix_date: 2017-05-31
+    crash_func: "DGN_INT16(unsigned char const*)"
+    crash_file: ogr/ogrsf_frmts/dgn/dgnread.cpp
+    signature: [heap-buffer-overflow, READ, DGN_INT16, dgnread.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480959"
+  - oss_id: 42480970
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dbd1d1ada6c133447e6e21d00512b70f20041984
+    fix_date: 2017-05-31
+    crash_func: revmemcpy
+    crash_file: frmts/grib/degrib18/degrib/memendian.c
+    signature: [heap-buffer-overflow, READ, revmemcpy, memendian.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480970"
+  - oss_id: 42480993
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a5002ab628d4ec05aa2b4e9984b34c00fc5f1224
+    fix_date: 2017-06-01
+    crash_func: "ReadGrib1Sect1(unsigned char*, unsigned int, unsigned int*, pdsG1Type*, char*, unsigned char*, char*, short*, unsigned short*, unsigned short*)"
+    crash_file: frmts/grib/degrib18/degrib/degrib1.cpp
+    signature: [heap-buffer-overflow, READ, ReadGrib1Sect1, degrib1.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480993"
+  - oss_id: 42481048
+    harness: shape_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bb965094dfdd8e00fc56d7abc47e5a1a323a9773
+    fix_date: 2017-06-01
+    crash_func: "NTFRecord::GetField(int, int)"
+    crash_file: ogr/ogrsf_frmts/ntf/ntfrecord.cpp
+    signature: [heap-buffer-overflow, READ, "NTFRecord::GetField", ntfrecord.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481048"
+  - oss_id: 42481317
+    harness: shape_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4dde128bef9698c65163e43188370f1628d51209
+    fix_date: 2017-06-02
+    crash_func: "VSIMemHandle::Read(void*, unsigned long, unsigned long)"
+    crash_file: port/cpl_vsi_mem.cpp
+    signature: [stack-buffer-overflow, WRITE, "VSIMemHandle::Read", cpl_vsi_mem.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481317"
+  - oss_id: 42481650
+    harness: gtiff_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b0c72df6723de97f03002e0dd9596104e70c4664
+    fix_date: 2017-06-02
+    crash_func: "CheckCitationKeyForStatePlaneUTM(gtiff*, GTIFDefn*, OGRSpatialReference*, int*)"
+    crash_file: frmts/gtiff/gt_citation.cpp
+    signature: [negative-size-param, -, CheckCitationKeyForStatePlaneUTM, gt_citation.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481650"
+  - oss_id: 42481672
+    harness: ogr_filesystem_fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1d7a1679162b4879e624483e95e5874d1d0334c7
+    fix_date: 2017-06-03
+    crash_func: "NTFFileReader::ProcessAttValue(char const*, char const*, char**, char**, char**)"
+    crash_file: ogr/ogrsf_frmts/ntf/ntffilereader.cpp
+    signature: [global-buffer-overflow, WRITE, "NTFFileReader::ProcessAttValue", ntffilereader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481672"
+  - oss_id: 42481860
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 572c5cb89f77c1e27ae358bfe51fedaa8e764093
+    fix_date: 2017-06-03
+    crash_func: "IRISRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/iris/irisdataset.cpp
+    signature: [heap-buffer-overflow, READ, "IRISRasterBand::IReadBlock", irisdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481860"
+  - oss_id: 42481872
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b4da9cf1557c5034ddbebfb6cfc235b9a1c4dd5e
+    fix_date: 2017-06-04
+    crash_func: TransferFloat
+    crash_file: frmts/grib/degrib18/degrib/grib2api.c
+    signature: [heap-buffer-overflow, READ, TransferFloat, grib2api.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481872"
+  - oss_id: 42481916
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1699a9690b4246181e343ce855dea60ff8a0a9f0
+    fix_date: 2017-06-04
+    crash_func: "IVFKDataBlock::SetProperties(char const*)"
+    crash_file: ogr/ogrsf_frmts/vfk/vfkdatablock.cpp
+    signature: [heap-buffer-overflow, READ, "IVFKDataBlock::SetProperties", vfkdatablock.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481916"
+  - oss_id: 42481949
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f745d70a1a4d1c7dbdb9dcd39da4bd9436a322de
+    fix_date: 2017-06-04
+    crash_func: "NTFFileReader::ProcessAttRec(NTFRecord*, int*, char***, char***)"
+    crash_file: ogr/ogrsf_frmts/ntf/ntffilereader.cpp
+    signature: [heap-buffer-overflow, READ, "NTFFileReader::ProcessAttRec", ntffilereader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481949"
+  - oss_id: 42482060
+    harness: aig_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a33916fe4a206e06e9f043a19e604a515ee2322c
+    fix_date: 2017-06-04
+    crash_func: Fax3DecodeRLE
+    crash_file: frmts/aigrid/aigccitt.c
+    signature: [heap-buffer-overflow, READ, Fax3DecodeRLE, aigccitt.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482060"
+  - oss_id: 42482182
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0940c65e108a72cdd99d17d759272c40f9574177
+    fix_date: 2017-06-04
+    crash_func: BigByteCpy
+    crash_file: frmts/grib/degrib18/degrib/grib2api.c
+    signature: [heap-buffer-overflow, READ, BigByteCpy, grib2api.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482182"
+  - oss_id: 42482217
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7b2b72c94ea35a622c02ec937efe7bcce40b712e
+    fix_date: 2017-06-05
+    crash_func: "FindSectLen(char*, int, int*, int*, short*)"
+    crash_file: frmts/grib/degrib18/degrib/degrib2.cpp
+    signature: [heap-buffer-overflow, READ, FindSectLen, degrib2.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482217"
+  - oss_id: 42482233
+    harness: gdal_filesystem_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a794661e9860d703bd98e5c1727ecf1f7c259b9b
+    fix_date: 2020-03-03
+    crash_func: "NITFDataset::ScanJPEGQLevel(unsigned long long*, bool*)"
+    crash_file: frmts/nitf/nitfdataset.cpp
+    signature: [stack-buffer-overflow, READ, "NITFDataset::ScanJPEGQLevel", nitfdataset.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482233"
+  - oss_id: 42482255
+    harness: gdal_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6db645ceb7190735134d13deed846f61d0b0ed0e
+    fix_date: 2020-03-05
+    crash_func: Fax3Decode2D
+    crash_file: frmts/gtiff/libtiff/tif_fax3.c
+    signature: [heap-buffer-overflow, WRITE, Fax3Decode2D, tif_fax3.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482255"
+  - oss_id: 42482261
+    harness: gtiff_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 87235a68907d6b238f31a37eb7e602b41230160d
+    fix_date: 2017-06-05
+    crash_func: "ImagineCitationTranslation(char*, geokey_t)"
+    crash_file: frmts/gtiff/gt_citation.cpp
+    signature: [stack-buffer-overflow, WRITE, ImagineCitationTranslation, gt_citation.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482261"
+  - oss_id: 42482825
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 47a93a942e87b40df623a6639a7005e865f17b88
+    fix_date: 2020-04-03
+    crash_func: "CPLErr GDALResampleChunk32R_AverageT<unsigned char, int>(double, double, double, double, GDALDataType, unsigned char*, unsigned char*, int, int, int, int, int, int, int, int, GDALRasterBand*, char const*, int, float, GDALColorTable*, bool)"
+    crash_file: gcore/overview.cpp
+    signature: [heap-buffer-overflow, READ, "CPLErr GDALResampleChunk32R_AverageT<>", overview.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482825"
+  - oss_id: 42482884
+    harness: gdal_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 27abfaab99b3c3b3d57cb2ab0a309d91d2942e3a
+    fix_date: 2020-04-07
+    crash_func: "Object::free()"
+    crash_file: poppler/poppler/Object.cc
+    signature: [heap-buffer-overflow, WRITE, "Object::free", Object.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482884"
+  - oss_id: 42484030
+    harness: gdal_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1f0e84c12727dff0bd46240fe9e649985fc73512
+    fix_date: 2020-05-27
+    crash_func: "GDALResampleChunk32R_Mode(double, double, double, double, GDALDataType, void const*, unsigned char const*, int, int, int, int, int, int, int, int, GDALRasterBand*, void**, GDALDataType*, char const*, int, float, GDALColorTable*, GDALDataType, bool)"
+    crash_file: gcore/overview.cpp
+    signature: [heap-buffer-overflow, WRITE, GDALResampleChunk32R_Mode, overview.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484030"
+  - oss_id: 42484371
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f0b97e1f784f33f40d213cc953c3f7a7ed9869ca
+    fix_date: 2017-06-23
+    crash_func: "bool LercNS::Lerc2::ReadTile<unsigned char>(unsigned char const**, unsigned char*, int, int, int, int, std::__1::vector<unsigned int, std::__1::allocator<unsigned int> >&) const"
+    crash_file: frmts/mrf/libLERC/Lerc2.h
+    signature: [heap-buffer-overflow, READ, "bool LercNS::Lerc2::ReadTile<>", Lerc2.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484371"
+  - oss_id: 42484382
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f0b97e1f784f33f40d213cc953c3f7a7ed9869ca
+    fix_date: 2017-06-23
+    crash_func: "bool LercNS::Lerc2::ReadDataOneSweep<unsigned char>(unsigned char const**, unsigned char*) const"
+    crash_file: frmts/mrf/libLERC/Lerc2.h
+    signature: [heap-buffer-overflow, READ, "bool LercNS::Lerc2::ReadDataOneSweep<>", Lerc2.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484382"
+  - oss_id: 42484661
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f0b97e1f784f33f40d213cc953c3f7a7ed9869ca
+    fix_date: 2017-06-23
+    crash_func: "LercNS::RLE::decompress(unsigned char const*, unsigned char*)"
+    crash_file: frmts/mrf/libLERC/RLE.cpp
+    signature: [heap-buffer-overflow, READ, "LercNS::RLE::decompress", RLE.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484661"
+  - oss_id: 42484938
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f0b97e1f784f33f40d213cc953c3f7a7ed9869ca
+    fix_date: 2017-06-23
+    crash_func: "LercNS::RLE::readCount(unsigned char const**)"
+    crash_file: frmts/mrf/libLERC/RLE.cpp
+    signature: [heap-buffer-overflow, READ, "LercNS::RLE::readCount", RLE.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484938"
+  - oss_id: 42485026
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 783166046299490f1ebd9bdb3d277d06a5b04839
+    fix_date: 2017-06-23
+    crash_func: decode_celldata
+    crash_file: frmts/blx/blx.c
+    signature: [heap-buffer-overflow, READ, decode_celldata, blx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485026"
+  - oss_id: 42485093
+    harness: osr_set_from_user_input_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c58fe8a01a0ad00760746936b6f4220923411466
+    fix_date: 2017-06-23
+    crash_func: Curl_setopt
+    crash_file: curl/lib/url.c
+    signature: [heap-use-after-free, WRITE, Curl_setopt, url.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485093"
+  - oss_id: 42485181
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b585f16786e90fd3b1257f557e24596978d1cf96
+    fix_date: 2017-06-24
+    crash_func: "LercNS::CntZImage::readZTile(unsigned char**, unsigned long&, int, int, int, int, double, float)"
+    crash_file: frmts/mrf/libLERC/CntZImage.cpp
+    signature: [heap-buffer-overflow, READ, "LercNS::CntZImage::readZTile", CntZImage.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485181"
+  - oss_id: 42485192
+    harness: mrf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d9edcd73fce363d291719c61ce5e0d48d15bc866
+    fix_date: 2017-06-24
+    crash_func: "void GDAL_MRF::CntZImgUFill<unsigned char>(LercNS::CntZImage&, unsigned char*, GDAL_MRF::ILImage const&)"
+    crash_file: frmts/mrf/LERC_band.cpp
+    signature: [heap-buffer-overflow, WRITE, "void GDAL_MRF::CntZImgUFill<>", LERC_band.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485192"
+  - oss_id: 42485315
+    harness: gdal_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 19bdfbf5111c75944405ad25e3e0995b6e9622d6
+    fix_date: 2017-06-24
+    crash_func: "LercNS::RLE::decompress(unsigned char const*, unsigned char*)"
+    crash_file: frmts/mrf/libLERC/RLE.cpp
+    signature: [heap-buffer-overflow, WRITE, "LercNS::RLE::decompress", RLE.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485315"
+  - oss_id: 42485826
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a68c5e87a182cd0c2bf054e1bc0d7a8951a70f14
+    fix_date: 2017-06-30
+    crash_func: "XYZRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/xyz/xyzdataset.cpp
+    signature: [heap-buffer-overflow, WRITE, "XYZRasterBand::IReadBlock", xyzdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485826"
+  - oss_id: 42485848
+    harness: cad_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 218716479201930a6d344842885f5ce151cf1b11
+    fix_date: 2017-07-12
+    crash_func: "Read2B(char const*, unsigned long&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/dwg/io.cpp
+    signature: [heap-buffer-overflow, READ, Read2B, io.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485848"
+  - oss_id: 42485959
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fbb96e5599d4d2a6205255e4bb138e7818640fe0
+    fix_date: 2017-07-01
+    crash_func: "GTiffDataset::IsBlockAvailable(int, unsigned long long*, unsigned long long*)"
+    crash_file: frmts/gtiff/geotiff.cpp
+    signature: [heap-buffer-overflow, READ, "GTiffDataset::IsBlockAvailable", geotiff.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485959"
+  - oss_id: 42485982
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d3fa315e436db38863297f074de11af359dbeefb
+    fix_date: 2017-07-01
+    crash_func: "PCIDSK::CBandInterleavedChannel::ReadBlock(int, void*, int, int, int, int)"
+    crash_file: frmts/pcidsk/sdk/channel/cbandinterleavedchannel.cpp
+    signature: [heap-buffer-overflow, READ, "PCIDSK::CBandInterleavedChannel::ReadBlock", cbandinterleavedchannel.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485982"
+  - oss_id: 42486093
+    harness: cad_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 218716479201930a6d344842885f5ce151cf1b11
+    fix_date: 2017-07-12
+    crash_func: "ReadBITDOUBLE(char const*, unsigned long&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/dwg/io.cpp
+    signature: [heap-buffer-overflow, READ, ReadBITDOUBLE, io.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486093"
+  - oss_id: 42486292
+    harness: gdal_translate_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 282153bf033d4a53b5403037c882468106e167d9
+    fix_date: 2017-07-04
+    crash_func: "void (anonymous namespace)::GDALCopyWordsComplexT<float, short>(float const*, int, short*, int, int)"
+    crash_file: gcore/rasterio.cpp
+    signature: [stack-buffer-overflow, READ, "void GDALCopyWordsComplexT<>", rasterio.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486292"
+  - oss_id: 42486737
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dc4c0c36575a54823727a57fb298aba83a7df2f0
+    fix_date: 2017-07-07
+    crash_func: "GRIBRasterBand::FindPDSTemplate()"
+    crash_file: frmts/grib/gribdataset.cpp
+    signature: [heap-buffer-overflow, READ, "GRIBRasterBand::FindPDSTemplate", gribdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486737"
+  - oss_id: 42487381
+    harness: osr_set_from_user_input_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a245b993512e65dd5e7eb05e99b8afa10d270c81
+    fix_date: 2017-08-07
+    crash_func: tftp_send_first
+    crash_file: curl/lib/tftp.c
+    signature: [heap-buffer-overflow, READ, tftp_send_first, tftp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487381"
+  - oss_id: 42487577
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 429f09a39b746793a546555ca1de3b01e08cf663
+    fix_date: 2020-09-21
+    crash_func: "Lerc1NS::blockread(unsigned char**, unsigned long&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int> >&)"
+    crash_file: frmts/mrf/LERCV1/Lerc1Image.cpp
+    signature: [heap-buffer-overflow, READ, "Lerc1NS::blockread", Lerc1Image.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487577"
+  - oss_id: 42487581
+    harness: cad_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 218716479201930a6d344842885f5ce151cf1b11
+    fix_date: 2017-07-12
+    crash_func: "void SwapEndianness<long&, unsigned long>(long&, unsigned long&&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/./dwg/io.h
+    signature: [stack-buffer-overflow, READ, "void SwapEndianness<>", io.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487581"
+  - oss_id: 42487837
+    harness: cad_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f6e2b73a90c36de28854d590079d8fb5ba0e81b8
+    fix_date: 2017-07-13
+    crash_func: "CADBuffer::ReadCHAR()"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/dwg/io.cpp
+    signature: [heap-buffer-overflow, READ, "CADBuffer::ReadCHAR", io.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487837"
+  - oss_id: 42487882
+    harness: cad_fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: f6e2b73a90c36de28854d590079d8fb5ba0e81b8
+    fix_date: 2017-07-13
+    crash_func: "void SwapEndianness<long&, unsigned long>(long&, unsigned long&&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/./dwg/io.h
+    signature: [stack-use-after-return, READ, "void SwapEndianness<>", io.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487882"
+  - oss_id: 42488548
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3e33d8823cebab5c036c5c06f2c526f9239700c0
+    fix_date: 2017-07-17
+    crash_func: "ParseSect4(int*, int, grib_MetaData*)"
+    crash_file: frmts/grib/degrib18/degrib/metaparse.cpp
+    signature: [heap-buffer-overflow, READ, ParseSect4, metaparse.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488548"
+  - oss_id: 42488770
+    harness: gtiff_mmap
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c55246ed990a0a50e4cf94c7d12dfba8df6306a3
+    fix_date: 2017-07-24
+    crash_func: putcontig8bitYCbCr42tile
+    crash_file: frmts/gtiff/libtiff/tif_getimage.c
+    signature: [heap-buffer-overflow, READ, putcontig8bitYCbCr42tile, tif_getimage.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488770"
+  - oss_id: 42488825
+    harness: gdal_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 60d97e3590bde9c86580c938c0c756dffd639f1a
+    fix_date: 2017-07-24
+    crash_func: "HF2RasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/hf2/hf2dataset.cpp
+    signature: [heap-buffer-overflow, WRITE, "HF2RasterBand::IReadBlock", hf2dataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488825"
+  - oss_id: 42488937
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c683f5aa156a233f832a73b37d4fff4aed7a7e03
+    fix_date: 2017-07-24
+    crash_func: "CPLKeywordParser::SkipWhite()"
+    crash_file: port/cplkeywordparser.cpp
+    signature: [heap-buffer-overflow, READ, "CPLKeywordParser::SkipWhite", cplkeywordparser.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488937"
+  - oss_id: 42489403
+    harness: ogr_sdts_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 22a9286cd451f7333556c9e11915ce27d4461775
+    fix_date: 2017-07-27
+    crash_func: "SDTSModId::Set(DDFField*)"
+    crash_file: frmts/sdts/sdtslib.cpp
+    signature: [heap-buffer-overflow, READ, "SDTSModId::Set", sdtslib.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489403"
+  - oss_id: 42490292
+    harness: ogr_sdts_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9003642b77133c92241b1e1030fcfa1ad6daa11d
+    fix_date: 2017-08-01
+    crash_func: "DDFSubfieldDefn::ExtractStringData(char const*, int, int*)"
+    crash_file: frmts/iso8211/ddfsubfielddefn.cpp
+    signature: [negative-size-param, -, "DDFSubfieldDefn::ExtractStringData", ddfsubfielddefn.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490292"
+  - oss_id: 42490337
+    harness: mrf_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4c6033666ce676a34c70d0d5301970129f9fbd35
+    fix_date: 2017-08-02
+    crash_func: CSLAddNameValue
+    crash_file: port/cpl_string.cpp
+    signature: [stack-buffer-overflow, READ, CSLAddNameValue, cpl_string.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490337"
+  - oss_id: 42490481
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 95e56a1d4b30d0f5746aaeb428be9da01189f491
+    fix_date: 2017-08-03
+    crash_func: "GDALMDReaderEROS::LoadImdTxtFile()"
+    crash_file: gcore/mdreader/reader_eros.cpp
+    signature: [heap-buffer-overflow, READ, "GDALMDReaderEROS::LoadImdTxtFile", reader_eros.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490481"
+  - oss_id: 42490692
+    harness: gdal_translate_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e614649056c9b753594269c90b5360046cbd02bc
+    fix_date: 2017-08-04
+    crash_func: "OGR_SRSNode::GetChildCount() const"
+    crash_file: ogr/ogr_spatialref.h
+    signature: [heap-use-after-free, READ, "OGR_SRSNode::GetChildCount", ogr_spatialref.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490692"
+  - oss_id: 42490759
+    harness: ogr_sdts_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d6937cde95559e9362e8e3b31a4f61ef00f30e4
+    fix_date: 2017-08-05
+    crash_func: "SDTSFeature::ApplyATID(DDFField*)"
+    crash_file: frmts/sdts/sdtslib.cpp
+    signature: [heap-buffer-overflow, READ, "SDTSFeature::ApplyATID", sdtslib.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490759"
+  - oss_id: 42490814
+    harness: ogr_sdts_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0eca940bdb8c32498c92bd9c39d3693038cb26f7
+    fix_date: 2017-08-06
+    crash_func: "SDTS_IREF::GetSADR(DDFField*, int, double*, double*, double*)"
+    crash_file: frmts/sdts/sdtsiref.cpp
+    signature: [heap-buffer-overflow, READ, "SDTS_IREF::GetSADR", sdtsiref.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490814"
+  - oss_id: 42490914
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e1db906e314d57ab35514dc3d69703a0c160be0e
+    fix_date: 2017-08-07
+    crash_func: "void GDAL_MRF::cpy_stride_in<unsigned char>(void*, void*, int, int)"
+    crash_file: frmts/mrf/mrf_band.cpp
+    signature: [heap-buffer-overflow, READ, "void GDAL_MRF::cpy_stride_in<>", mrf_band.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490914"
+  - oss_id: 42492371
+    harness: mrf_fuzzer
+    label: unknown-crash
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 83ea2908bafd0983d2cc6ffecfb669bc9de215b1
+    fix_date: 2017-08-12
+    crash_func: null
+    crash_file: ""
+    signature: [segv, -, -, -]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492371"
+  - oss_id: 42492427
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4df37c0e3620bdf2d07722bb560d93f631e544d1
+    fix_date: 2017-08-13
+    crash_func: "GDALArrayBandBlockCache::FlushCache()"
+    crash_file: gcore/gdalarraybandblockcache.cpp
+    signature: [heap-buffer-overflow, READ, "GDALArrayBandBlockCache::FlushCache", gdalarraybandblockcache.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492427"
+  - oss_id: 42492449
+    harness: ogr_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 37384f31bc8b854683c5a9c18b96b29e568d6ddf
+    fix_date: 2017-08-13
+    crash_func: "ReadDenseNodes(unsigned char*, unsigned char*, _OSMContext*)"
+    crash_file: ogr/ogrsf_frmts/osm/osm_parser.cpp
+    signature: [heap-buffer-overflow, WRITE, ReadDenseNodes, osm_parser.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492449"
+  - oss_id: 42492482
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5c694401346016ec718ba02be9a9619b7b85af9f
+    fix_date: 2017-08-13
+    crash_func: CPLScanDouble
+    crash_file: port/cpl_conv.cpp
+    signature: [heap-buffer-overflow, READ, CPLScanDouble, cpl_conv.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492482"
+  - oss_id: 42492504
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dfb225942449dc39069d76ffb4b051011385d35e
+    fix_date: 2017-08-13
+    crash_func: RPFTOCReadFromBuffer
+    crash_file: frmts/nitf/rpftocfile.cpp
+    signature: [heap-buffer-overflow, READ, RPFTOCReadFromBuffer, rpftocfile.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492504"
+  - oss_id: 42492582
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b6da092a5e2163d7f389683babda1aa3c06493a2
+    fix_date: 2017-08-14
+    crash_func: "ReadGrib1Sect2(unsigned char*, unsigned int, unsigned int*, gdsType*)"
+    crash_file: frmts/grib/degrib18/degrib/degrib1.cpp
+    signature: [heap-buffer-overflow, READ, ReadGrib1Sect2, degrib1.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492582"
+  - oss_id: 42492726
+    harness: gdal_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9fc691220863c4af7e79b9cee16ba9e325d47c39
+    fix_date: 2017-08-15
+    crash_func: TransferInt
+    crash_file: frmts/grib/degrib18/degrib/grib2api.c
+    signature: [heap-buffer-overflow, WRITE, TransferInt, grib2api.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492726"
+  - oss_id: 42493571
+    harness: ogr_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 95547907db125e5a2e91e3e2362d1aabc78e91bc
+    fix_date: 2017-08-22
+    crash_func: "OGRVRTLayer::FullInitialize()"
+    crash_file: ogr/ogrsf_frmts/vrt/ogrvrtlayer.cpp
+    signature: [heap-use-after-free, READ, "OGRVRTLayer::FullInitialize", ogrvrtlayer.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493571"
+  - oss_id: 42495181
+    harness: gdal_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac5e1c84d0e7f49ff56c864fe01cb4b54c861329
+    fix_date: 2017-09-03
+    crash_func: gbits
+    crash_file: frmts/grib/degrib18/g2clib-1.0.4/gbits.c
+    signature: [heap-buffer-overflow, READ, gbits, gbits.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42495181"
+  - oss_id: 42500369
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d4388c4628b478365a79081942e0832566a2968e
+    fix_date: 2017-10-23
+    crash_func: "VSIArchiveFilesystemHandler::SplitFilename(char const*, CPLString&, int)"
+    crash_file: port/cpl_vsil_abstract_archive.cpp
+    signature: [heap-buffer-overflow, READ, "VSIArchiveFilesystemHandler::SplitFilename", cpl_vsil_abstract_archive.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42500369"
+  - oss_id: 42502054
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7c745d48998bbce353d19ac81abfecf4d51c8a94
+    fix_date: 2017-10-29
+    crash_func: "OGRSimpleCurve::getPoint(int, OGRPoint*) const"
+    crash_file: ogr/ogrlinestring.cpp
+    signature: [heap-buffer-overflow, READ, "OGRSimpleCurve::getPoint", ogrlinestring.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502054"
+  - oss_id: 42503932
+    harness: gdal_translate_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 131a6f929090d0b7563cab5433f1bb269f3a9fba
+    fix_date: 2017-11-04
+    crash_func: "GDALResampleChunk32R_Gauss(double, double, double, double, GDALDataType, void*, unsigned char*, int, int, int, int, int, int, int, int, GDALRasterBand*, char const*, int, float, GDALColorTable*, GDALDataType, bool)"
+    crash_file: gcore/overview.cpp
+    signature: [global-buffer-overflow, READ, GDALResampleChunk32R_Gauss, overview.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503932"
+  - oss_id: 42504099
+    harness: gdal_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d89db70436643b27cdd995a3cd2d8385112f6953
+    fix_date: 2017-11-06
+    crash_func: "CPLErr GDALResampleChunk32R_ConvolutionT<float, false>(double, double, double, double, float const*, int, unsigned char*, int, int, int, int, int, int, int, int, GDALRasterBand**, int, float, double (*)(double), double (*)(double*), int, float)"
+    crash_file: gcore/overview.cpp
+    signature: [heap-buffer-overflow, WRITE, "CPLErr GDALResampleChunk32R_ConvolutionT<>", overview.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504099"
+  - oss_id: 42505310
+    harness: gtiff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 87638737b8f54ebd771faf3478562dae7dd0cc41
+    fix_date: 2017-11-11
+    crash_func: OJPEGReadBufferFill
+    crash_file: frmts/gtiff/libtiff/tif_ojpeg.c
+    signature: [heap-buffer-overflow, READ, OJPEGReadBufferFill, tif_ojpeg.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42505310"
+  - oss_id: 42508252
+    harness: dxf_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9da51c9d1ed6fab63e5dce97ec79e02df27a1e28
+    fix_date: 2017-11-28
+    crash_func: "ACTextUnescape(char const*, char const*, bool)"
+    crash_file: ogr/ogrsf_frmts/dxf/ogr_autocad_services.cpp
+    signature: [stack-buffer-overflow, READ, ACTextUnescape, ogr_autocad_services.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508252"
+  - oss_id: 42508563
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0fd5bb77cbab9ed05abcc9994c30c56b459b0cff
+    fix_date: 2017-11-29
+    crash_func: "GRIB2Inventory2to7(signed char, DataSource&, int, unsigned int*, char**, inventoryType*, unsigned char, unsigned short, unsigned short, unsigned char)"
+    crash_file: frmts/grib/degrib/degrib/inventory.cpp
+    signature: [heap-buffer-overflow, READ, GRIB2Inventory2to7, inventory.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42508563"
+  - oss_id: 42509485
+    harness: mitab_tab_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 16321dc9c8e1302d9fbdc7af4af60d7d153bb0c6
+    fix_date: 2017-12-08
+    crash_func: "TABFile::GetINDFileRef()"
+    crash_file: ogr/ogrsf_frmts/mitab/mitab_tabfile.cpp
+    signature: [heap-buffer-overflow, READ, "TABFile::GetINDFileRef", mitab_tabfile.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509485"
+  - oss_id: 42510640
+    harness: mitab_tab_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ac250458e556abfa2edbe7747911323d685110a3
+    fix_date: 2017-12-16
+    crash_func: "TABINDNode::FindFirst(unsigned char*)"
+    crash_file: ogr/ogrsf_frmts/mitab/mitab_indfile.cpp
+    signature: [heap-buffer-overflow, READ, "TABINDNode::FindFirst", mitab_indfile.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42510640"
+  - oss_id: 42511984
+    harness: mitab_mif_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9730b5b9dac48c068933986583ba72f405a893f0
+    fix_date: 2017-12-24
+    crash_func: "NTFFileReader::ProcessGeometry3D(NTFRecord*, int*)"
+    crash_file: ogr/ogrsf_frmts/ntf/ntffilereader.cpp
+    signature: [heap-use-after-free, READ, "NTFFileReader::ProcessGeometry3D", ntffilereader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511984"
+  - oss_id: 42513172
+    harness: gdal_sdts_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac2e0fe359822a058e11ffd12b2637d5717a5239
+    fix_date: 2018-01-03
+    crash_func: "SDTSRasterReader::Open(SDTS_CATD*, SDTS_IREF*, char const*)"
+    crash_file: frmts/sdts/sdtsrasterreader.cpp
+    signature: [heap-buffer-overflow, WRITE, "SDTSRasterReader::Open", sdtsrasterreader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513172"
+  - oss_id: 42513795
+    harness: cad_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ceefaccca6979001bc40922f476d29d2916b48aa
+    fix_date: 2018-02-25
+    crash_func: "ReadCHAR(char const*, unsigned long&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/dwg/io.cpp
+    signature: [heap-buffer-overflow, READ, ReadCHAR, io.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513795"
+  - oss_id: 42514339
+    harness: cad_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d98008b0c85e1e853e2f67a4e260f75794cb96ee
+    fix_date: 2018-01-06
+    crash_func: "DWGFileR2000::GetGeometry(unsigned long, long, long)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/dwg/r2000.cpp
+    signature: [heap-buffer-overflow, READ, "DWGFileR2000::GetGeometry", r2000.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514339"
+  - oss_id: 42514740
+    harness: dxf_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a4eaa51d5a2c7a339781513cbe3ad54a9a936145
+    fix_date: 2018-01-08
+    crash_func: "OGRDXFLayer::TranslateMLEADER()"
+    crash_file: ogr/ogrsf_frmts/dxf/ogrdxf_leader.cpp
+    signature: [container-overflow, READ, "OGRDXFLayer::TranslateMLEADER", ogrdxf_leader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514740"
+  - oss_id: 42515073
+    harness: gtiff_mmap
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 089866ec8830246e005d345d3e9c85d4cc751402
+    fix_date: 2018-01-09
+    crash_func: CPLvsnprintf
+    crash_file: port/cpl_string.cpp
+    signature: [stack-buffer-overflow, WRITE, CPLvsnprintf, cpl_string.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515073"
+  - oss_id: 42516150
+    harness: srp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e9accf88c2579358827e08ab789316b6d839e40c
+    fix_date: 2018-01-09
+    crash_func: "SRPRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/adrg/srpdataset.cpp
+    signature: [heap-buffer-overflow, READ, "SRPRasterBand::IReadBlock", srpdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42516150"
+  - oss_id: 42517449
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2b7dc7e81dc8d07828271498c874378994f8383c
+    fix_date: 2018-01-12
+    crash_func: gdal_lh_table_lookup_entry
+    crash_file: ogr/ogrsf_frmts/geojson/libjson/linkhash.c
+    signature: [heap-use-after-free, READ, gdal_lh_table_lookup_entry, linkhash.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517449"
+  - oss_id: 42517794
+    harness: gdal_sdts_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1d00777992650359787f9a0d393afbd596f5d2a5
+    fix_date: 2018-01-15
+    crash_func: "SDTSRasterReader::GetBlock(int, int, void*)"
+    crash_file: frmts/sdts/sdtsrasterreader.cpp
+    signature: [heap-buffer-overflow, WRITE, "SDTSRasterReader::GetBlock", sdtsrasterreader.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517794"
+  - oss_id: 42532943
+    harness: avcbin_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 6bc13f7e4d57a8ee52f8a34d70c3100fa6aa9300
+    fix_date: 2018-03-02
+    crash_func: AVCBinReadClose
+    crash_file: ogr/ogrsf_frmts/avc/avc_bin.cpp
+    signature: [attempting, -, AVCBinReadClose, avc_bin.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532943"
+  - oss_id: 42533165
+    harness: avce00_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fe53b55de6647ab7062e4bba53e781f733ee6b8e
+    fix_date: 2018-03-03
+    crash_func: "_AVCE00ParseTableRecord(AVCE00ParseInfo_t*)"
+    crash_file: ogr/ogrsf_frmts/avc/avc_e00parse.cpp
+    signature: [heap-buffer-overflow, READ, _AVCE00ParseTableRecord, avc_e00parse.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533165"
+  - oss_id: 42533210
+    harness: avce00_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7f5837295929561c93c69208f30db78af18dda39
+    fix_date: 2018-03-03
+    crash_func: "OGRAVCLayer::AppendTableDefinition(AVCTableDef_t*)"
+    crash_file: ogr/ogrsf_frmts/avc/ogravclayer.cpp
+    signature: [heap-use-after-free, READ, "OGRAVCLayer::AppendTableDefinition", ogravclayer.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533210"
+  - oss_id: 42533254
+    harness: avce00_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 12853e4302974f564b895a7de5f70e95a78e3439
+    fix_date: 2018-03-03
+    crash_func: "OGRAVCLayer::TranslateFeature(void*)"
+    crash_file: ogr/ogrsf_frmts/avc/ogravclayer.cpp
+    signature: [heap-buffer-overflow, READ, "OGRAVCLayer::TranslateFeature", ogravclayer.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533254"
+  - oss_id: 42533566
+    harness: ehdr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f45a7cc4cf8fabf643c8796d8191eb418ce18143
+    fix_date: 2018-03-04
+    crash_func: "EHdrRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/raw/ehdrdataset.cpp
+    signature: [heap-buffer-overflow, READ, "EHdrRasterBand::IReadBlock", ehdrdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533566"
+  - oss_id: 42533577
+    harness: envi_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ae88980c45691aeaa6ad0a63b6281470dfb311d9
+    fix_date: 2018-03-03
+    crash_func: "ENVIDataset::ReadHeader(_IO_FILE*)"
+    crash_file: frmts/raw/envidataset.cpp
+    signature: [heap-buffer-overflow, READ, "ENVIDataset::ReadHeader", envidataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533577"
+  - oss_id: 42535043
+    harness: isce_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 94181354ea10da372cf78ca086be5acdc6fc90dc
+    fix_date: 2018-03-12
+    crash_func: CSLFetchNameValue
+    crash_file: port/cpl_string.cpp
+    signature: [heap-use-after-free, READ, CSLFetchNameValue, cpl_string.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535043"
+  - oss_id: 42535766
+    harness: gdal_translate_fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0cb16a8ccb86c904c18b7f5c6d55b2db36c2275a
+    fix_date: 2018-03-15
+    crash_func: reduce
+    crash_file: frmts/grib/degrib/g2clib/reduce.c
+    signature: [global-buffer-overflow, WRITE, reduce, reduce.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535766"
+  - oss_id: 42536176
+    harness: gdal_vrt_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e1b11da3b0bce8a2126af8146bd6000cea25edea
+    fix_date: 2018-03-16
+    crash_func: "RIKRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/rik/rikdataset.cpp
+    signature: [heap-buffer-overflow, READ, "RIKRasterBand::IReadBlock", rikdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536176"
+  - oss_id: 42536276
+    harness: cad_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 623fd5608671e0d593e8dc607eaa986751d096e4
+    fix_date: 2018-03-16
+    crash_func: "CADVector::CADVector(CADVector const&)"
+    crash_file: ogr/ogrsf_frmts/cad/libopencad/cadobjects.cpp
+    signature: [container-overflow, READ, "CADVector::CADVector", cadobjects.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536276"
+  - oss_id: 42536454
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7788fa11896f685ab8fac0171474178004e7de08
+    fix_date: 2018-03-17
+    crash_func: sbits
+    crash_file: frmts/grib/degrib/g2clib/gbits.c
+    signature: [heap-buffer-overflow, READ, sbits, gbits.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536454"
+  - oss_id: 42536543
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6d6ad2a8172966e9a0b1f4c3831db41f640c6296
+    fix_date: 2018-03-17
+    crash_func: SHPCreateLL
+    crash_file: ogr/ogrsf_frmts/shape/./shpopen.c
+    signature: [heap-buffer-overflow, READ, SHPCreateLL, shpopen.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536543"
+  - oss_id: 42536554
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 80d68c64a24b3e9b6d2b8be4a01a6eccf249092a
+    fix_date: 2018-03-17
+    crash_func: SHPRewindObject
+    crash_file: ogr/ogrsf_frmts/shape/./shpopen.c
+    signature: [heap-buffer-overflow, READ, SHPRewindObject, shpopen.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536554"
+  - oss_id: 42536944
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 067d295c3527dad9f39da9d973235fac3dba1685
+    fix_date: 2018-03-19
+    crash_func: _escapeString_GCIO
+    crash_file: ogr/ogrsf_frmts/geoconcept/geoconcept.c
+    signature: [heap-buffer-overflow, WRITE, _escapeString_GCIO, geoconcept.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536944"
+  - oss_id: 42537244
+    harness: gdal_translate_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4ba39827678bb11f546f1983b93646eb8d233fc9
+    fix_date: 2018-03-22
+    crash_func: reduce
+    crash_file: frmts/grib/degrib/g2clib/reduce.c
+    signature: [global-buffer-overflow, READ, reduce, reduce.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537244"
+  - oss_id: 42537789
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4ca59c588ec9ea0917ab09798a11f13d81dfea22
+    fix_date: 2018-03-24
+    crash_func: "OGRPolygonLabelPoint(OGRPolygon*, OGRPoint*)"
+    crash_file: ogr/ogrsf_frmts/mitab/mitab_geometry.cpp
+    signature: [heap-buffer-overflow, READ, OGRPolygonLabelPoint, mitab_geometry.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537789"
+  - oss_id: 42538055
+    harness: gdal_vrt_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 64ce83f4b6408467a7ea2dbe4544f3287b66f600
+    fix_date: 2018-03-26
+    crash_func: "GetNextLZWCode(int, unsigned char*, unsigned int&, unsigned int&, int&)"
+    crash_file: frmts/rik/rikdataset.cpp
+    signature: [heap-buffer-overflow, READ, GetNextLZWCode, rikdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538055"
+  - oss_id: 42538736
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 919122e86f9568b98f360b93a176733629efad5a
+    fix_date: 2018-04-02
+    crash_func: CPLUnescapeString
+    crash_file: port/cpl_string.cpp
+    signature: [heap-buffer-overflow, READ, CPLUnescapeString, cpl_string.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538736"
+  - oss_id: 42538753
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6db8fe829df82476e62fce4d0c1d3ad5739aa950
+    fix_date: 2018-04-02
+    crash_func: "GDAL_MRF::fromYarn(char const*, unsigned long, char*, unsigned long, unsigned char)"
+    crash_file: frmts/mrf/Packer_RLE.cpp
+    signature: [heap-buffer-overflow, READ, "GDAL_MRF::fromYarn", Packer_RLE.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538753"
+  - oss_id: 42538775
+    harness: ogr_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07a7f1ca91bed18233cbee365e0851b04fe1440d
+    fix_date: 2018-04-03
+    crash_func: "CPLString::CPLString(char const*)"
+    crash_file: port/cpl_string.h
+    signature: [heap-buffer-overflow, READ, "CPLString::CPLString", cpl_string.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538775"
+  - oss_id: 42539247
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9afd63a740d2150bd13e7ba26eb02171e5826d6d
+    fix_date: 2018-04-17
+    crash_func: "EXIFPrintData(char*, unsigned short, unsigned int, unsigned char const*)"
+    crash_file: gcore/gdalexif.cpp
+    signature: [heap-buffer-overflow, READ, EXIFPrintData, gdalexif.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539247"
+  - oss_id: 42539479
+    harness: mitab_mif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a37c17b713a675cd7e9af32175351b1a8d9557f1
+    fix_date: 2018-04-23
+    crash_func: "VFKFeature::SetProperties(char const*)"
+    crash_file: ogr/ogrsf_frmts/vfk/vfkfeature.cpp
+    signature: [heap-buffer-overflow, READ, "VFKFeature::SetProperties", vfkfeature.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539479"
+  - oss_id: 42539667
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d95f0513ab46b696b9e9e67d6e41bc7c4a8e5f89
+    fix_date: 2018-05-03
+    crash_func: "PCIDSK::CPCIDSKGeoref::Load()"
+    crash_file: frmts/pcidsk/sdk/segment/cpcidskgeoref.cpp
+    signature: [heap-buffer-overflow, READ, "PCIDSK::CPCIDSKGeoref::Load", cpcidskgeoref.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539667"
+  - oss_id: 42540071
+    harness: gdal_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4fa747c580086fac55eb519e9d454ecb0d74495b
+    fix_date: 2018-05-23
+    crash_func: "GTiffOddBitsBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/gtiff/geotiff.cpp
+    signature: [heap-buffer-overflow, READ, "GTiffOddBitsBand::IReadBlock", geotiff.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540071"
+  - oss_id: 42540388
+    harness: gdal_vector_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10d8415df450993e829985c667746e3288cfb946
+    fix_date: 2018-06-07
+    crash_func: "OGRSimpleCurve::setPoints(int, OGRRawPoint*, double*, double*)"
+    crash_file: ogr/ogrlinestring.cpp
+    signature: [heap-buffer-overflow, READ, "OGRSimpleCurve::setPoints", ogrlinestring.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540388"
+  - oss_id: 42540516
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c11e78a14a6fcd785d34dab60bff28d757b4b782
+    fix_date: 2018-06-14
+    crash_func: "SGIRasterBand::IWriteBlock(int, int, void*)"
+    crash_file: frmts/sgi/sgidataset.cpp
+    signature: [heap-buffer-overflow, READ, "SGIRasterBand::IWriteBlock", sgidataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540516"
+  - oss_id: 42540599
+    harness: gdal_vector_translate_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c368014547ab9f9d7335254c02a87e08a156942a
+    fix_date: 2018-06-21
+    crash_func: "PCIDSK::ProjParmsFromText(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >)"
+    crash_file: frmts/pcidsk/sdk/core/pcidsk_utils.cpp
+    signature: [container-overflow, WRITE, "PCIDSK::ProjParmsFromText", pcidsk_utils.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540599"
+  - oss_id: 42540794
+    harness: gdal_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 65f13fc5fb879cd00f08904f14a9339c11be59c3
+    fix_date: 2018-06-28
+    crash_func: "RMFRasterBand::IReadBlock(int, int, void*)"
+    crash_file: frmts/rmf/rmfdataset.cpp
+    signature: [attempting, -, "RMFRasterBand::IReadBlock", rmfdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540794"
+  - oss_id: 42540797
+    harness: gdal_filesystem_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 65f13fc5fb879cd00f08904f14a9339c11be59c3
+    fix_date: 2018-06-28
+    crash_func: "RMFDataset::~RMFDataset()"
+    crash_file: frmts/rmf/rmfdataset.cpp
+    signature: [attempting, -, "RMFDataset::~RMFDataset", rmfdataset.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540797"
+  - oss_id: 42540952
+    harness: mrf_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 361363f724e59bc2da002cd9cdec05578e1c163b
+    fix_date: 2018-07-08
+    crash_func: "GDAL_LercNS::BitStuffer2::Decode(unsigned char const**, unsigned long&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int> >&, int) const"
+    crash_file: third_party/LercLib/BitStuffer2.cpp
+    signature: [container-overflow, READ, "GDAL_LercNS::BitStuffer2::Decode", BitStuffer2.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540952"
+  - oss_id: 42540954
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3fe14382ac0cb578b7b5a978942b64dab97e2346
+    fix_date: 2018-07-06
+    crash_func: "GDAL_LercNS::RLE::readCount(unsigned char const**)"
+    crash_file: third_party/LercLib/RLE.cpp
+    signature: [heap-buffer-overflow, READ, "GDAL_LercNS::RLE::readCount", RLE.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540954"
+  - oss_id: 42541126
+    harness: mrf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5eb75bc8495a304b6f9a13ecabcbfa88997c64e1
+    fix_date: 2018-07-16
+    crash_func: "GDAL_LercNS::Lerc2::ComputeChecksumFletcher32(unsigned char const*, int)"
+    crash_file: third_party/LercLib/Lerc2.cpp
+    signature: [heap-buffer-overflow, READ, "GDAL_LercNS::Lerc2::ComputeChecksumFletcher32", Lerc2.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541126"
+  - oss_id: 42541159
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0a2ab4c78d753e6f0cc61b0a454194fd21614473
+    fix_date: 2018-07-20
+    crash_func: NITFUncompressVQTile
+    crash_file: frmts/nitf/nitfimage.c
+    signature: [heap-buffer-overflow, WRITE, NITFUncompressVQTile, nitfimage.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541159"
+  - oss_id: 42541164
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac57c24314e3ea4f86d648fb1d1ae7e67c601cd7
+    fix_date: 2018-05-03
+    crash_func: ycc_rgb_convert
+    crash_file: frmts/jpeg/libjpeg/jdcolor.c
+    signature: [heap-buffer-overflow, WRITE, ycc_rgb_convert, jdcolor.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541164"
+  - oss_id: 42541203
+    harness: gdal_filesystem_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c6a186860fea8711852d3c6ea32b2ee439ed96a3
+    fix_date: 2018-07-22
+    crash_func: "VSIUnixStdioHandle::Read(void*, unsigned long, unsigned long)"
+    crash_file: port/cpl_vsil_unix_stdio_64.cpp
+    signature: [heap-buffer-overflow, WRITE, "VSIUnixStdioHandle::Read", cpl_vsil_unix_stdio_64.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541203"
+  - oss_id: 42541374
+    harness: gdal_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 730ac94eda1a32c89c1534db8cb4255b818da9b0
+    fix_date: 2018-07-31
+    crash_func: "void GDALUnrolledCopyGeneric<unsigned char, 1, 3>(unsigned char*, unsigned char const*, int)"
+    crash_file: gcore/rasterio.cpp
+    signature: [heap-buffer-overflow, WRITE, "void GDALUnrolledCopyGeneric<>", rasterio.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541374"
+  - oss_id: 42541510
+    harness: gdal_translate_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ff3561ab4d24310397409963cdaf786b7cc46d4c
+    fix_date: 2018-08-09
+    crash_func: "GDALResampleChunk32R_Gauss(double, double, double, double, GDALDataType, void*, unsigned char*, int, int, int, int, int, int, int, int, GDALRasterBand*, char const*, int, float, GDALColorTable*, GDALDataType, bool)"
+    crash_file: gcore/overview.cpp
+    signature: [heap-buffer-overflow, READ, GDALResampleChunk32R_Gauss, overview.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541510"
+  - oss_id: 42541530
+    harness: ogr_filesystem_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 66970cd31b72d97c4c6900896c504350b084e6fa
+    fix_date: 2018-08-09
+    crash_func: "OGRWFSLayer::GetRequiredOutputFormat()"
+    crash_file: ogr/ogrsf_frmts/wfs/./ogr_wfs.h
+    signature: [heap-buffer-overflow, READ, "OGRWFSLayer::GetRequiredOutputFormat", ogr_wfs.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541530"
+rejected:
+  - oss_id: 42476239
+    reason: commit_missing
+  - oss_id: 42476527
+    reason: commit_missing
+  - oss_id: 42476550
+    reason: commit_missing
+  - oss_id: 42476605
+    reason: commit_missing
+  - oss_id: 42480328
+    reason: commit_missing
+  - oss_id: 42480660
+    reason: commit_missing
+  - oss_id: 42482938
+    reason: commit_missing
+  - oss_id: 42484450
+    reason: commit_missing
+  - oss_id: 42489426
+    reason: commit_missing
+  - oss_id: 42490426
+    reason: commit_missing
+  - oss_id: 42498592
+    reason: commit_missing
+  - oss_id: 42527577
+    reason: commit_missing
+  - oss_id: 42535910
+    reason: commit_missing
+error: null

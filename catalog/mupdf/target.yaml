@@ -1,0 +1,337 @@
+project: mupdf
+repo: "git://git.ghostscript.com/mupdf.git"
+n_sites: 20
+n_issues: 20
+harnesses: [pdf_fuzzer]
+base:
+  commit: 867d6c72a346253837aaa662b34d7945b59665ed
+  date: 2023-05-30
+  method: wave_eve
+  n_latent: 7
+  n_latent_upper: 7
+  n_wave: 2
+  note: "eve of 2023-05-30 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-01-24
+    n: 3
+    eve: 093fc3b098dc5fadef5d8ad4b225db9fb124758b
+    n_latent_upper: 5
+    oss_ids: [42519882, 42519904, 42521126]
+  - day: 2021-07-23
+    n: 2
+    eve: 67fd576d694d9cc171cd720cd3ea9dac8105ab64
+    n_latent_upper: 6
+    oss_ids: [42499385, 42499447]
+  - day: 2023-05-30
+    n: 2
+    eve: 867d6c72a346253837aaa662b34d7945b59665ed
+    n_latent_upper: 7
+    oss_ids: [42524643, 42524877]
+  - day: 2018-01-31
+    n: 1
+    eve: de39f005f12a1afc6973c1f5cec362d6545f70cb
+    n_latent_upper: 4
+    oss_ids: [42520116]
+  - day: 2018-06-12
+    n: 1
+    eve: d79c0afbc850f4bb818096ac3fc7159a39ede4a8
+    n_latent_upper: 3
+    oss_ids: [42521724]
+  - day: 2018-08-10
+    n: 1
+    eve: 62876a7025e31897e7ccb92ff8d461d3fef6ddb4
+    n_latent_upper: 3
+    oss_ids: [42541002]
+  - day: 2018-08-21
+    n: 1
+    eve: 2e43685dc8a8a886fc9df9b3663cf199404f7637
+    n_latent_upper: 1
+    oss_ids: [42541718]
+  - day: 2019-03-28
+    n: 1
+    eve: f7bae569b1caee2b1c6748214c1a3ef65c085f92
+    n_latent_upper: 2
+    oss_ids: [42474362]
+  - day: 2021-01-27
+    n: 1
+    eve: d0b9c2be091749dbed2299e9186f632bfd048ce7
+    n_latent_upper: 4
+    oss_ids: [42491901]
+  - day: 2023-01-13
+    n: 1
+    eve: 360a6e0772e48272a738a9d825ba554387892ff7
+    n_latent_upper: 7
+    oss_ids: [42520029]
+  - day: 2023-06-07
+    n: 1
+    eve: 2590572078dcc4b2fe987a6fa731ba23f712c1fd
+    n_latent_upper: 5
+    oss_ids: [42524969]
+  - day: 2023-08-04
+    n: 1
+    eve: edbfb0cc392ce664837a69dfcd3e3cd7187ef4e5
+    n_latent_upper: 5
+    oss_ids: [42525912]
+bugs:
+  - oss_id: 42474362
+    harness: pdf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 152b3f31096f83d6507d400b2e43ac02033dc7a0
+    fix_date: 2019-03-28
+    crash_func: eval_sample_func
+    crash_file: source/pdf/pdf-function.c
+    signature: [heap-buffer-overflow, WRITE, eval_sample_func, pdf-function.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474362"
+  - oss_id: 42491901
+    harness: pdf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e27ceb2b0e64b9a56ba79d844ea96553d87dc113
+    fix_date: 2021-01-27
+    crash_func: pdf_get_xref_entry
+    crash_file: source/pdf/pdf-xref.c
+    signature: [heap-buffer-overflow, READ, pdf_get_xref_entry, pdf-xref.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491901"
+  - oss_id: 42499385
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 45003f3921774577968e209a5f6900022a5cc9bf
+    fix_date: 2021-07-23
+    crash_func: fz_paint_pixmap_with_mask
+    crash_file: source/fitz/draw-paint.c
+    signature: [heap-use-after-free, READ, fz_paint_pixmap_with_mask, draw-paint.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499385"
+  - oss_id: 42499447
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 45003f3921774577968e209a5f6900022a5cc9bf
+    fix_date: 2021-07-23
+    crash_func: fz_draw_clip_image_mask
+    crash_file: source/fitz/draw-device.c
+    signature: [heap-use-after-free, READ, fz_draw_clip_image_mask, draw-device.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499447"
+  - oss_id: 42519882
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f597300439e62f5e921f0d7b1e880b5c1a1f1607
+    fix_date: 2018-01-24
+    crash_func: add_range
+    crash_file: source/pdf/pdf-cmap.c
+    signature: [heap-use-after-free, READ, add_range, pdf-cmap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519882"
+  - oss_id: 42519904
+    harness: pdf_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 71ceebcf56e682504da22c4035b39a2d451e8ffd
+    fix_date: 2018-01-24
+    crash_func: pdf_lookup_cmap_full
+    crash_file: source/pdf/pdf-cmap.c
+    signature: [stack-buffer-overflow, WRITE, pdf_lookup_cmap_full, pdf-cmap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519904"
+  - oss_id: 42520029
+    harness: pdf_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 74e920a40e0aea93f7cefca6e6bbff249d637b18
+    fix_date: 2023-01-13
+    crash_func: pdf_map_one_to_many
+    crash_file: source/pdf/pdf-cmap.c
+    signature: [stack-buffer-overflow, READ, pdf_map_one_to_many, pdf-cmap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520029"
+  - oss_id: 42520116
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8a3257b01faa899dd9b5e35c6bb3403cd709c371
+    fix_date: 2018-01-31
+    crash_func: fz_drop_key_storable
+    crash_file: source/fitz/store.c
+    signature: [heap-use-after-free, READ, fz_drop_key_storable, store.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520116"
+  - oss_id: 42521126
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8fdad62ddb46f8798643e9b1a564a2af8b12411d
+    fix_date: 2018-01-24
+    crash_func: fz_fin_cached_color_converter
+    crash_file: source/fitz/colorspace.c
+    signature: [heap-use-after-free, READ, fz_fin_cached_color_converter, colorspace.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521126"
+  - oss_id: 42521724
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 43dec68e7f2d577c66c0fd6b8071562e5edb9cdb
+    fix_date: 2018-06-12
+    crash_func: pdf_copy_pattern_gstate
+    crash_file: source/pdf/pdf-op-run.c
+    signature: [heap-use-after-free, READ, pdf_copy_pattern_gstate, pdf-op-run.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521724"
+  - oss_id: 42524643
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 608e9e9a4ec4d2013faf1b8f9ecec09e90f131f2
+    fix_date: 2023-05-30
+    crash_func: pdf_cache_object
+    crash_file: source/pdf/pdf-xref.c
+    signature: [heap-use-after-free, WRITE, pdf_cache_object, pdf-xref.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524643"
+  - oss_id: 42524877
+    harness: pdf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ab9112d95d2af2ca5d9d48ee9d248fbd813c9c2f
+    fix_date: 2023-05-30
+    crash_func: bmp_read_palette
+    crash_file: source/fitz/load-bmp.c
+    signature: [heap-buffer-overflow, READ, bmp_read_palette, load-bmp.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42524877"
+  - oss_id: 42524969
+    harness: pdf_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 56a9eef4c66808608ae01bee70e1a4954c34b1d9
+    fix_date: 2023-06-07
+    crash_func: bmp_load_default_palette
+    crash_file: source/fitz/load-bmp.c
+    signature: [stack-buffer-underflow, WRITE, bmp_load_default_palette, load-bmp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42524969"
+  - oss_id: 42525912
+    harness: pdf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9a35f1652ed34ea6aaa7daef36de219b1ed8a3ce
+    fix_date: 2023-08-04
+    crash_func: reorder_weights
+    crash_file: source/fitz/draw-scale-simple.c
+    signature: [heap-buffer-overflow, WRITE, reorder_weights, draw-scale-simple.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525912"
+  - oss_id: 42530704
+    harness: pdf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 67d1055a074c5c06155405c49309d300b8c485a2
+    fix_date: 2023-12-02
+    crash_func: fz_new_buffer_from_copied_data
+    crash_file: source/fitz/buffer.c
+    signature: [segv, -, fz_new_buffer_from_copied_data, buffer.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530704"
+  - oss_id: 42537168
+    harness: pdf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 711e82dde434dfe8f36feca88c5c4b9d70ab87ce
+    fix_date: 2024-07-17
+    crash_func: nest_layer_clip
+    crash_file: source/pdf/pdf-op-run.c
+    signature: [heap-buffer-overflow, WRITE, nest_layer_clip, pdf-op-run.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537168"
+  - oss_id: 42541002
+    harness: pdf_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 09f2e173850e011e6390c49a4f761e87dd87ffba
+    fix_date: 2018-08-10
+    crash_func: next_null
+    crash_file: source/fitz/filter-basic.c
+    signature: [heap-buffer-overflow, WRITE, next_null, filter-basic.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42541002"
+  - oss_id: 42541718
+    harness: pdf_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c7d14ca6453d4dd2e8b3f433fbea17232231f4fd
+    fix_date: 2018-08-21
+    crash_func: ps_index
+    crash_file: source/pdf/pdf-function.c
+    signature: [stack-buffer-underflow, READ, ps_index, pdf-function.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42541718"
+  - oss_id: 391935579
+    harness: pdf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 05d7666f57f07dbbb073250a97548c53ce863c6d
+    fix_date: 2025-02-20
+    crash_func: cbz_recognize_doc_content
+    crash_file: source/cbz/mucbz.c
+    signature: [heap-buffer-overflow, READ, cbz_recognize_doc_content, mucbz.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/391935579"
+  - oss_id: 396958483
+    harness: pdf_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1cae05c192654334ae1afd46fff8bfd3c4190fc6
+    fix_date: 2025-02-17
+    crash_func: convert_to_boxes
+    crash_file: source/html/html-parse.c
+    signature: [heap-use-after-free, READ, convert_to_boxes, html-parse.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/396958483"
+rejected: []
+error: null

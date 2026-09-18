@@ -1,0 +1,456 @@
+project: mruby
+repo: "https://github.com/mruby/mruby"
+n_sites: 30
+n_issues: 30
+harnesses: [mruby_fuzzer, mruby_proto_fuzzer]
+base:
+  commit: 6b3b1012ca480f1e930c4ddeeaebed55e5df4144
+  date: 2021-10-12
+  method: wave_eve
+  n_latent: 15
+  n_latent_upper: 15
+  n_wave: 2
+  note: "eve of 2021-10-14 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-10-14
+    n: 2
+    eve: 6b3b1012ca480f1e930c4ddeeaebed55e5df4144
+    n_latent_upper: 15
+    oss_ids: [42503233, 42503239]
+  - day: 2020-01-08
+    n: 1
+    eve: dbba0ca517ad0c32cdd7f0bd68de9c35145e1735
+    n_latent_upper: 12
+    oss_ids: [42480985]
+  - day: 2020-05-26
+    n: 1
+    eve: 69c62415c07698d45e68ad2384a5204baf9e5f4d
+    n_latent_upper: 12
+    oss_ids: [42483880]
+  - day: 2020-07-02
+    n: 1
+    eve: 612e5d6aad7f224008735d57b19e5a81556cfd31
+    n_latent_upper: 11
+    oss_ids: [42485317]
+  - day: 2021-02-13
+    n: 1
+    eve: adb50df71a4e5c45cdf9c626fb90f95ef2d10b13
+    n_latent_upper: 17
+    oss_ids: [42493188]
+  - day: 2021-05-25
+    n: 1
+    eve: afbc199ed3b0820f156681548bf91290a2be48f4
+    n_latent_upper: 17
+    oss_ids: [42497373]
+  - day: 2021-06-10
+    n: 1
+    eve: df549c12e5852f640d37b2bd35e2d5dfc45a7283
+    n_latent_upper: 16
+    oss_ids: [42497881]
+  - day: 2021-07-02
+    n: 1
+    eve: 040d1799ecadaf4cca83d8e250c3ca268a363e09
+    n_latent_upper: 16
+    oss_ids: [42498551]
+  - day: 2021-07-03
+    n: 1
+    eve: 39aed39139782d26299876c3aa527c6d094294b1
+    n_latent_upper: 15
+    oss_ids: [42498567]
+  - day: 2021-09-10
+    n: 1
+    eve: cd0ffd6f1ca413f36b6239de7779ae7778e1a200
+    n_latent_upper: 14
+    oss_ids: [42501420]
+  - day: 2021-11-03
+    n: 1
+    eve: 36efd018e2d297636a3aa2799d214a8675a14e0c
+    n_latent_upper: 13
+    oss_ids: [42503250]
+  - day: 2022-05-04
+    n: 1
+    eve: 49b8cef31f01c0d88d874e17714dff1fa5b85df0
+    n_latent_upper: 15
+    oss_ids: [42511322]
+bugs:
+  - oss_id: 42480985
+    harness: mruby_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 2124b9b4c95e66e63b1eb26a8dab49753b82fd6c
+    fix_date: 2020-01-08
+    crash_func: mrb_str_len_to_dbl
+    crash_file: src/string.c
+    signature: [stack-buffer-overflow, WRITE, mrb_str_len_to_dbl, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480985"
+  - oss_id: 42483880
+    harness: mruby_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 15c63688e3f1a3c6067e6af70e3e9bf999d91389
+    fix_date: 2020-05-26
+    crash_func: fmt_setup
+    crash_file: src/sprintf.c
+    signature: [stack-buffer-overflow, WRITE, fmt_setup, sprintf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483880"
+  - oss_id: 42485317
+    harness: mruby_proto_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 97319697c8f9f6ff27b32589947e1918e3015503
+    fix_date: 2020-07-02
+    crash_func: mrb_default_allocf
+    crash_file: src/state.c
+    signature: [attempting, -, mrb_default_allocf, state.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485317"
+  - oss_id: 42493188
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 94fb86f89b131814201596d301f584dfe4547526
+    fix_date: 2021-02-13
+    crash_func: yyparse
+    crash_file: mrbgems/mruby-compiler/core/y.tab.c
+    signature: [heap-buffer-overflow, READ, yyparse, y.tab.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493188"
+  - oss_id: 42497373
+    harness: mruby_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 063b49ab8e6a10212c7f88e5b114b90fe59296f7
+    fix_date: 2021-05-25
+    crash_func: mrb_format_float
+    crash_file: src/fmt_fp.c
+    signature: [heap-buffer-overflow, WRITE, mrb_format_float, fmt_fp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42497373"
+  - oss_id: 42497881
+    harness: mruby_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 62f4cc8cd1d5839153eb364c1c095df64d7cdc22
+    fix_date: 2021-06-10
+    crash_func: mrb_str_format
+    crash_file: src/sprintf.c
+    signature: [negative-size-param, -, mrb_str_format, sprintf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42497881"
+  - oss_id: 42498551
+    harness: mruby_proto_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a624da6fdb160b9a70a96c1ffe9dec017d7f5cb4
+    fix_date: 2021-07-02
+    crash_func: mrb_vm_exec
+    crash_file: src/vm.c
+    signature: [heap-buffer-overflow, READ, mrb_vm_exec, vm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498551"
+  - oss_id: 42498567
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a6657afab9ffb258b01b3d6e485a86328bf4d40e
+    fix_date: 2021-07-03
+    crash_func: dispatch
+    crash_file: mrbgems/mruby-compiler/core/codegen.c
+    signature: [heap-buffer-overflow, READ, dispatch, codegen.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498567"
+  - oss_id: 42501420
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: da749d870f4a57df7a05ef4a9ae023602d48af86
+    fix_date: 2021-09-10
+    crash_func: value_move
+    crash_file: src/value_array.h
+    signature: [heap-buffer-overflow, READ, value_move, value_array.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42501420"
+  - oss_id: 42503233
+    harness: mruby_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7010ed0f0a414b1367e4620a504f106759341cc2
+    fix_date: 2021-10-14
+    crash_func: mrb_funcall_argv
+    crash_file: src/vm.c
+    signature: [heap-buffer-overflow, WRITE, mrb_funcall_argv, vm.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42503233"
+  - oss_id: 42503239
+    harness: mruby_proto_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7010ed0f0a414b1367e4620a504f106759341cc2
+    fix_date: 2021-10-14
+    crash_func: mrb_instance_new
+    crash_file: src/class.c
+    signature: [heap-buffer-overflow, WRITE, mrb_instance_new, class.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42503239"
+  - oss_id: 42503250
+    harness: mruby_proto_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b8b5d4094f4c1a34ca58d1acbaab2650df7fb228
+    fix_date: 2021-11-03
+    crash_func: mrb_vm_exec
+    crash_file: src/vm.c
+    signature: [heap-buffer-overflow, WRITE, mrb_vm_exec, vm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503250"
+  - oss_id: 42511322
+    harness: mruby_proto_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c32cac6e59a899497c603025b74fcfd316282f36
+    fix_date: 2022-05-04
+    crash_func: stack_copy
+    crash_file: src/vm.c
+    signature: [heap-use-after-free, READ, stack_copy, vm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511322"
+  - oss_id: 42513165
+    harness: mruby_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a40842eb73164254f465ce5bac74045200e5acb0
+    fix_date: 2022-07-09
+    crash_func: mpz_init_set_str
+    crash_file: mrbgems/mruby-bigint/core/bigint.c
+    signature: [segv, -, mpz_init_set_str, bigint.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513165"
+  - oss_id: 42513357
+    harness: mruby_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 37c2f080f09390105956edb2565627f29281e24e
+    fix_date: 2022-07-12
+    crash_func: mrb_bint_to_s
+    crash_file: mrbgems/mruby-bigint/core/bigint.c
+    signature: [heap-buffer-overflow, WRITE, mrb_bint_to_s, bigint.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513357"
+  - oss_id: 42513590
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b84bca666fdc4fe94286b49b6f6b9a64e4c3a534
+    fix_date: 2022-07-19
+    crash_func: mpz_get_int
+    crash_file: mrbgems/mruby-bigint/core/bigint.c
+    signature: [heap-buffer-overflow, READ, mpz_get_int, bigint.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513590"
+  - oss_id: 42513594
+    harness: mruby_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 2b074893723ebb335e6469c34caa2d8eac05d6ed
+    fix_date: 2022-07-20
+    crash_func: mrb_vm_run
+    crash_file: src/vm.c
+    signature: [heap-buffer-overflow, WRITE, mrb_vm_run, vm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513594"
+  - oss_id: 42513779
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d5475916cdcf4c54952f7c695363f3d3c682ee9
+    fix_date: 2022-07-25
+    crash_func: udiv
+    crash_file: mrbgems/mruby-bigint/core/bigint.c
+    signature: [heap-buffer-overflow, READ, udiv, bigint.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513779"
+  - oss_id: 42514154
+    harness: mruby_proto_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 5ccca7e45b802051e00e3398ecf036f86ba92843
+    fix_date: 2022-10-28
+    crash_func: udiv
+    crash_file: mrbgems/mruby-bigint/core/bigint.c
+    signature: [heap-buffer-overflow, WRITE, udiv, bigint.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514154"
+  - oss_id: 42517953
+    harness: mruby_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6bcbfed8bb955a4412e0ca79da0244f97076ba18
+    fix_date: 2022-11-10
+    crash_func: mrb_f_sprintf
+    crash_file: src/sprintf.c
+    signature: [negative-size-param, -, mrb_f_sprintf, sprintf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517953"
+  - oss_id: 42521532
+    harness: mruby_proto_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 321cfe97605de8f050ac9be597069e370d5d9da3
+    fix_date: 2023-03-03
+    crash_func: mrb_gc_mark
+    crash_file: src/gc.c
+    signature: [heap-use-after-free, READ, mrb_gc_mark, gc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521532"
+  - oss_id: 42525447
+    harness: mruby_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0713f2a84004da66d0d6263f7dd65f0c40994951
+    fix_date: 2023-06-20
+    crash_func: obj_free
+    crash_file: src/gc.c
+    signature: [heap-use-after-free, READ, obj_free, gc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525447"
+  - oss_id: 42528301
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 393aaada64a7ec77313ef2516fce1c2052b547c8
+    fix_date: 2023-09-20
+    crash_func: read_tmpl
+    crash_file: src/pack.c
+    signature: [heap-buffer-overflow, READ, read_tmpl, pack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528301"
+  - oss_id: 42528658
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 097681b4d458899dff945138ea39ae125df3e16a
+    fix_date: 2023-10-09
+    crash_func: unpack_bstr
+    crash_file: src/pack.c
+    signature: [heap-buffer-overflow, READ, unpack_bstr, pack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528658"
+  - oss_id: 42532183
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1e9d69f89679435d8dc5f59d30d68f117b422821
+    fix_date: 2024-01-18
+    crash_func: mrb_memsearch
+    crash_file: src/string.c
+    signature: [heap-buffer-overflow, READ, mrb_memsearch, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532183"
+  - oss_id: 42532420
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e61a2881a7c9adc895416fdd409e7362130198d3
+    fix_date: 2024-01-30
+    crash_func: mrb_memsearch_ss
+    crash_file: src/string.c
+    signature: [heap-buffer-overflow, READ, mrb_memsearch_ss, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532420"
+  - oss_id: 42532953
+    harness: mruby_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9c840a68e212fb54136b67711daff331435c1ce7
+    fix_date: 2024-02-13
+    crash_func: memsearch_swar
+    crash_file: src/string.c
+    signature: [heap-buffer-overflow, READ, memsearch_swar, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532953"
+  - oss_id: 42538578
+    harness: mruby_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9ea6bda7811b0ab46e438dd8c0a602dd051f9c1b
+    fix_date: 2024-11-19
+    crash_func: mrb_vm_exec
+    crash_file: src/vm.c
+    signature: [heap-use-after-free, READ, mrb_vm_exec, vm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42538578"
+  - oss_id: 401868632
+    harness: mruby_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f4de2059603088ff488480072f13322cd3670de2
+    fix_date: 2025-03-10
+    crash_func: range_num_to_a
+    crash_file: src/range.c
+    signature: [heap-buffer-overflow, WRITE, range_num_to_a, range.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/401868632"
+rejected:
+  - oss_id: 42522312
+    reason: commit_missing
+error: null

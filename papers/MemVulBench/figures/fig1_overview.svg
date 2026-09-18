@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="656.1pt" height="385.848pt" viewBox="0 0 656.1 385.848" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.6.3, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 385.848 
+L 656.1 385.848 
+L 656.1 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 25.8093 201.467304 
+L 303.0237 201.467304 
+Q 310.7241 201.467304 310.7241 197.009928 
+L 310.7241 110.833992 
+Q 310.7241 106.376616 303.0237 106.376616 
+L 25.8093 106.376616 
+Q 18.1089 106.376616 18.1089 110.833992 
+L 18.1089 197.009928 
+Q 18.1089 201.467304 25.8093 201.467304 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 353.0763 201.467304 
+L 630.2907 201.467304 
+Q 637.9911 201.467304 637.9911 197.009928 
+L 637.9911 110.833992 
+Q 637.9911 106.376616 630.2907 106.376616 
+L 353.0763 106.376616 
+Q 345.3759 106.376616 345.3759 110.833992 
+L 345.3759 197.009928 
+Q 345.3759 201.467304 353.0763 201.467304 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 25.8093 312.901704 
+L 303.0237 312.901704 
+Q 310.7241 312.901704 310.7241 308.444328 
+L 310.7241 222.268392 
+Q 310.7241 217.811016 303.0237 217.811016 
+L 25.8093 217.811016 
+Q 18.1089 217.811016 18.1089 222.268392 
+L 18.1089 308.444328 
+Q 18.1089 312.901704 25.8093 312.901704 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #009e73; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 353.0763 312.901704 
+L 630.2907 312.901704 
+Q 637.9911 312.901704 637.9911 308.444328 
+L 637.9911 222.268392 
+Q 637.9911 217.811016 630.2907 217.811016 
+L 353.0763 217.811016 
+Q 345.3759 217.811016 345.3759 222.268392 
+L 345.3759 308.444328 
+Q 345.3759 312.901704 353.0763 312.901704 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #009e73; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="20.20068" transform="rotate(-0 328.05 20.20068)">Design goal: 20 real projects, one exposed harness per project</text>
+   </g>
+   <g id="text_2">
+    <!-- Test unit: $U=(P,V,H)$     Campaign: $C=(F,S,U,T)$ -->
+    <g style="fill: #0072b2" transform="translate(140.7 57.34548)">
+     <text>
+      <tspan style="font: 15px 'DejaVu Sans'" x="0 9.162598 18.391113 26.206055 32.087402 36.855469 46.362305 55.869141 60.036621 65.917969 70.97168 89.641113 105.131836 120.029297 137.980957 156.950684 162.802734 167.570801 172.338867 177.106934 181.875 186.643066 197.116699 206.308594 220.92041 230.441895 239.633789 243.80127 253.322754 262.82959 267.883301 286.047363 301.538086 316.018066 333.22998 351.899414 368.752441" y="-0.609375">Test unit: =(,,)     Campaign: =(,,,)</tspan>
+      <tspan style="font: oblique 15px 'DejaVu Sans'" x="75.739746 110.983887 127.719727 145.671387 272.651367 307.390137 323.708496 340.92041 359.589844" y="-0.609375">UPVHCFSUT</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <text style="fill: #52616b; font: 9.5px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="77.77512" transform="rotate(-0 328.05 77.77512)">Program / revision / harness   |   Fuzzer / sanitizer / unit / time budget</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="164.4165" y="136.274359" transform="rotate(-0 164.4165 136.274359)">C1  Native programs and historical faults</text>
+   </g>
+   <g id="text_5">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(83.864391 169.061572)">Preserve historical program context</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(89.148375 181.191181)">Trace candidate fault provenance</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="491.6835" y="136.274359" transform="rotate(-0 491.6835 136.274359)">C2  Scoring entries per test unit</text>
+   </g>
+   <g id="text_7">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(404.697094 169.061572)">Count witnessed first-fault fingerprints</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(409.023422 181.191181)">Interpret within a fixed configuration</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #009e73; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="164.4165" y="247.749774" transform="rotate(-0 164.4165 247.749774)">C3  Input-level verification materials</text>
+   </g>
+   <g id="text_9">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(78.065719 280.495972)">Inputs and reports: physical witnesses</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(68.989078 292.625581)">Fingerprints: operational scoring identities</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #009e73; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="491.6835" y="247.749774" transform="rotate(-0 491.6835 247.749774)">C4  Fixed build and runtime environments</text>
+   </g>
+   <g id="text_11">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(393.883734 280.495972)">Record sources, binaries and dependencies</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(417.229594 292.625581)">Audit image and replay evidence</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #52616b; font: 9.5px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="339.64596" transform="rotate(-0 328.05 339.64596)">Environment E is linked separately; repetitions R belong to the experiment design.</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #52616b; font: 9px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="361.93284" transform="rotate(-0 328.05 361.93284)">All four criteria require evidence; quantity alone does not establish evaluation efficiency.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p69c83e2bdc">
+   <rect x="7.2" y="7.2" width="641.7" height="371.448"/>
+  </clipPath>
+ </defs>
+</svg>

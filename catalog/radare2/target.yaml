@@ -1,0 +1,402 @@
+project: radare2
+repo: "https://github.com/radare/radare2"
+n_sites: 25
+n_issues: 25
+harnesses: [ia_fuzz]
+base:
+  commit: ef5c59e0d443c5af25ddfc7e5c33cc6ba1e65f6b
+  date: 2018-09-18
+  method: wave_eve
+  n_latent: 20
+  n_latent_upper: 20
+  n_wave: 2
+  note: "eve of 2018-09-19 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2019-05-30
+    n: 3
+    eve: 3e05ecde523f00868217cdf24f376f4989e2f5c5
+    n_latent_upper: 9
+    oss_ids: [42475353, 42475545, 42475548]
+  - day: 2018-09-19
+    n: 2
+    eve: ef5c59e0d443c5af25ddfc7e5c33cc6ba1e65f6b
+    n_latent_upper: 20
+    oss_ids: [42470250, 42470538]
+  - day: 2020-06-08
+    n: 2
+    eve: 171873b9c36822beb15b60f351276b27e9ce3eb6
+    n_latent_upper: 2
+    oss_ids: [42483133, 42483245]
+  - day: 2018-11-13
+    n: 1
+    eve: 8bc369ef3f67c3e074cccfe383922393fa11c89a
+    n_latent_upper: 18
+    oss_ids: [42471500]
+  - day: 2019-02-09
+    n: 1
+    eve: 8c022deef84e0658394fca8746a7cbf1a13438e5
+    n_latent_upper: 17
+    oss_ids: [42472970]
+  - day: 2019-02-10
+    n: 1
+    eve: 45a2f03199e2cef792f3a1f621bb2df408bf7a03
+    n_latent_upper: 16
+    oss_ids: [42473258]
+  - day: 2019-02-12
+    n: 1
+    eve: b9bcbbe5183bfc01f797b3cc73f6c7fb3d9f08d2
+    n_latent_upper: 15
+    oss_ids: [42473044]
+  - day: 2019-03-13
+    n: 1
+    eve: d9a15aa661c367b45cdbd6dd57035a19fc35780a
+    n_latent_upper: 14
+    oss_ids: [42474100]
+  - day: 2019-03-22
+    n: 1
+    eve: 23fbd99718eb4cf9183c96517e672e3ee803bfea
+    n_latent_upper: 13
+    oss_ids: [42474270]
+  - day: 2019-04-27
+    n: 1
+    eve: 5fa6d8c640562dcae287f81816ecdb067da0c7af
+    n_latent_upper: 12
+    oss_ids: [42474568]
+  - day: 2019-05-09
+    n: 1
+    eve: ac546884f9750477657c1fa692ef1b4add0346b2
+    n_latent_upper: 11
+    oss_ids: [42474124]
+  - day: 2019-05-27
+    n: 1
+    eve: 27347ef76bba9901ea11ca12a60e9d6eb5aa6863
+    n_latent_upper: 10
+    oss_ids: [42475195]
+bugs:
+  - oss_id: 42470250
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 533da1306534ece22d67eaa3c32e46b717cd9199
+    fix_date: 2018-09-19
+    crash_func: r_bin_mdmp_get_mem_info
+    crash_file: libr/..//libr/bin/p/../format/mdmp/mdmp.c
+    signature: [heap-buffer-overflow, READ, r_bin_mdmp_get_mem_info, mdmp.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42470250"
+  - oss_id: 42470538
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 533da1306534ece22d67eaa3c32e46b717cd9199
+    fix_date: 2018-09-19
+    crash_func: r_str_utf16_to_utf8
+    crash_file: libr/util/str.c
+    signature: [heap-buffer-overflow, READ, r_str_utf16_to_utf8, str.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42470538"
+  - oss_id: 42471500
+    harness: ia_fuzz
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 5783cf42c40aaed9b9180ae7069c7a60ea86dc45
+    fix_date: 2018-11-13
+    crash_func: r_core_task_decref
+    crash_file: libr/core/task.c
+    signature: [heap-use-after-free, READ, r_core_task_decref, task.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471500"
+  - oss_id: 42472970
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 55ec5cc1938fba3c506e87c5314630f1f0736a15
+    fix_date: 2019-02-09
+    crash_func: r_read_le32
+    crash_file: include/r_endian.h
+    signature: [heap-buffer-overflow, READ, r_read_le32, r_endian.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472970"
+  - oss_id: 42473044
+    harness: ia_fuzz
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 56f5eaf18ed51fbf279a1911224be9863e8e4285
+    fix_date: 2019-02-12
+    crash_func: sdb_itoa
+    crash_file: src/util.c
+    signature: [stack-use-after-return, WRITE, sdb_itoa, util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473044"
+  - oss_id: 42473258
+    harness: ia_fuzz
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 149cb3587e4cd3928f8f56553ecfeaac15452585
+    fix_date: 2019-02-10
+    crash_func: _free_resources
+    crash_file: libr/../libr/bin/p/../format/pe/pe.c
+    signature: [attempting, -, _free_resources, pe.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473258"
+  - oss_id: 42474100
+    harness: ia_fuzz
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 5d65cbe1f7d677a22c0fca593dcae1aebf8cf35b
+    fix_date: 2019-03-13
+    crash_func: sdb_free
+    crash_file: src/sdb.c
+    signature: [heap-use-after-free, READ, sdb_free, sdb.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474100"
+  - oss_id: 42474124
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c10df533f658e068cfcadbf400c65b9dd579040a
+    fix_date: 2019-05-09
+    crash_func: r_utf8_strlen
+    crash_file: libr/util/utf8.c
+    signature: [heap-buffer-overflow, READ, r_utf8_strlen, utf8.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474124"
+  - oss_id: 42474270
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9f840c6306b853e98eab75ed2fa9522f7e2dae98
+    fix_date: 2019-03-22
+    crash_func: Elf32_r_bin_elf_compiler
+    crash_file: libr/../libr/bin/p/../format/elf/elf.c
+    signature: [heap-buffer-overflow, WRITE, Elf32_r_bin_elf_compiler, elf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474270"
+  - oss_id: 42474568
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 67d531dce9df1630387a870833cfdb6cd707ee9c
+    fix_date: 2019-04-27
+    crash_func: r_buf_cpy
+    crash_file: libr/util/buf.c
+    signature: [heap-buffer-overflow, WRITE, r_buf_cpy, buf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474568"
+  - oss_id: 42475195
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a875795bb5d8c216fa17d685b49784c4d5c93f87
+    fix_date: 2019-05-27
+    crash_func: r_core_lines_initcache
+    crash_file: libr/core/./cmd_seek.c
+    signature: [heap-buffer-overflow, WRITE, r_core_lines_initcache, cmd_seek.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475195"
+  - oss_id: 42475353
+    harness: ia_fuzz
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9392fc7117dd5240c76d8ab81d84b482bc968339
+    fix_date: 2019-05-30
+    crash_func: r_buf_read
+    crash_file: libr/util/buf.c
+    signature: [negative-size-param, -, r_buf_read, buf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475353"
+  - oss_id: 42475544
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0e7b37601a2011c9b11112566e2d8f1b2611986d
+    fix_date: 2019-06-05
+    crash_func: check_buffer
+    crash_file: libr/../libr/bin/p/bin_omf.c
+    signature: [heap-buffer-overflow, READ, check_buffer, bin_omf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475544"
+  - oss_id: 42475545
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9392fc7117dd5240c76d8ab81d84b482bc968339
+    fix_date: 2019-05-30
+    crash_func: symbols
+    crash_file: libr/../libr/bin/p/bin_xbe.c
+    signature: [heap-buffer-overflow, READ, symbols, bin_xbe.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475545"
+  - oss_id: 42475548
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9392fc7117dd5240c76d8ab81d84b482bc968339
+    fix_date: 2019-05-30
+    crash_func: load
+    crash_file: libr/../libr/bin/p/bin_xbe.c
+    signature: [heap-buffer-overflow, READ, load, bin_xbe.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475548"
+  - oss_id: 42475763
+    harness: ia_fuzz
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d7fd30df8ef0f1a9081863b91a0197f26408dc6b
+    fix_date: 2019-08-13
+    crash_func: cin_get
+    crash_file: libr/util/calc.c
+    signature: [heap-use-after-free, READ, cin_get, calc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475763"
+  - oss_id: 42475782
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 2ec8d3c9f2103c7da8bcb7d864db000b9e93a05a
+    fix_date: 2019-06-13
+    crash_func: r_buf_read
+    crash_file: libr/util/buf.c
+    signature: [negative-size-param, -, r_buf_read, buf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475782"
+  - oss_id: 42479230
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 74958b8e88879302d6f61a813943b968cf03dbd5
+    fix_date: 2019-10-20
+    crash_func: walk_exports
+    crash_file: libr/../libr/bin/p/../format/mach0/mach0.c
+    signature: [heap-buffer-overflow, READ, walk_exports, mach0.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479230"
+  - oss_id: 42483133
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 97f2d9cf5cdaee655e5a5527c78f42715b61ad51
+    fix_date: 2020-06-08
+    crash_func: read_reloc
+    crash_file: libr/../libr/bin/p/../format/elf/elf.c
+    signature: [heap-buffer-overflow, WRITE, read_reloc, elf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483133"
+  - oss_id: 42483245
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 97f2d9cf5cdaee655e5a5527c78f42715b61ad51
+    fix_date: 2020-06-08
+    crash_func: populate_relocs_record
+    crash_file: libr/../libr/bin/p/../format/elf/elf.c
+    signature: [heap-buffer-overflow, WRITE, populate_relocs_record, elf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483245"
+  - oss_id: 42528938
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9d18eb4229893fabd9c40ebdb00d7466d9ab401
+    fix_date: 2023-10-07
+    crash_func: r_str_ncpy
+    crash_file: include/r_util/r_str.h
+    signature: [heap-buffer-overflow, READ, r_str_ncpy, r_str.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528938"
+  - oss_id: 42530554
+    harness: ia_fuzz
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c7e91db654127765a2d2238752ce76a836b55e02
+    fix_date: 2023-11-27
+    crash_func: io_memory_read
+    crash_file: libr/io/io_memory.c
+    signature: [stack-buffer-overflow, WRITE, io_memory_read, io_memory.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530554"
+  - oss_id: 42530675
+    harness: ia_fuzz
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bb40f2ac075e5605970f159f5438dc001a92f9f3
+    fix_date: 2023-12-02
+    crash_func: r_bin_xcoff_init_ldsyms
+    crash_file: libr/../libr/bin/p/../format/coff/coff.c
+    signature: [heap-buffer-overflow, READ, r_bin_xcoff_init_ldsyms, coff.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530675"
+  - oss_id: 42533912
+    harness: ia_fuzz
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cb190f0170a62999f53133d904f444557f44c394
+    fix_date: 2024-03-26
+    crash_func: buf_bytes_write
+    crash_file: libr/util/./buf_bytes.c
+    signature: [heap-buffer-overflow, WRITE, buf_bytes_write, buf_bytes.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533912"
+  - oss_id: 42535918
+    harness: ia_fuzz
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4134dfd6fea11a9ed14fe0576a68c5211a33c4d7
+    fix_date: 2024-05-30
+    crash_func: findstrings
+    crash_file: libr/search/strings.c
+    signature: [stack-buffer-overflow, WRITE, findstrings, strings.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535918"
+rejected: []
+error: null

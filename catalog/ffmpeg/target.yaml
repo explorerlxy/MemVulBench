@@ -1,0 +1,2756 @@
+project: ffmpeg
+repo: "https://git.ffmpeg.org/ffmpeg.git"
+n_sites: 212
+n_issues: 212
+harnesses: [ffmpeg_AV_CODEC_ID_AAC_FIXED_fuzzer, ffmpeg_AV_CODEC_ID_AAC_LATM_fuzzer, ffmpeg_AV_CODEC_ID_ADPCM_IMA_APM_fuzzer, ffmpeg_AV_CODEC_ID_ADPCM_SWF_fuzzer, ffmpeg_AV_CODEC_ID_AGM_fuzzer, ffmpeg_AV_CODEC_ID_ALS_fuzzer, ffmpeg_AV_CODEC_ID_AMV_fuzzer, ffmpeg_AV_CODEC_ID_APNG_fuzzer, ffmpeg_AV_CODEC_ID_ARGO_fuzzer, ffmpeg_AV_CODEC_ID_ATRAC9_fuzzer, ffmpeg_AV_CODEC_ID_BINK_fuzzer, ffmpeg_AV_CODEC_ID_BITPACKED_fuzzer, ffmpeg_AV_CODEC_ID_CCAPTION_fuzzer, ffmpeg_AV_CODEC_ID_CDGRAPHICS_fuzzer, ffmpeg_AV_CODEC_ID_CDTOONS_fuzzer, ffmpeg_AV_CODEC_ID_CDXL_fuzzer, ffmpeg_AV_CODEC_ID_CFHD_fuzzer, ffmpeg_AV_CODEC_ID_COOK_fuzzer, ffmpeg_AV_CODEC_ID_CPIA_fuzzer, ffmpeg_AV_CODEC_ID_CRI_fuzzer, ffmpeg_AV_CODEC_ID_DFPWM_fuzzer, ffmpeg_AV_CODEC_ID_DNXHD_fuzzer, ffmpeg_AV_CODEC_ID_DST_fuzzer, ffmpeg_AV_CODEC_ID_DVVIDEO_fuzzer, ffmpeg_AV_CODEC_ID_DXTORY_fuzzer, ffmpeg_AV_CODEC_ID_DXV_fuzzer, ffmpeg_AV_CODEC_ID_EAC3_fuzzer, ffmpeg_AV_CODEC_ID_EXR_fuzzer, ffmpeg_AV_CODEC_ID_FFV1_fuzzer, ffmpeg_AV_CODEC_ID_FLASHSV2_fuzzer, ffmpeg_AV_CODEC_ID_FLIC_fuzzer, ffmpeg_AV_CODEC_ID_FMVC_fuzzer, ffmpeg_AV_CODEC_ID_H264_fuzzer, ffmpeg_AV_CODEC_ID_HAP_fuzzer, ffmpeg_AV_CODEC_ID_HCA_fuzzer, ffmpeg_AV_CODEC_ID_HCOM_fuzzer, ffmpeg_AV_CODEC_ID_HEVC_fuzzer, ffmpeg_AV_CODEC_ID_HYMT_fuzzer, ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer, ffmpeg_AV_CODEC_ID_ILBC_fuzzer, ffmpeg_AV_CODEC_ID_IMM4_fuzzer, ffmpeg_AV_CODEC_ID_JPEG2000_fuzzer, ffmpeg_AV_CODEC_ID_JPEGLS_fuzzer, ffmpeg_AV_CODEC_ID_LAGARITH_fuzzer, ffmpeg_AV_CODEC_ID_LIBFDK_AAC_fuzzer, ffmpeg_AV_CODEC_ID_LIBVORBIS_fuzzer, ffmpeg_AV_CODEC_ID_LIBVPX_VP8_fuzzer, ffmpeg_AV_CODEC_ID_LIBVPX_VP9_fuzzer, ffmpeg_AV_CODEC_ID_M101_fuzzer, ffmpeg_AV_CODEC_ID_MAGICYUV_fuzzer, ffmpeg_AV_CODEC_ID_MJPEG_fuzzer, ffmpeg_AV_CODEC_ID_MOBICLIP_fuzzer, ffmpeg_AV_CODEC_ID_MPEG1VIDEO_fuzzer, ffmpeg_AV_CODEC_ID_MPEG2VIDEO_fuzzer, ffmpeg_AV_CODEC_ID_MPEG4_fuzzer, ffmpeg_AV_CODEC_ID_MPEGVIDEO_fuzzer, ffmpeg_AV_CODEC_ID_MSNSIREN_fuzzer, ffmpeg_AV_CODEC_ID_MV30_fuzzer, ffmpeg_AV_CODEC_ID_MVDV_fuzzer, ffmpeg_AV_CODEC_ID_QDRAW_fuzzer, ffmpeg_AV_CODEC_ID_RASC_fuzzer, ffmpeg_AV_CODEC_ID_RAWVIDEO_fuzzer, ffmpeg_AV_CODEC_ID_RKA_fuzzer, ffmpeg_AV_CODEC_ID_RSCC_fuzzer, ffmpeg_AV_CODEC_ID_SAMI_fuzzer, ffmpeg_AV_CODEC_ID_SCPR_fuzzer, ffmpeg_AV_CODEC_ID_SGA_fuzzer, ffmpeg_AV_CODEC_ID_SIREN_fuzzer, ffmpeg_AV_CODEC_ID_SMACKER_fuzzer, ffmpeg_AV_CODEC_ID_SMC_fuzzer, ffmpeg_AV_CODEC_ID_SMVJPEG_fuzzer, ffmpeg_AV_CODEC_ID_SNOW_fuzzer, ffmpeg_AV_CODEC_ID_SONIC_fuzzer, ffmpeg_AV_CODEC_ID_SPEEDHQ_fuzzer, ffmpeg_AV_CODEC_ID_SPEEX_fuzzer, ffmpeg_AV_CODEC_ID_THP_fuzzer, ffmpeg_AV_CODEC_ID_TIERTEXSEQVIDEO_fuzzer, ffmpeg_AV_CODEC_ID_TIFF_fuzzer, ffmpeg_AV_CODEC_ID_TRUEHD_fuzzer, ffmpeg_AV_CODEC_ID_TTA_fuzzer, ffmpeg_AV_CODEC_ID_V210_fuzzer, ffmpeg_AV_CODEC_ID_VC1IMAGE_fuzzer, ffmpeg_AV_CODEC_ID_VQA_fuzzer, ffmpeg_AV_CODEC_ID_VQC_fuzzer, ffmpeg_AV_CODEC_ID_VVC_fuzzer, ffmpeg_AV_CODEC_ID_WAVPACK_fuzzer, ffmpeg_AV_CODEC_ID_WEBP_fuzzer, ffmpeg_AV_CODEC_ID_WMALOSSLESS_fuzzer, ffmpeg_AV_CODEC_ID_WMAV1_fuzzer, ffmpeg_AV_CODEC_ID_WMAV2_fuzzer, ffmpeg_AV_CODEC_ID_WMV3_fuzzer, ffmpeg_AV_CODEC_ID_XMA2_fuzzer, ffmpeg_AV_CODEC_ID_XPM_fuzzer, ffmpeg_BSF_AV1_METADATA_fuzzer, ffmpeg_BSF_EVC_FRAME_MERGE_fuzzer, ffmpeg_BSF_H264_REDUNDANT_PPS_fuzzer, ffmpeg_BSF_HEVC_METADATA_fuzzer, ffmpeg_BSF_MP3_HEADER_DECOMPRESS_fuzzer, ffmpeg_BSF_TRACE_HEADERS_fuzzer, ffmpeg_BSF_VP9_METADATA_fuzzer, ffmpeg_BSF_VP9_SUPERFRAME_fuzzer, ffmpeg_BSF_VVC_METADATA_fuzzer, ffmpeg_DEMUXER_fuzzer, ffmpeg_IO_DEMUXER_fuzzer, ffmpeg_dem_AAC_fuzzer, ffmpeg_dem_AIFF_fuzzer, ffmpeg_dem_CINE_fuzzer, ffmpeg_dem_DASH_fuzzer, ffmpeg_dem_FITS_fuzzer, ffmpeg_dem_FLV_fuzzer, ffmpeg_dem_IAMF_fuzzer, ffmpeg_dem_IMF_fuzzer, ffmpeg_dem_JPEGXL_ANIM_fuzzer, ffmpeg_dem_MPEGTSRAW_fuzzer, ffmpeg_dem_OBU_fuzzer, ffmpeg_dem_SIMBIOSIS_IMX_fuzzer, ffmpeg_dem_VIVIDAS_fuzzer, ffmpeg_dem_W64_fuzzer]
+base:
+  commit: 98b122cdb9ef0920b7774e110407158805d6c136
+  date: 2019-07-07
+  method: wave_eve
+  n_latent: 105
+  n_latent_upper: 105
+  n_wave: 3
+  note: "eve of 2019-07-08 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-03-19
+    n: 4
+    eve: 3e9284fccbfbea0a6feea5dae49725ced08953e2
+    n_latent_upper: 47
+    oss_ids: [42494130, 42494133, 42494150, 42494152]
+  - day: 2019-07-08
+    n: 3
+    eve: 98b122cdb9ef0920b7774e110407158805d6c136
+    n_latent_upper: 105
+    oss_ids: [42476157, 42476242, 42475857]
+  - day: 2019-11-01
+    n: 3
+    eve: 99fc5059fbee8a0fd2957f958b34fdec1e9ca361
+    n_latent_upper: 95
+    oss_ids: [42479299, 42479353, 42479566]
+  - day: 2020-06-04
+    n: 3
+    eve: 5bbd93c3ee912af6f46d592b1fe6653894dd1f75
+    n_latent_upper: 71
+    oss_ids: [42483755, 42484085, 42483099]
+  - day: 2021-04-01
+    n: 3
+    eve: b484e140efb406422eb4cbef0e8ae51bfb54a69d
+    n_latent_upper: 42
+    oss_ids: [42493744, 42494556, 42495283]
+  - day: 2023-04-14
+    n: 3
+    eve: 5366ae12b9ba60404822f6b39b41f6c0d98a7c8a
+    n_latent_upper: 30
+    oss_ids: [42523108, 42523112, 42523115]
+  - day: 2017-05-29
+    n: 2
+    eve: e091b9b3c7859030f2896ca2ae96faa3afc694a1
+    n_latent_upper: 26
+    oss_ids: [42480793, 42483572]
+  - day: 2018-07-07
+    n: 2
+    eve: 5c0fd9df87ba5d6024cf61c7da396979c79f1856
+    n_latent_upper: 81
+    oss_ids: [42540880, 42540891]
+  - day: 2018-10-18
+    n: 2
+    eve: c6282141cba20934d9801f31134872fabbd6ba3e
+    n_latent_upper: 86
+    oss_ids: [42470719, 42470722]
+  - day: 2019-04-21
+    n: 2
+    eve: f17e8e90bb1fe5e4db18cc6dde9522417108c7bd
+    n_latent_upper: 104
+    oss_ids: [42474638, 42474836]
+  - day: 2019-07-06
+    n: 2
+    eve: a3bd4b260eb9f0d5817f9b3d672844f127c51a0b
+    n_latent_upper: 105
+    oss_ids: [42475847, 42475851]
+  - day: 2019-08-05
+    n: 2
+    eve: fe2e1cfc191d48c45f51feb61fa198a2403931c2
+    n_latent_upper: 98
+    oss_ids: [42476801, 42476560]
+bugs:
+  - oss_id: 42470347
+    harness: ffmpeg_AV_CODEC_ID_RASC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9a9034958aec8c30ee898db23cb691863801ea1f
+    fix_date: 2018-10-03
+    crash_func: decode_move
+    crash_file: libavcodec/rasc.c
+    signature: [heap-buffer-overflow, READ, decode_move, rasc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470347"
+  - oss_id: 42470362
+    harness: ffmpeg_AV_CODEC_ID_LIBFDK_AAC_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 85a921f46184dace4b4f3d968830991eff218e3f
+    fix_date: 2018-09-11
+    crash_func: "initSlotBasedRotation(PS_DEC*, int, int)"
+    crash_file: src/psdec.cpp
+    signature: [global-buffer-overflow, READ, initSlotBasedRotation, psdec.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470362"
+  - oss_id: 42470719
+    harness: ffmpeg_AV_CODEC_ID_ILBC_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 25eb10d941f35c3223300583588b1e13debc9288
+    fix_date: 2018-10-18
+    crash_func: vector_multiplication
+    crash_file: libavcodec/ilbcdec.c
+    signature: [stack-buffer-underflow, WRITE, vector_multiplication, ilbcdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470719"
+  - oss_id: 42470722
+    harness: ffmpeg_AV_CODEC_ID_ILBC_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 25eb10d941f35c3223300583588b1e13debc9288
+    fix_date: 2018-10-18
+    crash_func: create_augmented_vector
+    crash_file: libavcodec/ilbcdec.c
+    signature: [stack-buffer-overflow, READ, create_augmented_vector, ilbcdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470722"
+  - oss_id: 42470870
+    harness: ffmpeg_AV_CODEC_ID_ILBC_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e90f0ac334f2bec0961955dceb824148594a4016
+    fix_date: 2018-10-22
+    crash_func: gain_dequantization
+    crash_file: libavcodec/ilbcdec.c
+    signature: [global-buffer-overflow, READ, gain_dequantization, ilbcdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42470870"
+  - oss_id: 42472718
+    harness: ffmpeg_AV_CODEC_ID_HYMT_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fcbda8af175a1f305c46d6d46a4f90be4aa630ae
+    fix_date: 2019-01-28
+    crash_func: decode_422_bitstream
+    crash_file: libavcodec/huffyuvdec.c
+    signature: [heap-buffer-overflow, READ, decode_422_bitstream, huffyuvdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42472718"
+  - oss_id: 42473419
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1f686d023b95219db933394a7704ad9aa5f01cbb
+    fix_date: 2019-02-16
+    crash_func: mpv_reconstruct_mb_internal
+    crash_file: libavcodec/mpegvideo.c
+    signature: [heap-buffer-overflow, WRITE, mpv_reconstruct_mb_internal, mpegvideo.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473419"
+  - oss_id: 42473850
+    harness: ffmpeg_AV_CODEC_ID_TIERTEXSEQVIDEO_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ce551a3925a1cf9c7824e26a246b99b6773bda4b
+    fix_date: 2017-05-05
+    crash_func: seq_decode_op2
+    crash_file: libavcodec/tiertexseqv.c
+    signature: [heap-buffer-overflow, WRITE, seq_decode_op2, tiertexseqv.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473850"
+  - oss_id: 42473874
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d227ed5d598340e719eff7156b1aa0a4469e9a6a
+    fix_date: 2019-03-11
+    crash_func: mpeg4_decode_studio_block
+    crash_file: libavcodec/mpeg4videodec.c
+    signature: [heap-buffer-overflow, READ, mpeg4_decode_studio_block, mpeg4videodec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473874"
+  - oss_id: 42473917
+    harness: ffmpeg_AV_CODEC_ID_SAMI_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f4ae3cce64bd46b1d539bdeac39753f83015f114
+    fix_date: 2017-05-08
+    crash_func: ff_htmlmarkup_to_ass
+    crash_file: libavcodec/htmlsubtitles.c
+    signature: [heap-buffer-overflow, READ, ff_htmlmarkup_to_ass, htmlsubtitles.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473917"
+  - oss_id: 42473931
+    harness: ffmpeg_AV_CODEC_ID_IMM4_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0be0197f49a5ac78c0f8be34fe66dd7657c83c23
+    fix_date: 2019-03-10
+    crash_func: copy_block16
+    crash_file: libavcodec/copy_block.h
+    signature: [heap-buffer-overflow, READ, copy_block16, copy_block.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473931"
+  - oss_id: 42474183
+    harness: ffmpeg_AV_CODEC_ID_CDXL_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e1b60aad77c27ed5d4dfc11e5e6a05a38c70489d
+    fix_date: 2017-05-06
+    crash_func: bytestream2_get_buffer
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, WRITE, bytestream2_get_buffer, bytestream.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474183"
+  - oss_id: 42474263
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 013f71497ba51e8381a6a4521b9279ed502e7077
+    fix_date: 2019-03-24
+    crash_func: ff_lzw_decode
+    crash_file: libavcodec/lzw.c
+    signature: [heap-buffer-overflow, WRITE, ff_lzw_decode, lzw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474263"
+  - oss_id: 42474410
+    harness: ffmpeg_AV_CODEC_ID_RSCC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3a0ec1511e7040845a0d1ce99fe2f30a0972b6d2
+    fix_date: 2019-04-01
+    crash_func: rscc_decode_frame
+    crash_file: libavcodec/rscc.c
+    signature: [heap-buffer-overflow, READ, rscc_decode_frame, rscc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474410"
+  - oss_id: 42474424
+    harness: ffmpeg_AV_CODEC_ID_AGM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8e3b01e20ebd82528c3302d6756f3c6dffa4bfb2
+    fix_date: 2019-04-04
+    crash_func: show_bits
+    crash_file: libavcodec/get_bits.h
+    signature: [heap-buffer-overflow, READ, show_bits, get_bits.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474424"
+  - oss_id: 42474615
+    harness: ffmpeg_AV_CODEC_ID_AGM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0f28355974847dff739b96b7e8072fde65e9df51
+    fix_date: 2019-04-11
+    crash_func: decode_inter_plane
+    crash_file: libavcodec/agm.c
+    signature: [heap-buffer-overflow, READ, decode_inter_plane, agm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474615"
+  - oss_id: 42474638
+    harness: ffmpeg_AV_CODEC_ID_AGM_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 158efc045c718054e3fbd7d0a19d8703e2c1b234
+    fix_date: 2019-04-21
+    crash_func: get_tree_codes
+    crash_file: libavcodec/agm.c
+    signature: [stack-buffer-overflow, READ, get_tree_codes, agm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474638"
+  - oss_id: 42474806
+    harness: ffmpeg_AV_CODEC_ID_WEBP_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6b5d3fb26fb4be48e4966e4b1d97c2165538d4ef
+    fix_date: 2017-05-10
+    crash_func: intra_predict
+    crash_file: libavcodec/vp8.c
+    signature: [heap-buffer-overflow, WRITE, intra_predict, vp8.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474806"
+  - oss_id: 42474836
+    harness: ffmpeg_AV_CODEC_ID_CCAPTION_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f17e8e90bb1fe5e4db18cc6dde9522417108c7bd
+    fix_date: 2019-04-21
+    crash_func: capture_screen
+    crash_file: libavcodec/ccaption_dec.c
+    signature: [global-buffer-overflow, READ, capture_screen, ccaption_dec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474836"
+  - oss_id: 42474895
+    harness: ffmpeg_AV_CODEC_ID_LIBFDK_AAC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ca6776a993903dbcfef5ae8a18556c40ecf83e1c
+    fix_date: 2017-05-28
+    crash_func: FDKmemset
+    crash_file: src/genericStds.cpp
+    signature: [heap-buffer-overflow, WRITE, FDKmemset, genericStds.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474895"
+  - oss_id: 42475161
+    harness: ffmpeg_AV_CODEC_ID_XPM_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cb243972b121b1ae6b60a78ff55a0506c69f3879
+    fix_date: 2017-05-12
+    crash_func: color_string_to_rgba
+    crash_file: libavcodec/xpmdec.c
+    signature: [stack-buffer-overflow, WRITE, color_string_to_rgba, xpmdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475161"
+  - oss_id: 42475294
+    harness: ffmpeg_AV_CODEC_ID_SCPR_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7ac5067146613997bb38442cb022d7f41321a706
+    fix_date: 2017-05-11
+    crash_func: decompress_i
+    crash_file: libavcodec/scpr.c
+    signature: [heap-buffer-overflow, WRITE, decompress_i, scpr.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475294"
+  - oss_id: 42475724
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d8716e3df9ee81909342b0b59f5b6eff052964fd
+    fix_date: 2019-06-25
+    crash_func: read_vblock
+    crash_file: libavformat/vividas.c
+    signature: [heap-buffer-overflow, WRITE, read_vblock, vividas.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475724"
+  - oss_id: 42475832
+    harness: ffmpeg_AV_CODEC_ID_M101_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 89b96900fa7c17d0770c9af26af7c3ae36ae0253
+    fix_date: 2019-06-29
+    crash_func: decode_simple_internal
+    crash_file: libavcodec/decode.c
+    signature: [heap-buffer-overflow, READ, decode_simple_internal, decode.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475832"
+  - oss_id: 42475840
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d33414d2ad27a5d2193c9ab0948ba7a282c2f910
+    fix_date: 2019-06-26
+    crash_func: cmap_read_palette
+    crash_file: libavcodec/iff.c
+    signature: [heap-buffer-overflow, WRITE, cmap_read_palette, iff.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475840"
+  - oss_id: 42475847
+    harness: ffmpeg_AV_CODEC_ID_ALS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0794494c8f2f756e3c9384dba21c54f7d4ba9286
+    fix_date: 2019-07-06
+    crash_func: read_var_block_data
+    crash_file: libavcodec/alsdec.c
+    signature: [heap-buffer-overflow, WRITE, read_var_block_data, alsdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475847"
+  - oss_id: 42475851
+    harness: ffmpeg_AV_CODEC_ID_ALS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0794494c8f2f756e3c9384dba21c54f7d4ba9286
+    fix_date: 2019-07-06
+    crash_func: ff_bgmc_decode
+    crash_file: libavcodec/bgmc.c
+    signature: [heap-buffer-overflow, WRITE, ff_bgmc_decode, bgmc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42475851"
+  - oss_id: 42475857
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e69106e70c89ed4864f504891d28886df6b15441
+    fix_date: 2019-07-08
+    crash_func: get_v
+    crash_file: libavformat/vividas.c
+    signature: [stack-buffer-overflow, READ, get_v, vividas.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42475857"
+  - oss_id: 42475994
+    harness: ffmpeg_AV_CODEC_ID_H264_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d3581e6bbec309ca0cc617c37cf6e87547764ef
+    fix_date: 2019-07-19
+    crash_func: ff_emulated_edge_mc_16
+    crash_file: libavcodec/videodsp_template.c
+    signature: [heap-buffer-overflow, READ, ff_emulated_edge_mc_16, videodsp_template.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475994"
+  - oss_id: 42476120
+    harness: ffmpeg_AV_CODEC_ID_DNXHD_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 15008db0fac6d97bb939fa7ef9e92d79bf1f7cb1
+    fix_date: 2019-07-17
+    crash_func: ff_combine_frame
+    crash_file: libavcodec/parser.c
+    signature: [heap-buffer-overflow, READ, ff_combine_frame, parser.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476120"
+  - oss_id: 42476140
+    harness: ffmpeg_AV_CODEC_ID_APNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 18c808ffbed81ea580fe6ddd6524dd7bea3f8d0e
+    fix_date: 2019-07-13
+    crash_func: handle_p_frame_apng
+    crash_file: libavcodec/pngdec.c
+    signature: [heap-buffer-overflow, READ, handle_p_frame_apng, pngdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476140"
+  - oss_id: 42476157
+    harness: ffmpeg_AV_CODEC_ID_DXV_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e96b7a8ba62c5e010328b80b647b64dd9cdbdc01
+    fix_date: 2019-07-08
+    crash_func: dxt1_block_internal
+    crash_file: libavcodec/texturedsp.c
+    signature: [heap-buffer-overflow, WRITE, dxt1_block_internal, texturedsp.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42476157"
+  - oss_id: 42476211
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c3ef24d9baf63f8c8794dfb2ef7192a64b586526
+    fix_date: 2019-08-03
+    crash_func: read_sb_block
+    crash_file: libavformat/vividas.c
+    signature: [heap-buffer-overflow, WRITE, read_sb_block, vividas.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476211"
+  - oss_id: 42476242
+    harness: ffmpeg_AV_CODEC_ID_FLIC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 37708cbae8d6887b80f58a70a1dfa01af6ea2c85
+    fix_date: 2019-07-08
+    crash_func: flic_decode_frame_24BPP
+    crash_file: libavcodec/flicvideo.c
+    signature: [heap-buffer-overflow, WRITE, flic_decode_frame_24BPP, flicvideo.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42476242"
+  - oss_id: 42476560
+    harness: ffmpeg_AV_CODEC_ID_VQA_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 02f909dc24b1f05cfbba75077c7707b905e63cd2
+    fix_date: 2019-08-05
+    crash_func: vqa_decode_chunk
+    crash_file: libavcodec/vqavideo.c
+    signature: [heap-buffer-overflow, WRITE, vqa_decode_chunk, vqavideo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476560"
+  - oss_id: 42476801
+    harness: ffmpeg_AV_CODEC_ID_CFHD_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 58e084bd2c7bad8934e0c4eaf40e319927dae729
+    fix_date: 2019-08-05
+    crash_func: horiz_filter_clip_bayer
+    crash_file: libavcodec/cfhd.c
+    signature: [heap-buffer-overflow, WRITE, horiz_filter_clip_bayer, cfhd.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476801"
+  - oss_id: 42476987
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: dfa5d1a3667fa38e07373becc2401175b31d8228
+    fix_date: 2019-09-05
+    crash_func: cmap_read_palette
+    crash_file: libavcodec/iff.c
+    signature: [memcpy-param-overlap, -, cmap_read_palette, iff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476987"
+  - oss_id: 42476988
+    harness: ffmpeg_AV_CODEC_ID_ATRAC9_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dead949a1fbf019647f5c8ea797d1c7be6615639
+    fix_date: 2019-08-27
+    crash_func: dequantize
+    crash_file: libavcodec/atrac9dec.c
+    signature: [global-buffer-overflow, READ, dequantize, atrac9dec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476988"
+  - oss_id: 42477128
+    harness: ffmpeg_AV_CODEC_ID_FMVC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e11dcc35bb4dbacd87378465b4cafa6a604e8b87
+    fix_date: 2017-05-17
+    crash_func: decode_frame
+    crash_file: libavcodec/fmvc.c
+    signature: [heap-buffer-overflow, READ, decode_frame, fmvc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42477128"
+  - oss_id: 42477344
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 55d4e22d71ca75223ee61f7d2535fdc6e9991026
+    fix_date: 2019-09-06
+    crash_func: decode_block
+    crash_file: libavformat/vividas.c
+    signature: [heap-buffer-overflow, READ, decode_block, vividas.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477344"
+  - oss_id: 42477386
+    harness: ffmpeg_AV_CODEC_ID_LIBVORBIS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 069be4aa5ddce4479b18896d80a852b144e680df
+    fix_date: 2019-10-29
+    crash_func: oggpack_read
+    crash_file: src/bitwise.c
+    signature: [heap-buffer-overflow, READ, oggpack_read, bitwise.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477386"
+  - oss_id: 42478666
+    harness: ffmpeg_AV_CODEC_ID_HCOM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 75fefb1fb7ac8b423e08a8dca19b19884a325ebf
+    fix_date: 2019-09-30
+    crash_func: hcom_decode
+    crash_file: libavcodec/hcom.c
+    signature: [heap-buffer-overflow, READ, hcom_decode, hcom.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478666"
+  - oss_id: 42479299
+    harness: ffmpeg_AV_CODEC_ID_WMAV1_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f011572e66c8dd2f0ac3cb147a769e91f24e0202
+    fix_date: 2019-11-01
+    crash_func: get_vlc2
+    crash_file: libavcodec/get_bits.h
+    signature: [heap-buffer-overflow, READ, get_vlc2, get_bits.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479299"
+  - oss_id: 42479353
+    harness: ffmpeg_AV_CODEC_ID_WMAV2_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f011572e66c8dd2f0ac3cb147a769e91f24e0202
+    fix_date: 2019-11-01
+    crash_func: get_bits1
+    crash_file: libavcodec/get_bits.h
+    signature: [heap-buffer-overflow, READ, get_bits1, get_bits.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479353"
+  - oss_id: 42479426
+    harness: ffmpeg_AV_CODEC_ID_AGM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7a1b30c871c873e97c93af75f925c854de7b75f2
+    fix_date: 2019-12-10
+    crash_func: copy_block8
+    crash_file: libavcodec/copy_block.h
+    signature: [segv, -, copy_block8, copy_block.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479426"
+  - oss_id: 42479566
+    harness: ffmpeg_AV_CODEC_ID_DST_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f011572e66c8dd2f0ac3cb147a769e91f24e0202
+    fix_date: 2019-11-01
+    crash_func: decode_frame
+    crash_file: libavcodec/dstdec.c
+    signature: [heap-buffer-overflow, READ, decode_frame, dstdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479566"
+  - oss_id: 42479747
+    harness: ffmpeg_AV_CODEC_ID_DVVIDEO_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d73f06270600c37c74beeceac37f593838ced383
+    fix_date: 2019-11-19
+    crash_func: put_block_8x4
+    crash_file: libavcodec/dvdec.c
+    signature: [global-buffer-overflow, READ, put_block_8x4, dvdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479747"
+  - oss_id: 42480025
+    harness: ffmpeg_AV_CODEC_ID_COOK_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 89fd76db71d9d4f87c51fee2a2edf99662444df7
+    fix_date: 2019-12-31
+    crash_func: joint_decode
+    crash_file: libavcodec/cook.c
+    signature: [global-buffer-overflow, READ, joint_decode, cook.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480025"
+  - oss_id: 42480077
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1b97f62f86d5dca35d01d7a5ebbc5dca2a88ae6
+    fix_date: 2019-12-28
+    crash_func: decodeplane8
+    crash_file: libavcodec/iff.c
+    signature: [heap-buffer-overflow, READ, decodeplane8, iff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480077"
+  - oss_id: 42480125
+    harness: ffmpeg_AV_CODEC_ID_ATRAC9_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e1d836d2375c93cbc44a2b0d34e404682c1e8436
+    fix_date: 2019-12-07
+    crash_func: parse_band_ext
+    crash_file: libavcodec/atrac9dec.c
+    signature: [global-buffer-overflow, READ, parse_band_ext, atrac9dec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480125"
+  - oss_id: 42480127
+    harness: ffmpeg_AV_CODEC_ID_V210_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ab3044368f3fc10a3d43718a2bd664be8ce9fdb5
+    fix_date: 2019-12-12
+    crash_func: v210_decode_slice
+    crash_file: libavcodec/v210dec.c
+    signature: [heap-buffer-overflow, READ, v210_decode_slice, v210dec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480127"
+  - oss_id: 42480276
+    harness: ffmpeg_AV_CODEC_ID_VC1IMAGE_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 32fb9198360402941e49aa878b9d33737b654f62
+    fix_date: 2020-01-11
+    crash_func: sprite_h_c
+    crash_file: libavcodec/vc1dsp.c
+    signature: [heap-buffer-overflow, READ, sprite_h_c, vc1dsp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480276"
+  - oss_id: 42480314
+    harness: ffmpeg_BSF_TRACE_HEADERS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4fa2d5a692f40c398a299acf2c6a20f5b98a3708
+    fix_date: 2019-12-26
+    crash_func: cbs_vp9_split_fragment
+    crash_file: libavcodec/cbs_vp9.c
+    signature: [heap-buffer-overflow, READ, cbs_vp9_split_fragment, cbs_vp9.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480314"
+  - oss_id: 42480318
+    harness: ffmpeg_BSF_VP9_METADATA_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d6553e2e60a389296dd2f83a96f944ccfa5877a0
+    fix_date: 2019-12-25
+    crash_func: get_bits
+    crash_file: libavcodec/get_bits.h
+    signature: [heap-buffer-overflow, READ, get_bits, get_bits.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480318"
+  - oss_id: 42480327
+    harness: ffmpeg_BSF_MP3_HEADER_DECOMPRESS_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f064c7c449f162a9011ad890f26ceeca26934d22
+    fix_date: 2019-12-15
+    crash_func: mp3_header_decompress
+    crash_file: libavcodec/mp3_header_decompress_bsf.c
+    signature: [global-buffer-overflow, READ, mp3_header_decompress, mp3_header_decompress_bsf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480327"
+  - oss_id: 42480499
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f1b97f62f86d5dca35d01d7a5ebbc5dca2a88ae6
+    fix_date: 2019-12-28
+    crash_func: decode_frame
+    crash_file: libavcodec/iff.c
+    signature: [heap-buffer-overflow, WRITE, decode_frame, iff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480499"
+  - oss_id: 42480793
+    harness: ffmpeg_AV_CODEC_ID_LIBFDK_AAC_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a3deeaade32db5a1b736b8d3365e52254f3fa6ac
+    fix_date: 2017-05-29
+    crash_func: FDKmemset
+    crash_file: src/genericStds.cpp
+    signature: [stack-buffer-overflow, WRITE, FDKmemset, genericStds.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480793"
+  - oss_id: 42480798
+    harness: ffmpeg_BSF_TRACE_HEADERS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1812352d767ccf5431aa440123e2e260a4db2726
+    fix_date: 2020-03-11
+    crash_func: cbs_jpeg_split_fragment
+    crash_file: libavcodec/cbs_jpeg.c
+    signature: [heap-buffer-overflow, READ, cbs_jpeg_split_fragment, cbs_jpeg.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480798"
+  - oss_id: 42480816
+    harness: ffmpeg_AV_CODEC_ID_RAWVIDEO_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2b5b9d5dac9a3525d7330662724c0e9045078bfb
+    fix_date: 2020-01-30
+    crash_func: raw_decode
+    crash_file: libavcodec/rawdec.c
+    signature: [heap-buffer-overflow, READ, raw_decode, rawdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480816"
+  - oss_id: 42480818
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8652f4e7a15e56fadf9697188c1ed42c9981db82
+    fix_date: 2020-01-30
+    crash_func: decode_ham_plane32
+    crash_file: libavcodec/iff.c
+    signature: [heap-buffer-overflow, READ, decode_ham_plane32, iff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480818"
+  - oss_id: 42480973
+    harness: ffmpeg_AV_CODEC_ID_AGM_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a98eeb0c1e867238905ed095b48184f706adf328
+    fix_date: 2020-02-09
+    crash_func: fill_pixels
+    crash_file: libavcodec/agm.c
+    signature: [heap-buffer-overflow, READ, fill_pixels, agm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480973"
+  - oss_id: 42481590
+    harness: ffmpeg_BSF_HEVC_METADATA_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 588114cea4ee434c9c61353ed91ffc817d2965f5
+    fix_date: 2020-04-26
+    crash_func: cbs_h265_read_st_ref_pic_set
+    crash_file: libavcodec/cbs_h265_syntax_template.c
+    signature: [stack-buffer-overflow, WRITE, cbs_h265_read_st_ref_pic_set, cbs_h265_syntax_template.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481590"
+  - oss_id: 42481643
+    harness: ffmpeg_AV_CODEC_ID_MVDV_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b0eec1391e1daeade456698b1aee9b2d43a6f538
+    fix_date: 2020-02-09
+    crash_func: decode_mvdv
+    crash_file: libavcodec/midivid.c
+    signature: [heap-buffer-overflow, READ, decode_mvdv, midivid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481643"
+  - oss_id: 42481790
+    harness: ffmpeg_AV_CODEC_ID_MVDV_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e007059d6617ca966380810fe03c571566ecd9c3
+    fix_date: 2020-02-13
+    crash_func: decode_mvdv
+    crash_file: libavcodec/midivid.c
+    signature: [heap-buffer-overflow, READ, decode_mvdv, midivid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481790"
+  - oss_id: 42481919
+    harness: ffmpeg_AV_CODEC_ID_CDTOONS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d2aff350bc8250d1efe04e90822f49f4b8aea9ae
+    fix_date: 2020-02-21
+    crash_func: cdtoons_render_sprite
+    crash_file: libavcodec/cdtoons.c
+    signature: [heap-buffer-overflow, READ, cdtoons_render_sprite, cdtoons.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481919"
+  - oss_id: 42481942
+    harness: ffmpeg_AV_CODEC_ID_MAGICYUV_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f8a0e9f9f71cf5650bdc250ff7475e0f7d8e8420
+    fix_date: 2020-02-25
+    crash_func: add_left_pred_int16_c
+    crash_file: libavcodec/lossless_videodsp.c
+    signature: [heap-buffer-overflow, READ, add_left_pred_int16_c, lossless_videodsp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481942"
+  - oss_id: 42482002
+    harness: ffmpeg_AV_CODEC_ID_SIREN_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 12ec8ad24b07e3ad424b43813c1f84c7d336bdcd
+    fix_date: 2020-03-04
+    crash_func: categorize_regions
+    crash_file: libavcodec/siren.c
+    signature: [global-buffer-overflow, READ, categorize_regions, siren.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482002"
+  - oss_id: 42482014
+    harness: ffmpeg_AV_CODEC_ID_ADPCM_IMA_APM_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ac73879f1bb27aa979a69bda24d1ca790e69f341
+    fix_date: 2020-03-02
+    crash_func: adpcm_ima_qt_expand_nibble
+    crash_file: libavcodec/adpcm.c
+    signature: [global-buffer-overflow, READ, adpcm_ima_qt_expand_nibble, adpcm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482014"
+  - oss_id: 42482180
+    harness: ffmpeg_AV_CODEC_ID_H264_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 05d364dcccb3703de3f299b6ebaa13021b12c061
+    fix_date: 2020-05-27
+    crash_func: get_se_golomb
+    crash_file: libavcodec/golomb.h
+    signature: [heap-buffer-overflow, READ, get_se_golomb, golomb.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482180"
+  - oss_id: 42482304
+    harness: ffmpeg_AV_CODEC_ID_APNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 79e5c2ee2bbdf462cabd2113c723dfb613d735c2
+    fix_date: 2020-05-09
+    crash_func: png_decode_idat
+    crash_file: libavcodec/pngdec.c
+    signature: [heap-buffer-overflow, READ, png_decode_idat, pngdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482304"
+  - oss_id: 42482420
+    harness: ffmpeg_AV_CODEC_ID_WAVPACK_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e923a35988151842083ae7f8230ae2a40149982c
+    fix_date: 2020-04-10
+    crash_func: wv_unpack_stereo
+    crash_file: libavcodec/wavpack.c
+    signature: [heap-buffer-overflow, WRITE, wv_unpack_stereo, wavpack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482420"
+  - oss_id: 42482437
+    harness: ffmpeg_AV_CODEC_ID_WAVPACK_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1e3e9e2042a77891d8a75ef501f95b9b820da11
+    fix_date: 2020-04-10
+    crash_func: ff_dsd2pcm_translate
+    crash_file: libavcodec/dsd.c
+    signature: [heap-buffer-overflow, READ, ff_dsd2pcm_translate, dsd.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482437"
+  - oss_id: 42482523
+    harness: ffmpeg_AV_CODEC_ID_HCA_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 67de1865b1ee9e3616124b8fb6f1c34cba1b1d5f
+    fix_date: 2020-03-31
+    crash_func: unpack
+    crash_file: libavcodec/hcadec.c
+    signature: [global-buffer-overflow, READ, unpack, hcadec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482523"
+  - oss_id: 42482971
+    harness: ffmpeg_AV_CODEC_ID_CFHD_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 54aaadf648073149f1ac34f56cbde4e6c5aa22ef
+    fix_date: 2017-06-10
+    crash_func: filter
+    crash_file: libavcodec/cfhd.c
+    signature: [heap-buffer-overflow, READ, filter, cfhd.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482971"
+  - oss_id: 42483099
+    harness: ffmpeg_AV_CODEC_ID_MV30_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e73a25168028fea7ca8a837519c6643875c09cab
+    fix_date: 2020-06-04
+    crash_func: idct_add
+    crash_file: libavcodec/mv30.c
+    signature: [heap-buffer-overflow, READ, idct_add, mv30.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483099"
+  - oss_id: 42483522
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8edfd0598d17a828cd59873351645ad1fbe8ff16
+    fix_date: 2020-06-06
+    crash_func: ogg_find_codec
+    crash_file: libavformat/oggdec.c
+    signature: [heap-buffer-overflow, READ, ogg_find_codec, oggdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483522"
+  - oss_id: 42483572
+    harness: ffmpeg_AV_CODEC_ID_LIBFDK_AAC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a3deeaade32db5a1b736b8d3365e52254f3fa6ac
+    fix_date: 2017-05-29
+    crash_func: "qmfSynPrototypeFirSlot(QMF_FILTER_BANK*, int*, int*, short*, int)"
+    crash_file: src/qmf.cpp
+    signature: [heap-buffer-overflow, WRITE, qmfSynPrototypeFirSlot, qmf.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483572"
+  - oss_id: 42483755
+    harness: ffmpeg_AV_CODEC_ID_BITPACKED_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e34686d7acdd2d2562286753a727e100cedd6393
+    fix_date: 2020-06-04
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: tools/target_dec_fuzzer.c
+    signature: [global-buffer-overflow, READ, LLVMFuzzerTestOneInput, target_dec_fuzzer.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483755"
+  - oss_id: 42483854
+    harness: ffmpeg_AV_CODEC_ID_JPEG2000_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4b2248594c7faf1530c43e662c4b80655240b269
+    fix_date: 2020-06-01
+    crash_func: bytestream2_peek_byte
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-use-after-free, READ, bytestream2_peek_byte, bytestream.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483854"
+  - oss_id: 42484078
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 71a822fa3514b82cde6701252bde0477aad21689
+    fix_date: 2020-06-05
+    crash_func: av_parse_ratio
+    crash_file: libavutil/parseutils.c
+    signature: [heap-buffer-overflow, WRITE, av_parse_ratio, parseutils.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484078"
+  - oss_id: 42484085
+    harness: ffmpeg_AV_CODEC_ID_WAVPACK_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bafaf95116b78ab58dbbcbf15f9c3a7c3a123fbd
+    fix_date: 2020-06-04
+    crash_func: wavpack_decode_block
+    crash_file: libavcodec/wavpack.c
+    signature: [heap-buffer-overflow, READ, wavpack_decode_block, wavpack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484085"
+  - oss_id: 42484272
+    harness: ffmpeg_BSF_TRACE_HEADERS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0842fd2c25c050e595083ba1e8c5176da3d55c9b
+    fix_date: 2020-06-01
+    crash_func: cbs_jpeg_split_fragment
+    crash_file: libavcodec/cbs_jpeg.c
+    signature: [heap-buffer-overflow, READ, cbs_jpeg_split_fragment, cbs_jpeg.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484272"
+  - oss_id: 42484307
+    harness: ffmpeg_AV_CODEC_ID_HYMT_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a1223ddc5692772198a02600ecff2545f32b37be
+    fix_date: 2020-06-05
+    crash_func: add_left_pred_c
+    crash_file: libavcodec/lossless_videodsp.c
+    signature: [heap-buffer-overflow, WRITE, add_left_pred_c, lossless_videodsp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484307"
+  - oss_id: 42484700
+    harness: ffmpeg_AV_CODEC_ID_IFF_ILBM_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 51225dee0a6266780d26d43bd6802bbcf736327e
+    fix_date: 2020-06-14
+    crash_func: decode_deep_rle32
+    crash_file: libavcodec/iff.c
+    signature: [heap-buffer-overflow, WRITE, decode_deep_rle32, iff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484700"
+  - oss_id: 42484791
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e53235f06c229a23d3241b47e32647019161fb7c
+    fix_date: 2020-06-14
+    crash_func: idctSparseColPut_int32_10bit
+    crash_file: libavcodec/simple_idct_template.c
+    signature: [heap-buffer-overflow, WRITE, idctSparseColPut_int32_10bit, simple_idct_template.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484791"
+  - oss_id: 42485069
+    harness: ffmpeg_AV_CODEC_ID_APNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65b1ba680fb67902a9c876a49d0146eaae5a1c3d
+    fix_date: 2020-07-01
+    crash_func: png_put_interlaced_row
+    crash_file: libavcodec/pngdec.c
+    signature: [heap-buffer-overflow, READ, png_put_interlaced_row, pngdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485069"
+  - oss_id: 42485080
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f35caea77f76c62bd0e392e514a84833ab1e0c83
+    fix_date: 2020-07-02
+    crash_func: dng_blit
+    crash_file: libavcodec/tiff.c
+    signature: [heap-buffer-overflow, WRITE, dng_blit, tiff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485080"
+  - oss_id: 42485228
+    harness: ffmpeg_AV_CODEC_ID_SCPR_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c8de8dfba6b2706f22214489b1779fb0d27e7e65
+    fix_date: 2020-07-02
+    crash_func: update_model6_to_7
+    crash_file: libavcodec/scpr3.c
+    signature: [stack-buffer-overflow, WRITE, update_model6_to_7, scpr3.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485228"
+  - oss_id: 42485412
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4091f4f78012d1a7eb1e04b69cf65d5ef3afee3a
+    fix_date: 2020-07-05
+    crash_func: dng_blit
+    crash_file: libavcodec/tiff.c
+    signature: [heap-buffer-overflow, READ, dng_blit, tiff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485412"
+  - oss_id: 42485576
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 79e8d17024e6c6328a40fcee191ffd70798a9c6e
+    fix_date: 2020-07-10
+    crash_func: av_packet_ref
+    crash_file: libavcodec/avpacket.c
+    signature: [heap-buffer-overflow, READ, av_packet_ref, avpacket.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485576"
+  - oss_id: 42486078
+    harness: ffmpeg_AV_CODEC_ID_JPEG2000_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a5ac81952e8ea3b071190d36a41b7bab4e957f66
+    fix_date: 2020-08-10
+    crash_func: bytestream_get_be32
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, READ, bytestream_get_be32, bytestream.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486078"
+  - oss_id: 42486209
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7577f8332a6bb2f227b876c83ec6fa45cc9670f9
+    fix_date: 2020-08-26
+    crash_func: tiff_decode_tag
+    crash_file: libavcodec/tiff.c
+    signature: [heap-buffer-overflow, WRITE, tiff_decode_tag, tiff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486209"
+  - oss_id: 42486244
+    harness: ffmpeg_AV_CODEC_ID_JPEG2000_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a5ac81952e8ea3b071190d36a41b7bab4e957f66
+    fix_date: 2020-08-10
+    crash_func: bytestream2_peek_be32
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, READ, bytestream2_peek_be32, bytestream.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486244"
+  - oss_id: 42487118
+    harness: ffmpeg_AV_CODEC_ID_MOBICLIP_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bad8b17a3da219777341acafd3e3113ea2477484
+    fix_date: 2020-09-12
+    crash_func: setup_qtables
+    crash_file: libavcodec/mobiclip.c
+    signature: [global-buffer-overflow, READ, setup_qtables, mobiclip.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487118"
+  - oss_id: 42487121
+    harness: ffmpeg_AV_CODEC_ID_DXTORY_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4562d8e8d628b6acf5d6cb564ff79ecafe9efc84
+    fix_date: 2020-09-05
+    crash_func: dxtory_decode_v1_420
+    crash_file: libavcodec/dxtory.c
+    signature: [heap-buffer-overflow, WRITE, dxtory_decode_v1_420, dxtory.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487121"
+  - oss_id: 42487151
+    harness: ffmpeg_AV_CODEC_ID_MOBICLIP_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e42fc6263379176869dd9a6467e37f9956d56431
+    fix_date: 2020-09-15
+    crash_func: predict_intra
+    crash_file: libavcodec/mobiclip.c
+    signature: [heap-buffer-overflow, READ, predict_intra, mobiclip.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487151"
+  - oss_id: 42487154
+    harness: ffmpeg_AV_CODEC_ID_DXTORY_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 497debb171b866500ef428479139a112ee7e50d8
+    fix_date: 2020-09-26
+    crash_func: dxtory_decode_v1_420
+    crash_file: libavcodec/dxtory.c
+    signature: [heap-buffer-overflow, READ, dxtory_decode_v1_420, dxtory.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487154"
+  - oss_id: 42487339
+    harness: ffmpeg_AV_CODEC_ID_EXR_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7265b7d904f86ec1c681222310c739f92ba55e5e
+    fix_date: 2020-10-15
+    crash_func: decode_block
+    crash_file: libavcodec/exr.c
+    signature: [heap-buffer-overflow, READ, decode_block, exr.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487339"
+  - oss_id: 42487475
+    harness: ffmpeg_AV_CODEC_ID_SONIC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f249981976b18438cfb646183d4c21fb051e1ad4
+    fix_date: 2020-09-25
+    crash_func: av_freep
+    crash_file: libavutil/mem.c
+    signature: [heap-buffer-overflow, READ, av_freep, mem.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487475"
+  - oss_id: 42487506
+    harness: ffmpeg_AV_CODEC_ID_COOK_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 5a2a7604da5f7a2fc498d1d5c90bd892edac9ce8
+    fix_date: 2020-10-17
+    crash_func: cook_decode_init
+    crash_file: libavcodec/cook.c
+    signature: [heap-buffer-overflow, WRITE, cook_decode_init, cook.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487506"
+  - oss_id: 42487568
+    harness: ffmpeg_AV_CODEC_ID_MOBICLIP_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2f9a3215aabbc95e43489848aea6205efa43384a
+    fix_date: 2020-09-25
+    crash_func: setup_qtables
+    crash_file: libavcodec/mobiclip.c
+    signature: [global-buffer-overflow, READ, setup_qtables, mobiclip.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487568"
+  - oss_id: 42487812
+    harness: ffmpeg_AV_CODEC_ID_SMACKER_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 42ded4d1e6fb0086a235dc584118414ae2bf30c9
+    fix_date: 2020-10-17
+    crash_func: get_bits1
+    crash_file: libavcodec/get_bits.h
+    signature: [heap-buffer-overflow, READ, get_bits1, get_bits.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487812"
+  - oss_id: 42487872
+    harness: ffmpeg_AV_CODEC_ID_MOBICLIP_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b6b640c5448f4a53e49caf93ccd665346d7598ef
+    fix_date: 2020-10-15
+    crash_func: predict_motion
+    crash_file: libavcodec/mobiclip.c
+    signature: [heap-buffer-overflow, READ, predict_motion, mobiclip.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487872"
+  - oss_id: 42488029
+    harness: ffmpeg_AV_CODEC_ID_CRI_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bc9686c85beb15cb87d492bfbea03c91d5317a11
+    fix_date: 2020-10-20
+    crash_func: unpack_10bit
+    crash_file: libavcodec/cri.c
+    signature: [heap-buffer-overflow, WRITE, unpack_10bit, cri.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488029"
+  - oss_id: 42488300
+    harness: ffmpeg_AV_CODEC_ID_MAGICYUV_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0dc42147b6843b133d4fa46bf1c2568a837b4bec
+    fix_date: 2020-10-24
+    crash_func: bytestream_get_buffer
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, READ, bytestream_get_buffer, bytestream.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488300"
+  - oss_id: 42488304
+    harness: ffmpeg_dem_VIVIDAS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b848baef0dc42d97a5c1ab975cc8994a265b88ae
+    fix_date: 2020-10-30
+    crash_func: viv_read_packet
+    crash_file: libavformat/vividas.c
+    signature: [heap-buffer-overflow, READ, viv_read_packet, vividas.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488304"
+  - oss_id: 42488327
+    harness: ffmpeg_dem_OBU_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2be51d14f278c1c207becafed0db20cbc4e89f55
+    fix_date: 2020-10-20
+    crash_func: get_bits
+    crash_file: ./libavcodec/get_bits.h
+    signature: [stack-buffer-overflow, READ, get_bits, get_bits.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488327"
+  - oss_id: 42488351
+    harness: ffmpeg_AV_CODEC_ID_EXR_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3e5959b3457f7f1856d997261e6ac672bba49e8b
+    fix_date: 2020-11-22
+    crash_func: decode_frame
+    crash_file: libavcodec/exr.c
+    signature: [heap-buffer-overflow, WRITE, decode_frame, exr.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488351"
+  - oss_id: 42488451
+    harness: ffmpeg_dem_VIVIDAS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 27a99e2c7d450fef15594671eef4465c8a166bd7
+    fix_date: 2020-11-04
+    crash_func: avio_read
+    crash_file: libavformat/aviobuf.c
+    signature: [heap-buffer-overflow, WRITE, avio_read, aviobuf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488451"
+  - oss_id: 42488666
+    harness: ffmpeg_dem_MPEGTSRAW_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 79cf7c71910a69b9f22b3e7ee6508a771262abaf
+    fix_date: 2020-11-07
+    crash_func: mpegts_raw_read_packet
+    crash_file: libavformat/mpegts.c
+    signature: [heap-buffer-overflow, READ, mpegts_raw_read_packet, mpegts.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488666"
+  - oss_id: 42489291
+    harness: ffmpeg_dem_FITS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 14bbb6bb30a6053e82f865c2d69d1a4dd2297fc1
+    fix_date: 2021-01-23
+    crash_func: fits_read_packet
+    crash_file: libavformat/fitsdec.c
+    signature: [heap-buffer-overflow, WRITE, fits_read_packet, fitsdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489291"
+  - oss_id: 42489342
+    harness: ffmpeg_dem_VIVIDAS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b29d351f972f801d0374ca8565cee398b8f69160
+    fix_date: 2020-12-09
+    crash_func: av_xiphlacing
+    crash_file: libavcodec/utils.c
+    signature: [heap-buffer-overflow, WRITE, av_xiphlacing, utils.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489342"
+  - oss_id: 42489353
+    harness: ffmpeg_AV_CODEC_ID_RSCC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a5ed6da9bdbe32408aabe1c75e4b55fcaeec1e9b
+    fix_date: 2021-02-04
+    crash_func: image_copy_plane
+    crash_file: libavutil/imgutils.c
+    signature: [heap-buffer-overflow, READ, image_copy_plane, imgutils.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489353"
+  - oss_id: 42489839
+    harness: ffmpeg_AV_CODEC_ID_CFHD_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f975cf7cc061b814bc029bb2fc86f656494c4d5c
+    fix_date: 2021-01-17
+    crash_func: cfhd_decode
+    crash_file: libavcodec/cfhd.c
+    signature: [heap-buffer-overflow, WRITE, cfhd_decode, cfhd.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489839"
+  - oss_id: 42490478
+    harness: ffmpeg_AV_CODEC_ID_FFV1_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5cae71d2b722d0beed4d46f189db42fbb57d877b
+    fix_date: 2020-12-21
+    crash_func: get_rac
+    crash_file: libavcodec/rangecoder.h
+    signature: [heap-buffer-overflow, READ, get_rac, rangecoder.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490478"
+  - oss_id: 42490623
+    harness: ffmpeg_AV_CODEC_ID_SIREN_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f3e4ebb00790312634e42bdd3f80ffbe34ce32e5
+    fix_date: 2021-01-28
+    crash_func: siren_decode
+    crash_file: libavcodec/siren.c
+    signature: [global-buffer-overflow, READ, siren_decode, siren.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42490623"
+  - oss_id: 42490792
+    harness: ffmpeg_AV_CODEC_ID_AAC_LATM_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6f03ffb47d51368a4bbc87702df8446e4660845d
+    fix_date: 2017-08-22
+    crash_func: apply_ltp
+    crash_file: libavcodec/aacdec_template.c
+    signature: [global-buffer-overflow, READ, apply_ltp, aacdec_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490792"
+  - oss_id: 42491309
+    harness: ffmpeg_dem_W64_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d7594ee751e621f6c7ef4d4977c4a3ce169ae0af
+    fix_date: 2021-01-31
+    crash_func: av_strdup
+    crash_file: libavutil/mem.c
+    signature: [heap-buffer-overflow, READ, av_strdup, mem.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491309"
+  - oss_id: 42491588
+    harness: ffmpeg_dem_AAC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 25f240fcb398eb499ca4b70c026a8bb9f2a32731
+    fix_date: 2021-02-10
+    crash_func: read_apic
+    crash_file: libavformat/id3v2.c
+    signature: [heap-buffer-overflow, WRITE, read_apic, id3v2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491588"
+  - oss_id: 42492030
+    harness: ffmpeg_BSF_AV1_METADATA_fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 33f2144d2ff9efd3729db27ae34a5ff30d4ed534
+    fix_date: 2021-04-23
+    crash_func: cbs_av1_write_obu
+    crash_file: libavcodec/cbs_av1.c
+    signature: [stack-use-after-return, WRITE, cbs_av1_write_obu, cbs_av1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492030"
+  - oss_id: 42492056
+    harness: ffmpeg_dem_CINE_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 09b304035423409ce18d731995fa3b921d54f9b5
+    fix_date: 2021-03-13
+    crash_func: cine_read_packet
+    crash_file: libavformat/cinedec.c
+    signature: [heap-buffer-overflow, READ, cine_read_packet, cinedec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492056"
+  - oss_id: 42493025
+    harness: ffmpeg_AV_CODEC_ID_CFHD_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: da8c86dd8be244100da226a11b416c20d0c914d6
+    fix_date: 2021-04-03
+    crash_func: interlaced_vertical_filter
+    crash_file: libavcodec/cfhd.c
+    signature: [heap-buffer-overflow, WRITE, interlaced_vertical_filter, cfhd.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493025"
+  - oss_id: 42493559
+    harness: ffmpeg_AV_CODEC_ID_HAP_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 89fe1935b18621af06587c76bcde6adcdc8f2249
+    fix_date: 2021-02-20
+    crash_func: bytestream_get_byte
+    crash_file: libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, READ, bytestream_get_byte, bytestream.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493559"
+  - oss_id: 42493744
+    harness: ffmpeg_AV_CODEC_ID_EXR_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9e8475c7c7a81e8299e88d89981df3c14657fff4
+    fix_date: 2021-04-01
+    crash_func: huf_decode
+    crash_file: libavcodec/exr.c
+    signature: [heap-buffer-overflow, READ, huf_decode, exr.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493744"
+  - oss_id: 42494003
+    harness: ffmpeg_AV_CODEC_ID_SGA_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e8bd34fe4fc05700b19c3915ff9768c8072309c4
+    fix_date: 2021-03-26
+    crash_func: lzss_decompress
+    crash_file: libavcodec/sga.c
+    signature: [heap-buffer-overflow, WRITE, lzss_decompress, sga.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494003"
+  - oss_id: 42494130
+    harness: ffmpeg_AV_CODEC_ID_SPEEDHQ_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 462b8261aa3c4f9844b2e050c74b9a2018e3649d
+    fix_date: 2021-03-19
+    crash_func: p8idct
+    crash_file: libavcodec/faanidct.c
+    signature: [heap-buffer-overflow, WRITE, p8idct, faanidct.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494130"
+  - oss_id: 42494133
+    harness: ffmpeg_AV_CODEC_ID_SPEEDHQ_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 462b8261aa3c4f9844b2e050c74b9a2018e3649d
+    fix_date: 2021-03-19
+    crash_func: idctSparseColPut_int16_8bit
+    crash_file: libavcodec/simple_idct_template.c
+    signature: [heap-buffer-overflow, WRITE, idctSparseColPut_int16_8bit, simple_idct_template.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494133"
+  - oss_id: 42494150
+    harness: ffmpeg_AV_CODEC_ID_SPEEDHQ_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 462b8261aa3c4f9844b2e050c74b9a2018e3649d
+    fix_date: 2021-03-19
+    crash_func: ff_put_pixels_clamped_c
+    crash_file: libavcodec/idctdsp.c
+    signature: [heap-buffer-overflow, WRITE, ff_put_pixels_clamped_c, idctdsp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494150"
+  - oss_id: 42494152
+    harness: ffmpeg_AV_CODEC_ID_SPEEDHQ_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 462b8261aa3c4f9844b2e050c74b9a2018e3649d
+    fix_date: 2021-03-19
+    crash_func: decode_alpha_block
+    crash_file: libavcodec/speedhq.c
+    signature: [heap-buffer-overflow, WRITE, decode_alpha_block, speedhq.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494152"
+  - oss_id: 42494556
+    harness: ffmpeg_dem_SIMBIOSIS_IMX_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f7a515044766426cf3cac20bdc091b700f00a458
+    fix_date: 2021-04-01
+    crash_func: simbiosis_imx_read_packet
+    crash_file: libavformat/imx.c
+    signature: [heap-buffer-overflow, WRITE, simbiosis_imx_read_packet, imx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494556"
+  - oss_id: 42495283
+    harness: ffmpeg_AV_CODEC_ID_EXR_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9e8475c7c7a81e8299e88d89981df3c14657fff4
+    fix_date: 2021-04-01
+    crash_func: huf_decode
+    crash_file: libavcodec/exr.c
+    signature: [heap-buffer-overflow, WRITE, huf_decode, exr.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42495283"
+  - oss_id: 42495985
+    harness: ffmpeg_AV_CODEC_ID_AMV_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 718e03e5f297564b828730dfc012fa3f6fbf576b
+    fix_date: 2021-04-20
+    crash_func: ff_jpegls_decode_picture
+    crash_file: libavcodec/jpeglsdec.c
+    signature: [heap-buffer-overflow, WRITE, ff_jpegls_decode_picture, jpeglsdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42495985"
+  - oss_id: 42496330
+    harness: ffmpeg_AV_CODEC_ID_MJPEG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7f6ada4eea089bbcb3ac3ff5d7e8c55c98b47740
+    fix_date: 2021-05-03
+    crash_func: shift_output
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, READ, shift_output, mjpegdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496330"
+  - oss_id: 42496340
+    harness: ffmpeg_AV_CODEC_ID_AMV_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9fd06a363987aa56a79db2532266c6218b1ca343
+    fix_date: 2021-05-03
+    crash_func: ff_mjpeg_receive_frame
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, WRITE, ff_mjpeg_receive_frame, mjpegdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496340"
+  - oss_id: 42496604
+    harness: ffmpeg_AV_CODEC_ID_THP_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 06d23c6f3f72c66364f6f0d2ab2eeac55daab6a8
+    fix_date: 2021-06-02
+    crash_func: ls_decode_line
+    crash_file: libavcodec/jpeglsdec.c
+    signature: [heap-buffer-overflow, READ, ls_decode_line, jpeglsdec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496604"
+  - oss_id: 42497685
+    harness: ffmpeg_AV_CODEC_ID_TTA_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dbbcfbcc4e4f0e91f814f2e13ced7b6d99069518
+    fix_date: 2021-06-12
+    crash_func: tta_decode_frame
+    crash_file: libavcodec/tta.c
+    signature: [global-buffer-overflow, READ, tta_decode_frame, tta.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497685"
+  - oss_id: 42497994
+    harness: ffmpeg_AV_CODEC_ID_CPIA_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cea05864e65db9a2dc8af82b2c63fb8f03c5f876
+    fix_date: 2021-06-29
+    crash_func: cpia_decode_frame
+    crash_file: libavcodec/cpia.c
+    signature: [heap-buffer-overflow, READ, cpia_decode_frame, cpia.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497994"
+  - oss_id: 42499236
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 54b798638e68dcebed5c42a216b403004a97f73e
+    fix_date: 2021-07-28
+    crash_func: ff_h2645_extract_rbsp
+    crash_file: libavcodec/h2645_parse.c
+    signature: [heap-buffer-overflow, READ, ff_h2645_extract_rbsp, h2645_parse.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499236"
+  - oss_id: 42499239
+    harness: ffmpeg_AV_CODEC_ID_WMV3_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c59b5e3d1e0121ea23b5b326529f5bdca44cf982
+    fix_date: 2021-08-22
+    crash_func: ff_print_debug_info2
+    crash_file: libavcodec/mpegutils.c
+    signature: [heap-buffer-overflow, READ, ff_print_debug_info2, mpegutils.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499239"
+  - oss_id: 42499724
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f0d4077c53b7960e8fe52c6cbe5047e18c81be4e
+    fix_date: 2021-08-14
+    crash_func: partition_score
+    crash_file: libavformat/mxfdec.c
+    signature: [heap-use-after-free, READ, partition_score, mxfdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499724"
+  - oss_id: 42500015
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3dd5a8a13510d08a4e25e8f138d718672a0fed4a
+    fix_date: 2021-09-13
+    crash_func: bytestream_put_le16
+    crash_file: ./libavcodec/bytestream.h
+    signature: [heap-buffer-overflow, WRITE, bytestream_put_le16, bytestream.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42500015"
+  - oss_id: 42500199
+    harness: ffmpeg_AV_CODEC_ID_ARGO_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 018b611b4ba74a5cecfb8a75a637b49840e7c320
+    fix_date: 2021-09-26
+    crash_func: decode_frame
+    crash_file: libavcodec/argo.c
+    signature: [unknown-crash, WRITE, decode_frame, argo.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42500199"
+  - oss_id: 42501760
+    harness: ffmpeg_AV_CODEC_ID_MSNSIREN_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: db18f29b33a060b3ce0fc7ac7d215aeb3506c0ae
+    fix_date: 2021-09-19
+    crash_func: decode_vector
+    crash_file: libavcodec/siren.c
+    signature: [global-buffer-overflow, READ, decode_vector, siren.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42501760"
+  - oss_id: 42503016
+    harness: ffmpeg_AV_CODEC_ID_ARGO_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 17e36fac0b5432f67e25adca7186c57f2dbe1c71
+    fix_date: 2021-10-11
+    crash_func: decode_mad1
+    crash_file: libavcodec/argo.c
+    signature: [segv, -, decode_mad1, argo.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42503016"
+  - oss_id: 42506445
+    harness: ffmpeg_AV_CODEC_ID_SPEEX_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d6b2357eddca392ee137cb2a92ff178a0a7d0cce
+    fix_date: 2022-01-01
+    crash_func: nb_decode
+    crash_file: libavcodec/speexdec.c
+    signature: [heap-buffer-overflow, WRITE, nb_decode, speexdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42506445"
+  - oss_id: 42506578
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: afdbc940c6011b64c1856f88d2b0609369f87406
+    fix_date: 2021-12-30
+    crash_func: av_free
+    crash_file: libavutil/mem.c
+    signature: [attempting, -, av_free, mem.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42506578"
+  - oss_id: 42509625
+    harness: ffmpeg_dem_IMF_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 34715fe4a2df70a9b6010df10e97330bb347fc57
+    fix_date: 2022-03-10
+    crash_func: xmlFreeProp
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeProp, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509625"
+  - oss_id: 42509666
+    harness: ffmpeg_BSF_VP9_SUPERFRAME_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c12e8c97b13f33897bd9c6095432c9740504f5c7
+    fix_date: 2022-03-31
+    crash_func: vp9_superframe_filter
+    crash_file: libavcodec/vp9_superframe_bsf.c
+    signature: [heap-buffer-overflow, READ, vp9_superframe_filter, vp9_superframe_bsf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509666"
+  - oss_id: 42509803
+    harness: ffmpeg_AV_CODEC_ID_DFPWM_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b59ea948cdcb8422964595c32076312756550f17
+    fix_date: 2022-03-18
+    crash_func: au_decompress
+    crash_file: libavcodec/dfpwmdec.c
+    signature: [heap-buffer-overflow, WRITE, au_decompress, dfpwmdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509803"
+  - oss_id: 42509806
+    harness: ffmpeg_dem_IMF_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 7dc570ea1345e4e4f3c237679e99f4ed8cee3795
+    fix_date: 2022-03-18
+    crash_func: xmlFreeNodeList
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeNodeList, tree.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509806"
+  - oss_id: 42510189
+    harness: ffmpeg_AV_CODEC_ID_WMALOSSLESS_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5d6cdb015e99c83e016b9398c6e0f236067f8248
+    fix_date: 2022-06-09
+    crash_func: decode_tilehdr
+    crash_file: libavcodec/wmalosslessdec.c
+    signature: [stack-buffer-overflow, READ, decode_tilehdr, wmalosslessdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510189"
+  - oss_id: 42511527
+    harness: ffmpeg_AV_CODEC_ID_FLASHSV2_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b418ad75c2238d36b1d28050e7f37911b9ae64d4
+    fix_date: 2022-07-07
+    crash_func: flashsv2_prime
+    crash_file: libavcodec/flashsv.c
+    signature: [heap-use-after-free, READ, flashsv2_prime, flashsv.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511527"
+  - oss_id: 42512052
+    harness: ffmpeg_AV_CODEC_ID_AMV_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6a82412bf33108111eb3f63076fd5a51349ae114
+    fix_date: 2022-06-23
+    crash_func: ff_jpegls_decode_picture
+    crash_file: libavcodec/jpeglsdec.c
+    signature: [heap-buffer-overflow, READ, ff_jpegls_decode_picture, jpeglsdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512052"
+  - oss_id: 42512058
+    harness: ffmpeg_AV_CODEC_ID_CDGRAPHICS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b7e30a13d4e4557b87f977b76a6bb5e3cbe5ac78
+    fix_date: 2022-06-23
+    crash_func: cdg_scroll
+    crash_file: libavcodec/cdgraphics.c
+    signature: [heap-buffer-overflow, WRITE, cdg_scroll, cdgraphics.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512058"
+  - oss_id: 42512082
+    harness: ffmpeg_IO_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: be4d1caad40e05b0c6b1cf2320fd8112fe9da14b
+    fix_date: 2022-06-29
+    crash_func: mov_read_iloc
+    crash_file: libavformat/mov.c
+    signature: [heap-buffer-overflow, WRITE, mov_read_iloc, mov.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512082"
+  - oss_id: 42512124
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e690d4edf581c42dbd907c0fafe53fba86a00812
+    fix_date: 2022-07-12
+    crash_func: copy_block17
+    crash_file: libavcodec/copy_block.h
+    signature: [heap-buffer-overflow, READ, copy_block17, copy_block.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512124"
+  - oss_id: 42512672
+    harness: ffmpeg_AV_CODEC_ID_QDRAW_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cd847f86d31f87f0f7733ca6ab7a2c022a1398bd
+    fix_date: 2022-07-03
+    crash_func: parse_palette
+    crash_file: libavcodec/qdrw.c
+    signature: [heap-buffer-overflow, WRITE, parse_palette, qdrw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512672"
+  - oss_id: 42512904
+    harness: ffmpeg_AV_CODEC_ID_LIBVPX_VP9_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 55c605f72cd22dab9fd12957332cfd81d3214045
+    fix_date: 2022-07-02
+    crash_func: decode_frame
+    crash_file: libavcodec/libvpxdec.c
+    signature: [heap-buffer-overflow, WRITE, decode_frame, libvpxdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512904"
+  - oss_id: 42513082
+    harness: ffmpeg_AV_CODEC_ID_LAGARITH_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9450f759748d02d1d284d2e4afd741cb0fe0c04a
+    fix_date: 2022-07-14
+    crash_func: lag_decode_zero_run_line
+    crash_file: libavcodec/lagarith.c
+    signature: [heap-buffer-overflow, WRITE, lag_decode_zero_run_line, lagarith.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513082"
+  - oss_id: 42513608
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 009ef35d384c3df22d8a8be7416dc9d532e91c52
+    fix_date: 2022-07-22
+    crash_func: copy_CTB
+    crash_file: libavcodec/hevc_filter.c
+    signature: [heap-buffer-overflow, READ, copy_CTB, hevc_filter.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513608"
+  - oss_id: 42513789
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a44f5a521227adc7be2f78b411f56da1a4d98704
+    fix_date: 2022-08-23
+    crash_func: ljpeg_decode_rgb_scan
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, READ, ljpeg_decode_rgb_scan, mjpegdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513789"
+  - oss_id: 42516042
+    harness: ffmpeg_AV_CODEC_ID_TIFF_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: dd81cc22b3dd5bd6badf012b4fe4c19e062650f4
+    fix_date: 2022-09-22
+    crash_func: ljpeg_decode_rgb_scan
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, WRITE, ljpeg_decode_rgb_scan, mjpegdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516042"
+  - oss_id: 42516248
+    harness: ffmpeg_AV_CODEC_ID_TRUEHD_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f1f78e3cf4da658225067d9ef35cdb25541e5fe2
+    fix_date: 2022-10-04
+    crash_func: ff_mlp_pack_output
+    crash_file: libavcodec/mlpdsp.c
+    signature: [heap-buffer-overflow, READ, ff_mlp_pack_output, mlpdsp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516248"
+  - oss_id: 42518442
+    harness: ffmpeg_AV_CODEC_ID_VQC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a9d15d43eb0f976b982bf2ad6ec1d8ac084c7ded
+    fix_date: 2022-12-08
+    crash_func: transform1
+    crash_file: libavcodec/vqcdec.c
+    signature: [heap-buffer-overflow, WRITE, transform1, vqcdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518442"
+  - oss_id: 42519805
+    harness: ffmpeg_AV_CODEC_ID_SCPR_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1b59de3770b2e3f7f44ec4adba27c88b79adaaec
+    fix_date: 2023-01-11
+    crash_func: decode_run_p
+    crash_file: libavcodec/scpr.h
+    signature: [heap-buffer-overflow, WRITE, decode_run_p, scpr.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519805"
+  - oss_id: 42520001
+    harness: ffmpeg_AV_CODEC_ID_BINK_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b95b2c8492fc1b52afd8fbe67b3be3cd518485d6
+    fix_date: 2023-01-28
+    crash_func: fill_block16_c
+    crash_file: libavcodec/blockdsp.c
+    signature: [heap-buffer-overflow, WRITE, fill_block16_c, blockdsp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520001"
+  - oss_id: 42520086
+    harness: ffmpeg_AV_CODEC_ID_SCPR_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cc7e984a05b28dcfaaaad95afa061be71b4ba7fc
+    fix_date: 2023-01-17
+    crash_func: decode_run_p
+    crash_file: libavcodec/scpr.h
+    signature: [heap-buffer-overflow, READ, decode_run_p, scpr.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520086"
+  - oss_id: 42520999
+    harness: ffmpeg_AV_CODEC_ID_RKA_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7c41a083b756c8daf34cf1d6bb8367b2151b4e4f
+    fix_date: 2023-02-13
+    crash_func: decode_ch_samples
+    crash_file: libavcodec/rka.c
+    signature: [heap-buffer-overflow, WRITE, decode_ch_samples, rka.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520999"
+  - oss_id: 42523108
+    harness: ffmpeg_AV_CODEC_ID_MPEG2VIDEO_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fa618f5f492f94d19dd8d32bcea084523fb4e2d8
+    fix_date: 2023-04-14
+    crash_func: put_pixels8_8_c
+    crash_file: libavcodec/pel_template.c
+    signature: [heap-buffer-overflow, WRITE, put_pixels8_8_c, pel_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523108"
+  - oss_id: 42523112
+    harness: ffmpeg_AV_CODEC_ID_MPEG2VIDEO_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa618f5f492f94d19dd8d32bcea084523fb4e2d8
+    fix_date: 2023-04-14
+    crash_func: ff_add_pixels_clamped_c
+    crash_file: libavcodec/idctdsp.c
+    signature: [heap-buffer-overflow, READ, ff_add_pixels_clamped_c, idctdsp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523112"
+  - oss_id: 42523115
+    harness: ffmpeg_AV_CODEC_ID_MPEGVIDEO_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa618f5f492f94d19dd8d32bcea084523fb4e2d8
+    fix_date: 2023-04-14
+    crash_func: p8idct
+    crash_file: libavcodec/faanidct.c
+    signature: [heap-buffer-overflow, READ, p8idct, faanidct.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523115"
+  - oss_id: 42523437
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 23d968d55a6e00dfc46799cfd0eb2ed02379037d
+    fix_date: 2023-05-11
+    crash_func: imf_base_resource_init
+    crash_file: libavformat/imf_cpl.c
+    signature: [heap-buffer-overflow, WRITE, imf_base_resource_init, imf_cpl.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523437"
+  - oss_id: 42523452
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 95a78c08c17b73a50ad64c1b82e47970a3f2bc41
+    fix_date: 2023-04-22
+    crash_func: colour_mapping_table
+    crash_file: libavcodec/hevc_ps.c
+    signature: [heap-buffer-overflow, WRITE, colour_mapping_table, hevc_ps.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523452"
+  - oss_id: 42523508
+    harness: ffmpeg_AV_CODEC_ID_JPEGLS_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 869248c053856e654002f0650b02d22648b563ba
+    fix_date: 2023-04-21
+    crash_func: mjpeg_decode_scan
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, READ, mjpeg_decode_scan, mjpegdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523508"
+  - oss_id: 42525159
+    harness: ffmpeg_AV_CODEC_ID_JPEG2000_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c012d1f2bb8735f2b17ce88cd8181d2ffc989b02
+    fix_date: 2023-09-14
+    crash_func: write_frame_8
+    crash_file: libavcodec/jpeg2000dec.c
+    signature: [heap-buffer-overflow, WRITE, write_frame_8, jpeg2000dec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525159"
+  - oss_id: 42525160
+    harness: ffmpeg_AV_CODEC_ID_MPEG1VIDEO_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d7d3f1af2ab23cae1b2fc36afafc9872bc633808
+    fix_date: 2023-06-18
+    crash_func: avg_h264_chroma_mc1_8_c
+    crash_file: libavcodec/h264chroma_template.c
+    signature: [heap-buffer-overflow, READ, avg_h264_chroma_mc1_8_c, h264chroma_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525160"
+  - oss_id: 42525521
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d48476183fad230c8e457b2f314f8e136b973c4e
+    fix_date: 2023-09-07
+    crash_func: ff_mpeg4_decode_studio
+    crash_file: libavcodec/mpeg4videodec.c
+    signature: [heap-buffer-overflow, WRITE, ff_mpeg4_decode_studio, mpeg4videodec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525521"
+  - oss_id: 42526394
+    harness: ffmpeg_dem_FLV_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 207e9f4e505d969d6ff7545b449295a1b88d6d1c
+    fix_date: 2023-08-03
+    crash_func: flv_same_video_codec
+    crash_file: libavformat/flvdec.c
+    signature: [heap-buffer-overflow, READ, flv_same_video_codec, flvdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42526394"
+  - oss_id: 42527470
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 94bd1796ff45b396021cd260e9b037bc61815933
+    fix_date: 2023-09-07
+    crash_func: put_hevc_pel_uni_pixels_8
+    crash_file: libavcodec/hevcdsp_template.c
+    signature: [memcpy-param-overlap, -, put_hevc_pel_uni_pixels_8, hevcdsp_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527470"
+  - oss_id: 42527734
+    harness: ffmpeg_dem_JPEGXL_ANIM_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d2e8974699a9e35cc1a926bf74a972300d629cd5
+    fix_date: 2023-09-14
+    crash_func: jpegxl_anim_read_packet
+    crash_file: libavformat/jpegxl_anim_dec.c
+    signature: [heap-buffer-overflow, WRITE, jpegxl_anim_read_packet, jpegxl_anim_dec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527734"
+  - oss_id: 42527843
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f7ac3512f5b5cb8eb149f37300b43461d8e93af3
+    fix_date: 2023-10-05
+    crash_func: read_vlc_prefix
+    crash_file: libavcodec/jpegxl_parser.c
+    signature: [heap-buffer-overflow, READ, read_vlc_prefix, jpegxl_parser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527843"
+  - oss_id: 42527915
+    harness: ffmpeg_AV_CODEC_ID_MAGICYUV_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2e04d35c69e6f8b4bdb46caa4a880c7c2ba3b141
+    fix_date: 2023-09-26
+    crash_func: vlc_multi_gen
+    crash_file: libavcodec/vlc.c
+    signature: [heap-use-after-free, READ, vlc_multi_gen, vlc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527915"
+  - oss_id: 42528263
+    harness: ffmpeg_BSF_EVC_FRAME_MERGE_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac4e3e188af8bf6f0c4a808a24f6ff0daba78248
+    fix_date: 2023-11-09
+    crash_func: ff_evc_parse_slice_header
+    crash_file: libavcodec/evc_parse.c
+    signature: [stack-buffer-overflow, WRITE, ff_evc_parse_slice_header, evc_parse.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528263"
+  - oss_id: 42528415
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce0c178a408d43e71085c28a47d50dc939b60196
+    fix_date: 2023-12-14
+    crash_func: cbs_h266_read_pps
+    crash_file: libavcodec/cbs_h266_syntax_template.c
+    signature: [heap-buffer-overflow, READ, cbs_h266_read_pps, cbs_h266_syntax_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528415"
+  - oss_id: 42528431
+    harness: ffmpeg_BSF_H264_REDUNDANT_PPS_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 61b86add52fa6af4fb872894a349e24b5fcb98d2
+    fix_date: 2023-10-15
+    crash_func: cbs_h2645_write_slice_data
+    crash_file: libavcodec/cbs_h2645.c
+    signature: [negative-size-param, -, cbs_h2645_write_slice_data, cbs_h2645.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528431"
+  - oss_id: 42528497
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ef3b42738b8081982498f5fb6b24593996045777
+    fix_date: 2023-10-15
+    crash_func: parse_nal_units
+    crash_file: libavcodec/evc_parser.c
+    signature: [global-buffer-overflow, READ, parse_nal_units, evc_parser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528497"
+  - oss_id: 42528956
+    harness: ffmpeg_dem_DASH_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 84e0e2f43e424c8a9ae0d18711f204ffebd961ba
+    fix_date: 2023-10-07
+    crash_func: xmlCopyCharMultiByte
+    crash_file: libxml2/parserInternals.c
+    signature: [heap-buffer-overflow, WRITE, xmlCopyCharMultiByte, parserInternals.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528956"
+  - oss_id: 42529289
+    harness: ffmpeg_AV_CODEC_ID_MAGICYUV_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4ddf4f5001ca6fd3525e4acb62c19627fdb76f8e
+    fix_date: 2023-10-27
+    crash_func: bits_read_vlc_multi_be
+    crash_file: libavcodec/bitstream_template.h
+    signature: [heap-buffer-overflow, WRITE, bits_read_vlc_multi_be, bitstream_template.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529289"
+  - oss_id: 42529337
+    harness: ffmpeg_DEMUXER_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fb54c89a0df3d63198678b17d64aef4dbb599109
+    fix_date: 2023-12-27
+    crash_func: read_distribution_bundle
+    crash_file: libavcodec/jpegxl_parser.c
+    signature: [stack-buffer-overflow, WRITE, read_distribution_bundle, jpegxl_parser.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529337"
+  - oss_id: 42531256
+    harness: ffmpeg_BSF_VVC_METADATA_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 36a986d9a193e39382de4bac95e2e314cc30ca7a
+    fix_date: 2024-01-30
+    crash_func: cbs_h266_read_vps
+    crash_file: libavcodec/cbs_h266_syntax_template.c
+    signature: [heap-buffer-overflow, WRITE, cbs_h266_read_vps, cbs_h266_syntax_template.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531256"
+  - oss_id: 42532113
+    harness: ffmpeg_AV_CODEC_ID_VVC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cc774cd96249e95b4ee4989c516881f0ad07e5f9
+    fix_date: 2024-02-03
+    crash_func: ff_refstruct_replace
+    crash_file: libavcodec/refstruct.c
+    signature: [heap-buffer-overflow, READ, ff_refstruct_replace, refstruct.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532113"
+  - oss_id: 42533396
+    harness: ffmpeg_dem_AIFF_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 23b29f72eeb2ff6f2176ee74b9abe78aec4cd1f4
+    fix_date: 2024-04-01
+    crash_func: av_channel_layout_copy
+    crash_file: libavutil/channel_layout.c
+    signature: [heap-buffer-overflow, READ, av_channel_layout_copy, channel_layout.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533396"
+  - oss_id: 42534183
+    harness: ffmpeg_dem_IAMF_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4593cf7ab3f0ff2884880b625f1873f0eaf7a439
+    fix_date: 2024-04-04
+    crash_func: av_channel_layout_copy
+    crash_file: libavutil/channel_layout.c
+    signature: [global-buffer-overflow, READ, av_channel_layout_copy, channel_layout.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534183"
+  - oss_id: 42535453
+    harness: ffmpeg_AV_CODEC_ID_SMC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c22488f718f2d51a24b432927399b596fb1eca91
+    fix_date: 2024-06-26
+    crash_func: smc_encode_stream
+    crash_file: libavcodec/smcenc.c
+    signature: [heap-buffer-overflow, READ, smc_encode_stream, smcenc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535453"
+  - oss_id: 42536087
+    harness: ffmpeg_AV_CODEC_ID_AAC_FIXED_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 91ab17e2fe57d5c093f9a2c63342e58df6cf024b
+    fix_date: 2024-06-07
+    crash_func: frame_configure_elements
+    crash_file: libavcodec/aac/aacdec.c
+    signature: [heap-use-after-free, WRITE, frame_configure_elements, aacdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536087"
+  - oss_id: 42536171
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e939f02ce67f2af570115214d2d5a6d93501dd80
+    fix_date: 2024-07-02
+    crash_func: init_slice_rpl
+    crash_file: libavcodec/hevc/refs.c
+    signature: [heap-buffer-overflow, READ, init_slice_rpl, refs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536171"
+  - oss_id: 42536269
+    harness: ffmpeg_AV_CODEC_ID_SNOW_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3a9292aff320d7b5048b371b1babea2f9b3c4e69
+    fix_date: 2024-06-26
+    crash_func: sad_hpel_motion_search
+    crash_file: libavcodec/motion_est.c
+    signature: [global-buffer-overflow, READ, sad_hpel_motion_search, motion_est.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536269"
+  - oss_id: 42536326
+    harness: ffmpeg_AV_CODEC_ID_HEVC_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e939f02ce67f2af570115214d2d5a6d93501dd80
+    fix_date: 2024-07-02
+    crash_func: derive_spatial_merge_candidates
+    crash_file: libavcodec/hevc/mvs.c
+    signature: [stack-buffer-overflow, WRITE, derive_spatial_merge_candidates, mvs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536326"
+  - oss_id: 42539050
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e03bf251d8784f4d1df2c22381c902087e151e31
+    fix_date: 2018-05-03
+    crash_func: dct_unquantize_mpeg2_intra_mmx
+    crash_file: libavcodec/x86/mpegvideo.c
+    signature: [global-buffer-overflow, READ, dct_unquantize_mpeg2_intra_mmx, mpegvideo.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42539050"
+  - oss_id: 42539919
+    harness: ffmpeg_AV_CODEC_ID_MPEG4_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b3a18511cc93082ebecce0861bc15d7f548492e0
+    fix_date: 2018-05-17
+    crash_func: ff_h263_pred_motion
+    crash_file: libavcodec/h263.c
+    signature: [heap-buffer-overflow, READ, ff_h263_pred_motion, h263.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42539919"
+  - oss_id: 42540556
+    harness: ffmpeg_AV_CODEC_ID_EAC3_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 00f98d23b1462afb97116b947334db3754516207
+    fix_date: 2018-07-04
+    crash_func: ac3_decode_frame
+    crash_file: libavcodec/ac3dec.c
+    signature: [stack-buffer-overflow, WRITE, ac3_decode_frame, ac3dec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42540556"
+  - oss_id: 42540880
+    harness: ffmpeg_AV_CODEC_ID_LIBVPX_VP8_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 284dde24dab30225ed3e233b0e5908d67d7e13e7
+    fix_date: 2018-07-07
+    crash_func: av_packet_ref
+    crash_file: libavcodec/avpacket.c
+    signature: [heap-use-after-free, READ, av_packet_ref, avpacket.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42540880"
+  - oss_id: 42540891
+    harness: ffmpeg_AV_CODEC_ID_JPEGLS_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ee1e3ca5eb1ec7d34e925d129c893e33847ee0b7
+    fix_date: 2018-07-07
+    crash_func: decode_dc_progressive
+    crash_file: libavcodec/mjpegdec.c
+    signature: [heap-buffer-overflow, WRITE, decode_dc_progressive, mjpegdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42540891"
+  - oss_id: 42541206
+    harness: ffmpeg_AV_CODEC_ID_CFHD_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2c1613ac94d07fd85e8831bb7aa7eb4bec707285
+    fix_date: 2018-08-20
+    crash_func: peak_table
+    crash_file: libavcodec/cfhd.c
+    signature: [heap-buffer-overflow, READ, peak_table, cfhd.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42541206"
+  - oss_id: 42541443
+    harness: ffmpeg_AV_CODEC_ID_LIBVPX_VP9_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 51290406461ed40b70e0e05b389a461a283f3367
+    fix_date: 2018-07-28
+    crash_func: decode_frame
+    crash_file: libavcodec/libvpxdec.c
+    signature: [heap-use-after-free, READ, decode_frame, libvpxdec.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42541443"
+rejected:
+  - oss_id: 42487992
+    reason: commit_missing
+  - oss_id: 42488672
+    reason: commit_missing
+  - oss_id: 42501174
+    reason: commit_missing
+  - oss_id: 42503260
+    reason: commit_missing
+  - oss_id: 42506575
+    reason: commit_missing
+  - oss_id: 42506581
+    reason: commit_missing
+  - oss_id: 42525877
+    reason: commit_missing
+error: null

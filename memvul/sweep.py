@@ -1,27 +1,17 @@
-"""Empirical survival-window sweep (methodology.md §7).
+"""Read and analyze manually recorded observability results.
 
-One build at commit C, every PoC replayed against it, signatures parsed.
-The resulting matrix is sliced into per-bug observability windows.
-
-Probe placement is cheap and host-side (git log). The expensive step is
-driven through an ARVO container: checkout → OSS-Fuzz ``compile`` → replay.
-Results are appended to a JSON file so the sweep can resume.
+This module deliberately contains no container, build, or replay driver.
 """
 
 from __future__ import annotations
 
 import datetime as dt
 import json
-import shutil
-import subprocess
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from . import asan, gitutil
 from .bug import Bug, Window
-
-WORKDIR = Path("/tmp/memvul")
-
 
 @dataclass
 class Probe:
@@ -69,7 +59,7 @@ def propose_probes(repo: Path, bugs: list[Bug],
     """Monthly-ish grid plus ARVO vuln commits and a left sentinel.
 
     ``every_days`` defaults to ~one month so a 3-year span is ~35 builds,
-    matching methodology.md §7. ARVO vuln commits are free high-value
+    ARVO vuln commits are free high-value
     points (each is known-live for at least one bug).
     """
     dated = [b.fix_date for b in bugs if b.fix_date]
@@ -284,67 +274,6 @@ def reconstruct(bugs: list[Bug], probes: list[Probe],
         )
         if b.reject == "window_unmeasured":
             b.reject = None
-
-
-# ---------------------------------------------------------------------------
-# Container driver
-# ---------------------------------------------------------------------------
-
-def docker(*args: str, timeout: int = 900) -> subprocess.CompletedProcess:
-    return subprocess.run(
-        ["docker", *args], capture_output=True, text=True,
-        encoding="utf-8", errors="replace", timeout=timeout)
-
-
-def sync_pocs(container: str, host_root: Path, dest: str = "/pocs") -> int:
-    """Copy any host-side PoC the container does not yet have."""
-    ls = docker("exec", container, "bash", "-lc", f"ls {dest} 2>/dev/null")
-    have = set(ls.stdout.split())
-    n = 0
-    for d in host_root.iterdir():
-        if not (d / "poc").exists() or d.name in have:
-            continue
-        docker("cp", str(d), f"{container}:{dest}/{d.name}", timeout=60)
-        n += 1
-    return n
-
-
-def install_scripts(container: str, root: Path) -> None:
-    docker("cp", str(root / "scripts" / "replay_in_container.sh"),
-           f"{container}:/replay.sh")
-    docker("cp", str(root / "scripts" / "sweep_probe.sh"),
-           f"{container}:/sweep_probe.sh")
-    docker("exec", container, "bash", "-lc",
-           "chmod +x /replay.sh /sweep_probe.sh")
-
-
-def run_probe(container: str, sha: str, srcdir: str, harness: str,
-              timeout: int = 900) -> dict[str, Shot]:
-    p = docker(
-        "exec", "-e", f"SRCDIR={srcdir}", "-e", f"HARNESS={harness}",
-        container, "bash", "/sweep_probe.sh", sha,
-        timeout=timeout,
-    )
-    dest = f"/reports/sweep/{sha}"
-    status = docker("exec", container, "cat", f"{dest}/status")
-    if "BUILD_FAIL" in (status.stdout + p.stdout):
-        return {}
-    tsv = docker("exec", container, "cat", f"{dest}/replay.tsv")
-    shots: dict[str, Shot] = {}
-    for line in tsv.stdout.splitlines()[1:]:
-        parts = line.split("\t")
-        if len(parts) < 4:
-            continue
-        oss_id, _rc, verdict, kind = parts[0], parts[1], parts[2], parts[3]
-        sig = None
-        if verdict == "asan":
-            log = docker("exec", container, "cat", f"{dest}/{oss_id}.log")
-            rep = asan.parse(log.stdout)
-            sig = list(rep.signature()) if rep.kind else None
-        shots[oss_id] = Shot(verdict=verdict,
-                             kind=None if kind == "-" else kind,
-                             signature=sig)
-    return shots
 
 
 def load(path: Path) -> Sweep | None:

@@ -1,0 +1,275 @@
+project: upx
+repo: "https://github.com/upx/upx.git"
+n_sites: 16
+n_issues: 16
+harnesses: [decompress_packed_file_fuzzer, list_packed_file_fuzzer, test_packed_file_fuzzer]
+base:
+  commit: 09c5e383223e6f70222b8b04fffdb79919f9c40a
+  date: 2024-01-09
+  method: measured_sweep
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 5
+  note: "PoC replay + signature match"
+waves:
+  - day: 2024-01-10
+    n: 5
+    eve: 09c5e383223e6f70222b8b04fffdb79919f9c40a
+    n_latent_upper: 16
+    oss_ids: [42531645, 42531653, 42531654, 42531668, 42531672]
+  - day: 2024-01-27
+    n: 3
+    eve: ff5a4eeb9673da0c24b45fb163a0f84bfba1ea05
+    n_latent_upper: 8
+    oss_ids: [42532260, 42532037, 42531669]
+  - day: 2024-01-11
+    n: 1
+    eve: e4a611bcaed669f99afd642a26086925c480ecb2
+    n_latent_upper: 11
+    oss_ids: [42531800]
+  - day: 2024-01-19
+    n: 1
+    eve: b019440980d8693966a1fbdeafb6cbb2f4d41caa
+    n_latent_upper: 10
+    oss_ids: [42531927]
+  - day: 2024-01-25
+    n: 1
+    eve: 5d649f83ecae9afa68f77d344aec5575b5eac948
+    n_latent_upper: 9
+    oss_ids: [42532364]
+  - day: 2025-01-21
+    n: 1
+    eve: 2edf91d315aad3e385339d9e8dbb27dcd4fdf745
+    n_latent_upper: 5
+    oss_ids: [383170478]
+  - day: 2025-01-30
+    n: 1
+    eve: 0a61ffea3a15cefbeb2ceb24dc136579cae10bef
+    n_latent_upper: 4
+    oss_ids: [383187490]
+  - day: 2025-01-31
+    n: 1
+    eve: 7b06ba0b78d4acb82eac48477f774531b4d9d9ca
+    n_latent_upper: 3
+    oss_ids: [383194079]
+  - day: 2025-02-22
+    n: 1
+    eve: 8cce9cf64166444f88d05e7469386a86e9dabf0b
+    n_latent_upper: 1
+    oss_ids: [397728078]
+  - day: 2025-05-08
+    n: 1
+    eve: 24b4ec42e701814b5bf55685f6fbc81e25f1044c
+    n_latent_upper: 1
+    oss_ids: [402200343]
+bugs:
+  - oss_id: 42531645
+    harness: list_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3dca1175e5899b54ac97e2ffab38dc5191cc4be4
+    fix_date: 2024-01-10
+    crash_func: "unsigned int get_ne32<void, void>(void const*)"
+    crash_file: src/util/../bele.h
+    signature: [heap-buffer-overflow, READ, "unsigned int get_ne32<>", bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531645"
+  - oss_id: 42531653
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6dde9f7dc03f94648ce65e203eb1ca382a63016a
+    fix_date: 2024-01-10
+    crash_func: "get_ne32<void, void>"
+    crash_file: src/util/../bele.h
+    signature: [heap-buffer-overflow, READ, "get_ne32<>", bele.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531653"
+  - oss_id: 42531654
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f310ce376ea1c8deb542b0746344f27251f7eadc
+    fix_date: 2024-01-10
+    crash_func: ucl_nrv2b_decompress_safe_le32
+    crash_file: src/n2b_d.c
+    signature: [heap-buffer-overflow, READ, ucl_nrv2b_decompress_safe_le32, n2b_d.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531654"
+  - oss_id: 42531668
+    harness: test_packed_file_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d549c2b5c9a2880ba03b6522e055bbe673fa7753
+    fix_date: 2024-01-10
+    crash_func: "unsigned int get_ne32<LE32, LE32>(LE32 const*)"
+    crash_file: src/bele.h
+    signature: [stack-buffer-overflow, READ, "unsigned int get_ne32<>", bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531668"
+  - oss_id: 42531669
+    harness: list_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c0e40da2ab6f072ceaff780308756b1e9e1fb6a2
+    fix_date: 2024-01-27
+    crash_func: "unsigned int get_ne32<unsigned char, unsigned char>(unsigned char const*)"
+    crash_file: src/bele.h
+    signature: [heap-buffer-overflow, READ, "unsigned int get_ne32<>", bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531669"
+  - oss_id: 42531672
+    harness: decompress_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d3e780d617014a883b2b181021b58d11b98eb46c
+    fix_date: 2024-01-10
+    crash_func: "get_ne64<void, void>"
+    crash_file: src/util/../bele.h
+    signature: [heap-buffer-overflow, READ, "get_ne64<>", bele.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531672"
+  - oss_id: 42531800
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2ad0d512266b0077e86d7e98a29f7957768ad643
+    fix_date: 2024-01-11
+    crash_func: "upx_safe_strlen(char const*)"
+    crash_file: src/util/snprintf.cpp
+    signature: [heap-buffer-overflow, READ, upx_safe_strlen, snprintf.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531800"
+  - oss_id: 42531927
+    harness: test_packed_file_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d615985b8a1b68bbdc0f31e0e6e648f93c434095
+    fix_date: 2024-01-19
+    crash_func: "unsigned long long get_ne64<void, void>(void const*)"
+    crash_file: src/util/../bele.h
+    signature: [heap-use-after-free, READ, "unsigned long long get_ne64<>", bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531927"
+  - oss_id: 42532037
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2767ec54e11ac516e4a2233f183c61843d9789f0
+    fix_date: 2024-01-27
+    crash_func: ucl_nrv2e_decompress_safe_le32
+    crash_file: src/n2e_d.c
+    signature: [heap-buffer-overflow, READ, ucl_nrv2e_decompress_safe_le32, n2e_d.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42532037"
+  - oss_id: 42532260
+    harness: list_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 69c51eee4df002cc4f2c3650012c54cddae256fc
+    fix_date: 2024-01-27
+    crash_func: "PackLinuxElf64::elf_lookup(char const*) const"
+    crash_file: src/p_lx_elf.cpp
+    signature: [heap-buffer-overflow, READ, "PackLinuxElf64::elf_lookup", p_lx_elf.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42532260"
+  - oss_id: 42532364
+    harness: test_packed_file_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 10807ebdc212c44db366131e71b3e358643eae51
+    fix_date: 2024-01-25
+    crash_func: "get_ne32<LE32, LE32>"
+    crash_file: src/bele.h
+    signature: [stack-buffer-overflow, READ, "get_ne32<>", bele.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42532364"
+  - oss_id: 383170478
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ef8a24ba53b31f646fb7b1aefe55906ef39798c9
+    fix_date: 2025-01-21
+    crash_func: ucl_nrv2e_decompress_safe_8
+    crash_file: src/n2e_d.c
+    signature: [heap-buffer-overflow, READ, ucl_nrv2e_decompress_safe_8, n2e_d.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/383170478"
+  - oss_id: 383187490
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0870514194c83c193330c817d82a78d276b72215
+    fix_date: 2025-01-30
+    crash_func: get_ne32
+    crash_file: src/util/../bele.h
+    signature: [heap-buffer-overflow, READ, get_ne32, bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/383187490"
+  - oss_id: 383194079
+    harness: test_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a49d023bd04c585ac4c342c90d214c9aef2c8b08
+    fix_date: 2025-01-31
+    crash_func: "get_ne32<unsigned char, unsigned char>"
+    crash_file: src/bele.h
+    signature: [heap-buffer-overflow, READ, "get_ne32<>", bele.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/383194079"
+  - oss_id: 397728078
+    harness: decompress_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e52a3ceb483f3a8a22d0dffc367e6c825d2b60cc
+    fix_date: 2025-02-22
+    crash_func: "PackLinuxElf32::unpack(OutputFile*)"
+    crash_file: src/p_lx_elf.cpp
+    signature: [heap-buffer-overflow, READ, "PackLinuxElf32::unpack", p_lx_elf.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/397728078"
+  - oss_id: 402200343
+    harness: decompress_packed_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a1ef410509a6e80ea337f8beddcd522e814d0f98
+    fix_date: 2025-05-08
+    crash_func: "get_ne64(unsigned char const*)"
+    crash_file: src/util/../bele.h
+    signature: [heap-buffer-overflow, READ, get_ne64, bele.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/402200343"
+rejected: []
+error: null

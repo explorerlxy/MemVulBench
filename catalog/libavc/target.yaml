@@ -1,0 +1,469 @@
+project: libavc
+repo: "https://android.googlesource.com/platform/external/libavc"
+n_sites: 31
+n_issues: 31
+harnesses: [avc_dec_fuzzer, mvc_dec_fuzzer, svc_dec_fuzzer, svc_enc_fuzzer]
+base:
+  commit: 764ab7b702142762bfa9c4e93427c6e494ff7940
+  date: 2023-02-15
+  method: measured_sweep
+  n_latent: 10
+  n_latent_upper: 10
+  n_wave: 4
+  note: "PoC replay + signature match"
+waves:
+  - day: 2023-02-15
+    n: 4
+    eve: 764ab7b702142762bfa9c4e93427c6e494ff7940
+    n_latent_upper: 16
+    oss_ids: [42520942, 42520945, 42520977, 42520983]
+  - day: 2023-12-11
+    n: 4
+    eve: 82f4e69094b7d6e4200d14ba64ac9937f337710d
+    n_latent_upper: 11
+    oss_ids: [42530447, 42530451, 42530559, 42530568]
+  - day: 2019-09-04
+    n: 3
+    eve: f305433dd45cb08713299132926c1c3c9648f829
+    n_latent_upper: 8
+    oss_ids: [42477212, 42477222, 42477302]
+  - day: 2020-07-29
+    n: 2
+    eve: 7bddf4b15af9b244219aa0f69325b4643983a802
+    n_latent_upper: 5
+    oss_ids: [42489821, 42490025]
+  - day: 2024-01-09
+    n: 2
+    eve: 0d29250b990430ca0d7346459c11ca053380bbb5
+    n_latent_upper: 7
+    oss_ids: [42531113, 42531141]
+  - day: 2025-08-08
+    n: 2
+    eve: 2f6371b3b8d69ee596fa44c48ca522db27f6f22f
+    n_latent_upper: 3
+    oss_ids: [434978682, 435086517]
+  - day: 2020-03-06
+    n: 1
+    eve: 93a6f1db82a65d9fe8f64b6971a489f6267291d2
+    n_latent_upper: 5
+    oss_ids: [42494156]
+  - day: 2020-06-03
+    n: 1
+    eve: 5a52ec8cdddfe3a2fd0759078c2faed913eaead4
+    n_latent_upper: 5
+    oss_ids: [42479939]
+  - day: 2020-12-09
+    n: 1
+    eve: 6efeedf0633e1965a4d4e17d64f14215e9b6d48f
+    n_latent_upper: 2
+    oss_ids: [42482784]
+  - day: 2022-02-09
+    n: 1
+    eve: 6ff3e24351046b63f774bc2381a5a2be515a3eec
+    n_latent_upper: 17
+    oss_ids: [42501625]
+  - day: 2023-02-05
+    n: 1
+    eve: e14ee149ef87f1e90b10cbda4b9d120432c8a410
+    n_latent_upper: 18
+    oss_ids: [42520686]
+  - day: 2023-02-13
+    n: 1
+    eve: b2a61a152a5e83b3419212e8d15a10d4488e51d9
+    n_latent_upper: 17
+    oss_ids: [42521138]
+bugs:
+  - oss_id: 42477212
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ea14d495b1995ff09642edfb1b0b45a3d289b0af
+    fix_date: 2019-09-04
+    crash_func: ih264d_compute_bs_non_mbaff_thread
+    crash_file: decoder/ih264d_thread_compute_bs.c
+    signature: [heap-buffer-overflow, READ, ih264d_compute_bs_non_mbaff_thread, ih264d_thread_compute_bs.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477212"
+  - oss_id: 42477222
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ea14d495b1995ff09642edfb1b0b45a3d289b0af
+    fix_date: 2019-09-04
+    crash_func: ih264d_cavlc_4x4res_block_totalcoeff_11to16
+    crash_file: decoder/ih264d_parse_cavlc.c
+    signature: [heap-buffer-overflow, READ, ih264d_cavlc_4x4res_block_totalcoeff_11to16, ih264d_parse_cavlc.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477222"
+  - oss_id: 42477302
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ea14d495b1995ff09642edfb1b0b45a3d289b0af
+    fix_date: 2019-09-04
+    crash_func: ih264d_cavlc_parse4x4coeff_n8
+    crash_file: decoder/ih264d_parse_cavlc.c
+    signature: [heap-buffer-overflow, READ, ih264d_cavlc_parse4x4coeff_n8, ih264d_parse_cavlc.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477302"
+  - oss_id: 42479939
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa8ec83555b0946d01c60f6df9751c1aa490bf85
+    fix_date: 2020-06-03
+    crash_func: ih264d_decode_slice_thread
+    crash_file: decoder/ih264d_thread_parse_decode.c
+    signature: [heap-buffer-overflow, READ, ih264d_decode_slice_thread, ih264d_thread_parse_decode.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42479939"
+  - oss_id: 42482784
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 01b93dd80cbb3be60423cac6b9aa656baa39582c
+    fix_date: 2020-12-09
+    crash_func: ih264d_get_bits_h264
+    crash_file: decoder/ih264d_bitstrm.c
+    signature: [heap-buffer-overflow, READ, ih264d_get_bits_h264, ih264d_bitstrm.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42482784"
+  - oss_id: 42489821
+    harness: avc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0b601e1a4fb246ce7c60aa101af5af4edd0a842d
+    fix_date: 2020-07-29
+    crash_func: ih264d_parse_pslice
+    crash_file: decoder/ih264d_parse_pslice.c
+    signature: [heap-buffer-overflow, WRITE, ih264d_parse_pslice, ih264d_parse_pslice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42489821"
+  - oss_id: 42490025
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0b601e1a4fb246ce7c60aa101af5af4edd0a842d
+    fix_date: 2020-07-29
+    crash_func: ih264d_fill_bs1_16x16mb_pslice
+    crash_file: decoder/ih264d_compute_bs.c
+    signature: [heap-buffer-overflow, READ, ih264d_fill_bs1_16x16mb_pslice, ih264d_compute_bs.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490025"
+  - oss_id: 42494156
+    harness: avc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: de9c6cefb626803279d217590ad19255f48ff4d0
+    fix_date: 2020-03-06
+    crash_func: ih264d_mark_err_slice_skip
+    crash_file: decoder/ih264d_parse_pslice.c
+    signature: [heap-buffer-overflow, WRITE, ih264d_mark_err_slice_skip, ih264d_parse_pslice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494156"
+  - oss_id: 42501625
+    harness: avc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b668003b842ee9b0366418c1f8bbf4ac897ff52e
+    fix_date: 2022-02-09
+    crash_func: ih264d_parse_decode_slice
+    crash_file: decoder/ih264d_parse_slice.c
+    signature: [heap-buffer-overflow, READ, ih264d_parse_decode_slice, ih264d_parse_slice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501625"
+  - oss_id: 42520686
+    harness: svc_enc_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f89d4010644b1820f335a59213f8aa1bd7375738
+    fix_date: 2023-02-05
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520686"
+  - oss_id: 42520942
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8739b7da75f305ab391eb36c613210c23243fe5b
+    fix_date: 2023-02-15
+    crash_func: isvcd_residual_luma_dyadic_sse42
+    crash_file: decoder/x86/svc/isvcd_residual_resamp_sse42.c
+    signature: [heap-buffer-overflow, READ, isvcd_residual_luma_dyadic_sse42, isvcd_residual_resamp_sse42.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520942"
+  - oss_id: 42520945
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8739b7da75f305ab391eb36c613210c23243fe5b
+    fix_date: 2023-02-15
+    crash_func: isvcd_populate_res_prms
+    crash_file: decoder/svc/isvcd_intra_resamp.c
+    signature: [heap-buffer-overflow, WRITE, isvcd_populate_res_prms, isvcd_intra_resamp.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520945"
+  - oss_id: 42520977
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8739b7da75f305ab391eb36c613210c23243fe5b
+    fix_date: 2023-02-15
+    crash_func: isvcd_parse_decode_slice
+    crash_file: decoder/svc/isvcd_parse_slice.c
+    signature: [heap-buffer-overflow, READ, isvcd_parse_decode_slice, isvcd_parse_slice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520977"
+  - oss_id: 42520983
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8739b7da75f305ab391eb36c613210c23243fe5b
+    fix_date: 2023-02-15
+    crash_func: isvcd_interlyr_motion_scale
+    crash_file: decoder/svc/isvcd_mode_mv_resamp.c
+    signature: [heap-buffer-overflow, READ, isvcd_interlyr_motion_scale, isvcd_mode_mv_resamp.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42520983"
+  - oss_id: 42521138
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: da58813a3a5c7d35c0bdbc69e53276253c230108
+    fix_date: 2023-02-13
+    crash_func: isvcd_interlyr_motion_mode_pred_dyadic
+    crash_file: decoder/svc/isvcd_mode_mv_resamp.c
+    signature: [heap-buffer-overflow, READ, isvcd_interlyr_motion_mode_pred_dyadic, isvcd_mode_mv_resamp.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521138"
+  - oss_id: 42521316
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5fabd43f6af6c5f432c543b8a84e690dfa31a3b2
+    fix_date: 2023-02-25
+    crash_func: isvcd_reflayer_construction_dyadic
+    crash_file: decoder/svc/isvcd_intra_resamp.c
+    signature: [heap-buffer-overflow, READ, isvcd_reflayer_construction_dyadic, isvcd_intra_resamp.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521316"
+  - oss_id: 42521509
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c0ca3b2979a6f0999c57549986f99334666e8ef7
+    fix_date: 2023-02-27
+    crash_func: isvcd_nal_byte_swap_emulation
+    crash_file: decoder/svc/isvcd_nal.c
+    signature: [heap-buffer-overflow, WRITE, isvcd_nal_byte_swap_emulation, isvcd_nal.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42521509"
+  - oss_id: 42523611
+    harness: svc_dec_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 84f955dd77e42ffb57cb05a869cb8c8bf68f1e13
+    fix_date: 2023-04-27
+    crash_func: ih264_inter_pred_luma_vert_ssse3
+    crash_file: common/x86/ih264_inter_pred_filters_ssse3.c
+    signature: [heap-use-after-free, READ, ih264_inter_pred_luma_vert_ssse3, ih264_inter_pred_filters_ssse3.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42523611"
+  - oss_id: 42530284
+    harness: mvc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 37beb9729249a1cde472545e2a19d80660e40edc
+    fix_date: 2023-11-21
+    crash_func: ih264d_sev
+    crash_file: decoder/ih264d_parse_cavlc.c
+    signature: [heap-buffer-overflow, READ, ih264d_sev, ih264d_parse_cavlc.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530284"
+  - oss_id: 42530447
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e49a9150a3b1cfc3fb9097ca02dd042e35226129
+    fix_date: 2023-12-11
+    crash_func: ih264d_fmt_conv_420sp_to_420sp
+    crash_file: decoder/ih264d_format_conv.c
+    signature: [heap-buffer-overflow, WRITE, ih264d_fmt_conv_420sp_to_420sp, ih264d_format_conv.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530447"
+  - oss_id: 42530451
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e49a9150a3b1cfc3fb9097ca02dd042e35226129
+    fix_date: 2023-12-11
+    crash_func: isvcd_start_of_pic
+    crash_file: decoder/svc/isvcd_parse_slice.c
+    signature: [heap-buffer-overflow, WRITE, isvcd_start_of_pic, isvcd_parse_slice.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530451"
+  - oss_id: 42530559
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e49a9150a3b1cfc3fb9097ca02dd042e35226129
+    fix_date: 2023-12-11
+    crash_func: isvcd_process_residual_resample_mb
+    crash_file: decoder/svc/isvcd_process_epslice.c
+    signature: [heap-buffer-overflow, READ, isvcd_process_residual_resample_mb, isvcd_process_epslice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530559"
+  - oss_id: 42530568
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e49a9150a3b1cfc3fb9097ca02dd042e35226129
+    fix_date: 2023-12-11
+    crash_func: ih264d_motion_compensate_bp
+    crash_file: decoder/ih264d_inter_pred.c
+    signature: [heap-buffer-overflow, READ, ih264d_motion_compensate_bp, ih264d_inter_pred.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530568"
+  - oss_id: 42531113
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 28727baf58aa7c8983769aff1ceecb3121a26ee6
+    fix_date: 2024-01-09
+    crash_func: ih264d_compute_bs_non_mbaff
+    crash_file: decoder/ih264d_compute_bs.c
+    signature: [heap-buffer-overflow, READ, ih264d_compute_bs_non_mbaff, ih264d_compute_bs.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531113"
+  - oss_id: 42531141
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 28727baf58aa7c8983769aff1ceecb3121a26ee6
+    fix_date: 2024-01-09
+    crash_func: ih264d_fmt_conv_420sp_to_420p
+    crash_file: decoder/ih264d_format_conv.c
+    signature: [heap-buffer-overflow, WRITE, ih264d_fmt_conv_420sp_to_420p, ih264d_format_conv.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531141"
+  - oss_id: 42533286
+    harness: mvc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 72315c11ac595a73d3b629cc36647327156d5875
+    fix_date: 2024-05-07
+    crash_func: ih264d_read_coeff4x4_cabac
+    crash_file: decoder/ih264d_parse_cabac.c
+    signature: [heap-buffer-overflow, READ, ih264d_read_coeff4x4_cabac, ih264d_parse_cabac.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42533286"
+  - oss_id: 42535307
+    harness: svc_dec_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b0117e32b9555e7069c2aef571d921bff22f502f
+    fix_date: 2024-07-11
+    crash_func: ih264d_fmt_conv_420sp_to_420sp_swap_uv
+    crash_file: decoder/ih264d_format_conv.c
+    signature: [heap-buffer-overflow, WRITE, ih264d_fmt_conv_420sp_to_420sp_swap_uv, ih264d_format_conv.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535307"
+  - oss_id: 428771938
+    harness: svc_dec_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6f5a49da5db207a149a3f0cc43fd850502017012
+    fix_date: 2025-08-11
+    crash_func: ih264_inter_pred_luma_horz_ssse3
+    crash_file: common/x86/ih264_inter_pred_filters_ssse3.c
+    signature: [heap-use-after-free, READ, ih264_inter_pred_luma_horz_ssse3, ih264_inter_pred_filters_ssse3.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/428771938"
+  - oss_id: 434978682
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b34ac3d492b0a46691a5949c19f30fd844c37396
+    fix_date: 2025-08-08
+    crash_func: isvcd_mark_err_slice_skip
+    crash_file: decoder/svc/isvcd_parse_epslice.c
+    signature: [heap-buffer-overflow, READ, isvcd_mark_err_slice_skip, isvcd_parse_epslice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/434978682"
+  - oss_id: 435086517
+    harness: svc_dec_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b34ac3d492b0a46691a5949c19f30fd844c37396
+    fix_date: 2025-08-08
+    crash_func: isvcd_decode_recon_tfr_nmb_base_lyr
+    crash_file: decoder/svc/isvcd_process_epslice.c
+    signature: [heap-buffer-overflow, READ, isvcd_decode_recon_tfr_nmb_base_lyr, isvcd_process_epslice.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/435086517"
+rejected:
+  - oss_id: 42479533
+    reason: commit_missing
+error: null

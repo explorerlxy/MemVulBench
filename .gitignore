@@ -1,11 +1,14 @@
 __pycache__/
 *.pyc
 logs/
+targets/
 data/census/arvo_candidates.json
 data/sweeps/
-data/pins/
-data/slices/
+data/plans/
+data/candidates/
+data/measure/
 *.tar
 *.sqlite
 build/
 out/
+benchmark/units/

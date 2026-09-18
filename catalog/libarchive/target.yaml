@@ -1,0 +1,311 @@
+project: libarchive
+repo: "https://github.com/libarchive/libarchive.git"
+n_sites: 18
+n_issues: 18
+harnesses: [libarchive_fuzzer]
+base:
+  commit: 410ecbd3a7cb3f8d72f61428db1141baaed2919d
+  date: 2022-11-02
+  method: measured_sweep
+  n_latent: 2
+  n_latent_upper: 2
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-11-02
+    n: 2
+    eve: 410ecbd3a7cb3f8d72f61428db1141baaed2919d
+    n_latent_upper: 3
+    oss_ids: [42514240, 42516899]
+  - day: 2019-01-07
+    n: 1
+    eve: 84f7fd01b68127454fcee321086b771bdc230630
+    n_latent_upper: 8
+    oss_ids: [42471116]
+  - day: 2019-01-30
+    n: 1
+    eve: c3d742c9836f352af573d485aca9d312ed1320d5
+    n_latent_upper: 7
+    oss_ids: [42471319]
+  - day: 2019-04-20
+    n: 1
+    eve: 7b3068c4bf7a217a1838db280072653197d30012
+    n_latent_upper: 7
+    oss_ids: [42474797]
+  - day: 2019-04-25
+    n: 1
+    eve: a4744f65134ed3c38be7f3241e394e75fd28d7e7
+    n_latent_upper: 6
+    oss_ids: [42473801]
+  - day: 2019-05-01
+    n: 1
+    eve: 458e49358f17ec58d65ab1c45cf299baaf3c98d1
+    n_latent_upper: 5
+    oss_ids: [42472727]
+  - day: 2019-05-03
+    n: 1
+    eve: 3614747af54e60229a2bf11e8f40e1b975cc9ae6
+    n_latent_upper: 4
+    oss_ids: [42475025]
+  - day: 2019-05-06
+    n: 1
+    eve: 0ba5492a09202514bbf3c9a422997a9800b24b8e
+    n_latent_upper: 3
+    oss_ids: [42475066]
+  - day: 2019-12-21
+    n: 1
+    eve: b80652b1138e5abf9bdc47a66d67dae1b0ad668b
+    n_latent_upper: 2
+    oss_ids: [42480548]
+  - day: 2021-03-08
+    n: 1
+    eve: 09e486da7587368f983e75a25dd53cb244a8e14b
+    n_latent_upper: 6
+    oss_ids: [42492824]
+  - day: 2022-02-16
+    n: 1
+    eve: 4af83bbfe082056f8f5e2b2ce7f8cf31ac2bd4fb
+    n_latent_upper: 5
+    oss_ids: [42507004]
+  - day: 2022-03-30
+    n: 1
+    eve: cfaa28168a07ea4a53276b63068f94fce37d6aff
+    n_latent_upper: 4
+    oss_ids: [42501937]
+bugs:
+  - oss_id: 42471116
+    harness: libarchive_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b52dd6c9e4ef7cf95c2a6ae5ab7ccac7f6d462a1
+    fix_date: 2019-01-07
+    crash_func: do_uncompress_block
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-buffer-overflow, WRITE, do_uncompress_block, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42471116"
+  - oss_id: 42471319
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4bc5892128a042780f167ac35aa72f63c426f3b7
+    fix_date: 2019-01-30
+    crash_func: read_bits_16
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-buffer-overflow, READ, read_bits_16, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42471319"
+  - oss_id: 42472727
+    harness: libarchive_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4bd12b6f40cb4413c8970c52f15f3b6885b5e32f
+    fix_date: 2019-05-01
+    crash_func: parse_tables
+    crash_file: archive_read_support_format_rar5.c
+    signature: [stack-buffer-overflow, WRITE, parse_tables, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42472727"
+  - oss_id: 42473801
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 39736c43bd7374beedb372aa300ecf36c9fc4733
+    fix_date: 2019-04-25
+    crash_func: run_e8e9_filter
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-buffer-overflow, READ, run_e8e9_filter, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42473801"
+  - oss_id: 42474797
+    harness: libarchive_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 2fce6f81cc59144bf4f2f66f7620233d609b41ef
+    fix_date: 2019-04-20
+    crash_func: parse_file_extra_owner
+    crash_file: archive_read_support_format_rar5.c
+    signature: [stack-buffer-overflow, WRITE, parse_file_extra_owner, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42474797"
+  - oss_id: 42475025
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 69bb9bcf6cef43b744e5baa101a8a3a78db0b00d
+    fix_date: 2019-05-03
+    crash_func: copy_string
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-buffer-overflow, READ, copy_string, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42475025"
+  - oss_id: 42475066
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f7b1d38b31877f39ea979722ddf1ef072a6c3af4
+    fix_date: 2019-05-06
+    crash_func: run_arm_filter
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-buffer-overflow, READ, run_arm_filter, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42475066"
+  - oss_id: 42480548
+    harness: libarchive_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c9267d665c30fa78023bd70b8e9c6f02450777e2
+    fix_date: 2019-12-21
+    crash_func: do_uncompress_block
+    crash_file: archive_read_support_format_rar5.c
+    signature: [segv, -, do_uncompress_block, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42480548"
+  - oss_id: 42492824
+    harness: libarchive_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: bc2e773b7c5ea8628dfd540a471630bf0e2df5ad
+    fix_date: 2021-03-08
+    crash_func: copy_string
+    crash_file: archive_read_support_format_rar5.c
+    signature: [heap-use-after-free, READ, copy_string, archive_read_support_format_rar5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42492824"
+  - oss_id: 42501937
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9ad5f077491b9536f01dadca1724385c39cd7613
+    fix_date: 2022-03-30
+    crash_func: read_children
+    crash_file: archive_read_support_format_iso9660.c
+    signature: [heap-buffer-overflow, READ, read_children, archive_read_support_format_iso9660.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42501937"
+  - oss_id: 42507004
+    harness: libarchive_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 52efa50c69653029687bfc545703b7340b7a51e2
+    fix_date: 2022-02-16
+    crash_func: run_filters
+    crash_file: archive_read_support_format_rar.c
+    signature: [heap-use-after-free, READ, run_filters, archive_read_support_format_rar.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42507004"
+  - oss_id: 42514240
+    harness: libarchive_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: fa4b613f2e2510bd036f2eeed2fece97cd18b079
+    fix_date: 2022-11-02
+    crash_func: archive_read_data
+    crash_file: archive_read.c
+    signature: [heap-use-after-free, READ, archive_read_data, archive_read.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42514240"
+  - oss_id: 42516899
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa4b613f2e2510bd036f2eeed2fece97cd18b079
+    fix_date: 2022-11-02
+    crash_func: execute_filter_rgb
+    crash_file: archive_read_support_format_rar.c
+    signature: [heap-buffer-overflow, READ, execute_filter_rgb, archive_read_support_format_rar.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42516899"
+  - oss_id: 42518409
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 45c728b00dce4af6b7f0603df0a0af4bafe6f2ad
+    fix_date: 2023-01-13
+    crash_func: archive_read_format_capabilities
+    crash_file: archive_read.c
+    signature: [heap-buffer-overflow, READ, archive_read_format_capabilities, archive_read.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42518409"
+  - oss_id: 42536665
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a612bf62f86a6faa47bd57c52b94849f0a404d8c
+    fix_date: 2025-05-11
+    crash_func: run_filters
+    crash_file: archive_read_support_format_rar.c
+    signature: [heap-buffer-overflow, READ, run_filters, archive_read_support_format_rar.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42536665"
+  - oss_id: 373610438
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 82912103214506316bd9990d73f33d743d55f570
+    fix_date: 2024-12-10
+    crash_func: archive_mstring_copy_mbs
+    crash_file: archive_string.c
+    signature: [heap-buffer-overflow, READ, archive_mstring_copy_mbs, archive_string.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/373610438"
+  - oss_id: 418349489
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 51793de83424bd8a48fe4954dbc1010c4dbb8ce1
+    fix_date: 2025-05-18
+    crash_func: archive_le32dec
+    crash_file: archive_endian.h
+    signature: [use-after-poison, READ, archive_le32dec, archive_endian.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/418349489"
+  - oss_id: 419167528
+    harness: libarchive_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9bdc5b82f7b98c9fa0c499268341be2aaf1f699e
+    fix_date: 2025-06-12
+    crash_func: find_elf_data_sec
+    crash_file: archive_read_support_format_7zip.c
+    signature: [use-after-poison, READ, find_elf_data_sec, archive_read_support_format_7zip.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/419167528"
+rejected: []
+error: null

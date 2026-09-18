@@ -1,0 +1,601 @@
+project: assimp
+repo: "https://github.com/assimp/assimp.git"
+n_sites: 42
+n_issues: 42
+harnesses: [assimp_fuzzer]
+base:
+  commit: d34cd103f477fba496f09e3daf49d3ce671eb21a
+  date: 2021-09-09
+  method: measured_sweep
+  n_latent: 25
+  n_latent_upper: 25
+  n_wave: 8
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-10-29
+    n: 8
+    eve: 30f17aa2064b86c0096f0ec701b9e8ea9312fef2
+    n_latent_upper: 28
+    oss_ids: [42487028, 42486096, 42487095, 42486052, 42494198, 42499530, 42486054, 42495802]
+  - day: 2022-01-05
+    n: 2
+    eve: 1d815fc23e91d1d292eec5b36cf32a32b4c3ed18
+    n_latent_upper: 19
+    oss_ids: [42502055, 42502140]
+  - day: 2022-07-16
+    n: 2
+    eve: 0a9a23a0562d5e0961eaca195b3d2a94010f5373
+    n_latent_upper: 17
+    oss_ids: [42506530, 42503964]
+  - day: 2022-12-11
+    n: 2
+    eve: 0fdae2879d78864693ee730610dcf8ee10707875
+    n_latent_upper: 16
+    oss_ids: [42513776, 42513611]
+  - day: 2023-06-26
+    n: 2
+    eve: 96d0c0769ed24405bcfbae00cd76cba8189927cf
+    n_latent_upper: 14
+    oss_ids: [42508951, 42505937]
+  - day: 2025-01-01
+    n: 2
+    eve: 69558d888968dae64edd51fd655170bf9960436f
+    n_latent_upper: 4
+    oss_ids: [42514078, 42529229]
+  - day: 2021-05-04
+    n: 1
+    eve: be85eac703475eb3f2b90224a8917d37d376fa7e
+    n_latent_upper: 24
+    oss_ids: [42495373]
+  - day: 2021-05-05
+    n: 1
+    eve: 1e89c06157e33459a478e9cbf56863936a004ef5
+    n_latent_upper: 23
+    oss_ids: [42495340]
+  - day: 2021-08-16
+    n: 1
+    eve: c28aab2ed6a9d1e2498391a5e2ede5ab8c298285
+    n_latent_upper: 28
+    oss_ids: [42488125]
+  - day: 2021-11-11
+    n: 1
+    eve: 1f8edd5959b4a247c870601a7c4a030ec67a49c6
+    n_latent_upper: 20
+    oss_ids: [42503905]
+  - day: 2021-11-12
+    n: 1
+    eve: 39664d608d0fb5abf1ba63466504c80102893b1d
+    n_latent_upper: 20
+    oss_ids: [42486152]
+  - day: 2022-03-09
+    n: 1
+    eve: 1bf5dd2731718e7243c42e6c0dfb175c3f1d0e57
+    n_latent_upper: 17
+    oss_ids: [42507104]
+bugs:
+  - oss_id: 42486052
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6a3ac623b960905b3450b78e7614453dae0540ed
+    fix_date: 2021-10-29
+    crash_func: "ODDLParser::OpenDDLParser::parseIdentifier(char*, char*, ODDLParser::Text**)"
+    crash_file: code/OpenDDLParser.cpp
+    signature: [heap-buffer-overflow, READ, "ODDLParser::OpenDDLParser::parseIdentifier", OpenDDLParser.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42486052"
+  - oss_id: 42486054
+    harness: assimp_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1909b3e8d27deed5acc93e7f9a0bf48b397e1788
+    fix_date: 2021-10-29
+    crash_func: "Assimp::IOStreamBuffer<char>::getNextDataLine(std::__1::vector<char, std::__1::allocator<char> >&, char)"
+    crash_file: include/assimp/IOStreamBuffer.h
+    signature: [heap-buffer-overflow, WRITE, "Assimp::IOStreamBuffer<>::getNextDataLine", IOStreamBuffer.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42486054"
+  - oss_id: 42486096
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1fe9d405f5c4811eb6073cf5fc6622842192e06b
+    fix_date: 2021-10-29
+    crash_func: "Assimp::MDLImporter::InternReadFile_3DGS_MDL345()"
+    crash_file: code/AssetLib/MDL/MDLLoader.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::MDLImporter::InternReadFile_3DGS_MDL345", MDLLoader.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42486096"
+  - oss_id: 42486152
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 97b8e41997160f2113e1e6fcde230ccb857167af
+    fix_date: 2021-11-12
+    crash_func: "Assimp::CommentRemover::RemoveLineComments(char const*, char*, char)"
+    crash_file: code/Common/RemoveComments.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::CommentRemover::RemoveLineComments", RemoveComments.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42486152"
+  - oss_id: 42487028
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 932dfe05627c139013b9ea5d5e0e0e296b467e7e
+    fix_date: 2021-10-29
+    crash_func: "aiTexel::operator!=(aiTexel const&) const"
+    crash_file: include/assimp/texture.h
+    signature: [heap-buffer-overflow, READ, "aiTexel::operator!=", texture.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487028"
+  - oss_id: 42487095
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 107371657b39c8cd4bcc8d8865d9071ff17049d2
+    fix_date: 2021-10-29
+    crash_func: "Assimp::HMPImporter::ReadFirstSkin(unsigned int, unsigned char const*, unsigned char const**)"
+    crash_file: code/AssetLib/HMP/HMPLoader.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::HMPImporter::ReadFirstSkin", HMPLoader.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42487095"
+  - oss_id: 42488125
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4ce638838d1011e15b0073ce8bf5bd8e31821763
+    fix_date: 2021-08-16
+    crash_func: "Assimp::ObjFileImporter::createVertexArray(Assimp::ObjFile::Model const*, Assimp::ObjFile::Object const*, unsigned int, aiMesh*, unsigned int)"
+    crash_file: code/AssetLib/Obj/ObjFileImporter.cpp
+    signature: [heap-use-after-free, READ, "Assimp::ObjFileImporter::createVertexArray", ObjFileImporter.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42488125"
+  - oss_id: 42494198
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6a3ac623b960905b3450b78e7614453dae0540ed
+    fix_date: 2021-10-29
+    crash_func: "ODDLParser::OpenDDLParser::normalizeBuffer(std::__1::vector<char, std::__1::allocator<char> >&)"
+    crash_file: code/OpenDDLParser.cpp
+    signature: [heap-buffer-overflow, READ, "ODDLParser::OpenDDLParser::normalizeBuffer", OpenDDLParser.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494198"
+  - oss_id: 42495340
+    harness: assimp_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 785cca1bb43f9e6047cb566a910fcd0e3d49951f
+    fix_date: 2021-05-05
+    crash_func: "Assimp::TXmlParser<pugi::xml_node>::clear()"
+    crash_file: include/assimp/XmlParser.h
+    signature: [heap-use-after-free, READ, "Assimp::TXmlParser<>::clear", XmlParser.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42495340"
+  - oss_id: 42495373
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 38df0f4376ee735863444022e1adaea06741f196
+    fix_date: 2021-05-04
+    crash_func: "SuperFastHash(char const*, unsigned int, unsigned int)"
+    crash_file: include/assimp/Hash.h
+    signature: [heap-buffer-overflow, READ, SuperFastHash, Hash.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42495373"
+  - oss_id: 42495802
+    harness: assimp_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e90061779637e4fe46798f2318fe26746d8dac78
+    fix_date: 2021-10-29
+    crash_func: "Assimp::FileSystemFilter::Cleanup(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) const"
+    crash_file: code/Common/FileSystemFilter.h
+    signature: [stack-buffer-overflow, READ, "Assimp::FileSystemFilter::Cleanup", FileSystemFilter.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42495802"
+  - oss_id: 42499530
+    harness: assimp_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6a3ac623b960905b3450b78e7614453dae0540ed
+    fix_date: 2021-10-29
+    crash_func: "ODDLParser::OpenDDLParser::parseIdentifier(char*, char*, ODDLParser::Text**)"
+    crash_file: code/OpenDDLParser.cpp
+    signature: [container-overflow, READ, "ODDLParser::OpenDDLParser::parseIdentifier", OpenDDLParser.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42499530"
+  - oss_id: 42502055
+    harness: assimp_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 34d8fba10054c150be1be7d492b6b3d9c7a659da
+    fix_date: 2022-01-05
+    crash_func: "Assimp::ZipArchiveIOSystem::Implement::MapArchive()"
+    crash_file: code/Common/ZipArchiveIOSystem.cpp
+    signature: [stack-buffer-overflow, READ, "Assimp::ZipArchiveIOSystem::Implement::MapArchive", ZipArchiveIOSystem.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42502055"
+  - oss_id: 42502140
+    harness: assimp_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b14b34d2b8954f6cc7fd25a8f7d20ad8f94faa27
+    fix_date: 2022-01-05
+    crash_func: "Assimp::LWSImporter::InternReadFile(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, aiScene*, Assimp::IOSystem*)"
+    crash_file: code/AssetLib/LWS/LWSLoader.cpp
+    signature: [stack-buffer-overflow, READ, "Assimp::LWSImporter::InternReadFile", LWSLoader.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42502140"
+  - oss_id: 42503905
+    harness: assimp_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 485497810860ccdf78734a5471e283fee666f0f6
+    fix_date: 2021-11-11
+    crash_func: _m3d_safestr
+    crash_file: code/AssetLib/M3D/m3d.h
+    signature: [heap-buffer-overflow, WRITE, _m3d_safestr, m3d.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42503905"
+  - oss_id: 42503964
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 772cfdc757c6c52c260b54c3c522faa92288151e
+    fix_date: 2022-07-16
+    crash_func: atoi
+    crash_file: include/stdlib.h
+    signature: [heap-buffer-overflow, READ, atoi, stdlib.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42503964"
+  - oss_id: 42505068
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c253ca3e5be69dc0eb7e9120278cd0a74deb9ac
+    fix_date: 2022-07-24
+    crash_func: "operator<<<const char *>"
+    crash_file: include/assimp/TinyFormatter.h
+    signature: [heap-buffer-overflow, READ, "operator<<<>", TinyFormatter.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42505068"
+  - oss_id: 42505937
+    harness: assimp_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 47575f759f36aa5e460cfb1d6aa6a7f590a28837
+    fix_date: 2023-06-26
+    crash_func: unzReadCurrentFile
+    crash_file: contrib/unzip/unzip.c
+    signature: [memcpy-param-overlap, -, unzReadCurrentFile, unzip.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42505937"
+  - oss_id: 42506530
+    harness: assimp_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a4274930e496f8cc905329b49dfe29ff424cb175
+    fix_date: 2022-07-16
+    crash_func: "shared_ptr<Assimp::DXF::PolyLine>"
+    crash_file: include/c++/v1/__memory/shared_ptr.h
+    signature: [heap-use-after-free, READ, "shared_ptr<>", shared_ptr.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42506530"
+  - oss_id: 42507104
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c14eccefaf0ba0286d2e9f3ae7b8dd1f3e055a27
+    fix_date: 2022-03-09
+    crash_func: "Assimp::IOSystem2Unzip::opendisk(void*, void*, unsigned int, int)"
+    crash_file: code/Common/ZipArchiveIOSystem.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::IOSystem2Unzip::opendisk", ZipArchiveIOSystem.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42507104"
+  - oss_id: 42508951
+    harness: assimp_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bce2fdbbe95b41c1aa0dfa377cbe514f347f4821
+    fix_date: 2023-06-26
+    crash_func: "aiMaterial::AddBinaryProperty(void const*, unsigned int, char const*, unsigned int, unsigned int, aiPropertyTypeInfo)"
+    crash_file: code/Material/MaterialSystem.cpp
+    signature: [stack-buffer-overflow, READ, "aiMaterial::AddBinaryProperty", MaterialSystem.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42508951"
+  - oss_id: 42511520
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4b85eb59c23bd87bf64ec0e84c93c2be5eda4898
+    fix_date: 2022-08-10
+    crash_func: "SkipSpacesAndLineEnd<char>"
+    crash_file: include/assimp/ParsingUtils.h
+    signature: [heap-buffer-overflow, READ, "SkipSpacesAndLineEnd<>", ParsingUtils.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42511520"
+  - oss_id: 42513611
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 917352dd8b44292c5c3490de8365932edb24c9a1
+    fix_date: 2022-12-11
+    crash_func: "Assimp::ObjFileParser::getFace(aiPrimitiveType)"
+    crash_file: code/AssetLib/Obj/ObjFileParser.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::ObjFileParser::getFace", ObjFileParser.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42513611"
+  - oss_id: 42513776
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 90769ef3e6a6d05691e46024b7415aafda4b9c7d
+    fix_date: 2022-12-11
+    crash_func: SkipSpacesAndLineEnd
+    crash_file: code/AssetLib/MD5/MD5Parser.h
+    signature: [heap-buffer-overflow, READ, SkipSpacesAndLineEnd, MD5Parser.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42513776"
+  - oss_id: 42514078
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d70606bfb63255b4382e4503acb50dc45fea4d9a
+    fix_date: 2025-01-01
+    crash_func: "Assimp::MDLImporter::ParseTextureColorData(unsigned char const*, unsigned int, unsigned int*, aiTexture*)"
+    crash_file: code/AssetLib/MDL/MDLMaterialLoader.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::MDLImporter::ParseTextureColorData", MDLMaterialLoader.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42514078"
+  - oss_id: 42514191
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: db8ff416799bbbed7195c9b7e0c98292e8631ce1
+    fix_date: 2022-12-15
+    crash_func: "Assimp::ScenePreprocessor::ProcessMesh(aiMesh*)"
+    crash_file: code/Common/ScenePreprocessor.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::ScenePreprocessor::ProcessMesh", ScenePreprocessor.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42514191"
+  - oss_id: 42517169
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 96b071bdb1965084c6e78073f9f42a872300f308
+    fix_date: 2023-01-04
+    crash_func: "Assimp::LWO::AnimResolver::UpdateAnimRangeSetup()"
+    crash_file: code/AssetLib/LWO/LWOAnimation.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::LWO::AnimResolver::UpdateAnimRangeSetup", LWOAnimation.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42517169"
+  - oss_id: 42519068
+    harness: assimp_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 54f5d01190d0952c5d4fcae1f34d7e3bba0a14e5
+    fix_date: 2023-05-31
+    crash_func: "Assimp::ObjFileImporter::createVertexArray(Assimp::ObjFile::Model const*, Assimp::ObjFile::Object const*, unsigned int, aiMesh*, unsigned int)"
+    crash_file: code/AssetLib/Obj/ObjFileImporter.cpp
+    signature: [heap-buffer-overflow, WRITE, "Assimp::ObjFileImporter::createVertexArray", ObjFileImporter.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42519068"
+  - oss_id: 42519284
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8f61427880c061b5d13f55cedc138220a16f9aa3
+    fix_date: 2023-06-27
+    crash_func: "Assimp::MD5::MD5Parser::ParseSection(Assimp::MD5::Section&)"
+    crash_file: code/AssetLib/MD5/MD5Parser.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::MD5::MD5Parser::ParseSection", MD5Parser.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42519284"
+  - oss_id: 42522920
+    harness: assimp_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d03ab3ef276e4ee8fe4705100c3d1516eea338fc
+    fix_date: 2023-12-20
+    crash_func: "aiScene::~aiScene()"
+    crash_file: code/Common/Version.cpp
+    signature: [heap-use-after-free, READ, "aiScene::~aiScene", Version.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522920"
+  - oss_id: 42524024
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bc7ef58b4947a01f4f7163b47b96ca273473d7eb
+    fix_date: 2023-08-17
+    crash_func: "ODDLParser::OpenDDLParser::parseStructure(char*, char*)"
+    crash_file: code/OpenDDLParser.cpp
+    signature: [heap-buffer-overflow, READ, "ODDLParser::OpenDDLParser::parseStructure", OpenDDLParser.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524024"
+  - oss_id: 42524453
+    harness: assimp_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b3a1c72c8f03275fcfea4a1b1ff3a3350b201664
+    fix_date: 2023-06-14
+    crash_func: "Assimp::FBXExporter::WriteObjects()"
+    crash_file: code/AssetLib/FBX/FBXExporter.cpp
+    signature: [heap-use-after-free, READ, "Assimp::FBXExporter::WriteObjects", FBXExporter.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524453"
+  - oss_id: 42524475
+    harness: assimp_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 5c45cdc0adb50e3b169cada0ea5ce0126d04184a
+    fix_date: 2023-08-16
+    crash_func: "Assimp::FBX::Scope::Scope(Assimp::FBX::Parser&, bool)"
+    crash_file: code/AssetLib/FBX/FBXParser.cpp
+    signature: [attempting, -, "Assimp::FBX::Scope::Scope", FBXParser.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524475"
+  - oss_id: 42525767
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5d5e0bad3c4033124f0f227bf6120c6f9b17ede4
+    fix_date: 2024-07-19
+    crash_func: "Assimp::MDLImporter::SkipSkinLump_3DGS_MDL7(unsigned char const*, unsigned char const**, unsigned int, unsigned int, unsigned int)"
+    crash_file: code/AssetLib/MDL/MDLMaterialLoader.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::MDLImporter::SkipSkinLump_3DGS_MDL7", MDLMaterialLoader.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525767"
+  - oss_id: 42528235
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d5cb1fe01f3e38d611ba30348ab3f2851fdb3402
+    fix_date: 2024-07-06
+    crash_func: "SkipSpaces<char>"
+    crash_file: include/assimp/ParsingUtils.h
+    signature: [heap-buffer-overflow, READ, "SkipSpaces<>", ParsingUtils.h]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42528235"
+  - oss_id: 42529229
+    harness: assimp_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 437b484070c074d575422436f3aa7a44df5457c8
+    fix_date: 2025-01-01
+    crash_func: "Assimp::HMPImporter::CreateOutputFaceList(unsigned int, unsigned int)"
+    crash_file: code/AssetLib/HMP/HMPLoader.cpp
+    signature: [heap-buffer-overflow, WRITE, "Assimp::HMPImporter::CreateOutputFaceList", HMPLoader.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42529229"
+  - oss_id: 42535201
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3bd98611d70e973b4f62cccc8e17519984d07588
+    fix_date: 2024-09-10
+    crash_func: "Assimp::MD3Importer::InternReadFile(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, aiScene*, Assimp::IOSystem*)"
+    crash_file: code/AssetLib/MD3/MD3Loader.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::MD3Importer::InternReadFile", MD3Loader.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535201"
+  - oss_id: 42535669
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f13197921b7881507f07376ec491cf3d16d01128
+    fix_date: 2025-01-22
+    crash_func: "Assimp::IOStreamBuffer<char>::getNextLine(std::__1::vector<char, std::__1::allocator<char>>&)"
+    crash_file: include/assimp/IOStreamBuffer.h
+    signature: [heap-buffer-overflow, READ, "Assimp::IOStreamBuffer<>::getNextLine", IOStreamBuffer.h]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535669"
+  - oss_id: 42535739
+    harness: assimp_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1e09642382ef914c5178cedbbf86ac4a9b982a48
+    fix_date: 2024-08-30
+    crash_func: "Assimp::PLYImporter::LoadVertex(Assimp::PLY::Element const*, Assimp::PLY::ElementInstance const*, unsigned int)"
+    crash_file: code/AssetLib/Ply/PlyLoader.cpp
+    signature: [heap-buffer-overflow, WRITE, "Assimp::PLYImporter::LoadVertex", PlyLoader.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535739"
+  - oss_id: 379418968
+    harness: assimp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0834fed661161bdee6f2472bc75c7e7fe717d4bc
+    fix_date: 2025-01-10
+    crash_func: "Assimp::FBXExporter::WriteObjects()"
+    crash_file: code/AssetLib/FBX/FBXExporter.cpp
+    signature: [heap-buffer-overflow, READ, "Assimp::FBXExporter::WriteObjects", FBXExporter.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/379418968"
+rejected:
+  - oss_id: 42502576
+    reason: commit_missing
+  - oss_id: 42519344
+    reason: commit_missing
+error: null

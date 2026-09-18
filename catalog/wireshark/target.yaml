@@ -1,0 +1,880 @@
+project: wireshark
+repo: "https://github.com/wireshark/wireshark.git"
+n_sites: 66
+n_issues: 66
+harnesses: [fuzzshark_ip, fuzzshark_ip_proto-ospf, fuzzshark_ip_proto-udp, fuzzshark_media_type-json, fuzzshark_tcp_port-bgp, fuzzshark_udp_port-bootp, fuzzshark_udp_port-dns]
+base:
+  commit: 19c45892461da6f1767190c86c62dab02db8a2e3
+  date: 2018-05-14
+  method: wave_eve
+  n_latent: 23
+  n_latent_upper: 23
+  n_wave: 2
+  note: "eve of 2018-05-14 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-05-15
+    n: 4
+    eve: 171d92cc148ee782fe5c900e11a1d8976ca77662
+    n_latent_upper: 21
+    oss_ids: [42530189, 42530533, 42538477, 42539545]
+  - day: 2018-05-14
+    n: 2
+    eve: 19c45892461da6f1767190c86c62dab02db8a2e3
+    n_latent_upper: 23
+    oss_ids: [42539503, 42539516]
+  - day: 2023-05-23
+    n: 2
+    eve: 512557a3284354c188b43feeb044161fc9e9ba8f
+    n_latent_upper: 11
+    oss_ids: [42524598, 42524605]
+  - day: 2017-04-22
+    n: 1
+    eve: 26d5b3dab9ee0dc3610d56148b52f35f5cc1c496
+    n_latent_upper: 27
+    oss_ids: [42472620]
+  - day: 2017-04-23
+    n: 1
+    eve: f42b2a531e0c9cafe7d694cb1109dd53c33fdd40
+    n_latent_upper: 26
+    oss_ids: [42472609]
+  - day: 2017-04-25
+    n: 1
+    eve: 907d05da84f97b893887416d453a540a793c9ec5
+    n_latent_upper: 25
+    oss_ids: [42472964]
+  - day: 2017-05-04
+    n: 1
+    eve: 2f35a811a33e21b06adf917051aa9a7a66c95544
+    n_latent_upper: 24
+    oss_ids: [42473020]
+  - day: 2017-05-11
+    n: 1
+    eve: d13b8ea13cf708a7770e7f51912ce16d0b43e459
+    n_latent_upper: 23
+    oss_ids: [42474828]
+  - day: 2017-09-17
+    n: 1
+    eve: 8dbb21dfde14221dab09b6b9c7719b9067c1f06e
+    n_latent_upper: 24
+    oss_ids: [42496737]
+  - day: 2017-10-02
+    n: 1
+    eve: 96c07c6471176082b8aff7ec6df650aebaaace0e
+    n_latent_upper: 24
+    oss_ids: [42498148]
+  - day: 2018-01-30
+    n: 1
+    eve: 18f16c8b93cea32d617e7e846b45a16f00b02018
+    n_latent_upper: 27
+    oss_ids: [42517726]
+  - day: 2018-02-12
+    n: 1
+    eve: 27b571e62f6a672804c6f8e7b0558ccfb589cf9b
+    n_latent_upper: 26
+    oss_ids: [42524646]
+bugs:
+  - oss_id: 42470183
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 38657fad58034ff5557caef10ef679b4ac404dbd
+    fix_date: 2018-09-04
+    crash_func: detect_trailing_stray_characters
+    crash_file: epan/proto.c
+    signature: [heap-buffer-overflow, READ, detect_trailing_stray_characters, proto.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470183"
+  - oss_id: 42470925
+    harness: fuzzshark_ip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d9231144b652362eaf62f8595df7d4886dbaf44d
+    fix_date: 2018-10-10
+    crash_func: except_pop
+    crash_file: epan/except.c
+    signature: [global-buffer-overflow, READ, except_pop, except.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470925"
+  - oss_id: 42471803
+    harness: fuzzshark_ip_proto-udp
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1bd99df3535ac053f182a7e4e2246dae3e4c53ed
+    fix_date: 2018-12-03
+    crash_func: cdma2k_message_ACTIVE_SET_RECORD_FIELDS
+    crash_file: epan/dissectors/packet-cdma2k.c
+    signature: [stack-buffer-overflow, READ, cdma2k_message_ACTIVE_SET_RECORD_FIELDS, packet-cdma2k.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471803"
+  - oss_id: 42472609
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6fdf8eb5a92d51617203be1a712c15585b156497
+    fix_date: 2017-04-23
+    crash_func: OALMarshal_UncompressValue
+    crash_file: epan/dissectors/packet-dof.c
+    signature: [heap-buffer-overflow, READ, OALMarshal_UncompressValue, packet-dof.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42472609"
+  - oss_id: 42472620
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 22f05d620f428c0769227f0173876c95fb9aead4
+    fix_date: 2017-04-22
+    crash_func: COM_Parse
+    crash_file: epan/dissectors/packet-quakeworld.c
+    signature: [global-buffer-overflow, WRITE, COM_Parse, packet-quakeworld.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42472620"
+  - oss_id: 42472964
+    harness: fuzzshark_ip
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: bfd1461ec81311f31e9fc0f3f298ae779911c7f4
+    fix_date: 2017-04-25
+    crash_func: add_tagged_field
+    crash_file: epan/dissectors/packet-ieee80211.c
+    signature: [stack-use-after-return, READ, add_tagged_field, packet-ieee80211.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42472964"
+  - oss_id: 42473020
+    harness: fuzzshark_udp_port-bootp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 508bec78a39f0c7a2a54986b7616e4f615d6f170
+    fix_date: 2017-05-04
+    crash_func: dissect_packetcable_bsdpd_vendor_info_heur
+    crash_file: epan/dissectors/packet-bootp.c
+    signature: [heap-buffer-overflow, READ, dissect_packetcable_bsdpd_vendor_info_heur, packet-bootp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473020"
+  - oss_id: 42473037
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8f15ebed65ceea5c856fce055b5d83fb0c4b597b
+    fix_date: 2019-03-06
+    crash_func: unicode_to_bytes
+    crash_file: epan/dissectors/packet-srvloc.c
+    signature: [heap-buffer-overflow, READ, unicode_to_bytes, packet-srvloc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473037"
+  - oss_id: 42473920
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b8b582af3d54b924c6ae89cfaaa47ce1cbd3c958
+    fix_date: 2019-03-05
+    crash_func: compcp
+    crash_file: epan/dissectors/packet-noe.c
+    signature: [global-buffer-overflow, READ, compcp, packet-noe.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473920"
+  - oss_id: 42474828
+    harness: fuzzshark_ip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f751918476bdde65f2289b86245a3c30dace6730
+    fix_date: 2017-05-11
+    crash_func: csnStreamDissector
+    crash_file: epan/dissectors/packet-csn1.c
+    signature: [global-buffer-overflow, READ, csnStreamDissector, packet-csn1.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474828"
+  - oss_id: 42475786
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 45a3d0787f3c9f6f5fb5b53a8c29771b3f28e406
+    fix_date: 2019-06-25
+    crash_func: dissect_ber_real
+    crash_file: epan/dissectors/packet-ber.c
+    signature: [heap-buffer-overflow, READ, dissect_ber_real, packet-ber.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475786"
+  - oss_id: 42476579
+    harness: fuzzshark_ip_proto-udp
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ba54b896969930491645aa3ec4125b76480add9c
+    fix_date: 2019-07-18
+    crash_func: tvb_memcpy
+    crash_file: epan/tvbuff.c
+    signature: [stack-buffer-overflow, WRITE, tvb_memcpy, tvbuff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476579"
+  - oss_id: 42478101
+    harness: fuzzshark_ip_proto-udp
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7d874e2d3caff57d571cfca28b7919bda9f30c97
+    fix_date: 2019-09-22
+    crash_func: wmem_strbuf_get_str
+    crash_file: epan/wmem/wmem_strbuf.c
+    signature: [heap-use-after-free, READ, wmem_strbuf_get_str, wmem_strbuf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478101"
+  - oss_id: 42479779
+    harness: fuzzshark_ip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d7d1686a95868d5df1f8e2ba5e6097c622ba1b64
+    fix_date: 2019-11-11
+    crash_func: dissect_ber_choice
+    crash_file: epan/dissectors/packet-ber.c
+    signature: [global-buffer-overflow, READ, dissect_ber_choice, packet-ber.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479779"
+  - oss_id: 42480062
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f17f1277607e5d745d889489f8da43b2a4e996a6
+    fix_date: 2019-11-30
+    crash_func: bytes_to_hexstr_punct
+    crash_file: epan/to_str.c
+    signature: [heap-buffer-overflow, READ, bytes_to_hexstr_punct, to_str.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480062"
+  - oss_id: 42480457
+    harness: fuzzshark_ip
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c247a8351f4d2be224e8cc424e104d8823450f5d
+    fix_date: 2019-12-20
+    crash_func: tvb_memcpy
+    crash_file: epan/tvbuff.c
+    signature: [heap-buffer-overflow, WRITE, tvb_memcpy, tvbuff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480457"
+  - oss_id: 42481100
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 71b59b18e4bb61d0e6da8bb2b26c87750570ae40
+    fix_date: 2020-01-12
+    crash_func: wassp_match_strval
+    crash_file: epan/dissectors/packet-wassp.c
+    signature: [global-buffer-overflow, READ, wassp_match_strval, packet-wassp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481100"
+  - oss_id: 42483000
+    harness: fuzzshark_tcp_port-bgp
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6d25a1062d092fdae62defeb7ed83a0807fe238a
+    fix_date: 2020-04-16
+    crash_func: tvb_get_ipv4_addr_with_prefix_len
+    crash_file: epan/addr_and_mask.c
+    signature: [stack-buffer-overflow, READ, tvb_get_ipv4_addr_with_prefix_len, addr_and_mask.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483000"
+  - oss_id: 42485647
+    harness: fuzzshark_ip
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fe8d996bb22c83ecd080b81a0f6dc942d37e07ae
+    fix_date: 2020-07-14
+    crash_func: get_next_item
+    crash_file: epan/dissectors/packet-xcsl.c
+    signature: [stack-buffer-overflow, WRITE, get_next_item, packet-xcsl.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485647"
+  - oss_id: 42488817
+    harness: fuzzshark_ip
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 29f2177222f8a7c1a527dbf599cf47c7225f1783
+    fix_date: 2020-11-16
+    crash_func: wmem_simple_free_all
+    crash_file: epan/wmem/wmem_allocator_simple.c
+    signature: [attempting, -, wmem_simple_free_all, wmem_allocator_simple.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488817"
+  - oss_id: 42490194
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ca46d11c08a4792354a88956ad100282961bc586
+    fix_date: 2021-01-01
+    crash_func: ieee1905_fragment_hash
+    crash_file: epan/dissectors/packet-ieee1905.c
+    signature: [heap-buffer-overflow, READ, ieee1905_fragment_hash, packet-ieee1905.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490194"
+  - oss_id: 42490793
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a2bc5b53570b1bc95e57870651932cb2096d7b6f
+    fix_date: 2020-12-21
+    crash_func: dissect_idn_dimmer_level_subset
+    crash_file: epan/dissectors/packet-idn.c
+    signature: [heap-buffer-overflow, WRITE, dissect_idn_dimmer_level_subset, packet-idn.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490793"
+  - oss_id: 42493451
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 72c9b4b1e8e9bb5ae0ffc4493f3fd86b06c014d8
+    fix_date: 2021-02-19
+    crash_func: dissect_vjc_uncomp
+    crash_file: epan/dissectors/packet-vj-comp.c
+    signature: [heap-buffer-overflow, READ, dissect_vjc_uncomp, packet-vj-comp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493451"
+  - oss_id: 42496737
+    harness: fuzzshark_ip
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b40ad7c2ffb3776c7002ce7b3c4aade42de319c7
+    fix_date: 2017-09-17
+    crash_func: zbee_sec_add_key_to_keyring
+    crash_file: epan/dissectors/packet-zbee-security.c
+    signature: [stack-buffer-overflow, READ, zbee_sec_add_key_to_keyring, packet-zbee-security.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42496737"
+  - oss_id: 42498148
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 83cb6ff625a403b6d505c3b2f0fc23cebbd479bd
+    fix_date: 2017-10-02
+    crash_func: dissect_gtpv2_ie_common
+    crash_file: epan/dissectors/packet-gtpv2.c
+    signature: [global-buffer-overflow, READ, dissect_gtpv2_ie_common, packet-gtpv2.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498148"
+  - oss_id: 42498787
+    harness: fuzzshark_media_type-json
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1f12e1d26707123b5516540ec07f8c77aa437f31
+    fix_date: 2021-07-18
+    crash_func: json_string_unescape
+    crash_file: epan/dissectors/packet-json.c
+    signature: [heap-buffer-overflow, WRITE, json_string_unescape, packet-json.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498787"
+  - oss_id: 42511778
+    harness: fuzzshark_ip
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: aef4c0c60a3a1b62d0dec952a15a0f269a1b8541
+    fix_date: 2022-05-25
+    crash_func: conversation_match_element_list
+    crash_file: epan/conversation.c
+    signature: [stack-use-after-return, READ, conversation_match_element_list, conversation.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511778"
+  - oss_id: 42514948
+    harness: fuzzshark_ip
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: eb83e055b855d23802a25d5de6e3c8682f38fb9d
+    fix_date: 2022-09-05
+    crash_func: get_transaction
+    crash_file: epan/dissectors/packet-atalk.c
+    signature: [stack-buffer-overflow, READ, get_transaction, packet-atalk.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42514948"
+  - oss_id: 42515629
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: af0b20a9692cd7cbfb58c655e82a4310f9cb6eba
+    fix_date: 2022-09-09
+    crash_func: get_utf_8_string
+    crash_file: epan/charsets.c
+    signature: [heap-buffer-overflow, READ, get_utf_8_string, charsets.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42515629"
+  - oss_id: 42517300
+    harness: fuzzshark_ip
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 39910654d3010fc1d199754c962979592293ebd6
+    fix_date: 2022-10-24
+    crash_func: dissect_he_feedback_matrix
+    crash_file: epan/dissectors/packet-ieee80211.c
+    signature: [stack-buffer-overflow, WRITE, dissect_he_feedback_matrix, packet-ieee80211.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42517300"
+  - oss_id: 42517726
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b81c5ad26f879bc0e949a4dc42cb5e234c2ad371
+    fix_date: 2018-01-30
+    crash_func: proto_item_add_bitmask_tree
+    crash_file: epan/proto.c
+    signature: [global-buffer-overflow, READ, proto_item_add_bitmask_tree, proto.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42517726"
+  - oss_id: 42518200
+    harness: fuzzshark_ip_proto-udp
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b9a4bf297ece1f93e9caf5f2b1e3ee5f6e447d28
+    fix_date: 2022-11-15
+    crash_func: fragment_defragment_and_free
+    crash_file: epan/reassemble.c
+    signature: [heap-use-after-free, READ, fragment_defragment_and_free, reassemble.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518200"
+  - oss_id: 42519519
+    harness: fuzzshark_media_type-json
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6c8cdebe8751ce2077ce6c1d5e0936434d9fd89c
+    fix_date: 2022-12-27
+    crash_func: utf_8_validate
+    crash_file: epan/charsets.c
+    signature: [heap-buffer-overflow, READ, utf_8_validate, charsets.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519519"
+  - oss_id: 42519940
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8a4f22be615054b8951c961a5c1873a89dfe8541
+    fix_date: 2023-01-10
+    crash_func: dissect_alp_mpegts
+    crash_file: epan/dissectors/packet-alp.c
+    signature: [use-after-poison, READ, dissect_alp_mpegts, packet-alp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519940"
+  - oss_id: 42522120
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 450aa4e580314cdd55733858c72dcd4828a234b0
+    fix_date: 2023-03-12
+    crash_func: rlp_fcs_compute
+    crash_file: epan/dissectors/packet-gsm_rlp.c
+    signature: [heap-buffer-overflow, READ, rlp_fcs_compute, packet-gsm_rlp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522120"
+  - oss_id: 42522740
+    harness: fuzzshark_ip_proto-udp
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 495fe725e0dfa2f0bf3f588ea154488d9fc0a82c
+    fix_date: 2023-03-29
+    crash_func: ext11_work_out_bundles
+    crash_file: epan/dissectors/packet-oran.c
+    signature: [stack-buffer-overflow, WRITE, ext11_work_out_bundles, packet-oran.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522740"
+  - oss_id: 42524524
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7da66f8676cc663d8898b5ff9cf41cad80df4900
+    fix_date: 2018-02-14
+    crash_func: decode_udvm_multitype_operand
+    crash_file: epan/dissectors/packet-sigcomp.c
+    signature: [heap-buffer-overflow, READ, decode_udvm_multitype_operand, packet-sigcomp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524524"
+  - oss_id: 42524598
+    harness: fuzzshark_ip_proto-udp
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 285a4cb39eb3d066103ba4a8976ca46b2ea41bc2
+    fix_date: 2023-05-23
+    crash_func: wmem_memdup
+    crash_file: wsutil/wmem/wmem_miscutl.c
+    signature: [heap-use-after-free, READ, wmem_memdup, wmem_miscutl.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524598"
+  - oss_id: 42524605
+    harness: fuzzshark_ip
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 285a4cb39eb3d066103ba4a8976ca46b2ea41bc2
+    fix_date: 2023-05-23
+    crash_func: addresses_equal
+    crash_file: epan/address.h
+    signature: [heap-use-after-free, READ, addresses_equal, address.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524605"
+  - oss_id: 42524646
+    harness: fuzzshark_ip_proto-udp
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e9376e47307daf4dd81658b8d0c356e0936b692c
+    fix_date: 2018-02-12
+    crash_func: dissect_per_sequence_of_helper
+    crash_file: epan/dissectors/packet-per.c
+    signature: [heap-use-after-free, WRITE, dissect_per_sequence_of_helper, packet-per.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524646"
+  - oss_id: 42528156
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 108217f4bb1afb8b25fc705c2722b3e328b1ad78
+    fix_date: 2023-09-16
+    crash_func: ws_manuf_lookup_str
+    crash_file: epan/manuf.c
+    signature: [heap-buffer-overflow, READ, ws_manuf_lookup_str, manuf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528156"
+  - oss_id: 42529645
+    harness: fuzzshark_ip_proto-udp
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0ea6bbb9e3b2fe86842eee73125eb96c10d43412
+    fix_date: 2023-10-29
+    crash_func: dissect_rf4ce_profile_common
+    crash_file: epan/dissectors/packet-rf4ce-profile.c
+    signature: [global-buffer-overflow, READ, dissect_rf4ce_profile_common, packet-rf4ce-profile.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529645"
+  - oss_id: 42530086
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 22c6a8f0d47e7458a405415d4672a13891d9989a
+    fix_date: 2023-11-13
+    crash_func: dissect_rf4ce_nwk_common
+    crash_file: epan/dissectors/packet-rf4ce-nwk.c
+    signature: [use-after-poison, READ, dissect_rf4ce_nwk_common, packet-rf4ce-nwk.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530086"
+  - oss_id: 42530166
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 101b692569f17d14f7165446a8a2ae26415057cb
+    fix_date: 2018-05-27
+    crash_func: print_address_prefix_buf
+    crash_file: epan/osi-utils.c
+    signature: [heap-buffer-overflow, READ, print_address_prefix_buf, osi-utils.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530166"
+  - oss_id: 42530189
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 48fac2a18debb2969413e03f3d88bbb9c31500ae
+    fix_date: 2018-05-15
+    crash_func: IA5_7BIT_decode
+    crash_file: epan/strutil.c
+    signature: [heap-buffer-overflow, WRITE, IA5_7BIT_decode, strutil.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530189"
+  - oss_id: 42530222
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2e139a15fab0206403e66abaf435456007cb5e1f
+    fix_date: 2018-02-22
+    crash_func: dissect_udvm_reference_operand_memory
+    crash_file: epan/dissectors/packet-sigcomp.c
+    signature: [heap-buffer-overflow, READ, dissect_udvm_reference_operand_memory, packet-sigcomp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530222"
+  - oss_id: 42530289
+    harness: fuzzshark_ip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9b0dc0aa7e5d6e0ddc8ee4010106fc2a44dc8d9
+    fix_date: 2023-11-20
+    crash_func: dissect_zcl_read_attr_struct
+    crash_file: epan/dissectors/packet-zbee-zcl.c
+    signature: [global-buffer-overflow, READ, dissect_zcl_read_attr_struct, packet-zbee-zcl.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530289"
+  - oss_id: 42530533
+    harness: fuzzshark_ip
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e67283ddca70a7652b7dd41ef8883ee3278501d0
+    fix_date: 2018-05-15
+    crash_func: wmem_strong_hash
+    crash_file: epan/wmem/wmem_map.c
+    signature: [heap-buffer-overflow, READ, wmem_strong_hash, wmem_map.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530533"
+  - oss_id: 42533557
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 03df722198c3edf026d1063b386c9c00840c2051
+    fix_date: 2024-03-05
+    crash_func: add_address_to_hash
+    crash_file: epan/address.h
+    signature: [heap-buffer-overflow, READ, add_address_to_hash, address.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533557"
+  - oss_id: 42534162
+    harness: fuzzshark_ip
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7084b6e4dbe7246def540d36d241b49f5d69e9a3
+    fix_date: 2024-04-01
+    crash_func: dissect_osi_options
+    crash_file: epan/dissectors/packet-osi-options.c
+    signature: [global-buffer-overflow, READ, dissect_osi_options, packet-osi-options.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534162"
+  - oss_id: 42535494
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2e0d1b8da0dbc2d85d6226b878a06a0b7a371596
+    fix_date: 2024-05-14
+    crash_func: dissect_btle
+    crash_file: epan/dissectors/packet-btle.c
+    signature: [heap-buffer-overflow, READ, dissect_btle, packet-btle.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535494"
+  - oss_id: 42536051
+    harness: fuzzshark_ip_proto-udp
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 16f9adc2744c5b4ab738df5fb99defdb9eb91c85
+    fix_date: 2024-08-28
+    crash_func: dissect_wlan_radio_phdr
+    crash_file: epan/dissectors/packet-ieee80211-radio.c
+    signature: [stack-buffer-overflow, READ, dissect_wlan_radio_phdr, packet-ieee80211-radio.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536051"
+  - oss_id: 42536900
+    harness: fuzzshark_ip
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6401440932006465004650d3ac3722670174d0ac
+    fix_date: 2018-03-20
+    crash_func: dissect_ieee80211_common
+    crash_file: epan/dissectors/packet-ieee80211.c
+    signature: [stack-buffer-overflow, READ, dissect_ieee80211_common, packet-ieee80211.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536900"
+  - oss_id: 42537280
+    harness: fuzzshark_udp_port-dns
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 66dcd56f1eae615697b6588ac4778a61a5576391
+    fix_date: 2024-07-28
+    crash_func: header_equal
+    crash_file: epan/dissectors/packet-ntlmssp.c
+    signature: [stack-buffer-overflow, READ, header_equal, packet-ntlmssp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42537280"
+  - oss_id: 42538477
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9ee790e99c72ddb5b599b8076b4ecf74611b184e
+    fix_date: 2018-05-15
+    crash_func: tvb_uncompress
+    crash_file: epan/tvbuff_zlib.c
+    signature: [heap-buffer-overflow, READ, tvb_uncompress, tvbuff_zlib.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538477"
+  - oss_id: 42539503
+    harness: fuzzshark_udp_port-dns
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 843735e0efe03f601ed69f69e5295974aad927b2
+    fix_date: 2018-05-14
+    crash_func: add_rr_to_tree
+    crash_file: epan/dissectors/packet-dns.c
+    signature: [heap-buffer-overflow, READ, add_rr_to_tree, packet-dns.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539503"
+  - oss_id: 42539516
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4413d43962e1aed72a285ae8fb68780bb64a11fe
+    fix_date: 2018-05-14
+    crash_func: dissect_rtcp_rtpfb_transport_cc
+    crash_file: epan/dissectors/packet-rtcp.c
+    signature: [heap-buffer-overflow, WRITE, dissect_rtcp_rtpfb_transport_cc, packet-rtcp.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539516"
+  - oss_id: 42539545
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: df5a8b29bbb046933b73e9e369b9bc9e4b03aaa8
+    fix_date: 2018-05-15
+    crash_func: dissect_ber_constrained_bitstring
+    crash_file: epan/dissectors/packet-ber.c
+    signature: [heap-buffer-overflow, READ, dissect_ber_constrained_bitstring, packet-ber.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539545"
+  - oss_id: 42539741
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f440561b8c49c7863191c1ff2b36debed4d8d620
+    fix_date: 2018-05-18
+    crash_func: Dot11DecryptTDLSDeriveKey
+    crash_file: epan/crypt/dot11decrypt.c
+    signature: [heap-buffer-overflow, READ, Dot11DecryptTDLSDeriveKey, dot11decrypt.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539741"
+  - oss_id: 42540174
+    harness: fuzzshark_ip_proto-udp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 635cad93737ea7f8ebd6047baf54548212ede7c7
+    fix_date: 2018-05-30
+    crash_func: cobs_frame_decode
+    crash_file: epan/dissectors/packet-mstp.c
+    signature: [heap-buffer-overflow, READ, cobs_frame_decode, packet-mstp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540174"
+  - oss_id: 42540897
+    harness: fuzzshark_udp_port-bootp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 5a560f3f6aa2cbfad957cf6223e50c3b61ef575b
+    fix_date: 2018-07-08
+    crash_func: expand_dns_name
+    crash_file: epan/dissectors/packet-dns.c
+    signature: [heap-buffer-overflow, WRITE, expand_dns_name, packet-dns.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540897"
+rejected:
+  - oss_id: 42470895
+    reason: commit_missing
+  - oss_id: 42498325
+    reason: commit_missing
+  - oss_id: 42517523
+    reason: commit_missing
+  - oss_id: 42517524
+    reason: commit_missing
+  - oss_id: 42517543
+    reason: commit_missing
+error: null

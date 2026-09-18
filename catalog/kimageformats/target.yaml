@@ -1,0 +1,242 @@
+project: kimageformats
+repo: "https://invent.kde.org/frameworks/kimageformats.git"
+n_sites: 19
+n_issues: 19
+harnesses: [kimgio_fuzzer, kimgio_hdr_fuzzer, kimgio_heif_fuzzer, kimgio_jxl_fuzzer, kimgio_ora_fuzzer, kimgio_pcx_fuzzer, kimgio_psd_fuzzer, kimgio_qoi_fuzzer, kimgio_raw_fuzzer, kimgio_xcf_fuzzer]
+base:
+  commit: d734f2872745dd1ab5aab9dafb144130d7e9fdcc
+  date: 2022-10-18
+  method: wave_eve
+  n_latent: 6
+  n_latent_upper: 6
+  n_wave: 2
+  note: "eve of 2022-10-30 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2022-10-30
+    n: 2
+    eve: d734f2872745dd1ab5aab9dafb144130d7e9fdcc
+    n_latent_upper: 6
+    oss_ids: [42517499, 42517623]
+  - day: 2019-02-03
+    n: 1
+    eve: 1a31500e55d019d39ab0815658f7fb8175d727bf
+    n_latent_upper: 2
+    oss_ids: [42473118]
+  - day: 2019-04-07
+    n: 1
+    eve: 83d1ca90d906f30adedefe574410b344cf988935
+    n_latent_upper: 3
+    oss_ids: [42474586]
+  - day: 2021-02-27
+    n: 1
+    eve: ca52d4ddf540cc731d0f31dbccc1897f7e6d9db4
+    n_latent_upper: 7
+    oss_ids: [42493865]
+  - day: 2021-03-02
+    n: 1
+    eve: c532227d4302339de562bd4388772532e87114bb
+    n_latent_upper: 6
+    oss_ids: [42493873]
+  - day: 2021-05-02
+    n: 1
+    eve: 55b4077f2c12a424a410a1e213eccf98f0eadd20
+    n_latent_upper: 5
+    oss_ids: [42496362]
+  - day: 2022-04-07
+    n: 1
+    eve: 5c47a97b79d921dd61f1a9c01fb6672652523220
+    n_latent_upper: 7
+    oss_ids: [42510459]
+  - day: 2022-12-13
+    n: 1
+    eve: a30f043e5d99fa4be5e0c2f0b690d4aadf216549
+    n_latent_upper: 4
+    oss_ids: [42519134]
+  - day: 2023-08-18
+    n: 1
+    eve: 4348a0973382b68de4dc1fa146596d67467d1518
+    n_latent_upper: 3
+    oss_ids: [42527220]
+  - day: 2023-09-07
+    n: 1
+    eve: 723f72930b66f5c188799de67ef8c953c0135880
+    n_latent_upper: 2
+    oss_ids: [42527808]
+  - day: 2023-11-04
+    n: 1
+    eve: f6bb59228e8e8ad09915c46aec83954384b4f6aa
+    n_latent_upper: 1
+    oss_ids: [42529356]
+bugs:
+  - oss_id: 42473118
+    harness: kimgio_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a51cbd865f922b9a39a0db421ab84b6c4108bd56
+    fix_date: 2019-02-03
+    crash_func: "(anonymous namespace)::LoadTGA(QDataStream&, (anonymous namespace)::TgaHeader const&, QImage&)"
+    crash_file: src/imageformats/tga.cpp
+    signature: [heap-buffer-overflow, WRITE, LoadTGA, tga.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42473118"
+  - oss_id: 42474586
+    harness: kimgio_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c0656c5181437763189c3ce3a5446b4dad6d354a
+    fix_date: 2019-04-07
+    crash_func: "KArchiveDirectory::addEntry(KArchiveEntry*)"
+    crash_file: src/karchive.cpp
+    signature: [heap-use-after-free, READ, "KArchiveDirectory::addEntry", karchive.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474586"
+  - oss_id: 42493865
+    harness: kimgio_heif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1462c3abd6cec6c8140bc11c13a8801969c82672
+    fix_date: 2021-02-27
+    crash_func: "Op_to_sdr_planes::convert_colorspace(std::__1::shared_ptr<heif::HeifPixelImage const> const&, heif::ColorState, heif::ColorConversionOptions)"
+    crash_file: libheif/libheif/heif_colorconversion.cc
+    signature: [heap-buffer-overflow, READ, "Op_to_sdr_planes::convert_colorspace", heif_colorconversion.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493865"
+  - oss_id: 42493873
+    harness: kimgio_heif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 511a22f0b49a467af1e2932f7a339481acab94a1
+    fix_date: 2021-03-02
+    crash_func: "put_epel_8_fallback(short*, long, unsigned char const*, long, int, int, int, int, short*)"
+    crash_file: libde265/libde265/fallback-motion.cc
+    signature: [heap-buffer-overflow, READ, put_epel_8_fallback, fallback-motion.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493873"
+  - oss_id: 42496362
+    harness: kimgio_xcf_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 297ed9a2fe339bfe36916b9fce628c3242e5be0f
+    fix_date: 2021-05-02
+    crash_func: "XCFImageFormat::loadTileRLE(QDataStream&, unsigned char*, int, int, int)"
+    crash_file: src/imageformats/xcf.cpp
+    signature: [stack-buffer-overflow, WRITE, "XCFImageFormat::loadTileRLE", xcf.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42496362"
+  - oss_id: 42510459
+    harness: kimgio_psd_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9e28aae868156242e4a83faa71190ad15df7c108
+    fix_date: 2022-04-07
+    crash_func: "void (anonymous namespace)::planarToChunchy<unsigned short>(unsigned char*, char const*, int, int, int)"
+    crash_file: src/imageformats/psd.cpp
+    signature: [heap-buffer-overflow, WRITE, "void planarToChunchy<>", psd.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510459"
+  - oss_id: 42517499
+    harness: kimgio_raw_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8586bb47193aebecab2f84ff531beaaeaa7bf93c
+    fix_date: 2022-10-30
+    crash_func: "LibRaw::xtrans_interpolate(int)"
+    crash_file: src/demosaic/xtrans_demosaic.cpp
+    signature: [stack-buffer-overflow, WRITE, "LibRaw::xtrans_interpolate", xtrans_demosaic.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42517499"
+  - oss_id: 42517623
+    harness: kimgio_raw_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8586bb47193aebecab2f84ff531beaaeaa7bf93c
+    fix_date: 2022-10-30
+    crash_func: "LibRaw::phase_one_correct()"
+    crash_file: src/decoders/load_mfbacks.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::phase_one_correct", load_mfbacks.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42517623"
+  - oss_id: 42519134
+    harness: kimgio_heif_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f4ca3f6783bb3d78a9f158efe4874d426b75ae72
+    fix_date: 2022-12-13
+    crash_func: fromUtf8
+    crash_file: src/corelib/text/qstring.h
+    signature: [heap-use-after-free, READ, fromUtf8, qstring.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42519134"
+  - oss_id: 42527220
+    harness: kimgio_qoi_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 274f30e00840cfe0d4476f3b7959cf847a4f9104
+    fix_date: 2023-08-18
+    crash_func: "(anonymous namespace)::LoadQOI(QIODevice*, (anonymous namespace)::QoiHeader const&, QImage&)"
+    crash_file: src/imageformats/qoi.cpp
+    signature: [heap-buffer-overflow, READ, LoadQOI, qoi.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527220"
+  - oss_id: 42527808
+    harness: kimgio_hdr_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a981cefdd239ca44bfd12eb7d78dc0c0560f016d
+    fix_date: 2023-09-07
+    crash_func: "(anonymous namespace)::Read_Old_Line(unsigned char*, int, QDataStream&)"
+    crash_file: src/imageformats/hdr.cpp
+    signature: [heap-buffer-overflow, WRITE, Read_Old_Line, hdr.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527808"
+  - oss_id: 42529356
+    harness: kimgio_heif_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bfc73ca26024dd9adb19039b729474c8833019f6
+    fix_date: 2023-11-04
+    crash_func: "read_coding_unit(thread_context*, int, int, int, int)"
+    crash_file: libde265/libde265/slice.cc
+    signature: [global-buffer-overflow, READ, read_coding_unit, slice.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42529356"
+rejected:
+  - oss_id: 42515438
+    reason: commit_missing
+  - oss_id: 42515725
+    reason: commit_missing
+  - oss_id: 42520542
+    reason: commit_missing
+  - oss_id: 42527828
+    reason: commit_missing
+  - oss_id: 42537249
+    reason: commit_missing
+  - oss_id: 408025086
+    reason: commit_missing
+  - oss_id: 418520149
+    reason: commit_missing
+error: null

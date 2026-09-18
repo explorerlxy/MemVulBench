@@ -1,0 +1,432 @@
+project: open62541
+repo: "https://github.com/open62541/open62541.git"
+n_sites: 29
+n_issues: 29
+harnesses: [fuzz_attributeoperand, fuzz_binary_decode, fuzz_binary_message, fuzz_json_decode, fuzz_json_decode_encode, fuzz_tcp_message]
+base:
+  commit: 23131fe8aec1143aceb587386f8d01b656d2a905
+  date: 2017-11-19
+  method: wave_eve
+  n_latent: 13
+  n_latent_upper: 13
+  n_wave: 2
+  note: "eve of 2017-11-19 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2020-07-10
+    n: 3
+    eve: c749a17e2647f68bdad070fa840f62a12d05f9e3
+    n_latent_upper: 7
+    oss_ids: [42484906, 42484907, 42485158]
+  - day: 2017-11-19
+    n: 2
+    eve: 23131fe8aec1143aceb587386f8d01b656d2a905
+    n_latent_upper: 13
+    oss_ids: [42506598, 42506644]
+  - day: 2018-01-21
+    n: 2
+    eve: 01f78374285f16749452ba84289356fc85e4ab22
+    n_latent_upper: 9
+    oss_ids: [42519959, 42520826]
+  - day: 2020-05-27
+    n: 2
+    eve: 989b1a736c378542efec352642634d44ecc53971
+    n_latent_upper: 9
+    oss_ids: [42481164, 42482721]
+  - day: 2017-11-02
+    n: 1
+    eve: ead0756c96ca6f562645a18fe57aa2749d9190e0
+    n_latent_upper: 15
+    oss_ids: [42500380]
+  - day: 2017-11-09
+    n: 1
+    eve: 51427e75416cb8c72d220fe92a28b9ba25b9482d
+    n_latent_upper: 14
+    oss_ids: [42504387]
+  - day: 2018-01-06
+    n: 1
+    eve: 334e25a86d977e389fabe3006be3ff1a40c16ddb
+    n_latent_upper: 10
+    oss_ids: [42511795]
+  - day: 2018-01-17
+    n: 1
+    eve: b4a72aad61762e4f3aa84702ef415454ab3c958e
+    n_latent_upper: 10
+    oss_ids: [42514618]
+  - day: 2018-10-07
+    n: 1
+    eve: 3354b45980db0c0a89966a6ad349ad7053a91be9
+    n_latent_upper: 12
+    oss_ids: [42470745]
+  - day: 2018-11-30
+    n: 1
+    eve: 94d61b6c13b975d711fe9027a6dd6eedbb4b6503
+    n_latent_upper: 11
+    oss_ids: [42471639]
+  - day: 2019-04-30
+    n: 1
+    eve: f101e78ede34ab3fc16228826e6e4da5544acafd
+    n_latent_upper: 11
+    oss_ids: [42474969]
+  - day: 2019-06-24
+    n: 1
+    eve: aff76e6f778aba81b74e9f6e15cb66fc9db0d009
+    n_latent_upper: 10
+    oss_ids: [42475709]
+bugs:
+  - oss_id: 42470745
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 21771329dd2f13568f458a925671f9db80bc8ade
+    fix_date: 2018-10-07
+    crash_func: UA_WorkQueue_manuallyProcessDelayed
+    crash_file: src/ua_workqueue.c
+    signature: [heap-use-after-free, READ, UA_WorkQueue_manuallyProcessDelayed, ua_workqueue.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470745"
+  - oss_id: 42471639
+    harness: fuzz_binary_decode
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f4f8cdc4c344ad75051f3785a53a956a644cba05
+    fix_date: 2018-11-30
+    crash_func: Variant_clear
+    crash_file: src/ua_types.c
+    signature: [heap-use-after-free, READ, Variant_clear, ua_types.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471639"
+  - oss_id: 42474969
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b9225f9f936a48af66c4aeb7e3fd1684e4d3b88b
+    fix_date: 2019-04-30
+    crash_func: String_clear
+    crash_file: src/ua_types.c
+    signature: [heap-use-after-free, READ, String_clear, ua_types.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474969"
+  - oss_id: 42475116
+    harness: fuzz_json_decode_encode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e1cdb1dd75ea92adcc949c5d3dc4fc4ebdf74b92
+    fix_date: 2019-08-22
+    crash_func: searchObjectForKeyRec
+    crash_file: src/ua_types_encoding_json.c
+    signature: [heap-buffer-overflow, READ, searchObjectForKeyRec, ua_types_encoding_json.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475116"
+  - oss_id: 42475119
+    harness: fuzz_json_decode_encode
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fb4a98f6550529162d4daf7b528c7a74cdb7008a
+    fix_date: 2019-08-31
+    crash_func: UA_unbase64
+    crash_file: deps/base64.c
+    signature: [heap-buffer-overflow, WRITE, UA_unbase64, base64.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475119"
+  - oss_id: 42475709
+    harness: fuzz_binary_message
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 054f460d6e9e98deba186eee6bd956756dfc89e0
+    fix_date: 2019-06-24
+    crash_func: UA_copy
+    crash_file: src/ua_types.c
+    signature: [heap-buffer-overflow, WRITE, UA_copy, ua_types.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475709"
+  - oss_id: 42479160
+    harness: fuzz_json_decode_encode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cc7d2558ff2f63859ee1301b5d07b8b110f6cd6e
+    fix_date: 2019-10-14
+    crash_func: Variant_decodeJson
+    crash_file: src/ua_types_encoding_json.c
+    signature: [heap-buffer-overflow, READ, Variant_decodeJson, ua_types_encoding_json.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479160"
+  - oss_id: 42481164
+    harness: fuzz_json_decode
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 5caf5e4314baa1e2024e744bd2a596d492d188c6
+    fix_date: 2020-05-27
+    crash_func: UA_Array_delete
+    crash_file: src/ua_types.c
+    signature: [attempting, -, UA_Array_delete, ua_types.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481164"
+  - oss_id: 42482721
+    harness: fuzz_json_decode_encode
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 5caf5e4314baa1e2024e744bd2a596d492d188c6
+    fix_date: 2020-05-27
+    crash_func: NodeId_clear
+    crash_file: src/ua_types.c
+    signature: [heap-use-after-free, READ, NodeId_clear, ua_types.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482721"
+  - oss_id: 42484906
+    harness: fuzz_json_decode
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 47d6edb7b19a8c868e958c5cc153606f5273f614
+    fix_date: 2020-07-10
+    crash_func: parseSignedInteger
+    crash_file: src/ua_types_encoding_json.c
+    signature: [stack-use-after-scope, WRITE, parseSignedInteger, ua_types_encoding_json.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484906"
+  - oss_id: 42484907
+    harness: fuzz_json_decode
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 47d6edb7b19a8c868e958c5cc153606f5273f614
+    fix_date: 2020-07-10
+    crash_func: parseUnsignedInteger
+    crash_file: src/ua_types_encoding_json.c
+    signature: [stack-use-after-scope, READ, parseUnsignedInteger, ua_types_encoding_json.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484907"
+  - oss_id: 42485158
+    harness: fuzz_tcp_message
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 47d6edb7b19a8c868e958c5cc153606f5273f614
+    fix_date: 2020-07-10
+    crash_func: null
+    crash_file: ""
+    signature: [stack-use-after-scope, WRITE, -, -]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485158"
+  - oss_id: 42486724
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 46a618acfbb3a71f3ccabcbc26cd620636300868
+    fix_date: 2020-08-24
+    crash_func: UA_NodeMap_delete
+    crash_file: plugins/ua_nodestore_hashmap.c
+    signature: [heap-use-after-free, READ, UA_NodeMap_delete, ua_nodestore_hashmap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486724"
+  - oss_id: 42500380
+    harness: fuzz_binary_message
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3455a82ddb781794d1a32b9ee94153f02117c61c
+    fix_date: 2017-11-02
+    crash_func: Service_FindServers
+    crash_file: src/server/ua_services_discovery.c
+    signature: [heap-buffer-overflow, WRITE, Service_FindServers, ua_services_discovery.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42500380"
+  - oss_id: 42503022
+    harness: fuzz_binary_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9e0d1ac7d752b44d4d37fb9da632388dc069f2d7
+    fix_date: 2021-10-31
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: fuzz/fuzz_binary_decode.cc
+    signature: [abrt, -, LLVMFuzzerTestOneInput, fuzz_binary_decode.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42503022"
+  - oss_id: 42504387
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d9208207e458a973e481ded5f7c2cf765dd7ea4c
+    fix_date: 2017-11-09
+    crash_func: UA_Subscription_answerPublishRequestsNoSubscription
+    crash_file: src/server/ua_subscription.c
+    signature: [heap-use-after-free, READ, UA_Subscription_answerPublishRequestsNoSubscription, ua_subscription.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42504387"
+  - oss_id: 42506598
+    harness: fuzz_binary_decode
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 9165b056a95f3ff5db23dbf9628acb1efee6f86b
+    fix_date: 2017-11-19
+    crash_func: String_deleteMembers
+    crash_file: src/ua_types.c
+    signature: [attempting, -, String_deleteMembers, ua_types.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42506598"
+  - oss_id: 42506644
+    harness: fuzz_binary_decode
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9165b056a95f3ff5db23dbf9628acb1efee6f86b
+    fix_date: 2017-11-19
+    crash_func: UA_Array_copy
+    crash_file: src/ua_types.c
+    signature: [heap-use-after-free, READ, UA_Array_copy, ua_types.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42506644"
+  - oss_id: 42508235
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: eca1796f2d33f49143045861e719b1b3e7f784ab
+    fix_date: 2022-02-16
+    crash_func: UA_ServerConfig_clean
+    crash_file: src/server/ua_server_config.c
+    signature: [heap-use-after-free, READ, UA_ServerConfig_clean, ua_server_config.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508235"
+  - oss_id: 42508445
+    harness: fuzz_json_decode_encode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 727bee44a7e47a9b8bbfcae386236be11c368a13
+    fix_date: 2022-02-18
+    crash_func: extensionObjectOrder
+    crash_file: src/ua_types.c
+    signature: [heap-buffer-overflow, READ, extensionObjectOrder, ua_types.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508445"
+  - oss_id: 42511795
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 6f689994e1e530142d01988659ac1b1d7dbd7237
+    fix_date: 2018-01-06
+    crash_func: UInt32_encodeBinary
+    crash_file: src/ua_types_encoding_binary.c
+    signature: [heap-use-after-free, WRITE, UInt32_encodeBinary, ua_types_encoding_binary.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511795"
+  - oss_id: 42514618
+    harness: fuzz_binary_message
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 68bdf5e9a9bfc1c50b0bae131ef34b7c12f2b9ba
+    fix_date: 2018-01-17
+    crash_func: Variant_setRange
+    crash_file: src/ua_types.c
+    signature: [heap-buffer-overflow, READ, Variant_setRange, ua_types.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514618"
+  - oss_id: 42519959
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a6d732b4050e902d9bba3acfa7bf72e30fa4dcc6
+    fix_date: 2018-01-21
+    crash_func: UA_SecureChannel_deleteMembersCleanup
+    crash_file: src/ua_securechannel.c
+    signature: [heap-use-after-free, READ, UA_SecureChannel_deleteMembersCleanup, ua_securechannel.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42519959"
+  - oss_id: 42520826
+    harness: fuzz_binary_message
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a6d732b4050e902d9bba3acfa7bf72e30fa4dcc6
+    fix_date: 2018-01-21
+    crash_func: UA_Session_detachFromSecureChannel
+    crash_file: src/server/ua_session.c
+    signature: [heap-use-after-free, WRITE, UA_Session_detachFromSecureChannel, ua_session.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42520826"
+  - oss_id: 376331507
+    harness: fuzz_attributeoperand
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 83ad60c1030f62f844205b44633baf2fa664db48
+    fix_date: 2025-01-02
+    crash_func: clearStructure
+    crash_file: src/ua_types.c
+    signature: [attempting, -, clearStructure, ua_types.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/376331507"
+  - oss_id: 387317444
+    harness: fuzz_json_decode
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cbafff5c18021c67661343b85bff1b1c5a2fa380
+    fix_date: 2025-04-19
+    crash_func: removeFieldFromEncoding
+    crash_file: src/ua_types_encoding_json_105.c
+    signature: [negative-size-param, -, removeFieldFromEncoding, ua_types_encoding_json_105.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/387317444"
+  - oss_id: 412393092
+    harness: fuzz_json_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d97206301f980637f454d34e39d2e5fdfdf9a86c
+    fix_date: 2025-06-16
+    crash_func: removeFieldFromEncoding
+    crash_file: src/ua_types_encoding_json_105.c
+    signature: [heap-buffer-overflow, READ, removeFieldFromEncoding, ua_types_encoding_json_105.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/412393092"
+rejected:
+  - oss_id: 42498970
+    reason: commit_missing
+  - oss_id: 42533411
+    reason: commit_missing
+error: null

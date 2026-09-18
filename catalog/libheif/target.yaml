@@ -1,0 +1,276 @@
+project: libheif
+repo: "https://github.com/strukturag/libheif.git"
+n_sites: 17
+n_issues: 17
+harnesses: [box_fuzzer, color-conversion-fuzzer, color_conversion_fuzzer, encoder-fuzzer, file-fuzzer, file_fuzzer, kimgio_heif_fuzzer]
+base:
+  commit: 3dc3acbf739dfb841f4387c0397b244d35168086
+  date: 2025-05-05
+  method: wave_eve
+  n_latent: 2
+  n_latent_upper: 2
+  n_wave: 2
+  note: "eve of 2025-05-05 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2025-05-05
+    n: 2
+    eve: 3dc3acbf739dfb841f4387c0397b244d35168086
+    n_latent_upper: 2
+    oss_ids: [415627222, 415838846]
+  - day: 2020-08-11
+    n: 1
+    eve: ab9c1a5b1dadd9e2ffca621fb5b9cd3c87a5e4ca
+    n_latent_upper: 5
+    oss_ids: [42486640]
+  - day: 2020-08-14
+    n: 1
+    eve: 0e329635b8539d4a22f45dfc4d537c7717932eb8
+    n_latent_upper: 4
+    oss_ids: [42483421]
+  - day: 2020-08-26
+    n: 1
+    eve: e90387873d037c7298571afeae23f1fa8f23c586
+    n_latent_upper: 3
+    oss_ids: [42486193]
+  - day: 2021-01-29
+    n: 1
+    eve: 1fbc8b392526a00bbe18001a9731a61866949db6
+    n_latent_upper: 3
+    oss_ids: [42479831]
+  - day: 2022-04-04
+    n: 1
+    eve: 23d87adc0d7059b95e54c38786e4a4b5fd99eee3
+    n_latent_upper: 7
+    oss_ids: [42502614]
+  - day: 2023-01-24
+    n: 1
+    eve: b0bda93ab311e007cb4b7e91172825ab9572d309
+    n_latent_upper: 7
+    oss_ids: [42493809]
+  - day: 2023-03-21
+    n: 1
+    eve: f44559a24d12538f7c4c9ec0ae347b39f3cbbc76
+    n_latent_upper: 6
+    oss_ids: [42523506]
+  - day: 2023-04-18
+    n: 1
+    eve: af0fd4faf8a62f40675c6fc8ac8db79fecb0a67b
+    n_latent_upper: 5
+    oss_ids: [42523470]
+  - day: 2023-10-03
+    n: 1
+    eve: 4a3327b5b73c94a26b2deed91d0cae82d53db24a
+    n_latent_upper: 7
+    oss_ids: [42527431]
+  - day: 2023-10-12
+    n: 1
+    eve: a26bcb0b219cca182e7aedded4fdc1001eb36f5f
+    n_latent_upper: 6
+    oss_ids: [42525317]
+  - day: 2023-10-17
+    n: 1
+    eve: 18d4e550ad7ee114fb95ba2256ee3e756174e92d
+    n_latent_upper: 5
+    oss_ids: [42536257]
+bugs:
+  - oss_id: 42479831
+    harness: file-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ec955675542b4c9c2f565558b76493dba37516e9
+    fix_date: 2021-01-29
+    crash_func: "void apply_sao_internal<unsigned short>(de265_image*, int, int, slice_segment_header const*, int, int, int, unsigned short const*, int, unsigned short*, int)"
+    crash_file: libde265/libde265/sao.cc
+    signature: [heap-buffer-overflow, READ, "void apply_sao_internal<>", sao.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479831"
+  - oss_id: 42483421
+    harness: file-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b7484d2ed35338970b727e55adb509f2200b0e40
+    fix_date: 2020-08-14
+    crash_func: "Op_RGB_to_RGB24_32::convert_colorspace(std::__1::shared_ptr<heif::HeifPixelImage const> const&, heif::ColorState, heif::ColorConversionOptions)"
+    crash_file: heif_colorconversion.cc
+    signature: [heap-buffer-overflow, READ, "Op_RGB_to_RGB24_32::convert_colorspace", heif_colorconversion.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483421"
+  - oss_id: 42486193
+    harness: encoder-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 95deb055d9200fdd3b154b51d99a05282d81075c
+    fix_date: 2020-08-26
+    crash_func: "x265::PicYuv::copyFromPicture(x265_picture const&, x265_param const&, int, int)"
+    crash_file: x265/source/common/picyuv.cpp
+    signature: [heap-buffer-overflow, READ, "x265::PicYuv::copyFromPicture", picyuv.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486193"
+  - oss_id: 42486640
+    harness: file-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5f80153e95109741dd1779b12ff13554dee6affc
+    fix_date: 2020-08-11
+    crash_func: "Op_RGB_to_YCbCr<unsigned char>::convert_colorspace(std::__1::shared_ptr<heif::HeifPixelImage const> const&, heif::ColorState, heif::ColorConversionOptions)"
+    crash_file: heif_colorconversion.cc
+    signature: [heap-buffer-overflow, READ, "Op_RGB_to_YCbCr<>::convert_colorspace", heif_colorconversion.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486640"
+  - oss_id: 42493809
+    harness: file-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 38ea1ba75c7022318596c1be5bc289f0195a2bfd
+    fix_date: 2023-01-24
+    crash_func: "void apply_sao_internal<unsigned short>(de265_image*, int, int, slice_segment_header const*, int, int, int, unsigned short const*, int, unsigned short*, int)"
+    crash_file: libde265/libde265/sao.cc
+    signature: [stack-buffer-overflow, READ, "void apply_sao_internal<>", sao.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493809"
+  - oss_id: 42502614
+    harness: color-conversion-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 11ffeffadd980f9f96019fe180fc1e81827e3790
+    fix_date: 2022-04-04
+    crash_func: "Op_YCbCr_to_RGB<unsigned char>::convert_colorspace(std::__1::shared_ptr<heif::HeifPixelImage const> const&, heif::ColorState, heif::ColorConversionOptions)"
+    crash_file: heif_colorconversion.cc
+    signature: [heap-buffer-overflow, READ, "Op_YCbCr_to_RGB<>::convert_colorspace", heif_colorconversion.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42502614"
+  - oss_id: 42523470
+    harness: file-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f2d7c57c71a0810b25fc2bead63c5ab35e5d0284
+    fix_date: 2023-04-18
+    crash_func: "RegionItem::parse(std::__1::vector<unsigned char, std::__1::allocator<unsigned char> > const&)"
+    crash_file: region.cc
+    signature: [heap-buffer-overflow, READ, "RegionItem::parse", region.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523470"
+  - oss_id: 42523506
+    harness: file-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 464956e1fd9b2a701f7d3bfd98ba2217eed190ad
+    fix_date: 2023-03-21
+    crash_func: parse_signed
+    crash_file: region.cc
+    signature: [heap-buffer-overflow, READ, parse_signed, region.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523506"
+  - oss_id: 42525317
+    harness: color_conversion_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 94e5a84d1f05fe905e91a41e8a17e29437c3c15e
+    fix_date: 2023-10-12
+    crash_func: "StreamReader_memory::read(void*, unsigned int)"
+    crash_file: bitstream.cc
+    signature: [heap-buffer-overflow, WRITE, "StreamReader_memory::read", bitstream.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525317"
+  - oss_id: 42527431
+    harness: file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6c4016fd3d944a8903bdd3e6be8fcdd1bc73ca79
+    fix_date: 2023-10-03
+    crash_func: "HeifContext::interpret_heif_file()"
+    crash_file: context.cc
+    signature: [heap-buffer-overflow, READ, "HeifContext::interpret_heif_file", context.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527431"
+  - oss_id: 42536257
+    harness: file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 37b81c9c801c125b4e595153b065b05b69d02744
+    fix_date: 2023-10-17
+    crash_func: "BitReader::refill()"
+    crash_file: bitstream.cc
+    signature: [heap-buffer-overflow, READ, "BitReader::refill", bitstream.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536257"
+  - oss_id: 42536646
+    harness: file_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7c9729ea8d0f319ab423f8e4e6de121fd78596d0
+    fix_date: 2024-07-06
+    crash_func: "MaskImageCodec::decode_mask_image(std::__1::shared_ptr<HeifFile const> const&, unsigned int, std::__1::shared_ptr<HeifPixelImage>&, unsigned int, unsigned int, std::__1::vector<unsigned char, std::__1::allocator<unsigned char> > const&)"
+    crash_file: mask_image.cc
+    signature: [heap-buffer-overflow, WRITE, "MaskImageCodec::decode_mask_image", mask_image.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42536646"
+  - oss_id: 415190388
+    harness: box_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 154667f9db97e764957b4377645b8c22dd87f41b
+    fix_date: 2025-05-04
+    crash_func: "Box_saiz::parse(BitstreamRange&, heif_security_limits const*)"
+    crash_file: sequences/seq_boxes.cc
+    signature: [container-overflow, WRITE, "Box_saiz::parse", seq_boxes.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/415190388"
+  - oss_id: 415627222
+    harness: file_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4e6fd877f3260125b91aec98e831e59f5b603e5a
+    fix_date: 2025-05-05
+    crash_func: "StreamReader_memory::read(void*, unsigned long)"
+    crash_file: bitstream.cc
+    signature: [container-overflow, WRITE, "StreamReader_memory::read", bitstream.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/415627222"
+  - oss_id: 415838846
+    harness: box_fuzzer
+    label: container-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4e6fd877f3260125b91aec98e831e59f5b603e5a
+    fix_date: 2025-05-05
+    crash_func: "Box_saio::parse(BitstreamRange&, heif_security_limits const*)"
+    crash_file: sequences/seq_boxes.cc
+    signature: [container-overflow, WRITE, "Box_saio::parse", seq_boxes.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/415838846"
+rejected:
+  - oss_id: 42523474
+    reason: commit_missing
+  - oss_id: 42537016
+    reason: commit_missing
+error: null

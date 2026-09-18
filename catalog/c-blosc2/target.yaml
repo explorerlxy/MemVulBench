@@ -1,0 +1,558 @@
+project: c-blosc2
+repo: "https://github.com/Blosc/c-blosc2.git"
+n_sites: 37
+n_issues: 37
+harnesses: [compress_fuzzer, decompress_chunk_fuzzer, decompress_frame_fuzzer, decompress_fuzzer]
+base:
+  commit: 0e8bdfce66ba4b2fef79a2525fd83ecfc22b0983
+  date: 2021-01-18
+  method: wave_eve
+  n_latent: 27
+  n_latent_upper: 27
+  n_wave: 3
+  note: "eve of 2021-01-19 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2022-05-07
+    n: 4
+    eve: d77d3ebe14d6fb7085fde26c30678a82f6fe562c
+    n_latent_upper: 9
+    oss_ids: [42505679, 42506129, 42506157, 42507220]
+  - day: 2022-06-14
+    n: 4
+    eve: 886d4c9b78334d1e854be60e67c95f37547685fe
+    n_latent_upper: 2
+    oss_ids: [42498356, 42504546, 42506962, 42507214]
+  - day: 2021-01-19
+    n: 3
+    eve: 0e8bdfce66ba4b2fef79a2525fd83ecfc22b0983
+    n_latent_upper: 27
+    oss_ids: [42491502, 42491774, 42491876]
+  - day: 2021-04-12
+    n: 3
+    eve: f1f42afb9a7f6b554a71270e5060dc7d33b66145
+    n_latent_upper: 16
+    oss_ids: [42494472, 42494583, 42494800]
+  - day: 2025-02-18
+    n: 2
+    eve: 26d05bffff00b05eb2fdc6abc2d3395a437cc048
+    n_latent_upper: 0
+    oss_ids: [42518878, 42520719]
+  - day: 2020-08-08
+    n: 1
+    eve: 7bfcc322c086f41df8188a493c989af21e3707d2
+    n_latent_upper: 33
+    oss_ids: [42486467]
+  - day: 2020-10-11
+    n: 1
+    eve: f4a74cbff7c021342450f103623a6d9143230e85
+    n_latent_upper: 32
+    oss_ids: [42487950]
+  - day: 2020-10-17
+    n: 1
+    eve: bb42656cb982f60ce8f1b87f3185bdcd94eb9d0a
+    n_latent_upper: 31
+    oss_ids: [42488251]
+  - day: 2020-12-30
+    n: 1
+    eve: 9ba29ef1584b7c29f5303dce51909a52da4837ee
+    n_latent_upper: 30
+    oss_ids: [42489779]
+  - day: 2021-01-02
+    n: 1
+    eve: 3055a05f0a229a11b5d8c65d42ab15ad17f3b714
+    n_latent_upper: 29
+    oss_ids: [42489773]
+  - day: 2021-01-04
+    n: 1
+    eve: 15f9cd0a160847d01e1aa18f00533f25cbe94e39
+    n_latent_upper: 28
+    oss_ids: [42490417]
+  - day: 2021-01-25
+    n: 1
+    eve: d8e1c5150b308737a011b648bce3b3b4431a3caa
+    n_latent_upper: 24
+    oss_ids: [42491999]
+bugs:
+  - oss_id: 42486467
+    harness: decompress_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ff8fa1052cac4bea0a8a97d28856b422c5bfbe0b
+    fix_date: 2020-08-08
+    crash_func: tinfl_decompress
+    crash_file: internal-complibs/miniz-2.0.8/miniz.c
+    signature: [heap-buffer-overflow, READ, tinfl_decompress, miniz.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486467"
+  - oss_id: 42487950
+    harness: decompress_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d314d790853799ac4db940c852dd673dfde8d3cf
+    fix_date: 2020-10-11
+    crash_func: MEM_read32
+    crash_file: internal-complibs/zstd-1.4.5/decompress/../common/mem.h
+    signature: [heap-buffer-overflow, READ, MEM_read32, mem.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487950"
+  - oss_id: 42488251
+    harness: compress_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c4c6470e88210afc95262c8b9fcc27e30ca043ee
+    fix_date: 2020-10-17
+    crash_func: _sw32
+    crash_file: blosc/blosc-private.h
+    signature: [heap-buffer-overflow, WRITE, _sw32, blosc-private.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488251"
+  - oss_id: 42489773
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 877959117eef391293b5abff200a23bafe458754
+    fix_date: 2021-01-02
+    crash_func: frame_get_usermeta
+    crash_file: blosc/frame.c
+    signature: [segv, -, frame_get_usermeta, frame.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489773"
+  - oss_id: 42489779
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3724317f7bd698abb3b3d39a6d785088b9f8db0a
+    fix_date: 2020-12-30
+    crash_func: Lizard_decompress_generic
+    crash_file: internal-complibs/lizard-1.0/lizard_decompress.c
+    signature: [heap-buffer-overflow, READ, Lizard_decompress_generic, lizard_decompress.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489779"
+  - oss_id: 42490417
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 787c8184416a388a26c1f3c82bf182dc06496d1c
+    fix_date: 2021-01-04
+    crash_func: blosc_run_decompression_with_context
+    crash_file: blosc/blosc2.c
+    signature: [heap-buffer-overflow, READ, blosc_run_decompression_with_context, blosc2.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490417"
+  - oss_id: 42491502
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c473b21cff5e1a459b4467f18bf7414114f848fd
+    fix_date: 2021-01-19
+    crash_func: ZSTD_initDDict_internal
+    crash_file: internal-complibs/zstd-1.4.5/decompress/zstd_ddict.c
+    signature: [heap-buffer-overflow, READ, ZSTD_initDDict_internal, zstd_ddict.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42491502"
+  - oss_id: 42491774
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c473b21cff5e1a459b4467f18bf7414114f848fd
+    fix_date: 2021-01-19
+    crash_func: blosc_getitem
+    crash_file: blosc/blosc2.c
+    signature: [heap-buffer-overflow, READ, blosc_getitem, blosc2.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42491774"
+  - oss_id: 42491876
+    harness: decompress_frame_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c473b21cff5e1a459b4467f18bf7414114f848fd
+    fix_date: 2021-01-19
+    crash_func: ZSTD_freeDDict
+    crash_file: internal-complibs/zstd-1.4.5/decompress/zstd_ddict.c
+    signature: [heap-use-after-free, READ, ZSTD_freeDDict, zstd_ddict.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42491876"
+  - oss_id: 42491999
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5b2009c497d5e3f2e3265795fa1aab12bfd0adcc
+    fix_date: 2021-01-25
+    crash_func: sw32_
+    crash_file: blosc/blosc-private.h
+    signature: [heap-buffer-overflow, READ, sw32_, blosc-private.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491999"
+  - oss_id: 42492173
+    harness: decompress_frame_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 986aabad378ad0d819ddb0b6db7469e95ec21985
+    fix_date: 2021-01-29
+    crash_func: frame_get_usermeta
+    crash_file: blosc/frame.c
+    signature: [heap-buffer-overflow, READ, frame_get_usermeta, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492173"
+  - oss_id: 42492419
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 57fca38a4f51687d71e451ae29df6b353764fb72
+    fix_date: 2021-02-04
+    crash_func: handle_runlen
+    crash_file: blosc/blosc2.c
+    signature: [heap-buffer-overflow, READ, handle_runlen, blosc2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492419"
+  - oss_id: 42492486
+    harness: decompress_frame_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: dd0e099a4cf51ec01064065778b1d3bfb314f201
+    fix_date: 2021-02-07
+    crash_func: frame_get_metalayers
+    crash_file: blosc/frame.c
+    signature: [memcpy-param-overlap, -, frame_get_metalayers, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492486"
+  - oss_id: 42493168
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 767a0d9302dce5d7467014cfd64f91a1b266e6d9
+    fix_date: 2021-02-15
+    crash_func: get_vlmeta_from_trailer
+    crash_file: blosc/frame.c
+    signature: [heap-buffer-overflow, READ, get_vlmeta_from_trailer, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493168"
+  - oss_id: 42493450
+    harness: decompress_frame_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e411d87705c65db2aafb0e774092fe57647fb31c
+    fix_date: 2021-02-19
+    crash_func: sw32_
+    crash_file: blosc/blosc-private.h
+    signature: [heap-use-after-free, READ, sw32_, blosc-private.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493450"
+  - oss_id: 42493966
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4f6d42ab4b25e781dad94c5324dab8a4dbb702ad
+    fix_date: 2021-03-02
+    crash_func: ZSTD_initDDict_internal
+    crash_file: internal-complibs/zstd-1.4.8/decompress/zstd_ddict.c
+    signature: [heap-buffer-overflow, READ, ZSTD_initDDict_internal, zstd_ddict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493966"
+  - oss_id: 42494099
+    harness: decompress_frame_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 1a79d783cc791faf12fa9f6f6f92c26fb8be4967
+    fix_date: 2021-03-13
+    crash_func: frame_get_lazychunk
+    crash_file: blosc/frame.c
+    signature: [attempting, -, frame_get_lazychunk, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494099"
+  - oss_id: 42494472
+    harness: decompress_frame_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e670bb4036fd7c840b1c206b8739f292346b1aa9
+    fix_date: 2021-04-12
+    crash_func: bshuf_shuffle_bit_eightelem_sse2
+    crash_file: blosc/bitshuffle-sse2.c
+    signature: [heap-buffer-overflow, WRITE, bshuf_shuffle_bit_eightelem_sse2, bitshuffle-sse2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494472"
+  - oss_id: 42494511
+    harness: decompress_frame_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 48123a7d2e7409ecd0e74f64a326fa7f2af0627d
+    fix_date: 2021-04-14
+    crash_func: ZSTD_freeDDict
+    crash_file: internal-complibs/zstd-1.4.8/decompress/zstd_ddict.c
+    signature: [heap-use-after-free, READ, ZSTD_freeDDict, zstd_ddict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494511"
+  - oss_id: 42494583
+    harness: decompress_frame_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e670bb4036fd7c840b1c206b8739f292346b1aa9
+    fix_date: 2021-04-12
+    crash_func: blosc_d
+    crash_file: blosc/blosc2.c
+    signature: [negative-size-param, -, blosc_d, blosc2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494583"
+  - oss_id: 42494800
+    harness: decompress_frame_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e670bb4036fd7c840b1c206b8739f292346b1aa9
+    fix_date: 2021-04-12
+    crash_func: ZSTD_safecopy
+    crash_file: internal-complibs/zstd-1.4.8/decompress/zstd_decompress_block.c
+    signature: [heap-buffer-overflow, WRITE, ZSTD_safecopy, zstd_decompress_block.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42494800"
+  - oss_id: 42495817
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8a058b7a6be4d7e47a9af5831c454fca8c725dd4
+    fix_date: 2021-05-10
+    crash_func: get_meta_from_header
+    crash_file: blosc/frame.c
+    signature: [heap-buffer-overflow, READ, get_meta_from_header, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42495817"
+  - oss_id: 42495831
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4a727370b1c2e9746434c00bf2236db86c31ea5c
+    fix_date: 2021-04-22
+    crash_func: blosc_d
+    crash_file: blosc/blosc2.c
+    signature: [heap-buffer-overflow, READ, blosc_d, blosc2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42495831"
+  - oss_id: 42496936
+    harness: decompress_frame_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac7b9359e84d796bfb1ff1fd3f7c9eaf9a506799
+    fix_date: 2021-06-08
+    crash_func: get_vlmeta_from_trailer
+    crash_file: blosc/frame.c
+    signature: [negative-size-param, -, get_vlmeta_from_trailer, frame.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496936"
+  - oss_id: 42497855
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1600817ed4961b13bbe6eed5f308c9abc78eee1e
+    fix_date: 2021-06-28
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497855"
+  - oss_id: 42498356
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7f4574f51ad7db56fc13de89e13e7893b1a82189
+    fix_date: 2022-06-14
+    crash_func: ZSTD_copyRawBlock
+    crash_file: internal-complibs/zstd-1.4.9/decompress/zstd_decompress.c
+    signature: [heap-buffer-overflow, READ, ZSTD_copyRawBlock, zstd_decompress.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498356"
+  - oss_id: 42504546
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7f4574f51ad7db56fc13de89e13e7893b1a82189
+    fix_date: 2022-06-14
+    crash_func: inflate
+    crash_file: internal-complibs/zlib-ng-2.0.2/inflate.c
+    signature: [heap-buffer-overflow, READ, inflate, inflate.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504546"
+  - oss_id: 42505679
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8ea407a6e4d57ac71499cf8fa1b7c5be4cf66dd3
+    fix_date: 2022-05-07
+    crash_func: ndlz4_decompress
+    crash_file: plugins/codecs/ndlz/ndlz4x4.c
+    signature: [heap-buffer-overflow, WRITE, ndlz4_decompress, ndlz4x4.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42505679"
+  - oss_id: 42506129
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8ea407a6e4d57ac71499cf8fa1b7c5be4cf66dd3
+    fix_date: 2022-05-07
+    crash_func: ndlz8_decompress
+    crash_file: plugins/codecs/ndlz/ndlz8x8.c
+    signature: [heap-buffer-overflow, WRITE, ndlz8_decompress, ndlz8x8.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42506129"
+  - oss_id: 42506157
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ea407a6e4d57ac71499cf8fa1b7c5be4cf66dd3
+    fix_date: 2022-05-07
+    crash_func: ndlz4_decompress
+    crash_file: plugins/codecs/ndlz/ndlz4x4.c
+    signature: [heap-buffer-overflow, WRITE, ndlz4_decompress, ndlz4x4.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42506157"
+  - oss_id: 42506962
+    harness: decompress_frame_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 7f4574f51ad7db56fc13de89e13e7893b1a82189
+    fix_date: 2022-06-14
+    crash_func: ZSTD_initDDict_internal
+    crash_file: internal-complibs/zstd-1.4.9/decompress/zstd_ddict.c
+    signature: [memcpy-param-overlap, -, ZSTD_initDDict_internal, zstd_ddict.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42506962"
+  - oss_id: 42507214
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7f4574f51ad7db56fc13de89e13e7893b1a82189
+    fix_date: 2022-06-14
+    crash_func: LZ4_wildCopy32
+    crash_file: internal-complibs/lz4-1.9.3/lz4.c
+    signature: [heap-buffer-overflow, READ, LZ4_wildCopy32, lz4.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42507214"
+  - oss_id: 42507220
+    harness: decompress_chunk_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ea407a6e4d57ac71499cf8fa1b7c5be4cf66dd3
+    fix_date: 2022-05-07
+    crash_func: ndlz8_decompress
+    crash_file: plugins/codecs/ndlz/ndlz8x8.c
+    signature: [heap-buffer-overflow, WRITE, ndlz8_decompress, ndlz8x8.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42507220"
+  - oss_id: 42515518
+    harness: decompress_chunk_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d55bfcd6804699e1435dc3e233fd76c8a5d3f9e3
+    fix_date: 2023-06-21
+    crash_func: ndlz4_decompress
+    crash_file: plugins/codecs/ndlz/ndlz4x4.c
+    signature: [heap-buffer-overflow, WRITE, ndlz4_decompress, ndlz4x4.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42515518"
+  - oss_id: 42518878
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cf8d63c23d68754eb50762b45e58ab9a13b8d470
+    fix_date: 2025-02-18
+    crash_func: ZSTD_initDDict_internal
+    crash_file: internal-complibs/zstd-1.5.2/decompress/zstd_ddict.c
+    signature: [use-after-poison, READ, ZSTD_initDDict_internal, zstd_ddict.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518878"
+  - oss_id: 42520719
+    harness: decompress_frame_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: cf8d63c23d68754eb50762b45e58ab9a13b8d470
+    fix_date: 2025-02-18
+    crash_func: ZSTD_freeDDict
+    crash_file: internal-complibs/zstd-1.4.9/decompress/zstd_ddict.c
+    signature: [heap-use-after-free, READ, ZSTD_freeDDict, zstd_ddict.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520719"
+  - oss_id: 42523342
+    harness: decompress_frame_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa5e3f4c5c645e315be0f998679b8e73b7d42680
+    fix_date: 2024-05-13
+    crash_func: MEM_read64
+    crash_file: internal-complibs/zstd-1.4.9/decompress/../common/mem.h
+    signature: [heap-buffer-overflow, READ, MEM_read64, mem.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523342"
+rejected: []
+error: null

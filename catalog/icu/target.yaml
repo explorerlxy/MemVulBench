@@ -1,0 +1,259 @@
+project: icu
+repo: "https://github.com/unicode-org/icu.git"
+n_sites: 14
+n_issues: 14
+harnesses: [collator_compare_fuzzer, collator_rulebased_fuzzer, date_format_fuzzer, locale_morph_fuzzer, plurrule_fuzzer, time_zone_names_fuzzer, ubidi_fuzzer, ucasemap_fuzzer, uloc_canonicalize_fuzzer, uloc_is_right_to_left_fuzzer, uregex_match_fuzzer]
+base:
+  commit: 667ee72b7c2921d28b935af4e620832054452a09
+  date: 2023-08-21
+  method: wave_eve
+  n_latent: 10
+  n_latent_upper: 10
+  n_wave: 1
+  note: "eve of 2023-08-22 wave (1 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2019-06-28
+    n: 1
+    eve: 6e5755a2a833bc64852eae12967d0a54d7adf629
+    n_latent_upper: 1
+    oss_ids: [42476093]
+  - day: 2021-09-15
+    n: 1
+    eve: 29443b8be710640ded073116b768da35f00cf0dd
+    n_latent_upper: 5
+    oss_ids: [42501263]
+  - day: 2022-02-23
+    n: 1
+    eve: 5489287998c846e86dd37ff88f36358ef3a2ac39
+    n_latent_upper: 9
+    oss_ids: [42508617]
+  - day: 2022-04-04
+    n: 1
+    eve: f4f74c1f2ee380c20434f224d7fea05fdb4e91d6
+    n_latent_upper: 8
+    oss_ids: [42476221]
+  - day: 2023-08-22
+    n: 1
+    eve: 667ee72b7c2921d28b935af4e620832054452a09
+    n_latent_upper: 10
+    oss_ids: [42527280]
+  - day: 2023-09-12
+    n: 1
+    eve: 35645abdcb5ad7ffa9bb4fba9debff05d300c29d
+    n_latent_upper: 9
+    oss_ids: [42527841]
+  - day: 2023-09-15
+    n: 1
+    eve: 832997c57e7ad4a128447d8c90ee338d90a0faf3
+    n_latent_upper: 8
+    oss_ids: [42528131]
+  - day: 2023-09-19
+    n: 1
+    eve: 6df1babae26f363d3140af7c50a9956e8f80a12c
+    n_latent_upper: 7
+    oss_ids: [42528225]
+  - day: 2023-12-19
+    n: 1
+    eve: 11d1148e5680fe62456659af85b37f690612ba73
+    n_latent_upper: 6
+    oss_ids: [42531617]
+  - day: 2024-01-10
+    n: 1
+    eve: ed970751efe96e47540b645192f5ad46e16d6670
+    n_latent_upper: 4
+    oss_ids: [42531783]
+  - day: 2024-01-19
+    n: 1
+    eve: 7b690aa8c797ca3fead7821200f1b1b10093bcfc
+    n_latent_upper: 4
+    oss_ids: [42532047]
+  - day: 2024-05-02
+    n: 1
+    eve: 1ff249b73f8a8c3c5c355c976622fc8e39a863cb
+    n_latent_upper: 3
+    oss_ids: [42534905]
+bugs:
+  - oss_id: 42476093
+    harness: collator_compare_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c43455749b914feef56b178b256f29b3016146eb
+    fix_date: 2019-06-28
+    crash_func: __asan_memcpy
+    crash_file: llvm/projects/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cc
+    signature: [heap-buffer-overflow, WRITE, __asan_memcpy, asan_interceptors_memintrinsics.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42476093"
+  - oss_id: 42476221
+    harness: collator_rulebased_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4833cc89b2fae2e8863b46bf1dc785964847e882
+    fix_date: 2022-04-04
+    crash_func: "icu_64::CollationIterator::appendCEsFromCE32(icu_64::CollationData const*, int, unsigned int, signed char, UErrorCode&)"
+    crash_file: icu4c/source/i18n/collationiterator.cpp
+    signature: [heap-buffer-overflow, READ, "icu_64::CollationIterator::appendCEsFromCE32", collationiterator.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42476221"
+  - oss_id: 42501263
+    harness: uloc_canonicalize_fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: adb109f440f5dc9c7bb9f2b1df3a9d63109aa585
+    fix_date: 2021-09-15
+    crash_func: uprv_stricmp_70
+    crash_file: icu4c/source/common/cstring.cpp
+    signature: [stack-use-after-scope, READ, uprv_stricmp_70, cstring.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42501263"
+  - oss_id: 42508617
+    harness: ucasemap_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4962050f47ecdef3539b7035b030ff712c1fc6f7
+    fix_date: 2022-02-23
+    crash_func: maybeTitleDutchIJ
+    crash_file: icu4c/source/common/ucasemap.cpp
+    signature: [heap-buffer-overflow, READ, maybeTitleDutchIJ, ucasemap.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508617"
+  - oss_id: 42527280
+    harness: uloc_is_right_to_left_fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 5d6d197a03c100428cd523346ace880ef9e56fe5
+    fix_date: 2023-08-22
+    crash_func: _uloc_addLikelySubtags
+    crash_file: icu4c/source/common/loclikely.cpp
+    signature: [stack-use-after-scope, READ, _uloc_addLikelySubtags, loclikely.cpp]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42527280"
+  - oss_id: 42527841
+    harness: locale_morph_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 68a61daa959c03f4c624d73802d98730c35ad3da
+    fix_date: 2023-09-12
+    crash_func: "icu_74::CheckedArrayByteSink::Append(char const*, int)"
+    crash_file: icu4c/source/common/bytestream.cpp
+    signature: [stack-buffer-overflow, READ, "icu_74::CheckedArrayByteSink::Append", bytestream.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527841"
+  - oss_id: 42528131
+    harness: locale_morph_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 386e9a10db28af620658ca0c635e1d98915f6306
+    fix_date: 2023-09-15
+    crash_func: _appendKeywordsToLanguageTag
+    crash_file: icu4c/source/common/uloc_tag.cpp
+    signature: [stack-buffer-overflow, WRITE, _appendKeywordsToLanguageTag, uloc_tag.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528131"
+  - oss_id: 42528225
+    harness: date_format_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 990779c4bf935d2741ef6514f4d070231c388d05
+    fix_date: 2023-09-19
+    crash_func: getDayPeriodForHour
+    crash_file: icu4c/source/i18n/dayperiodrules.h
+    signature: [heap-buffer-overflow, READ, getDayPeriodForHour, dayperiodrules.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528225"
+  - oss_id: 42531617
+    harness: time_zone_names_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 838227ce9570921e0aa75a399fdff47862d34f61
+    fix_date: 2023-12-19
+    crash_func: "icu_75::mergeTimeZoneKey(icu_75::UnicodeString const&, char*)"
+    crash_file: icu4c/source/i18n/tznames_impl.cpp
+    signature: [stack-buffer-overflow, WRITE, "icu_75::mergeTimeZoneKey", tznames_impl.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531617"
+  - oss_id: 42531783
+    harness: date_format_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 87ca0234476c62f7d42ab43bb4f5e17ca329f5d0
+    fix_date: 2024-01-10
+    crash_func: "_canonicalize(char const*, icu_75::ByteSink&, unsigned int, UErrorCode*)"
+    crash_file: icu4c/source/common/uloc.cpp
+    signature: [stack-buffer-overflow, READ, _canonicalize, uloc.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531783"
+  - oss_id: 42532047
+    harness: plurrule_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3eb8923b9730efeae10a92f8054f63495fe8a95f
+    fix_date: 2024-01-19
+    crash_func: getNumberValue
+    crash_file: icu4c/source/i18n/plurrule.cpp
+    signature: [stack-buffer-overflow, WRITE, getNumberValue, plurrule.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532047"
+  - oss_id: 42534905
+    harness: ubidi_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 464531eb8e08abe0bd183401525a05e32423cb30
+    fix_date: 2024-05-02
+    crash_func: __asan_memcpy
+    crash_file: llvm-project/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp
+    signature: [heap-buffer-overflow, READ, __asan_memcpy, asan_interceptors_memintrinsics.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534905"
+  - oss_id: 42535104
+    harness: ubidi_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: faac745421f0ef85baf6001216b80aaaddb0e821
+    fix_date: 2024-05-29
+    crash_func: ubidi_writeReordered_76
+    crash_file: icu4c/source/common/ubidiwrt.cpp
+    signature: [heap-buffer-overflow, READ, ubidi_writeReordered_76, ubidiwrt.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535104"
+  - oss_id: 407590995
+    harness: uregex_match_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 197be68a147938c38d227bd832fd3e23bec77283
+    fix_date: 2025-06-30
+    crash_func: "icu_76::RegexMatcher::MatchChunkAt(int, signed char, UErrorCode&)"
+    crash_file: icu4c/source/i18n/rematch.cpp
+    signature: [heap-buffer-overflow, READ, "icu_76::RegexMatcher::MatchChunkAt", rematch.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/407590995"
+rejected: []
+error: null

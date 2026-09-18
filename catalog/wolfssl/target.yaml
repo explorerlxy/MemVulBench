@@ -1,0 +1,470 @@
+project: wolfssl
+repo: "https://github.com/wolfssl/wolfssl"
+n_sites: 37
+n_issues: 37
+harnesses: [cryptofuzz-disable-fastmath, cryptofuzz-fastmath, cryptofuzz-normal-math, cryptofuzz-openssl-api, cryptofuzz-sp-math, cryptofuzz-sp-math-all, fuzzer-wolfssh-client, fuzzer-wolfssh-client-randomize, fuzzer-wolfssh-server, fuzzer-wolfssh-server-randomize, fuzzer-wolfssl-client, fuzzer-wolfssl-client-randomize, fuzzer-wolfssl-crl, fuzzer-wolfssl-misc, fuzzer-wolfssl-ocsp, fuzzer-wolfssl-server, fuzzer-wolfssl-server-randomize, fuzzer-wolfssl-x509]
+base:
+  commit: a13e9bde29c0d4fb15859e9dd9b0d58a3f04ec1c
+  date: 2021-01-18
+  method: wave_eve
+  n_latent: 18
+  n_latent_upper: 18
+  n_wave: 2
+  note: "eve of 2021-01-19 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-02-15
+    n: 3
+    eve: 505514415d345ab14c6c0b04418fdf132da3079b
+    n_latent_upper: 14
+    oss_ids: [42493197, 42493042, 42493167]
+  - day: 2021-01-19
+    n: 2
+    eve: a13e9bde29c0d4fb15859e9dd9b0d58a3f04ec1c
+    n_latent_upper: 18
+    oss_ids: [42491298, 42491616]
+  - day: 2022-07-26
+    n: 2
+    eve: a98642ba61f1848b819b307fd1ec084306c35680
+    n_latent_upper: 11
+    oss_ids: [42513882, 42513886]
+  - day: 2020-10-07
+    n: 1
+    eve: 270da3c33c85569ffbe22bc201222b44dc7e57b7
+    n_latent_upper: 22
+    oss_ids: [42487677]
+  - day: 2020-10-16
+    n: 1
+    eve: a595e3cc4849a80e0c98ce6b5bb93741875988ed
+    n_latent_upper: 21
+    oss_ids: [42488087]
+  - day: 2020-10-30
+    n: 1
+    eve: bd3841c7d152849564cf9a1f8eb45d4cdb4a952d
+    n_latent_upper: 20
+    oss_ids: [42489610]
+  - day: 2020-12-30
+    n: 1
+    eve: c482d160290c5cf314a3b10eba621dd37b6795a1
+    n_latent_upper: 20
+    oss_ids: [42491082]
+  - day: 2021-01-04
+    n: 1
+    eve: 54f072fd8d591eebd9c800315a036e35f116f991
+    n_latent_upper: 19
+    oss_ids: [42491208]
+  - day: 2021-01-21
+    n: 1
+    eve: 57b06f700de37424cbba37c67b955fa5598e4950
+    n_latent_upper: 16
+    oss_ids: [42492729]
+  - day: 2021-02-06
+    n: 1
+    eve: 714aa97490f0574fff7f766f31931de13cb2b986
+    n_latent_upper: 15
+    oss_ids: [42492581]
+  - day: 2021-02-11
+    n: 1
+    eve: d05dc921a7896e7a9559f42ead88e4dc1d4dfb87
+    n_latent_upper: 15
+    oss_ids: [42491507]
+  - day: 2021-05-26
+    n: 1
+    eve: 956a0f2b5f000de6955a51379917bf7b3ff29a41
+    n_latent_upper: 15
+    oss_ids: [42497441]
+bugs:
+  - oss_id: 42487677
+    harness: fuzzer-wolfssh-server
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4f6c1db9a2ae47cfe488e7443ce54b7e2a815261
+    fix_date: 2020-10-07
+    crash_func: SendUserAuthPkOk
+    crash_file: src/internal.c
+    signature: [heap-buffer-overflow, READ, SendUserAuthPkOk, internal.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487677"
+  - oss_id: 42488087
+    harness: fuzzer-wolfssl-server-randomize
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4364700c01bb55bc664106e6c8b997849ec69228
+    fix_date: 2020-10-16
+    crash_func: fp_to_unsigned_bin_at_pos
+    crash_file: src/tfm.c
+    signature: [heap-buffer-overflow, WRITE, fp_to_unsigned_bin_at_pos, tfm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488087"
+  - oss_id: 42489610
+    harness: fuzzer-wolfssh-client
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 22816b53dee81e0be97e8e3aedbcf972201c8a14
+    fix_date: 2020-10-30
+    crash_func: fp_read_unsigned_bin
+    crash_file: src/tfm.c
+    signature: [stack-buffer-overflow, READ, fp_read_unsigned_bin, tfm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489610"
+  - oss_id: 42491082
+    harness: cryptofuzz-sp-math-all
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 81f70fba5f6f3fd4715cbe1d51e3b7e76ce22b5d
+    fix_date: 2020-12-30
+    crash_func: "cryptofuzz::module::wolfCrypt_bignum::Bignum::ToDecString()"
+    crash_file: cryptofuzz-sp-math-all/modules/wolfcrypt/bn_helper.cpp
+    signature: [heap-buffer-overflow, WRITE, "cryptofuzz::module::wolfCrypt_bignum::Bignum::ToDecString", bn_helper.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491082"
+  - oss_id: 42491208
+    harness: fuzzer-wolfssl-server
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 46e260dd61971cc180e9313a6bbda79e5fc88f00
+    fix_date: 2021-01-04
+    crash_func: ato16
+    crash_file: src/misc.c
+    signature: [heap-buffer-overflow, READ, ato16, misc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491208"
+  - oss_id: 42491298
+    harness: cryptofuzz-sp-math-all
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 949af909bf32789d741cdabe685d95b7410674fb
+    fix_date: 2021-01-19
+    crash_func: sp_tohex
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, WRITE, sp_tohex, sp_int.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42491298"
+  - oss_id: 42491507
+    harness: cryptofuzz-openssl-api
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 39cb84de25a9119481b9ccaa69b34dd99451435a
+    fix_date: 2021-02-11
+    crash_func: AES_GCM_encrypt_C
+    crash_file: src/aes.c
+    signature: [heap-buffer-overflow, WRITE, AES_GCM_encrypt_C, aes.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42491507"
+  - oss_id: 42491616
+    harness: cryptofuzz-openssl-api
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 949af909bf32789d741cdabe685d95b7410674fb
+    fix_date: 2021-01-19
+    crash_func: wc_AesFeedbackEncrypt
+    crash_file: src/aes.c
+    signature: [heap-buffer-overflow, WRITE, wc_AesFeedbackEncrypt, aes.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42491616"
+  - oss_id: 42492581
+    harness: cryptofuzz-disable-fastmath
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3fd2647383318d5ca0c4ec3ef99119c863c51528
+    fix_date: 2021-02-06
+    crash_func: Sha512Update
+    crash_file: src/sha512.c
+    signature: [stack-buffer-overflow, WRITE, Sha512Update, sha512.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492581"
+  - oss_id: 42492729
+    harness: fuzzer-wolfssh-server-randomize
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: af3d8426634f65e208c2f0e042e11f9524ef30a9
+    fix_date: 2021-01-21
+    crash_func: DoUserAuthRequestEcc
+    crash_file: src/internal.c
+    signature: [negative-size-param, -, DoUserAuthRequestEcc, internal.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492729"
+  - oss_id: 42493042
+    harness: fuzzer-wolfssl-client
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ba1c67843a1f2e8a0ad990bb783d65610990adc7
+    fix_date: 2021-02-15
+    crash_func: ProcessPeerCerts
+    crash_file: src/internal.c
+    signature: [heap-buffer-overflow, WRITE, ProcessPeerCerts, internal.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493042"
+  - oss_id: 42493167
+    harness: cryptofuzz-sp-math
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 830de9a9fb99e30f9ac9caa0a7f7bba29c3b4863
+    fix_date: 2021-02-15
+    crash_func: sp_copy
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, WRITE, sp_copy, sp_int.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493167"
+  - oss_id: 42493197
+    harness: cryptofuzz-sp-math-all
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e4f8545e36fb28249864ff7f3a73b6460f6882c3
+    fix_date: 2021-02-15
+    crash_func: sp_exch
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, READ, sp_exch, sp_int.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493197"
+  - oss_id: 42496739
+    harness: fuzzer-wolfssl-misc
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 220bfe9926852df2c89066ba4cc4d07e82e3c0ec
+    fix_date: 2021-06-14
+    crash_func: Base64_Decode
+    crash_file: src/coding.c
+    signature: [heap-buffer-overflow, READ, Base64_Decode, coding.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496739"
+  - oss_id: 42497441
+    harness: fuzzer-wolfssl-ocsp
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cfef249041313a0b6a5229fca4a414aa8c053fa8
+    fix_date: 2021-05-26
+    crash_func: DecodeSingleResponse
+    crash_file: src/asn.c
+    signature: [stack-buffer-overflow, WRITE, DecodeSingleResponse, asn.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497441"
+  - oss_id: 42498216
+    harness: fuzzer-wolfssl-server
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 656e49cc3b39957b5e98affa0a3aae6bda17c37f
+    fix_date: 2021-06-24
+    crash_func: TLS_hmac
+    crash_file: src/tls.c
+    signature: [heap-buffer-overflow, READ, TLS_hmac, tls.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498216"
+  - oss_id: 42503094
+    harness: cryptofuzz-disable-fastmath
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0522e19fc1f2b399ef52a6a1268ccf4d6e91ef30
+    fix_date: 2021-10-10
+    crash_func: mp_mod_2d
+    crash_file: src/integer.c
+    signature: [heap-buffer-overflow, WRITE, mp_mod_2d, integer.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42503094"
+  - oss_id: 42505617
+    harness: fuzzer-wolfssl-x509
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bd515cd3a62c16a33a01a7f488eb45eda2d5a63b
+    fix_date: 2021-12-17
+    crash_func: DecodePolicyConstraints
+    crash_file: src/asn.c
+    signature: [heap-buffer-overflow, READ, DecodePolicyConstraints, asn.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42505617"
+  - oss_id: 42513882
+    harness: cryptofuzz-disable-fastmath
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c2476e38581804958f31bae786b6039ee5d5a3d0
+    fix_date: 2022-07-26
+    crash_func: sp_copy
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, WRITE, sp_copy, sp_int.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513882"
+  - oss_id: 42513886
+    harness: cryptofuzz-normal-math
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c2476e38581804958f31bae786b6039ee5d5a3d0
+    fix_date: 2022-07-26
+    crash_func: sp_copy
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, WRITE, sp_copy, sp_int.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513886"
+  - oss_id: 42513887
+    harness: cryptofuzz-sp-math
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 23a01b32764a3681ec2997510a301d434efa1536
+    fix_date: 2022-08-15
+    crash_func: sp_256_from_mp
+    crash_file: src/sp_x86_64.c
+    signature: [heap-buffer-overflow, WRITE, sp_256_from_mp, sp_x86_64.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513887"
+  - oss_id: 42514480
+    harness: fuzzer-wolfssh-server
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ef47cc86ffa3fc790968344e7c1f21bcc5a452b
+    fix_date: 2022-08-10
+    crash_func: wolfSSH_CleanPath
+    crash_file: src/internal.c
+    signature: [heap-buffer-overflow, READ, wolfSSH_CleanPath, internal.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514480"
+  - oss_id: 42519156
+    harness: fuzzer-wolfssl-x509
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8c54bd0fb190dfcf51b1bd9a585c0059eb569074
+    fix_date: 2022-12-15
+    crash_func: DecodeAltNames
+    crash_file: src/asn.c
+    signature: [heap-buffer-overflow, READ, DecodeAltNames, asn.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42519156"
+  - oss_id: 42520835
+    harness: cryptofuzz-fastmath
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5b8fda1ac68f7fb79394aaed5ff3ebc828beca71
+    fix_date: 2023-02-10
+    crash_func: fp_to_unsigned_bin_len
+    crash_file: src/tfm.c
+    signature: [heap-buffer-overflow, READ, fp_to_unsigned_bin_len, tfm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520835"
+  - oss_id: 42521961
+    harness: fuzzer-wolfssl-crl
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4eeb792a05740c750048aa0e1088e970b0a3daa4
+    fix_date: 2023-03-21
+    crash_func: ParseCRL_Extensions
+    crash_file: src/asn.c
+    signature: [heap-buffer-overflow, READ, ParseCRL_Extensions, asn.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42521961"
+  - oss_id: 42522543
+    harness: fuzzer-wolfssl-client-randomize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: aeffe6cfa799565a05bd30d0271fa0bdd26a3d31
+    fix_date: 2023-03-23
+    crash_func: memory_test
+    crash_file: include/fuzzers/shared.h
+    signature: [heap-buffer-overflow, READ, memory_test, shared.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522543"
+  - oss_id: 42523371
+    harness: cryptofuzz-normal-math
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 70322f620dfb4f13d9222664a57bfee1fe840fd9
+    fix_date: 2023-04-18
+    crash_func: sp_read_unsigned_bin
+    crash_file: src/sp_int.c
+    signature: [heap-buffer-overflow, WRITE, sp_read_unsigned_bin, sp_int.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523371"
+  - oss_id: 42523839
+    harness: fuzzer-wolfssl-client-randomize
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 46dce4b33f45b3a4d9fdd62b61ec281ba8fa3447
+    fix_date: 2023-05-11
+    crash_func: wolfCrypt_custom_free
+    crash_file: include/fuzzers/shared.h
+    signature: [attempting, -, wolfCrypt_custom_free, shared.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42523839"
+  - oss_id: 42530527
+    harness: fuzzer-wolfssl-server-randomize
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f65f8be1767690c34513b12605076287785fd148
+    fix_date: 2023-11-26
+    crash_func: wc_ecc_free
+    crash_file: src/ecc.c
+    signature: [heap-buffer-overflow, READ, wc_ecc_free, ecc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42530527"
+rejected:
+  - oss_id: 42492412
+    reason: commit_missing
+  - oss_id: 42500195
+    reason: commit_missing
+  - oss_id: 42508792
+    reason: commit_missing
+  - oss_id: 42513890
+    reason: commit_missing
+  - oss_id: 42520151
+    reason: commit_missing
+  - oss_id: 42520208
+    reason: commit_missing
+  - oss_id: 42520867
+    reason: commit_missing
+  - oss_id: 42524965
+    reason: commit_missing
+error: null

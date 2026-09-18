@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="656.1pt" height="385.848pt" viewBox="0 0 656.1 385.848" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.6.3, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 385.848 
+L 656.1 385.848 
+L 656.1 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 22.6008 153.179064 
+L 200.3517 153.179064 
+Q 208.0521 153.179064 208.0521 148.721688 
+L 208.0521 62.545752 
+Q 208.0521 58.088376 200.3517 58.088376 
+L 22.6008 58.088376 
+Q 14.9004 58.088376 14.9004 62.545752 
+L 14.9004 148.721688 
+Q 14.9004 153.179064 22.6008 153.179064 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 237.5703 153.179064 
+L 415.3212 153.179064 
+Q 423.0216 153.179064 423.0216 148.721688 
+L 423.0216 62.545752 
+Q 423.0216 58.088376 415.3212 58.088376 
+L 237.5703 58.088376 
+Q 229.8699 58.088376 229.8699 62.545752 
+L 229.8699 148.721688 
+Q 229.8699 153.179064 237.5703 153.179064 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 452.5398 153.179064 
+L 630.2907 153.179064 
+Q 637.9911 153.179064 637.9911 148.721688 
+L 637.9911 62.545752 
+Q 637.9911 58.088376 630.2907 58.088376 
+L 452.5398 58.088376 
+Q 444.8394 58.088376 444.8394 62.545752 
+L 444.8394 148.721688 
+Q 444.8394 153.179064 452.5398 153.179064 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 452.5398 281.328624 
+L 630.2907 281.328624 
+Q 637.9911 281.328624 637.9911 276.871248 
+L 637.9911 190.695312 
+Q 637.9911 186.237936 630.2907 186.237936 
+L 452.5398 186.237936 
+Q 444.8394 186.237936 444.8394 190.695312 
+L 444.8394 276.871248 
+Q 444.8394 281.328624 452.5398 281.328624 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 237.5703 281.328624 
+L 415.3212 281.328624 
+Q 423.0216 281.328624 423.0216 276.871248 
+L 423.0216 190.695312 
+Q 423.0216 186.237936 415.3212 186.237936 
+L 237.5703 186.237936 
+Q 229.8699 186.237936 229.8699 190.695312 
+L 229.8699 276.871248 
+Q 229.8699 281.328624 237.5703 281.328624 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #0072b2; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 22.6008 281.328624 
+L 200.3517 281.328624 
+Q 208.0521 281.328624 208.0521 276.871248 
+L 208.0521 190.695312 
+Q 208.0521 186.237936 200.3517 186.237936 
+L 22.6008 186.237936 
+Q 14.9004 186.237936 14.9004 190.695312 
+L 14.9004 276.871248 
+Q 14.9004 281.328624 22.6008 281.328624 
+z
+" clip-path="url(#p69c83e2bdc)" style="fill: #f7fafc; stroke: #009e73; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 20.034 311.78736 
+L 636.066 311.78736 
+" clip-path="url(#p69c83e2bdc)" style="fill: none; stroke: #cbd5df; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="20.20068" transform="rotate(-0 328.05 20.20068)">Criteria → construction artifacts → verification</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="111.47625" y="87.986119" transform="rotate(-0 111.47625 87.986119)">1  Source and type screen</text>
+   </g>
+   <g id="text_3">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(92.834297 120.773332)">C1 + C2</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(33.942656 132.902941)">Historical memory-bug candidates</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 208.125654 105.63372 
+Q 217.354515 105.63372 225.018128 105.63372 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 221.018128 103.63372 
+L 225.018128 105.63372 
+L 221.018128 107.63372 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="326.44575" y="88.027134" transform="rotate(-0 326.44575 88.027134)">2  Select a common revision</text>
+   </g>
+   <g id="text_5">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(307.803797 120.773332)">C1 + C2</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(244.644188 132.902941)">Upstream version and candidate set</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 423.095154 105.63372 
+Q 432.324015 105.63372 439.987628 105.63372 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 435.987628 103.63372 
+L 439.987628 105.63372 
+L 435.987628 107.63372 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="541.41525" y="87.986119" transform="rotate(-0 541.41525 87.986119)">3  Replay and attribute</text>
+   </g>
+   <g id="text_7">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(535.409859 120.773332)">C3</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(461.349 132.902941)">PoCs, reports and identity evidence</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="541.41525" y="216.135679" transform="rotate(-0 541.41525 216.135679)">4  Organize one harness</text>
+   </g>
+   <g id="text_9">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(535.409859 248.922892)">C2</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(464.937047 261.052501)">Original entry or prefix dispatcher</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #0072b2; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="326.44575" y="216.176694" transform="rotate(-0 326.44575 216.176694)">5  Link final witnesses</text>
+   </g>
+   <g id="text_11">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(307.803797 248.922892)">C2 + C3</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(257.324344 261.052501)">Bug / fingerprint / input / route</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #009e73; font: 700 10.5px 'DejaVu Sans'; text-anchor: middle" x="111.47625" y="216.176694" transform="rotate(-0 111.47625 216.176694)">6  Preserve environments</text>
+   </g>
+   <g id="text_13">
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(105.470859 248.922892)">C4</text>
+    <text style="font: 9px 'DejaVu Sans'" transform="translate(32.207344 261.052501)">Build and runtime image manifests</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 541.7361 155.922256 
+Q 541.7361 169.706885 541.7361 181.926265 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 543.7361 177.926265 
+L 541.7361 181.926265 
+L 539.7361 177.926265 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 441.558521 233.78328 
+Q 433.932178 233.78328 427.871083 233.78328 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 431.871083 235.78328 
+L 427.871083 233.78328 
+L 431.871083 231.78328 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 226.589021 233.78328 
+Q 218.962678 233.78328 212.901583 233.78328 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 216.901583 235.78328 
+L 212.901583 233.78328 
+L 216.901583 231.78328 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 111.7971 284.07431 
+Q 111.7971 295.073166 111.7971 304.506775 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 113.7971 300.506775 
+L 111.7971 304.506775 
+L 109.7971 300.506775 
+" style="fill: none; stroke: #52616b; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_14">
+    <text style="fill: #009e73; font: 700 9.5px 'DejaVu Sans'; text-anchor: middle" x="87.4125" y="332.217" transform="rotate(-0 87.4125 332.217)">RQ1  Real provenance</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #009e73; font: 700 9.5px 'DejaVu Sans'; text-anchor: middle" x="247.8375" y="332.217" transform="rotate(-0 247.8375 332.217)">RQ2  Entries per unit</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #009e73; font: 700 9.5px 'DejaVu Sans'; text-anchor: middle" x="408.2625" y="332.217" transform="rotate(-0 408.2625 332.217)">RQ3  PoCs + identities</text>
+   </g>
+   <g id="text_17">
+    <text style="fill: #009e73; font: 700 9.5px 'DejaVu Sans'; text-anchor: middle" x="568.6875" y="332.217" transform="rotate(-0 568.6875 332.217)">RQ4  Image evidence</text>
+   </g>
+   <g id="text_18">
+    <text style="fill: #52616b; font: 9px 'DejaVu Sans'; text-anchor: middle" x="328.05" y="361.93284" transform="rotate(-0 328.05 361.93284)">Verification reports both supporting evidence and gaps; recorded metadata is not a passed check.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p69c83e2bdc">
+   <rect x="7.2" y="7.2" width="641.7" height="371.448"/>
+  </clipPath>
+ </defs>
+</svg>

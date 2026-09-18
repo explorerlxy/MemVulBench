@@ -1,0 +1,236 @@
+project: libxslt
+repo: "https://gitlab.gnome.org/GNOME/libxslt.git"
+n_sites: 13
+n_issues: 13
+harnesses: [xpath, xslt]
+base:
+  commit: 7238299d64847e44bfe92170af1c7c57e26d469a
+  date: 2021-01-17
+  method: measured_sweep
+  n_latent: 4
+  n_latent_upper: 4
+  n_wave: 3
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-03-18
+    n: 3
+    eve: fbec07736bd4f8fe969a6ff9a95c2f9946e1d486
+    n_latent_upper: 9
+    oss_ids: [42509179, 42509193, 42509225]
+  - day: 2023-03-16
+    n: 2
+    eve: 5d452a61d3580054c45501f761f233d34b8a29d3
+    n_latent_upper: 6
+    oss_ids: [42522274, 42522278]
+  - day: 2019-09-15
+    n: 1
+    eve: d8ce4f1c27cdcbe0b202a696d636d2122abb192e
+    n_latent_upper: 3
+    oss_ids: [42477952]
+  - day: 2019-10-20
+    n: 1
+    eve: 6d4a773a4bd06cbfe3c0ca68728d0099777e8df6
+    n_latent_upper: 2
+    oss_ids: [42479300]
+  - day: 2021-02-02
+    n: 1
+    eve: 7238299d64847e44bfe92170af1c7c57e26d469a
+    n_latent_upper: 4
+    oss_ids: [42492314]
+  - day: 2023-03-15
+    n: 1
+    eve: f13329a622f0370bf1eb72ef99229e8faf46f732
+    n_latent_upper: 6
+    oss_ids: [42522260]
+  - day: 2023-03-19
+    n: 1
+    eve: df6dc8f69940e56b4900acd74dd6e16afc7f328b
+    n_latent_upper: 4
+    oss_ids: [42522452]
+  - day: 2023-03-21
+    n: 1
+    eve: d8dda889b361f85fd94c6a2feba61e2309a17515
+    n_latent_upper: 3
+    oss_ids: [42522611]
+  - day: 2023-04-10
+    n: 1
+    eve: 075b6087785d7ba3dd6904f117ef9d0b9aa36a2b
+    n_latent_upper: 2
+    oss_ids: [42522804]
+  - day: 2024-07-30
+    n: 1
+    eve: f5ee8c954d3194c5f3fe4ed3795e5b063dd1f296
+    n_latent_upper: 1
+    oss_ids: [42537531]
+bugs:
+  - oss_id: 42477952
+    harness: xpath
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e1f8d2e6eb1167fd51eb5b8c99d2d40c37299897
+    fix_date: 2019-09-15
+    crash_func: xsltFormatNumberConversion
+    crash_file: numbers.c
+    signature: [heap-buffer-overflow, READ, xsltFormatNumberConversion, numbers.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477952"
+  - oss_id: 42479300
+    harness: xpath
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b6f38bfdd2241cded26d20036d99669df305ce7e
+    fix_date: 2019-10-20
+    crash_func: xmlXPathCompileExpr
+    crash_file: libxml2/xpath.c
+    signature: [heap-buffer-overflow, READ, xmlXPathCompileExpr, xpath.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42479300"
+  - oss_id: 42492314
+    harness: xslt
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 3e8bbcdec8d2318ca8ab27a2a4a509a5d9bb2d51
+    fix_date: 2021-02-02
+    crash_func: xmlFreeNodeList
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeNodeList, tree.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42492314"
+  - oss_id: 42509179
+    harness: xslt
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 22f12ce58eb5f41d23bb205530034b29aac03700
+    fix_date: 2022-03-18
+    crash_func: xmlFreeProp
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeProp, tree.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42509179"
+  - oss_id: 42509193
+    harness: xslt
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 22f12ce58eb5f41d23bb205530034b29aac03700
+    fix_date: 2022-03-18
+    crash_func: xmlFreeNodeList
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeNodeList, tree.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42509193"
+  - oss_id: 42509225
+    harness: xslt
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 22f12ce58eb5f41d23bb205530034b29aac03700
+    fix_date: 2022-03-18
+    crash_func: xmlFreeNode
+    crash_file: libxml2/tree.c
+    signature: [attempting, -, xmlFreeNode, tree.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42509225"
+  - oss_id: 42522260
+    harness: xslt
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: ac9d752240d399db1d7c09f2ef4008200a272c8c
+    fix_date: 2023-03-15
+    crash_func: xsltCompileStepPattern
+    crash_file: pattern.c
+    signature: [attempting, -, xsltCompileStepPattern, pattern.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522260"
+  - oss_id: 42522274
+    harness: xslt
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c401ed2166493eeaf5d00dc47fe139a6f47fd5cf
+    fix_date: 2023-03-16
+    crash_func: xmlParseContentInternal
+    crash_file: libxml2/parser.c
+    signature: [global-buffer-overflow, READ, xmlParseContentInternal, parser.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522274"
+  - oss_id: 42522278
+    harness: xslt
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c401ed2166493eeaf5d00dc47fe139a6f47fd5cf
+    fix_date: 2023-03-16
+    crash_func: xmlSkipBlankChars
+    crash_file: libxml2/parser.c
+    signature: [global-buffer-overflow, READ, xmlSkipBlankChars, parser.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522278"
+  - oss_id: 42522452
+    harness: xslt
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: dd5a4064672c18e01b8a06ba62e67df24390f64a
+    fix_date: 2023-03-19
+    crash_func: xsltFreeAVTList
+    crash_file: attrvt.c
+    signature: [heap-use-after-free, READ, xsltFreeAVTList, attrvt.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522452"
+  - oss_id: 42522611
+    harness: xslt
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 569328d95d418f10067bb5915147d600986f9058
+    fix_date: 2023-03-21
+    crash_func: xmlParseNotationDecl
+    crash_file: libxml2/parser.c
+    signature: [global-buffer-overflow, READ, xmlParseNotationDecl, parser.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522611"
+  - oss_id: 42522804
+    harness: xslt
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 677b2e8fe8187f3ba981dc97f65e75fec2dec62c
+    fix_date: 2023-04-10
+    crash_func: xmlHashDefaultDeallocator
+    crash_file: libxml2/hash.c
+    signature: [attempting, -, xmlHashDefaultDeallocator, hash.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42522804"
+  - oss_id: 42537531
+    harness: xslt
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ab10c15fc73e8d79aea1599a61f491b5a1ddee63
+    fix_date: 2024-07-30
+    crash_func: xmlCharEncCloseFunc
+    crash_file: libxml2/encoding.c
+    signature: [heap-use-after-free, READ, xmlCharEncCloseFunc, encoding.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42537531"
+rejected: []
+error: null

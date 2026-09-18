@@ -1,0 +1,342 @@
+project: graphicsmagick
+repo: "https://foss.heptapod.net/graphicsmagick/graphicsmagick"
+n_sites: 25
+n_issues: 25
+harnesses: ["^[[?62;c^[[>1;4000;32c^[P>|kitty(0.32.2)^[\\coder_JPEG_fuzzer", coder_BIGTIFF_fuzzer, coder_DPX_fuzzer, coder_JPG_fuzzer, coder_JXL_fuzzer, coder_MAT_fuzzer, coder_MIFF_fuzzer, coder_MNG_fuzzer, coder_MPC_fuzzer, coder_MSL_fuzzer, coder_MVG_fuzzer, coder_PCT_fuzzer, coder_PICT_fuzzer, coder_PNG_fuzzer, coder_PTIF_fuzzer, coder_SUN_fuzzer, coder_WPG_fuzzer]
+base:
+  commit: null
+  date: null
+  method: unresolved
+  n_latent: 0
+  n_latent_upper: 0
+  n_wave: 0
+  note: "clone: remote: Gitlab::GitAccess::NotFoundError\nfatal: repository 'https://foss.heptapod.net/graphicsmagick/graphicsmagick/' not found"
+waves: []
+bugs:
+  - oss_id: 42470064
+    harness: coder_MVG_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bc328f2fcf47f91b1b14d04665cb209e30e0716d
+    fix_date: null
+    crash_func: TranslateTextEx
+    crash_file: magick/utility.c
+    signature: [stack-buffer-overflow, WRITE, TranslateTextEx, utility.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42470064"
+  - oss_id: 42470109
+    harness: coder_MVG_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f9154aa8139f5761d61b8108a2252c55187b0602
+    fix_date: null
+    crash_func: ConvertPrimitiveToPath
+    crash_file: magick/render.c
+    signature: [heap-buffer-overflow, WRITE, ConvertPrimitiveToPath, render.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42470109"
+  - oss_id: 42470341
+    harness: coder_MVG_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 90ff9f04a465b7f797c23799afdd3d45c45f07ce
+    fix_date: null
+    crash_func: TracePoint
+    crash_file: magick/render.c
+    signature: [heap-buffer-overflow, WRITE, TracePoint, render.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42470341"
+  - oss_id: 42470443
+    harness: coder_MNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2c147f7b970a749bf8c0d40a61b34443d22223a3
+    fix_date: null
+    crash_func: mng_get_long
+    crash_file: coders/png.c
+    signature: [heap-buffer-overflow, READ, mng_get_long, png.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42470443"
+  - oss_id: 42470720
+    harness: coder_MVG_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 709e7ed55c6ae30c7d822d589ee1baefd7577507
+    fix_date: null
+    crash_func: MagickGetToken
+    crash_file: magick/utility.c
+    signature: [stack-buffer-overflow, READ, MagickGetToken, utility.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42470720"
+  - oss_id: 42473496
+    harness: coder_MVG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cba247b8e1f16e37cf2744fee3d71cb323e5d387
+    fix_date: null
+    crash_func: DrawDashPolygon
+    crash_file: magick/render.c
+    signature: [heap-buffer-overflow, READ, DrawDashPolygon, render.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42473496"
+  - oss_id: 42475536
+    harness: "^[[?62;c^[[>1;4000;32c^[P>|kitty(0.32.2)^[\\coder_JPEG_fuzzer"
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6ba17134dc332e90dbe832f3d4c114d55d9aef1
+    fix_date: null
+    crash_func: GenerateEXIFAttribute
+    crash_file: magick/attribute.c
+    signature: [heap-buffer-overflow, READ, GenerateEXIFAttribute, attribute.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42475536"
+  - oss_id: 42476325
+    harness: coder_MVG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b94644cbd4062312901837d2ea477ca35d5efa21
+    fix_date: null
+    crash_func: TraceSquareLinecap
+    crash_file: magick/render.c
+    signature: [heap-buffer-overflow, READ, TraceSquareLinecap, render.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42476325"
+  - oss_id: 42481148
+    harness: coder_PICT_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: "9b958e79d967101509dbe9ddf26b42e580c35909\nb2982b34791b78ba5469b8772d6df82ed11f73e4"
+    fix_date: null
+    crash_func: DecodeImage
+    crash_file: coders/pict.c
+    signature: [heap-buffer-overflow, READ, DecodeImage, pict.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42481148"
+  - oss_id: 42481154
+    harness: coder_PICT_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b2982b34791b78ba5469b8772d6df82ed11f73e4
+    fix_date: null
+    crash_func: ExpandBuffer
+    crash_file: coders/pict.c
+    signature: [heap-buffer-overflow, READ, ExpandBuffer, pict.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42481154"
+  - oss_id: 42481448
+    harness: coder_WPG_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 83b4d2b4b873dc2cb29cd7dff5c209c2b8f05682
+    fix_date: null
+    crash_func: InsertRow
+    crash_file: coders/wpg.c
+    signature: [heap-buffer-overflow, WRITE, InsertRow, wpg.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42481448"
+  - oss_id: 42483368
+    harness: coder_WPG_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 83b4d2b4b873dc2cb29cd7dff5c209c2b8f05682
+    fix_date: null
+    crash_func: ImportGrayQuantumType
+    crash_file: magick/import.c
+    signature: [heap-use-after-free, WRITE, ImportGrayQuantumType, import.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42483368"
+  - oss_id: 42489833
+    harness: coder_JPG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 450f946ef86dcbb9686b5f0089c332a22bbc5a60
+    fix_date: null
+    crash_func: decompress_smooth_data
+    crash_file: libjpeg-turbo/jdcoefct.c
+    signature: [heap-buffer-overflow, READ, decompress_smooth_data, jdcoefct.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42489833"
+  - oss_id: 42490929
+    harness: coder_MPC_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: "f226cbdadb837939da7612845a06c2d0e7456e3a\nb2b75f418d414e9dd15cbee293c12e0e7a4e73ef"
+    fix_date: null
+    crash_func: _MagickReallocateResourceLimitedMemory
+    crash_file: magick/memory.c
+    signature: [heap-buffer-overflow, READ, _MagickReallocateResourceLimitedMemory, memory.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42490929"
+  - oss_id: 42494719
+    harness: coder_MSL_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: e4d8bf18397d53631cb29172b483b796c1bc625c
+    fix_date: null
+    crash_func: ProcessMSLScript
+    crash_file: coders/msl.c
+    signature: [heap-use-after-free, READ, ProcessMSLScript, msl.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42494719"
+  - oss_id: 42507212
+    harness: coder_PCT_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 241c653c42ad1f21a8904806e099b3b038c9bc84
+    fix_date: null
+    crash_func: ReadBlob
+    crash_file: magick/blob.c
+    signature: [heap-buffer-overflow, WRITE, ReadBlob, blob.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42507212"
+  - oss_id: 42519761
+    harness: coder_SUN_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6276f58fac266293f7892cf09c5ceb3a731df45d
+    fix_date: null
+    crash_func: ReadImage
+    crash_file: magick/constitute.c
+    signature: [heap-buffer-overflow, READ, ReadImage, constitute.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42519761"
+  - oss_id: 42531066
+    harness: coder_JXL_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: aec67d608efc48f0cc1cf570e9fbddeecac3e766
+    fix_date: null
+    crash_func: ZeroDensityContext
+    crash_file: libjxl/lib/jxl/ac_context.h
+    signature: [global-buffer-overflow, READ, ZeroDensityContext, ac_context.h]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42531066"
+  - oss_id: 42539477
+    harness: coder_DPX_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f2a453ced38e30c87b824cc19cd75919642873c4
+    fix_date: null
+    crash_func: ReadDPXImage
+    crash_file: coders/dpx.c
+    signature: [heap-buffer-overflow, READ, ReadDPXImage, dpx.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42539477"
+  - oss_id: 42539842
+    harness: coder_PTIF_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 6416b871cf3926b081ddd2f44d455730e3c70b61
+    fix_date: null
+    crash_func: "Magick::BlobRef::~BlobRef()"
+    crash_file: Magick++/lib/BlobRef.cpp
+    signature: [attempting, -, "Magick::BlobRef::~BlobRef", BlobRef.cpp]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42539842"
+  - oss_id: 42539956
+    harness: coder_BIGTIFF_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a9947a52ce3b3140e65f26c32f7217c8f180a3bc
+    fix_date: null
+    crash_func: put1bitbwtile
+    crash_file: libtiff/libtiff/tif_getimage.c
+    signature: [heap-buffer-overflow, WRITE, put1bitbwtile, tif_getimage.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42539956"
+  - oss_id: 42540197
+    harness: coder_MAT_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 209782a0dad1be44e178f05c1069a51bc0228477
+    fix_date: null
+    crash_func: ReadBlobLSBDoubles
+    crash_file: magick/blob.c
+    signature: [heap-buffer-overflow, READ, ReadBlobLSBDoubles, blob.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42540197"
+  - oss_id: 42540355
+    harness: coder_PNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f5e2fc49d2d5fa296a852f5f66c60f37dac76853
+    fix_date: null
+    crash_func: png_read_raw_profile
+    crash_file: coders/png.c
+    signature: [heap-buffer-overflow, READ, png_read_raw_profile, png.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42540355"
+  - oss_id: 42540456
+    harness: coder_MNG_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 29dbb71f909507b94e3c0b6aecc27656c37c26a4
+    fix_date: null
+    crash_func: ReadMNGImage
+    crash_file: coders/png.c
+    signature: [heap-buffer-overflow, READ, ReadMNGImage, png.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42540456"
+  - oss_id: 42541037
+    harness: coder_MIFF_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 99feb27a67193addef13b93a74ec9b3e83feb52c
+    fix_date: null
+    crash_func: ImportRGBQuantumType
+    crash_file: magick/import.c
+    signature: [heap-buffer-overflow, READ, ImportRGBQuantumType, import.c]
+    status: unresolved
+    evidence: none
+    report: "https://issues.oss-fuzz.com/issues/42541037"
+rejected: []
+error: "clone: remote: Gitlab::GitAccess::NotFoundError\nfatal: repository 'https://foss.heptapod.net/graphicsmagick/graphicsmagick/' not found"

@@ -1,0 +1,1085 @@
+project: opensc
+repo: "https://github.com/OpenSC/OpenSC"
+n_sites: 86
+n_issues: 86
+harnesses: [fuzz_asn1_print, fuzz_asn1_sig_value, fuzz_card, fuzz_pkcs11, fuzz_pkcs15_crypt, fuzz_pkcs15_decode, fuzz_pkcs15_encode, fuzz_pkcs15_reader, fuzz_pkcs15_tool, fuzz_pkcs15init]
+base:
+  commit: 2c9dddc7386dbb57844cf17688859e735a783fd8
+  date: 2022-04-14
+  method: wave_eve
+  n_latent: 34
+  n_latent_upper: 34
+  n_wave: 3
+  note: "eve of 2022-04-14 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2022-05-03
+    n: 4
+    eve: 1e6558ad6fb4cb508bd6a9d115e0899eaf6d3926
+    n_latent_upper: 30
+    oss_ids: [42509342, 42509841, 42510699, 42510727]
+  - day: 2023-08-31
+    n: 4
+    eve: ce7fcdaa35196706a83fe982900228e15464f928
+    n_latent_upper: 15
+    oss_ids: [42526271, 42526378, 42527467, 42527518]
+  - day: 2021-02-25
+    n: 3
+    eve: 17d8980cde7be597afc366b7e311d0d7cadcb1f4
+    n_latent_upper: 22
+    oss_ids: [42492106, 42492330, 42493094]
+  - day: 2022-04-14
+    n: 3
+    eve: 2c9dddc7386dbb57844cf17688859e735a783fd8
+    n_latent_upper: 34
+    oss_ids: [42509373, 42509978, 42509982]
+  - day: 2022-07-11
+    n: 3
+    eve: 0863f2a2e70c5462e099f8a930b587f0d0526221
+    n_latent_upper: 26
+    oss_ids: [42511664, 42511938, 42513240]
+  - day: 2019-11-29
+    n: 2
+    eve: 249e9281761fc861bab93f76baf6cdcefb1774ee
+    n_latent_upper: 29
+    oss_ids: [42480020, 42480195]
+  - day: 2020-01-21
+    n: 2
+    eve: a487e9595e0030c1775e324b2a1bbba5f982bfe2
+    n_latent_upper: 23
+    oss_ids: [42481302, 42481303]
+  - day: 2020-06-04
+    n: 2
+    eve: 4bc03cb55dc2be4a3af9ded56ac4e481ab76beb1
+    n_latent_upper: 32
+    oss_ids: [42484055, 42484390]
+  - day: 2020-07-07
+    n: 2
+    eve: c4d7bb1a7ba80d155021f7a311b7fa6b1ce54e15
+    n_latent_upper: 27
+    oss_ids: [42485014, 42485300]
+  - day: 2020-11-18
+    n: 2
+    eve: 445c651549eefff771fe96a8499fc5ecd0190549
+    n_latent_upper: 25
+    oss_ids: [42488760, 42489404]
+  - day: 2022-05-24
+    n: 2
+    eve: 3ac2fa475c6576f11a4f8305ae78300d5012410e
+    n_latent_upper: 29
+    oss_ids: [42511244, 42511654]
+  - day: 2022-10-13
+    n: 2
+    eve: cbe8bbefea36e8980d5a65bc350b317bc0244bb9
+    n_latent_upper: 25
+    oss_ids: [42515176, 42516458]
+bugs:
+  - oss_id: 42477951
+    harness: fuzz_pkcs15_decode
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d965156fe61df9f892b1c0555198b7b37daff437
+    fix_date: 2019-09-30
+    crash_func: sc_pkcs15_free_object
+    crash_file: src/libopensc/pkcs15.c
+    signature: [heap-use-after-free, READ, sc_pkcs15_free_object, pkcs15.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42477951"
+  - oss_id: 42479408
+    harness: fuzz_pkcs15_decode
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 6ce6152284c47ba9b1d4fe8ff9d2e6a3f5ee02c7
+    fix_date: 2019-10-23
+    crash_func: sc_pkcs15_decode_prkdf_entry
+    crash_file: src/libopensc/pkcs15-prkey.c
+    signature: [attempting, -, sc_pkcs15_decode_prkdf_entry, pkcs15-prkey.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479408"
+  - oss_id: 42479473
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 026b6ab43dfb52b768ad15123dc698e05c52be20
+    fix_date: 2019-10-26
+    crash_func: _validate_pin
+    crash_file: src/libopensc/pkcs15-pin.c
+    signature: [heap-buffer-overflow, READ, _validate_pin, pkcs15-pin.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479473"
+  - oss_id: 42479758
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e50bc29bd9519c9f4c43e9f3cf34b5b8a9aa38da
+    fix_date: 2019-11-11
+    crash_func: parse_sec_attr_44
+    crash_file: src/libopensc/card-setcos.c
+    signature: [heap-buffer-overflow, READ, parse_sec_attr_44, card-setcos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479758"
+  - oss_id: 42479861
+    harness: fuzz_pkcs15_decode
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 5557f34f5ef86cbf2d2de0ff39b591d4c836defb
+    fix_date: 2019-11-12
+    crash_func: sc_pkcs15_free_object_content
+    crash_file: src/libopensc/pkcs15.c
+    signature: [attempting, -, sc_pkcs15_free_object_content, pkcs15.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479861"
+  - oss_id: 42479963
+    harness: fuzz_pkcs15_reader
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 2d02de4233a70fdad4cbf0862c83f03d9ba85d78
+    fix_date: 2019-11-18
+    crash_func: coolkey_free_private_data
+    crash_file: src/libopensc/card-coolkey.c
+    signature: [attempting, -, coolkey_free_private_data, card-coolkey.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479963"
+  - oss_id: 42480020
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: aa6d3e1d36969aa0f955b11faf9142666145a72b
+    fix_date: 2019-11-29
+    crash_func: coolkey_get_attribute_bytes
+    crash_file: src/libopensc/pkcs15-coolkey.c
+    signature: [heap-buffer-overflow, READ, coolkey_get_attribute_bytes, pkcs15-coolkey.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480020"
+  - oss_id: 42480195
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: aa6d3e1d36969aa0f955b11faf9142666145a72b
+    fix_date: 2019-11-29
+    crash_func: coolkey_get_attribute_bytes_alloc
+    crash_file: src/libopensc/pkcs15-coolkey.c
+    signature: [heap-buffer-overflow, READ, coolkey_get_attribute_bytes_alloc, pkcs15-coolkey.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480195"
+  - oss_id: 42480263
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ee78b0b80514460936c585c3ff5fc477338ae371
+    fix_date: 2019-12-11
+    crash_func: sc_pkcs15emu_object_add
+    crash_file: src/libopensc/pkcs15-syn.c
+    signature: [stack-buffer-overflow, READ, sc_pkcs15emu_object_add, pkcs15-syn.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480263"
+  - oss_id: 42480591
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 333c41c5d51450177553b8fd8cb2d710a7f7dec5
+    fix_date: 2019-12-18
+    crash_func: pgp_parse_algo_attr_blob
+    crash_file: src/libopensc/card-openpgp.c
+    signature: [stack-buffer-overflow, WRITE, pgp_parse_algo_attr_blob, card-openpgp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480591"
+  - oss_id: 42481302
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4ef7ed9ffd2acacfc5026db4fb984a1386a07bdb
+    fix_date: 2020-01-21
+    crash_func: sc_hex_dump
+    crash_file: src/libopensc/log.c
+    signature: [heap-buffer-overflow, READ, sc_hex_dump, log.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481302"
+  - oss_id: 42481303
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4ef7ed9ffd2acacfc5026db4fb984a1386a07bdb
+    fix_date: 2020-01-21
+    crash_func: fuzz_reader_connect
+    crash_file: src/tests/fuzzing/fuzz_pkcs15_reader.c
+    signature: [heap-buffer-overflow, WRITE, fuzz_reader_connect, fuzz_pkcs15_reader.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481303"
+  - oss_id: 42481890
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 906108bb691a35828cc4e09fcba904d08c24d458
+    fix_date: 2020-02-27
+    crash_func: dnie_read_binary
+    crash_file: src/libopensc/card-dnie.c
+    signature: [heap-buffer-overflow, READ, dnie_read_binary, card-dnie.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42481890"
+  - oss_id: 42484055
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 55fd3db2b5f2ecdb8d2bc148270b75ec6ff2ed2f
+    fix_date: 2020-06-04
+    crash_func: auth_read_binary
+    crash_file: src/libopensc/card-oberthur.c
+    signature: [heap-buffer-overflow, READ, auth_read_binary, card-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484055"
+  - oss_id: 42484390
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9d294de90d1cc66956389856e60b6944b27b4817
+    fix_date: 2020-06-04
+    crash_func: tcos_decipher
+    crash_file: src/libopensc/card-tcos.c
+    signature: [stack-buffer-overflow, WRITE, tcos_decipher, card-tcos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484390"
+  - oss_id: 42484667
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7ae74c524f1cc2912e8de1ecbf616b602424a830
+    fix_date: 2020-06-09
+    crash_func: piv_cache_internal_data
+    crash_file: src/libopensc/card-piv.c
+    signature: [heap-buffer-overflow, READ, piv_cache_internal_data, card-piv.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484667"
+  - oss_id: 42485014
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7cf8087351c821aa1e617282db93ecb33d53d918
+    fix_date: 2020-07-07
+    crash_func: asepcos_parse_sec_attr
+    crash_file: src/libopensc/card-asepcos.c
+    signature: [heap-buffer-overflow, READ, asepcos_parse_sec_attr, card-asepcos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485014"
+  - oss_id: 42485300
+    harness: fuzz_pkcs15_reader
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 05dcde508b8f5884242c6832cc2a4521fedd626f
+    fix_date: 2020-07-07
+    crash_func: authentic_set_current_files
+    crash_file: src/libopensc/card-authentic.c
+    signature: [memcpy-param-overlap, -, authentic_set_current_files, card-authentic.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485300"
+  - oss_id: 42485513
+    harness: fuzz_pkcs15_reader
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: cdbcb5b7db8766d6ea9da6912755ed335780f2f9
+    fix_date: 2020-08-04
+    crash_func: coolkey_apdu_io
+    crash_file: src/libopensc/card-coolkey.c
+    signature: [stack-use-after-scope, READ, coolkey_apdu_io, card-coolkey.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485513"
+  - oss_id: 42485889
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 6903aebfddc466d966c7b865fae34572bf3ed23e
+    fix_date: 2020-07-30
+    crash_func: sc_oberthur_read_file
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, WRITE, sc_oberthur_read_file, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485889"
+  - oss_id: 42487174
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8dd136ac240580b63ce509a1379a109026b93b5e
+    fix_date: 2020-09-15
+    crash_func: hextoint
+    crash_file: src/libopensc/pkcs15-itacns.c
+    signature: [heap-buffer-overflow, READ, hextoint, pkcs15-itacns.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487174"
+  - oss_id: 42487696
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3ff059a74bcd10ead9a92cc67e5c8c006996e940
+    fix_date: 2020-10-02
+    crash_func: sc_oberthur_parse_publicinfo
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, sc_oberthur_parse_publicinfo, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487696"
+  - oss_id: 42487756
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 732ed77ad67e5303c46c0fa767929afd87076c87
+    fix_date: 2020-09-30
+    crash_func: sc_get_response
+    crash_file: src/libopensc/apdu.c
+    signature: [stack-buffer-overflow, WRITE, sc_get_response, apdu.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487756"
+  - oss_id: 42487889
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fca2ba9474e150e72282317b91ce68d0b801f573
+    fix_date: 2020-10-05
+    crash_func: sc_oberthur_parse_privateinfo
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, sc_oberthur_parse_privateinfo, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487889"
+  - oss_id: 42488760
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65461e4eb5aff766b3137022d3af61e2b66a6076
+    fix_date: 2020-11-18
+    crash_func: authentic_set_current_files
+    crash_file: src/libopensc/card-authentic.c
+    signature: [memcpy-param-overlap, -, authentic_set_current_files, card-authentic.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488760"
+  - oss_id: 42489404
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b5b1afe401bb6a04783ca36b5253948d6cf5ee48
+    fix_date: 2020-11-18
+    crash_func: insert_key
+    crash_file: src/libopensc/pkcs15-tcos.c
+    signature: [stack-buffer-overflow, READ, insert_key, pkcs15-tcos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489404"
+  - oss_id: 42490187
+    harness: fuzz_pkcs15_reader
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: f015746d22d249642c19674298a18ad824db0ed7
+    fix_date: 2020-12-04
+    crash_func: sc_pkcs15_free_tokeninfo
+    crash_file: src/libopensc/pkcs15.c
+    signature: [attempting, -, sc_pkcs15_free_tokeninfo, pkcs15.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490187"
+  - oss_id: 42490407
+    harness: fuzz_pkcs15_reader
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 5df913b7f57ad89b9832555d24c08d23a534311e
+    fix_date: 2020-12-09
+    crash_func: insert_pin
+    crash_file: src/libopensc/pkcs15-tcos.c
+    signature: [stack-use-after-return, READ, insert_pin, pkcs15-tcos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490407"
+  - oss_id: 42490918
+    harness: fuzz_pkcs15_reader
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1db88374bb7706a115d5c3617c6f16115c33bf27
+    fix_date: 2021-01-22
+    crash_func: sc_file_valid
+    crash_file: src/libopensc/sc.c
+    signature: [heap-use-after-free, READ, sc_file_valid, sc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490918"
+  - oss_id: 42492106
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1252aca9f10771ef5ba8405e73cf2da50827958f
+    fix_date: 2021-02-25
+    crash_func: sc_asn1_read_tag
+    crash_file: src/libopensc/asn1.c
+    signature: [stack-buffer-overflow, READ, sc_asn1_read_tag, asn1.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492106"
+  - oss_id: 42492330
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 17d8980cde7be597afc366b7e311d0d7cadcb1f4
+    fix_date: 2021-02-25
+    crash_func: sc_pkcs15emu_oberthur_add_data
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, sc_pkcs15emu_oberthur_add_data, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42492330"
+  - oss_id: 42493094
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ae1cf0be90396fb6c0be95829bf0d3eecbd2fd1c
+    fix_date: 2021-02-25
+    crash_func: iasecc_process_fci
+    crash_file: src/libopensc/card-iasecc.c
+    signature: [stack-buffer-overflow, READ, iasecc_process_fci, card-iasecc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493094"
+  - oss_id: 42493916
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 40c50a3a4219308aae90f6efd7b10213794a8d86
+    fix_date: 2021-03-16
+    crash_func: sc_pkcs15emu_oberthur_add_cert
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, sc_pkcs15emu_oberthur_add_cert, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42493916"
+  - oss_id: 42494592
+    harness: fuzz_pkcs15_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 05648b0604bf3e498e8d42dff3c6e7c56a5bf749
+    fix_date: 2021-03-18
+    crash_func: sc_pkcs15emu_oberthur_add_pubkey
+    crash_file: src/libopensc/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, sc_pkcs15emu_oberthur_add_pubkey, pkcs15-oberthur.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494592"
+  - oss_id: 42499094
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 456ac566938a1da774db06126a2fa6c0cba514b3
+    fix_date: 2021-08-04
+    crash_func: piv_compute_signature
+    crash_file: src/libopensc/card-piv.c
+    signature: [stack-buffer-overflow, WRITE, piv_compute_signature, card-piv.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499094"
+  - oss_id: 42509342
+    harness: fuzz_pkcs15init
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8697a01850d5e02a3099acd5160d0a0ee2d31077
+    fix_date: 2022-05-03
+    crash_func: do_fileid
+    crash_file: src/pkcs15init/profile.c
+    signature: [heap-buffer-overflow, WRITE, do_fileid, profile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509342"
+  - oss_id: 42509373
+    harness: fuzz_pkcs15init
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4d7368fd3519a4778765b8eb818af0941a8d4f25
+    fix_date: 2022-04-14
+    crash_func: sc_format_oid
+    crash_file: src/libopensc/sc.c
+    signature: [stack-buffer-overflow, READ, sc_format_oid, sc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509373"
+  - oss_id: 42509477
+    harness: fuzz_pkcs15init
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e96dbe9a59b30f00eefa823b731c85e89d5aa960
+    fix_date: 2022-03-18
+    crash_func: new_file
+    crash_file: src/pkcs15init/profile.c
+    signature: [heap-buffer-overflow, WRITE, new_file, profile.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509477"
+  - oss_id: 42509841
+    harness: fuzz_pkcs15init
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 8697a01850d5e02a3099acd5160d0a0ee2d31077
+    fix_date: 2022-05-03
+    crash_func: template_sanity_check
+    crash_file: src/pkcs15init/profile.c
+    signature: [stack-use-after-return, READ, template_sanity_check, profile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509841"
+  - oss_id: 42509978
+    harness: fuzz_pkcs15init
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 089cedc7520fbb9e0e4a912c4c3866a1aa429de6
+    fix_date: 2022-04-14
+    crash_func: cosm_new_file
+    crash_file: src/pkcs15init/pkcs15-epass2003.c
+    signature: [heap-buffer-overflow, WRITE, cosm_new_file, pkcs15-epass2003.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509978"
+  - oss_id: 42509982
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: da37a0d5ece632080351c529ac87f00495eddbfa
+    fix_date: 2022-04-14
+    crash_func: epass2003_hook_path
+    crash_file: src/libopensc/card-epass2003.c
+    signature: [heap-buffer-overflow, READ, epass2003_hook_path, card-epass2003.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509982"
+  - oss_id: 42510699
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1e6558ad6fb4cb508bd6a9d115e0899eaf6d3926
+    fix_date: 2022-05-03
+    crash_func: sc_pkcs15init_delete_by_path
+    crash_file: src/pkcs15init/pkcs15-lib.c
+    signature: [heap-buffer-overflow, READ, sc_pkcs15init_delete_by_path, pkcs15-lib.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42510699"
+  - oss_id: 42510727
+    harness: fuzz_card
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fdf343bfcd80d8041f6d199492cf5508dec7b2f8
+    fix_date: 2022-05-03
+    crash_func: sc_hsm_list_files
+    crash_file: src/libopensc/card-sc-hsm.c
+    signature: [stack-buffer-overflow, READ, sc_hsm_list_files, card-sc-hsm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42510727"
+  - oss_id: 42511244
+    harness: fuzz_pkcs15_tool
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 3d261b9a7f4b056b5b342c8b6ca1a5b1d91ee01e
+    fix_date: 2022-05-24
+    crash_func: change_pin
+    crash_file: src/tools/pkcs15-tool.c
+    signature: [attempting, -, change_pin, pkcs15-tool.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511244"
+  - oss_id: 42511654
+    harness: fuzz_card
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 74a8f296e0f195916d28e1c928f457e04aa22892
+    fix_date: 2022-05-24
+    crash_func: cardos_list_files
+    crash_file: src/libopensc/card-cardos.c
+    signature: [stack-buffer-overflow, READ, cardos_list_files, card-cardos.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511654"
+  - oss_id: 42511664
+    harness: fuzz_pkcs11
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 27e3db8b142522d7367cc446283fb07d855443d7
+    fix_date: 2022-07-11
+    crash_func: sc_build_pin
+    crash_file: src/libopensc/sec.c
+    signature: [heap-buffer-overflow, READ, sc_build_pin, sec.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511664"
+  - oss_id: 42511938
+    harness: fuzz_pkcs15init
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 367c3ad2ef2c10cb29602f72163e7fb23c3f5827
+    fix_date: 2022-07-11
+    crash_func: myeid_create_key
+    crash_file: src/pkcs15init/pkcs15-myeid.c
+    signature: [heap-buffer-overflow, WRITE, myeid_create_key, pkcs15-myeid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42511938"
+  - oss_id: 42513240
+    harness: fuzz_pkcs11
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 27e3db8b142522d7367cc446283fb07d855443d7
+    fix_date: 2022-07-11
+    crash_func: sc_pkcs15_allocate_object_content
+    crash_file: src/libopensc/pkcs15.c
+    signature: [heap-buffer-overflow, READ, sc_pkcs15_allocate_object_content, pkcs15.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513240"
+  - oss_id: 42515176
+    harness: fuzz_pkcs15_crypt
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 581b93543abbeda6c17a5da11e2cf82401824bef
+    fix_date: 2022-10-13
+    crash_func: sc_hsm_decode_ecdsa_signature
+    crash_file: src/libopensc/card-sc-hsm.c
+    signature: [stack-buffer-overflow, WRITE, sc_hsm_decode_ecdsa_signature, card-sc-hsm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515176"
+  - oss_id: 42516458
+    harness: fuzz_pkcs15init
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 1e4222efcf6d889adaab9d28f32623e5e1055042
+    fix_date: 2022-10-13
+    crash_func: sc_pkcs15_encode_df
+    crash_file: src/libopensc/pkcs15.c
+    signature: [attempting, -, sc_pkcs15_encode_df, pkcs15.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42516458"
+  - oss_id: 42517374
+    harness: fuzz_pkcs15_encode
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e6593b237eea851072e0d545795ee23ec0b4b524
+    fix_date: 2022-11-15
+    crash_func: authentic_parse_size
+    crash_file: src/libopensc/card-authentic.c
+    signature: [stack-buffer-overflow, READ, authentic_parse_size, card-authentic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42517374"
+  - oss_id: 42518213
+    harness: fuzz_pkcs15init
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c16d4e6588a19f4b85aa584174335f62efe28aaf
+    fix_date: 2023-03-03
+    crash_func: sc_path_print
+    crash_file: src/libopensc/sc.c
+    signature: [stack-buffer-overflow, READ, sc_path_print, sc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42518213"
+  - oss_id: 42518345
+    harness: fuzz_pkcs15_encode
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ce773aaaaedd37a66329e0eea3c45f30cb567fe2
+    fix_date: 2022-12-19
+    crash_func: authentic_get_tagged_data
+    crash_file: src/libopensc/card-authentic.c
+    signature: [stack-buffer-overflow, READ, authentic_get_tagged_data, card-authentic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42518345"
+  - oss_id: 42518451
+    harness: fuzz_pkcs15init
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e7f81d86dcdc751f4737f4b29a99bfc54d29c5c9
+    fix_date: 2022-12-12
+    crash_func: msc_zero_object
+    crash_file: src/libopensc/muscle.c
+    signature: [stack-buffer-overflow, WRITE, msc_zero_object, muscle.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42518451"
+  - oss_id: 42518779
+    harness: fuzz_pkcs15init
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 578aed8391ef117ca64a9e0cba8e5c264368a0ec
+    fix_date: 2022-12-12
+    crash_func: sc_pkcs15init_rmdir
+    crash_file: src/pkcs15init/pkcs15-lib.c
+    signature: [stack-buffer-overflow, WRITE, sc_pkcs15init_rmdir, pkcs15-lib.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42518779"
+  - oss_id: 42520917
+    harness: fuzz_pkcs15init
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a97e702bb8e66b4f5b6230b9962b7d36869237bc
+    fix_date: 2023-03-09
+    crash_func: do_acl
+    crash_file: src/pkcs15init/profile.c
+    signature: [stack-buffer-overflow, WRITE, do_acl, profile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42520917"
+  - oss_id: 42521078
+    harness: fuzz_pkcs15init
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a97e702bb8e66b4f5b6230b9962b7d36869237bc
+    fix_date: 2023-03-09
+    crash_func: get_authid
+    crash_file: src/pkcs15init/profile.c
+    signature: [stack-buffer-overflow, WRITE, get_authid, profile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521078"
+  - oss_id: 42521319
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dd138d0600a1acd7991989127f36827e5836b24e
+    fix_date: 2023-03-22
+    crash_func: sc_hsm_write_ef
+    crash_file: src/libopensc/card-sc-hsm.c
+    signature: [heap-buffer-overflow, READ, sc_hsm_write_ef, card-sc-hsm.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521319"
+  - oss_id: 42526247
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 41d61da8481582e12710b5858f8b635e0a71ab5e
+    fix_date: 2023-09-21
+    crash_func: cosm_new_file
+    crash_file: src/pkcs15init/pkcs15-oberthur.c
+    signature: [heap-buffer-overflow, READ, cosm_new_file, pkcs15-oberthur.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526247"
+  - oss_id: 42526271
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 440ca666eff10cc7011901252d20f3fc4ea23651
+    fix_date: 2023-08-31
+    crash_func: setcos_create_key
+    crash_file: src/pkcs15init/pkcs15-setcos.c
+    signature: [heap-buffer-overflow, READ, setcos_create_key, pkcs15-setcos.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526271"
+  - oss_id: 42526378
+    harness: fuzz_pkcs15init
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 245efe608d083fd4e4ec96793fdefd218e26fde7
+    fix_date: 2023-08-31
+    crash_func: sc_pkcs15_get_lastupdate
+    crash_file: src/libopensc/pkcs15.c
+    signature: [stack-buffer-overflow, READ, sc_pkcs15_get_lastupdate, pkcs15.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526378"
+  - oss_id: 42526603
+    harness: fuzz_pkcs11
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ffbff25ec6c6d0ad3f8df76f57210698f7947fc3
+    fix_date: 2023-08-15
+    crash_func: test_verify
+    crash_file: src/tests/fuzzing/fuzz_pkcs11.c
+    signature: [heap-buffer-overflow, READ, test_verify, fuzz_pkcs11.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526603"
+  - oss_id: 42527467
+    harness: fuzz_pkcs15_crypt
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa8ad362852dbefad5b6796c32f2a33859b8a8e0
+    fix_date: 2023-08-31
+    crash_func: sc_color_fprintf_va
+    crash_file: src/libopensc/log.c
+    signature: [stack-buffer-overflow, READ, sc_color_fprintf_va, log.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527467"
+  - oss_id: 42527518
+    harness: fuzz_pkcs15init
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2a4921ab23fd0853f327517636c50de947548161
+    fix_date: 2023-08-31
+    crash_func: iasecc_crt_parse
+    crash_file: src/libopensc/iasecc-sdo.c
+    signature: [stack-buffer-overflow, READ, iasecc_crt_parse, iasecc-sdo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527518"
+  - oss_id: 42528972
+    harness: fuzz_pkcs15init
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 50f0985f6343eeac4044661d56807ee9286db42c
+    fix_date: 2023-10-23
+    crash_func: entersafe_reverse_buffer
+    crash_file: src/libopensc/card-entersafe.c
+    signature: [stack-buffer-overflow, READ, entersafe_reverse_buffer, card-entersafe.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42528972"
+  - oss_id: 42529037
+    harness: fuzz_pkcs15_crypt
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 83b9129bd3cfc6ac57d5554e015c3df85f5076dc
+    fix_date: 2023-10-23
+    crash_func: iasecc_parse_get_tlv
+    crash_file: src/libopensc/iasecc-sdo.c
+    signature: [heap-buffer-overflow, READ, iasecc_parse_get_tlv, iasecc-sdo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42529037"
+  - oss_id: 42529507
+    harness: fuzz_pkcs15_crypt
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fbda61d0d276dc98b9d1d1e6810bbd21d19e3859
+    fix_date: 2023-11-05
+    crash_func: iasecc_parse_size
+    crash_file: src/libopensc/iasecc-sdo.c
+    signature: [heap-buffer-overflow, READ, iasecc_parse_size, iasecc-sdo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42529507"
+  - oss_id: 42529909
+    harness: fuzz_pkcs15_decode
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8fc2c20c3f895569eeb58328bb882aec07325d3b
+    fix_date: 2023-11-08
+    crash_func: iasecc_parse_acls
+    crash_file: src/libopensc/iasecc-sdo.c
+    signature: [heap-buffer-overflow, READ, iasecc_parse_acls, iasecc-sdo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42529909"
+  - oss_id: 42530168
+    harness: fuzz_pkcs15init
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 4013a807492568bf9907cfb3df41f130ac83c7b9
+    fix_date: 2023-11-20
+    crash_func: sc_file_clear_acl_entries
+    crash_file: src/libopensc/sc.c
+    signature: [attempting, -, sc_file_clear_acl_entries, sc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530168"
+  - oss_id: 42530206
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 609164045facaeae193feb48d9c2fc5cc4321e8a
+    fix_date: 2023-11-20
+    crash_func: epass2003_pkcs15_generate_key
+    crash_file: src/pkcs15init/pkcs15-epass2003.c
+    signature: [heap-buffer-overflow, READ, epass2003_pkcs15_generate_key, pkcs15-epass2003.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530206"
+  - oss_id: 42530547
+    harness: fuzz_pkcs11
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2fb0d735b433a7d5618865be5280e41e78362b5e
+    fix_date: 2023-12-07
+    crash_func: asn1_decode_entry
+    crash_file: src/libopensc/asn1.c
+    signature: [stack-buffer-overflow, READ, asn1_decode_entry, asn1.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530547"
+  - oss_id: 42530963
+    harness: fuzz_pkcs15init
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 5835f0d4f6c033bd58806d33fa546908d39825c9
+    fix_date: 2023-12-20
+    crash_func: authentic_emu_update_tokeninfo
+    crash_file: src/pkcs15init/pkcs15-authentic.c
+    signature: [heap-use-after-free, READ, authentic_emu_update_tokeninfo, pkcs15-authentic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530963"
+  - oss_id: 42531837
+    harness: fuzz_pkcs15init
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c3545018d059b4debde33b9f34de719dd41e5531
+    fix_date: 2024-01-15
+    crash_func: iasecc_delete_file
+    crash_file: src/libopensc/card-iasecc.c
+    signature: [heap-use-after-free, READ, iasecc_delete_file, card-iasecc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531837"
+  - oss_id: 42535468
+    harness: fuzz_pkcs15init
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0ba15ba096b9cd58354cf8960e04f295af3de59c
+    fix_date: 2024-05-16
+    crash_func: openpgp_generate_key_rsa
+    crash_file: src/pkcs15init/pkcs15-openpgp.c
+    signature: [heap-buffer-overflow, READ, openpgp_generate_key_rsa, pkcs15-openpgp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535468"
+  - oss_id: 42537670
+    harness: fuzz_pkcs15init
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 02e847458369c08421fd2d5e9a16a5f272c2de9e
+    fix_date: 2024-08-19
+    crash_func: pgp_calculate_and_store_fingerprint
+    crash_file: src/libopensc/card-openpgp.c
+    signature: [heap-buffer-overflow, WRITE, pgp_calculate_and_store_fingerprint, card-openpgp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42537670"
+  - oss_id: 416295951
+    harness: fuzz_pkcs15_reader
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 953986f65db61871bbbff72788d861d67d5140c6
+    fix_date: 2025-05-26
+    crash_func: fuzz_reader_transmit
+    crash_file: src/tests/fuzzing/fuzzer_reader.c
+    signature: [stack-buffer-overflow, WRITE, fuzz_reader_transmit, fuzzer_reader.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/416295951"
+rejected:
+  - oss_id: 42477333
+    reason: commit_missing
+  - oss_id: 42477340
+    reason: commit_missing
+  - oss_id: 42479504
+    reason: commit_missing
+  - oss_id: 42479506
+    reason: commit_missing
+  - oss_id: 42479512
+    reason: commit_missing
+  - oss_id: 42479513
+    reason: commit_missing
+  - oss_id: 42479545
+    reason: commit_missing
+  - oss_id: 42479584
+    reason: commit_missing
+  - oss_id: 42479607
+    reason: commit_missing
+  - oss_id: 42483752
+    reason: commit_missing
+error: null

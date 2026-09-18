@@ -1,0 +1,148 @@
+{
+ "scope": "all 20 final aggregate images recomputed against recorded sha256",
+ "verified_at": "2026-09-18",
+ "units": 20,
+ "matches": 20,
+ "results": [
+  {
+   "project": "ghostpdl",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ghostpdl/images/ghostpdl-991a95ff-agg.tar",
+   "recorded_sha256": "1cc8dca8c8990fd213bd3ebacd5f6cced488041f883d31172dd36352cd2ef780",
+   "recomputed_sha256": "1cc8dca8c8990fd213bd3ebacd5f6cced488041f883d31172dd36352cd2ef780",
+   "match": true
+  },
+  {
+   "project": "gpac",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/gpac/images/gpac-b890f1c-agg.tar",
+   "recorded_sha256": "e15c2cd68ba7b8c2334fe6a3914c1f93c72ae98b72b2cfe837d195663745b442",
+   "recomputed_sha256": "e15c2cd68ba7b8c2334fe6a3914c1f93c72ae98b72b2cfe837d195663745b442",
+   "match": true
+  },
+  {
+   "project": "assimp",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/images/assimp-d34cd103-agg.tar",
+   "recorded_sha256": "68a4dde4da3afa7c3a0fe0bc69fed01c0a13c9256c0cad4e5d424a0a9fdf8a90",
+   "recomputed_sha256": "68a4dde4da3afa7c3a0fe0bc69fed01c0a13c9256c0cad4e5d424a0a9fdf8a90",
+   "match": true
+  },
+  {
+   "project": "PcapPlusPlus",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/PcapPlusPlus/images/PcapPlusPlus-65974d7-agg.tar",
+   "recorded_sha256": "2347257a0286ba701424383479e08a4eaf30f6fdb40ac036103ae7a59c700164",
+   "recomputed_sha256": "2347257a0286ba701424383479e08a4eaf30f6fdb40ac036103ae7a59c700164",
+   "match": true
+  },
+  {
+   "project": "ndpi",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/ndpi/images/ndpi-65d526d8-agg.tar",
+   "recorded_sha256": "caff14366a4bf93848e729d5ccafbae7148d6a3a60520c6c95455fbc69c0305e",
+   "recomputed_sha256": "caff14366a4bf93848e729d5ccafbae7148d6a3a60520c6c95455fbc69c0305e",
+   "match": true
+  },
+  {
+   "project": "opensc",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/opensc/images/opensc-2c9dddc-agg.tar",
+   "recorded_sha256": "ecce00b27c5db83ea3cf8c5fcee436dcf89ec02035b37df7382258eb9a795aee",
+   "recomputed_sha256": "ecce00b27c5db83ea3cf8c5fcee436dcf89ec02035b37df7382258eb9a795aee",
+   "match": true
+  },
+  {
+   "project": "libdwarf",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libdwarf/images/libdwarf-2ee326ba-agg.tar",
+   "recorded_sha256": "cf5a6621c08131e5450b207f87901f17c8169bdcdbfc6ba705f247ff7cc92853",
+   "recomputed_sha256": "cf5a6621c08131e5450b207f87901f17c8169bdcdbfc6ba705f247ff7cc92853",
+   "match": true
+  },
+  {
+   "project": "openh264",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openh264/images/openh264-83a0eae9-agg.tar",
+   "recorded_sha256": "bc345f93d3f213e491f5df5045b919b387f71e063ef2bb628a65edb3e765afe1",
+   "recomputed_sha256": "bc345f93d3f213e491f5df5045b919b387f71e063ef2bb628a65edb3e765afe1",
+   "match": true
+  },
+  {
+   "project": "selinux",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/selinux/images/selinux-38a09b74-agg.tar",
+   "recorded_sha256": "c0b0eb4bf456e291c4a75cbea7886ac8a569a73ed6f2d067c9434089c706d100",
+   "recomputed_sha256": "c0b0eb4bf456e291c4a75cbea7886ac8a569a73ed6f2d067c9434089c706d100",
+   "match": true
+  },
+  {
+   "project": "upx",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/upx/images/upx-09c5e383-agg.tar",
+   "recorded_sha256": "163b730b2289b46466814a8e753307960e3751337e3e190a73e084638c3be05f",
+   "recomputed_sha256": "163b730b2289b46466814a8e753307960e3751337e3e190a73e084638c3be05f",
+   "match": true
+  },
+  {
+   "project": "fluent-bit",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/fluent-bit/images/fluent-bit-e5289e606-agg.tar",
+   "recorded_sha256": "bc0a0dbad3394dd4309f5d33a2498c9de62b459ed342b97145818bc0a12ddf31",
+   "recomputed_sha256": "bc0a0dbad3394dd4309f5d33a2498c9de62b459ed342b97145818bc0a12ddf31",
+   "match": true
+  },
+  {
+   "project": "hdf5",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/hdf5/images/hdf5-bd7616-agg.tar",
+   "recorded_sha256": "2312c65378da7cb0c887283d424fdebcc55cc3b7fb3e0c31af18a8d70198c1c8",
+   "recomputed_sha256": "2312c65378da7cb0c887283d424fdebcc55cc3b7fb3e0c31af18a8d70198c1c8",
+   "match": true
+  },
+  {
+   "project": "openvswitch",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/openvswitch/images/openvswitch-f5129153-agg.tar",
+   "recorded_sha256": "79de11d6bbba6377da4c33b3d3a285b7047cbcdd5d8f282357c07662b1d0a635",
+   "recomputed_sha256": "79de11d6bbba6377da4c33b3d3a285b7047cbcdd5d8f282357c07662b1d0a635",
+   "match": true
+  },
+  {
+   "project": "pcl",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/pcl/images/pcl-09e914b0-agg.tar",
+   "recorded_sha256": "359cc2c8f7a136564049c02670c476dd4586b7a1313eeba1736fa6795a22d929",
+   "recomputed_sha256": "359cc2c8f7a136564049c02670c476dd4586b7a1313eeba1736fa6795a22d929",
+   "match": true
+  },
+  {
+   "project": "libavc",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libavc/images/libavc-764ab7b-agg.tar",
+   "recorded_sha256": "a3d36d4c05a33a2cf2c3950c80cfb95680cd29f2d652267ed4b465224f393b11",
+   "recomputed_sha256": "a3d36d4c05a33a2cf2c3950c80cfb95680cd29f2d652267ed4b465224f393b11",
+   "match": true
+  },
+  {
+   "project": "sleuthkit",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/sleuthkit/images/sleuthkit-5eabe4d5-agg.tar",
+   "recorded_sha256": "1b3ab0394b04cc8c8daabb1775531440153a38033377d1c3c0727d2c3f700682",
+   "recomputed_sha256": "1b3ab0394b04cc8c8daabb1775531440153a38033377d1c3c0727d2c3f700682",
+   "match": true
+  },
+  {
+   "project": "espeak-ng",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/espeak-ng/images/espeak-ng-ccb1c31-agg.tar",
+   "recorded_sha256": "b1253b1415676d790af43be555577df373f8ef8c25287ccac44a899a16ce539c",
+   "recomputed_sha256": "b1253b1415676d790af43be555577df373f8ef8c25287ccac44a899a16ce539c",
+   "match": true
+  },
+  {
+   "project": "libxml2",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libxml2/images/libxml2-4b3452d-agg.tar",
+   "recorded_sha256": "4d547db534ad3bc5735c0d2de7ff6bd3bc59fc1989db5f85ccb097988a45e77b",
+   "recomputed_sha256": "4d547db534ad3bc5735c0d2de7ff6bd3bc59fc1989db5f85ccb097988a45e77b",
+   "match": true
+  },
+  {
+   "project": "libraw",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/libraw/images/libraw-371161a-agg.tar",
+   "recorded_sha256": "37b0a3754a3667239d94925731425b40aa4c85b7d893f7bc9a64a1e817d41e10",
+   "recomputed_sha256": "37b0a3754a3667239d94925731425b40aa4c85b7d893f7bc9a64a1e817d41e10",
+   "match": true
+  },
+  {
+   "project": "arrow",
+   "image": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/arrow/images/arrow-8b09ecc-agg.tar",
+   "recorded_sha256": "6274a5aad0a0baf097dea9a72b457cd222c6b6739e6e54cbb20b7a135bba1e49",
+   "recomputed_sha256": "6274a5aad0a0baf097dea9a72b457cd222c6b6739e6e54cbb20b7a135bba1e49",
+   "match": true
+  }
+ ]
+}

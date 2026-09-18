@@ -1,0 +1,474 @@
+project: php-src
+repo: "https://github.com/php/php-src.git"
+n_sites: 50
+n_issues: 50
+harnesses: [php-fuzz-execute, php-fuzz-exif, php-fuzz-function-jit, php-fuzz-mbstring, php-fuzz-parser, php-fuzz-tracing-jit, php-fuzz-unserialize, php-fuzz-unserializehash]
+base:
+  commit: e5b6f43ec7813392d83ea586b7902e0396a1f792
+  date: 2021-05-06
+  method: wave_eve
+  n_latent: 13
+  n_latent_upper: 13
+  n_wave: 2
+  note: "eve of 2021-05-06 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-07-12
+    n: 3
+    eve: efbb2198d4e5a01167d1a8c2937b848f75ac4d19
+    n_latent_upper: 11
+    oss_ids: [42487317, 42488320, 42493954]
+  - day: 2021-05-06
+    n: 2
+    eve: e5b6f43ec7813392d83ea586b7902e0396a1f792
+    n_latent_upper: 13
+    oss_ids: [42496556, 42496664]
+  - day: 2020-06-12
+    n: 1
+    eve: b7a55aaff272f28fc03e68b756ad2f232515aaf2
+    n_latent_upper: 20
+    oss_ids: [42484817]
+  - day: 2020-06-19
+    n: 1
+    eve: 6fa126e966d343b45f84d9eac114c14b73aef5a8
+    n_latent_upper: 19
+    oss_ids: [42485034]
+  - day: 2020-08-28
+    n: 1
+    eve: 138f14160569a52ffedfb789d0a8162741ec87b3
+    n_latent_upper: 19
+    oss_ids: [42486934]
+  - day: 2020-09-14
+    n: 1
+    eve: 1359a52d5bbab26004c6195d9d8b8fbc720fd701
+    n_latent_upper: 20
+    oss_ids: [42487031]
+  - day: 2020-10-22
+    n: 1
+    eve: ac87880addfd22e651b210346178dc1ed851b1dd
+    n_latent_upper: 19
+    oss_ids: [42487422]
+  - day: 2020-12-01
+    n: 1
+    eve: 5dfec886d67f01c4e7ea96ef8c26792cb1210047
+    n_latent_upper: 19
+    oss_ids: [42490125]
+  - day: 2020-12-16
+    n: 1
+    eve: 205d209de931d5c5e1535277531a7e4dc8a6000a
+    n_latent_upper: 18
+    oss_ids: [42490721]
+  - day: 2021-01-05
+    n: 1
+    eve: 0067c3ced17ff69516854865e607887a9702cd0c
+    n_latent_upper: 17
+    oss_ids: [42491394]
+  - day: 2021-01-15
+    n: 1
+    eve: 141c4be70a97ea9dd99b3a80543098c677d12c1e
+    n_latent_upper: 16
+    oss_ids: [42491690]
+  - day: 2021-04-15
+    n: 1
+    eve: a3e6735999c3d44a99099fccb697d7378866bcd2
+    n_latent_upper: 15
+    oss_ids: [42495001]
+bugs:
+  - oss_id: 42484817
+    harness: php-fuzz-unserialize
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 50c87e92fc22ae3da5dda6f7340d3b786c6117a4
+    fix_date: 2020-06-12
+    crash_func: zend_gc_delref
+    crash_file: Zend/zend_types.h
+    signature: [heap-use-after-free, READ, zend_gc_delref, zend_types.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484817"
+  - oss_id: 42485034
+    harness: php-fuzz-parser
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 55717656097918baf21fe272a788db501ed33854
+    fix_date: 2020-06-19
+    crash_func: zend_string_init
+    crash_file: Zend/zend_string.h
+    signature: [memcpy-param-overlap, -, zend_string_init, zend_string.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485034"
+  - oss_id: 42486934
+    harness: php-fuzz-parser
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2c15c9ce80b0c8779a3d5cc5ad1c3452e620d084
+    fix_date: 2020-08-28
+    crash_func: shutdown_executor
+    crash_file: Zend/zend_execute_API.c
+    signature: [heap-use-after-free, READ, shutdown_executor, zend_execute_API.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486934"
+  - oss_id: 42487031
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ad61e141dd60087f566c4e9ccb0f529988526608
+    fix_date: 2020-09-14
+    crash_func: zend_generator_search_multi_children_node
+    crash_file: Zend/zend_generators.c
+    signature: [heap-use-after-free, READ, zend_generator_search_multi_children_node, zend_generators.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487031"
+  - oss_id: 42487317
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 989205e95cde4c43b562148a5f35fe32bb7af3da
+    fix_date: 2021-07-12
+    crash_func: zend_assign_to_variable
+    crash_file: Zend/zend_execute.h
+    signature: [heap-use-after-free, READ, zend_assign_to_variable, zend_execute.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487317"
+  - oss_id: 42487422
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: dd4a080133b7b0570b629cdfb7c9e2651bdf88f7
+    fix_date: 2020-10-22
+    crash_func: zend_gc_addref
+    crash_file: Zend/zend_types.h
+    signature: [heap-use-after-free, READ, zend_gc_addref, zend_types.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42487422"
+  - oss_id: 42488320
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 989205e95cde4c43b562148a5f35fe32bb7af3da
+    fix_date: 2021-07-12
+    crash_func: zend_assign_to_string_offset
+    crash_file: Zend/zend_execute.c
+    signature: [heap-use-after-free, READ, zend_assign_to_string_offset, zend_execute.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42488320"
+  - oss_id: 42490125
+    harness: php-fuzz-parser
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f06afc434aec631f18f8da8ffca9a6f0559e1acf
+    fix_date: 2020-12-01
+    crash_func: _zend_is_inconsistent
+    crash_file: Zend/zend_hash.c
+    signature: [heap-buffer-overflow, READ, _zend_is_inconsistent, zend_hash.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490125"
+  - oss_id: 42490721
+    harness: php-fuzz-execute
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c56701690a184c13fa850e9946f09bac7172c604
+    fix_date: 2020-12-16
+    crash_func: zif_range
+    crash_file: ext/standard/array.c
+    signature: [heap-buffer-overflow, WRITE, zif_range, array.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490721"
+  - oss_id: 42491394
+    harness: php-fuzz-unserialize
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: d29d3a4bf69f0122b40ebafa376e2f34b20002f6
+    fix_date: 2021-01-05
+    crash_func: zval_get_type
+    crash_file: Zend/zend_types.h
+    signature: [stack-use-after-return, READ, zval_get_type, zend_types.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491394"
+  - oss_id: 42491690
+    harness: php-fuzz-unserializehash
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cebdad4b533c350ee59e9437a85ed65096a128f0
+    fix_date: 2021-01-15
+    crash_func: XXH_memcpy
+    crash_file: ext/hash/xxhash/xxhash.h
+    signature: [heap-buffer-overflow, READ, XXH_memcpy, xxhash.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491690"
+  - oss_id: 42493954
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 989205e95cde4c43b562148a5f35fe32bb7af3da
+    fix_date: 2021-07-12
+    crash_func: php_var_dump
+    crash_file: ext/standard/var.c
+    signature: [heap-use-after-free, READ, php_var_dump, var.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42493954"
+  - oss_id: 42495001
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f40c8fdf672923fd585023574e954b79b85b8777
+    fix_date: 2021-04-15
+    crash_func: zend_string_equal_content
+    crash_file: Zend/zend_string.h
+    signature: [heap-use-after-free, READ, zend_string_equal_content, zend_string.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495001"
+  - oss_id: 42496556
+    harness: php-fuzz-execute
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: ed33262dbbc9a39c43c5de75be6aa89c1a3a71a8
+    fix_date: 2021-05-06
+    crash_func: zend_call_function
+    crash_file: Zend/zend_execute_API.c
+    signature: [stack-use-after-return, READ, zend_call_function, zend_execute_API.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42496556"
+  - oss_id: 42496643
+    harness: php-fuzz-exif
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bb0107b63dec8de5b0f3c3f535d3c52c2decda28
+    fix_date: 2021-05-05
+    crash_func: _estrdup
+    crash_file: Zend/zend_alloc.c
+    signature: [heap-buffer-overflow, READ, _estrdup, zend_alloc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42496643"
+  - oss_id: 42496664
+    harness: php-fuzz-execute
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: ed33262dbbc9a39c43c5de75be6aa89c1a3a71a8
+    fix_date: 2021-05-06
+    crash_func: zend_fiber_suspend_context
+    crash_file: Zend/zend_fibers.c
+    signature: [stack-use-after-return, READ, zend_fiber_suspend_context, zend_fibers.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42496664"
+  - oss_id: 42499767
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 98b9d6d9c66256d09e5be0a2ac850d67c85705c4
+    fix_date: 2021-08-03
+    crash_func: ZEND_ASSIGN_DIM_SPEC_VAR_UNUSED_OP_DATA_VAR_HANDLER
+    crash_file: Zend/zend_vm_execute.h
+    signature: [heap-use-after-free, READ, ZEND_ASSIGN_DIM_SPEC_VAR_UNUSED_OP_DATA_VAR_HANDLER, zend_vm_execute.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42499767"
+  - oss_id: 42500752
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4fcf0db649835339837a502589732e11f0ce6b57
+    fix_date: 2021-08-27
+    crash_func: zend_string_release
+    crash_file: Zend/zend_string.h
+    signature: [heap-use-after-free, READ, zend_string_release, zend_string.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42500752"
+  - oss_id: 42501419
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 06275d940c46cff4e2e1ff99f9e11d2db49ace52
+    fix_date: 2021-09-08
+    crash_func: ZEND_FETCH_OBJ_R_SPEC_CV_CONST_INLINE_HANDLER
+    crash_file: Zend/zend_vm_execute.h
+    signature: [heap-use-after-free, READ, ZEND_FETCH_OBJ_R_SPEC_CV_CONST_INLINE_HANDLER, zend_vm_execute.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42501419"
+  - oss_id: 42501725
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 15bbf6f3377e6446e88300b9c5383179091fe270
+    fix_date: 2021-09-24
+    crash_func: ZEND_FE_FETCH_RW_SPEC_VAR_HANDLER
+    crash_file: Zend/zend_vm_execute.h
+    signature: [heap-use-after-free, READ, ZEND_FE_FETCH_RW_SPEC_VAR_HANDLER, zend_vm_execute.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42501725"
+  - oss_id: 42509273
+    harness: php-fuzz-execute
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c4ecd82f9399850a36bf2466d0a54a045b6dfa15
+    fix_date: 2022-10-24
+    crash_func: zval_get_type
+    crash_file: Zend/zend_types.h
+    signature: [heap-buffer-overflow, READ, zval_get_type, zend_types.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509273"
+  - oss_id: 42513382
+    harness: php-fuzz-execute
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6eb5dc5fdf8373b3f6cd1c121100cad7e75f69a
+    fix_date: 2022-07-18
+    crash_func: zend_enum_fetch_case_value
+    crash_file: Zend/zend_enum.h
+    signature: [heap-buffer-overflow, READ, zend_enum_fetch_case_value, zend_enum.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513382"
+  - oss_id: 42515276
+    harness: php-fuzz-execute
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 8cdfffb7537084e3f8a691fc13428425f559566c
+    fix_date: 2022-09-08
+    crash_func: php_date_initialize
+    crash_file: ext/date/php_date.c
+    signature: [heap-use-after-free, READ, php_date_initialize, php_date.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515276"
+  - oss_id: 42515716
+    harness: php-fuzz-function-jit
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 49c029858b371c718da9982c524848edc88a85dc
+    fix_date: 2022-09-09
+    crash_func: timelib_error_container_dtor
+    crash_file: ext/date/lib/timelib.c
+    signature: [heap-use-after-free, READ, timelib_error_container_dtor, timelib.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515716"
+  - oss_id: 42527736
+    harness: php-fuzz-tracing-jit
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 64ebadcac5ca57c686f31695eb8076e164ce1cd1
+    fix_date: 2023-09-08
+    crash_func: php_fgetcsv
+    crash_file: ext/standard/file.c
+    signature: [negative-size-param, -, php_fgetcsv, file.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527736"
+  - oss_id: 42531102
+    harness: php-fuzz-tracing-jit
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2b8c00850b86ab40457dcd09a35a8cd9e0c4f9f0
+    fix_date: 2023-12-12
+    crash_func: pcre_get_compiled_regex_cache_ex
+    crash_file: ext/pcre/php_pcre.c
+    signature: [global-buffer-overflow, READ, pcre_get_compiled_regex_cache_ex, php_pcre.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42531102"
+  - oss_id: 427814456
+    harness: php-fuzz-tracing-jit
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 5d590a1e8783a60b36fdac93ef4f81ebd15263ab
+    fix_date: 2025-07-01
+    crash_func: xbuf_format_converter
+    crash_file: main/spprintf.c
+    signature: [heap-use-after-free, READ, xbuf_format_converter, spprintf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/427814456"
+rejected:
+  - oss_id: 42478840
+    reason: commit_missing
+  - oss_id: 42481412
+    reason: commit_missing
+  - oss_id: 42481430
+    reason: commit_missing
+  - oss_id: 42481451
+    reason: commit_missing
+  - oss_id: 42481465
+    reason: commit_missing
+  - oss_id: 42492090
+    reason: commit_missing
+  - oss_id: 42493110
+    reason: commit_missing
+  - oss_id: 42493786
+    reason: commit_missing
+  - oss_id: 42496589
+    reason: commit_missing
+  - oss_id: 42502527
+    reason: commit_missing
+  - oss_id: 42502807
+    reason: commit_missing
+  - oss_id: 42502996
+    reason: commit_missing
+  - oss_id: 42503796
+    reason: commit_missing
+  - oss_id: 42505190
+    reason: commit_missing
+  - oss_id: 42505706
+    reason: commit_missing
+  - oss_id: 42505783
+    reason: commit_missing
+  - oss_id: 42506092
+    reason: commit_missing
+  - oss_id: 42506525
+    reason: commit_missing
+  - oss_id: 42506705
+    reason: commit_missing
+  - oss_id: 42507738
+    reason: commit_missing
+  - oss_id: 42520698
+    reason: commit_missing
+  - oss_id: 42522627
+    reason: commit_missing
+  - oss_id: 42529661
+    reason: commit_missing
+error: null

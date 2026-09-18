@@ -1,0 +1,1518 @@
+project: imagemagick
+repo: "https://github.com/imagemagick/imagemagick"
+n_sites: 121
+n_issues: 121
+harnesses: [bping_ptif_fuzzer, crop_fuzzer, encoder_bmp_fuzzer, encoder_cin_fuzzer, encoder_dds_fuzzer, encoder_dng_fuzzer, encoder_dxt5_fuzzer, encoder_epsi_fuzzer, encoder_ept2_fuzzer, encoder_ept_fuzzer, encoder_gif_fuzzer, encoder_hdr_fuzzer, encoder_heic_fuzzer, encoder_inline_fuzzer, encoder_j2k_fuzzer, encoder_jnx_fuzzer, encoder_jpg_fuzzer, encoder_jxl_fuzzer, encoder_label_fuzzer, encoder_mac_fuzzer, encoder_mat_fuzzer, encoder_miff_fuzzer, encoder_mng_fuzzer, encoder_mpc_fuzzer, encoder_mvg_fuzzer, encoder_palm_fuzzer, encoder_pes_fuzzer, encoder_png00_fuzzer, encoder_png48_fuzzer, encoder_png64_fuzzer, encoder_pocketmod_fuzzer, encoder_ps_fuzzer, encoder_psd_fuzzer, encoder_ptif_fuzzer, encoder_radial-gradient_fuzzer, encoder_sixel_fuzzer, encoder_sun_fuzzer, encoder_tiff64_fuzzer, encoder_tiff_fuzzer, encoder_ttf_fuzzer, encoder_xc_fuzzer, enhance_fuzzer, ping_bayer_fuzzer, ping_dcm_fuzzer, ping_dng_fuzzer, ping_eps_fuzzer, ping_heic_fuzzer, ping_jps_fuzzer, ping_miff_fuzzer, ping_mng_fuzzer, ping_mvg_fuzzer, ping_pcl_fuzzer, ping_pict_fuzzer, ping_png32_fuzzer, ping_png_fuzzer, ping_ps_fuzzer, ping_ptif_fuzzer, ping_pwp_fuzzer, ping_tiff_fuzzer, ping_ttf_fuzzer, ping_webp_fuzzer, ping_wpg_fuzzer, rotate_fuzzer]
+base:
+  commit: b48da02fb6d3951ee95bca3b8ac206ad1fd39110
+  date: 2018-01-20
+  method: wave_eve
+  n_latent: 60
+  n_latent_upper: 60
+  n_wave: 3
+  note: "eve of 2018-01-20 wave (3 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-04-01
+    n: 4
+    eve: 7fce9752137f7040358dfbc90c677240396f8b82
+    n_latent_upper: 41
+    oss_ids: [42539004, 42539142, 42539206, 42538714]
+  - day: 2018-01-20
+    n: 3
+    eve: b48da02fb6d3951ee95bca3b8ac206ad1fd39110
+    n_latent_upper: 60
+    oss_ids: [42519760, 42519504, 42519182]
+  - day: 2021-01-03
+    n: 3
+    eve: 96dedcd9c7ff0e0edc449fb0ceb0577776977cf5
+    n_latent_upper: 29
+    oss_ids: [42491302, 42491305, 42491316]
+  - day: 2018-03-07
+    n: 2
+    eve: 2f289a096590a99c2c70cb175fe6c6925027c88e
+    n_latent_upper: 48
+    oss_ids: [42518438, 42526590]
+  - day: 2018-04-09
+    n: 2
+    eve: 513b2f0406b99534d08fa228cfa10389784b3b59
+    n_latent_upper: 34
+    oss_ids: [42538986, 42538985]
+  - day: 2019-07-14
+    n: 2
+    eve: f2d77ef087aa2e6d7813460b3ac112ef08e66526
+    n_latent_upper: 30
+    oss_ids: [42476400, 42476401]
+  - day: 2019-10-13
+    n: 2
+    eve: 5477cf0d9794ee090f7f324b399c3e00941fdf00
+    n_latent_upper: 26
+    oss_ids: [42479089, 42479075]
+  - day: 2019-11-04
+    n: 2
+    eve: e7db610deaacb2e5045f1e97190707c5af64f2cb
+    n_latent_upper: 26
+    oss_ids: [42479024, 42479809]
+  - day: 2021-04-17
+    n: 2
+    eve: c688cd61dc6c4d27ded6df3a60e0fc3843da43d8
+    n_latent_upper: 27
+    oss_ids: [42495919, 42495927]
+  - day: 2021-10-24
+    n: 2
+    eve: f5c3396e2644cdd9b4350e537c9c0550c05f960c
+    n_latent_upper: 25
+    oss_ids: [42501313, 42499970]
+  - day: 2022-01-17
+    n: 2
+    eve: 89bcd844f83a6fec321732a7c7822bc7c1fe339b
+    n_latent_upper: 22
+    oss_ids: [42507442, 42507446]
+  - day: 2022-07-18
+    n: 2
+    eve: 0afa38d17e78ece86eb64d693838ae54b5ede58b
+    n_latent_upper: 12
+    oss_ids: [42513564, 42513587]
+bugs:
+  - oss_id: 42470131
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9bd3e4c89ccb78974d3b7ec63ba7680ac78882af
+    fix_date: 2018-08-30
+    crash_func: DrawDashPolygon
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, READ, DrawDashPolygon, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470131"
+  - oss_id: 42472424
+    harness: ping_jps_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9177b7b3c2789c6196e7272e97893d9f7d3991f2
+    fix_date: 2019-04-14
+    crash_func: ParseInternalDoctype
+    crash_file: MagickCore/xml-tree.c
+    signature: [heap-buffer-overflow, READ, ParseInternalDoctype, xml-tree.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472424"
+  - oss_id: 42473518
+    harness: bping_ptif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7921e3f13b72e9e49a1dff434c256466a08205d4
+    fix_date: 2019-02-19
+    crash_func: TIFFGetProperties
+    crash_file: coders/tiff.c
+    signature: [heap-buffer-overflow, READ, TIFFGetProperties, tiff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473518"
+  - oss_id: 42473556
+    harness: encoder_j2k_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 75477483fbf99382b4310233b1521cbcc5e7affd
+    fix_date: 2019-02-20
+    crash_func: ReadJP2Image
+    crash_file: coders/jp2.c
+    signature: [heap-buffer-overflow, READ, ReadJP2Image, jp2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473556"
+  - oss_id: 42474040
+    harness: encoder_mat_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f7206618d27c2e69d977abf40e3035a33e5f6be0
+    fix_date: 2019-04-27
+    crash_func: ReadImage
+    crash_file: MagickCore/constitute.c
+    signature: [heap-use-after-free, WRITE, ReadImage, constitute.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474040"
+  - oss_id: 42474313
+    harness: ping_dng_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 58b1d87bef2b8d7dbd7391091069a3c279ec5e85
+    fix_date: 2019-08-08
+    crash_func: "LibRaw::sget4(unsigned char*)"
+    crash_file: libraw/internal/dcraw_common.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::sget4", dcraw_common.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42474313"
+  - oss_id: 42475804
+    harness: ping_dng_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d68366982b85afcb7a03436b8330678ca2e67246
+    fix_date: 2019-07-02
+    crash_func: "LibRaw::get2()"
+    crash_file: libraw/internal/dcraw_common.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::get2", dcraw_common.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475804"
+  - oss_id: 42475836
+    harness: encoder_heic_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cdddf99e151c9c2750af70e172d4b6dcb481e1b0
+    fix_date: 2019-06-29
+    crash_func: heif_image_release
+    crash_file: libheif/libheif/heif.cc
+    signature: [stack-buffer-overflow, READ, heif_image_release, heif.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475836"
+  - oss_id: 42476400
+    harness: ping_ps_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 364908fa52a94322d810fe59168db0b7e30c179b
+    fix_date: 2019-07-14
+    crash_func: GetNextUTFCode
+    crash_file: ./MagickCore/token-private.h
+    signature: [stack-buffer-overflow, READ, GetNextUTFCode, token-private.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476400"
+  - oss_id: 42476401
+    harness: ping_eps_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 364908fa52a94322d810fe59168db0b7e30c179b
+    fix_date: 2019-07-14
+    crash_func: ConstantString
+    crash_file: MagickCore/string.c
+    signature: [stack-buffer-overflow, READ, ConstantString, string.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476401"
+  - oss_id: 42476458
+    harness: encoder_jnx_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 39f226a9c137f547e12afde972eeba7551124493
+    fix_date: 2019-07-18
+    crash_func: DestroyStringInfo
+    crash_file: MagickCore/string.c
+    signature: [heap-use-after-free, READ, DestroyStringInfo, string.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42476458"
+  - oss_id: 42477247
+    harness: encoder_mvg_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ecf7c6b288e11e7e7f75387c5e9e93e423b98397
+    fix_date: 2019-08-18
+    crash_func: TraceBezier
+    crash_file: MagickCore/draw.c
+    signature: [heap-use-after-free, READ, TraceBezier, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477247"
+  - oss_id: 42479018
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3758ba36d7ba381ce28920715a6099c2a06775ba
+    fix_date: 2019-10-12
+    crash_func: GetVirtualPixelCacheNexus
+    crash_file: MagickCore/cache.c
+    signature: [heap-buffer-overflow, WRITE, GetVirtualPixelCacheNexus, cache.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479018"
+  - oss_id: 42479024
+    harness: enhance_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0045f7f670077d948125a52d76a145dc878a9033
+    fix_date: 2019-11-04
+    crash_func: IsWEBPImageLossless
+    crash_file: coders/webp.c
+    signature: [segv, -, IsWEBPImageLossless, webp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479024"
+  - oss_id: 42479075
+    harness: ping_ptif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 986b5dff173413fa712db27eb677cdef15f0bab6
+    fix_date: 2019-10-13
+    crash_func: TIFFGetProfiles
+    crash_file: coders/tiff.c
+    signature: [heap-buffer-overflow, READ, TIFFGetProfiles, tiff.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479075"
+  - oss_id: 42479089
+    harness: encoder_heic_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 0bbdf0dbc54cdd39a3ace21561db9e46af8d3bbf
+    fix_date: 2019-10-13
+    crash_func: "NAL_unit::set_data(unsigned char const*, int)"
+    crash_file: libde265/libde265/nal-parser.cc
+    signature: [memcpy-param-overlap, -, "NAL_unit::set_data", nal-parser.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479089"
+  - oss_id: 42479212
+    harness: ping_tiff_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 974a84e41b64e6473d8588acd4a35ee0db54b376
+    fix_date: 2019-10-17
+    crash_func: _TIFFVGetField
+    crash_file: libtiff/libtiff/tif_dir.c
+    signature: [stack-buffer-overflow, WRITE, _TIFFVGetField, tif_dir.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479212"
+  - oss_id: 42479620
+    harness: ping_miff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d9aac6fdc47f1dcecffcba028a1131f19e3f09a7
+    fix_date: 2020-01-05
+    crash_func: PushDoublePixel
+    crash_file: MagickCore/quantum-import.c
+    signature: [heap-buffer-overflow, READ, PushDoublePixel, quantum-import.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479620"
+  - oss_id: 42479645
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 22fb7aed8f38f3bdbad8944a27f67476cc1c8a5d
+    fix_date: 2019-12-26
+    crash_func: TraceStrokePolygon
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, TraceStrokePolygon, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479645"
+  - oss_id: 42479809
+    harness: ping_dng_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0045f7f670077d948125a52d76a145dc878a9033
+    fix_date: 2019-11-04
+    crash_func: "LibRaw::sget4(unsigned char*)"
+    crash_file: src/utils/read_utils.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::sget4", read_utils.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479809"
+  - oss_id: 42480809
+    harness: encoder_psd_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: df9e141e9a5e82b61123e1aebebc10f7a14d5a5d
+    fix_date: 2020-01-04
+    crash_func: SetPSDPixel
+    crash_file: coders/psd.c
+    signature: [segv, -, SetPSDPixel, psd.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480809"
+  - oss_id: 42480836
+    harness: encoder_label_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1410b61985d074d39714794eec61f9acf1bf0db1
+    fix_date: 2020-01-03
+    crash_func: FxEvaluateSubexpression
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, WRITE, FxEvaluateSubexpression, fx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480836"
+  - oss_id: 42482030
+    harness: encoder_radial-gradient_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1abaabbbf9269f7dfb3c57eac6f4e63cfe62cbb1
+    fix_date: 2020-02-23
+    crash_func: ReadGRADIENTImage
+    crash_file: coders/gradient.c
+    signature: [stack-buffer-overflow, READ, ReadGRADIENTImage, gradient.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482030"
+  - oss_id: 42482117
+    harness: encoder_tiff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 824f344ceb823e156ad6e85314d79c087933c2a0
+    fix_date: 2020-06-13
+    crash_func: BlobToStringInfo
+    crash_file: MagickCore/string.c
+    signature: [heap-buffer-overflow, READ, BlobToStringInfo, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482117"
+  - oss_id: 42483273
+    harness: encoder_tiff64_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c987d4f39ead2138f978a39726a62c31ea7445f
+    fix_date: 2020-05-01
+    crash_func: PushLongPixel
+    crash_file: ./MagickCore/quantum-private.h
+    signature: [heap-buffer-overflow, READ, PushLongPixel, quantum-private.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483273"
+  - oss_id: 42483338
+    harness: encoder_ept2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 38b09fc7de522321a74e3168f6239a66655cde51
+    fix_date: 2020-05-05
+    crash_func: PushQuantumFloatPixel
+    crash_file: MagickCore/quantum-import.c
+    signature: [heap-buffer-overflow, READ, PushQuantumFloatPixel, quantum-import.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483338"
+  - oss_id: 42483445
+    harness: encoder_ept_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e99898adfd0fe9de9e8c5471cf8c20b6855a23ac
+    fix_date: 2020-05-08
+    crash_func: PushShortPixel
+    crash_file: ./MagickCore/quantum-private.h
+    signature: [heap-buffer-overflow, READ, PushShortPixel, quantum-private.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42483445"
+  - oss_id: 42485257
+    harness: ping_mvg_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a2d3e5632b79d93333d9cc448836497d435b63d7
+    fix_date: 2020-06-27
+    crash_func: DrawPrimitive
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, READ, DrawPrimitive, draw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485257"
+  - oss_id: 42485656
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f2d5b7615ec97abb32d24d2b021d386283d983ec
+    fix_date: 2020-07-13
+    crash_func: RenderMVGContent
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, RenderMVGContent, draw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42485656"
+  - oss_id: 42488802
+    harness: ping_pwp_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 965bd3b69ff5dc1b6e3653114fe3147cac8c5138
+    fix_date: 2020-11-03
+    crash_func: SetStringInfoDatum
+    crash_file: MagickCore/string.c
+    signature: [stack-buffer-overflow, READ, SetStringInfoDatum, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488802"
+  - oss_id: 42491302
+    harness: encoder_mac_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac4f25ef71b53c5098da06465c81a8b3d9a59abe
+    fix_date: 2021-01-03
+    crash_func: ReadMACImage
+    crash_file: coders/mac.c
+    signature: [heap-buffer-overflow, WRITE, ReadMACImage, mac.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491302"
+  - oss_id: 42491305
+    harness: encoder_palm_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 74a6187b6a5248b0456dcac199c230a2b395092b
+    fix_date: 2021-01-03
+    crash_func: SortColormapByIntensity
+    crash_file: MagickCore/colormap.c
+    signature: [heap-buffer-overflow, READ, SortColormapByIntensity, colormap.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491305"
+  - oss_id: 42491316
+    harness: encoder_label_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 87284751ae4dadda2f8ed9e47f8f7bb0cb510561
+    fix_date: 2021-01-03
+    crash_func: getDistance
+    crash_file: MagickCore/attribute.c
+    signature: [heap-buffer-overflow, READ, getDistance, attribute.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491316"
+  - oss_id: 42491782
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: adcdf0a220e46fb2442837645846c863602aacfa
+    fix_date: 2021-01-15
+    crash_func: TracePoint
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, TracePoint, draw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42491782"
+  - oss_id: 42495919
+    harness: ping_pict_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6213806c70040f63504e03622cf128cc188f42e2
+    fix_date: 2021-04-17
+    crash_func: decode_mcu_fast
+    crash_file: libjpeg-turbo/jdhuff.c
+    signature: [heap-buffer-overflow, READ, decode_mcu_fast, jdhuff.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495919"
+  - oss_id: 42495927
+    harness: encoder_inline_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cfb052422c48efb6a0f1efe5e4e48503491cede9
+    fix_date: 2021-04-17
+    crash_func: ReadMAPImage
+    crash_file: coders/map.c
+    signature: [heap-buffer-overflow, READ, ReadMAPImage, map.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495927"
+  - oss_id: 42498229
+    harness: ping_png32_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 601356f1d2881b57945de8c22349d8758927f76a
+    fix_date: 2021-06-24
+    crash_func: ConcatenateStringInfo
+    crash_file: MagickCore/string.c
+    signature: [heap-buffer-overflow, WRITE, ConcatenateStringInfo, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42498229"
+  - oss_id: 42499970
+    harness: ping_dcm_fuzzer
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 7e2565b79a2268bc89a1b83bd30ed19fe8881add
+    fix_date: 2021-10-24
+    crash_func: RelinquishMagickMemory
+    crash_file: MagickCore/memory.c
+    signature: [attempting, -, RelinquishMagickMemory, memory.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42499970"
+  - oss_id: 42500631
+    harness: ping_ttf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ac8fdfa944724cf5565b33d3f876d5ebdefded71
+    fix_date: 2021-08-24
+    crash_func: tt_skip_pdffont_random_tag
+    crash_file: src/truetype/ttobjs.c
+    signature: [heap-buffer-overflow, READ, tt_skip_pdffont_random_tag, ttobjs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42500631"
+  - oss_id: 42501313
+    harness: encoder_dxt5_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: be3c7dc182ca88690083929ef550a9cb01d5860d
+    fix_date: 2021-10-24
+    crash_func: ReadBC7Pixels
+    crash_file: coders/dds.c
+    signature: [global-buffer-overflow, READ, ReadBC7Pixels, dds.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42501313"
+  - oss_id: 42503378
+    harness: encoder_j2k_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7366f2608cbf893212024955a1851ede76449ddf
+    fix_date: 2021-09-28
+    crash_func: opj_t1_allocate_buffers
+    crash_file: src/lib/openjp2/t1.c
+    signature: [heap-buffer-overflow, WRITE, opj_t1_allocate_buffers, t1.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42503378"
+  - oss_id: 42503815
+    harness: encoder_dds_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b93521f5087ea92d3564862046422a0dc0ce8692
+    fix_date: 2021-11-02
+    crash_func: SetPixelRed
+    crash_file: ./MagickCore/pixel-accessor.h
+    signature: [heap-buffer-overflow, WRITE, SetPixelRed, pixel-accessor.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42503815"
+  - oss_id: 42503895
+    harness: encoder_heic_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7ef309b6e091b0b3a5f2fc803efce5ae86d045a4
+    fix_date: 2022-03-30
+    crash_func: "void apply_sao_internal<unsigned short>(de265_image*, int, int, slice_segment_header const*, int, int, int, unsigned short const*, int, unsigned short*, int)"
+    crash_file: libde265/libde265/sao.cc
+    signature: [stack-buffer-overflow, READ, "void apply_sao_internal<>", sao.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42503895"
+  - oss_id: 42504758
+    harness: encoder_psd_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0e417f477b5914308ce7e8de13a5c6e787a133d1
+    fix_date: 2021-11-23
+    crash_func: SetPixelChannel
+    crash_file: ./MagickCore/pixel-accessor.h
+    signature: [heap-buffer-overflow, READ, SetPixelChannel, pixel-accessor.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42504758"
+  - oss_id: 42507442
+    harness: encoder_label_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0d9b7a60617849f55014d619306dc34ae77eb062
+    fix_date: 2022-01-17
+    crash_func: CopyMagickString
+    crash_file: MagickCore/string.c
+    signature: [stack-buffer-overflow, WRITE, CopyMagickString, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507442"
+  - oss_id: 42507446
+    harness: encoder_label_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: def69fd7bee47398269378be88d16e8be4328c7a
+    fix_date: 2022-01-17
+    crash_func: SkipSpaces
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, READ, SkipSpaces, fx.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507446"
+  - oss_id: 42507601
+    harness: encoder_label_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 260621179f340cd8be4c0251004061c2e861d26f
+    fix_date: 2022-01-20
+    crash_func: GetFunction
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, WRITE, GetFunction, fx.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507601"
+  - oss_id: 42507993
+    harness: ping_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: a628a0918de7fa4c54fb84c036775ed6d92d84a8
+    fix_date: 2022-01-30
+    crash_func: CopyMagickString
+    crash_file: MagickCore/string.c
+    signature: [heap-buffer-overflow, WRITE, CopyMagickString, string.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507993"
+  - oss_id: 42508260
+    harness: encoder_label_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9bd4c0e16d034f733c93d5d1b022f9e5f78e70e
+    fix_date: 2022-02-06
+    crash_func: ProcessTernaryOpr
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, READ, ProcessTernaryOpr, fx.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508260"
+  - oss_id: 42508698
+    harness: ping_mvg_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 352a9ab54ef228553d793c148c717d9f0beac864
+    fix_date: 2022-02-19
+    crash_func: GetFillAlpha
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, READ, GetFillAlpha, draw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508698"
+  - oss_id: 42509575
+    harness: ping_dcm_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ea43d4b023e7b2fdbf8ff6d6fb23e7dd91add4c3
+    fix_date: 2022-03-17
+    crash_func: ReadDCMImage
+    crash_file: coders/dcm.c
+    signature: [heap-buffer-overflow, READ, ReadDCMImage, dcm.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509575"
+  - oss_id: 42509901
+    harness: encoder_miff_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 966a769a646aaaeff127862b8e475297bf5058d3
+    fix_date: 2022-03-23
+    crash_func: LocaleCompare
+    crash_file: MagickCore/locale.c
+    signature: [heap-use-after-free, READ, LocaleCompare, locale.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42509901"
+  - oss_id: 42510636
+    harness: ping_ttf_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: dc5116fb171f35ab3c6a1e027687e971a72d097e
+    fix_date: 2022-04-12
+    crash_func: ft_free
+    crash_file: freetype2/builds/unix/ftsystem.c
+    signature: [attempting, -, ft_free, ftsystem.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510636"
+  - oss_id: 42511063
+    harness: encoder_mng_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: bca2fb87480b0c5ffb57e1da2e73d07f90571c6a
+    fix_date: 2022-04-26
+    crash_func: CloseBlob
+    crash_file: MagickCore/blob.c
+    signature: [heap-use-after-free, READ, CloseBlob, blob.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511063"
+  - oss_id: 42512377
+    harness: encoder_tiff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a854a0a8af977a1b67830f02a53d9eb4d877e10d
+    fix_date: 2022-06-21
+    crash_func: ImportMultispectralQuantum
+    crash_file: MagickCore/quantum-import.c
+    signature: [heap-buffer-overflow, READ, ImportMultispectralQuantum, quantum-import.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512377"
+  - oss_id: 42513423
+    harness: enhance_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dd9e9bb80e500ad5e1213e7b4a5f7075ef09b547
+    fix_date: 2022-07-14
+    crash_func: GetMagicInfo
+    crash_file: MagickCore/magic.c
+    signature: [heap-buffer-overflow, READ, GetMagicInfo, magic.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513423"
+  - oss_id: 42513564
+    harness: ping_bayer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a61aed8956f8bc5b32b70f1db3a149d62a8ddb2b
+    fix_date: 2022-07-18
+    crash_func: ReadBlob
+    crash_file: MagickCore/blob.c
+    signature: [heap-buffer-overflow, READ, ReadBlob, blob.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513564"
+  - oss_id: 42513587
+    harness: ping_bayer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a61aed8956f8bc5b32b70f1db3a149d62a8ddb2b
+    fix_date: 2022-07-18
+    crash_func: ReadTIM2ImageData
+    crash_file: coders/tim2.c
+    signature: [heap-buffer-overflow, READ, ReadTIM2ImageData, tim2.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513587"
+  - oss_id: 42513647
+    harness: encoder_miff_fuzzer
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 892040b56cc81ae2068ad59f78888d0f2fce79d9
+    fix_date: 2022-07-23
+    crash_func: RelinquishMagickMemory
+    crash_file: MagickCore/memory.c
+    signature: [attempting, -, RelinquishMagickMemory, memory.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513647"
+  - oss_id: 42518438
+    harness: encoder_cin_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9998cd719775e90f9989fd1ecaa84647a56c1b57
+    fix_date: 2018-03-07
+    crash_func: ImportQuantumPixels
+    crash_file: MagickCore/quantum-import.c
+    signature: [heap-buffer-overflow, READ, ImportQuantumPixels, quantum-import.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42518438"
+  - oss_id: 42519182
+    harness: encoder_sun_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bb4e7e8919573caf70bd5af3330e991ddbad0c92
+    fix_date: 2018-01-20
+    crash_func: SetGrayscaleImage
+    crash_file: MagickCore/quantize.c
+    signature: [heap-buffer-overflow, WRITE, SetGrayscaleImage, quantize.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42519182"
+  - oss_id: 42519416
+    harness: encoder_sixel_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 614d7b140cd03a0d38f76ae55a7fcb2c9d76012a
+    fix_date: 2018-01-23
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42519416"
+  - oss_id: 42519504
+    harness: encoder_epsi_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1f55115e43f7276a6d91bd4408dd4a6ef45d6be5
+    fix_date: 2018-01-20
+    crash_func: ParseEntities
+    crash_file: MagickCore/xml-tree.c
+    signature: [heap-buffer-overflow, READ, ParseEntities, xml-tree.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42519504"
+  - oss_id: 42519760
+    harness: encoder_pes_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4
+    fix_date: 2018-01-20
+    crash_func: ReadPESImage
+    crash_file: coders/pes.c
+    signature: [stack-buffer-overflow, WRITE, ReadPESImage, pes.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42519760"
+  - oss_id: 42520349
+    harness: encoder_epsi_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0757000bbefbb74da32344eff87f04d71c5d37a4
+    fix_date: 2018-01-21
+    crash_func: DestroyXMLTreeAttributes
+    crash_file: MagickCore/xml-tree.c
+    signature: [heap-use-after-free, READ, DestroyXMLTreeAttributes, xml-tree.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42520349"
+  - oss_id: 42520703
+    harness: encoder_png48_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 62e47eb4a21393211f54577536fc57339af9cecb
+    fix_date: 2023-02-03
+    crash_func: FormatLocaleStringList
+    crash_file: MagickCore/locale.c
+    signature: [heap-buffer-overflow, READ, FormatLocaleStringList, locale.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520703"
+  - oss_id: 42520717
+    harness: encoder_png64_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 62e47eb4a21393211f54577536fc57339af9cecb
+    fix_date: 2023-02-03
+    crash_func: PNGParseiTXt
+    crash_file: coders/png.c
+    signature: [heap-buffer-overflow, READ, PNGParseiTXt, png.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520717"
+  - oss_id: 42521591
+    harness: encoder_mvg_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: c9a75ec387eb3c1f3c9584b97260d72512868b1b
+    fix_date: 2018-01-24
+    crash_func: GetNextToken
+    crash_file: MagickCore/token.c
+    signature: [stack-buffer-overflow, WRITE, GetNextToken, token.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42521591"
+  - oss_id: 42522068
+    harness: encoder_psd_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d48e8072f44d44b1d6613322bba780402c4eda9d
+    fix_date: 2018-01-28
+    crash_func: CopyMagickMemory
+    crash_file: MagickCore/memory.c
+    signature: [negative-size-param, -, CopyMagickMemory, memory.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42522068"
+  - oss_id: 42523268
+    harness: encoder_xc_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1b9d41ca6956686de2430d0355a1ab6f2d914587
+    fix_date: 2018-01-29
+    crash_func: __interceptor_strlen.part.32
+    crash_file: llvm/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc
+    signature: [heap-buffer-overflow, READ, __interceptor_strlen.part.32, sanitizer_common_interceptors.inc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42523268"
+  - oss_id: 42525880
+    harness: encoder_hdr_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07e656c7089f3b3ae30a71a042fb903c83e077b6
+    fix_date: 2018-02-06
+    crash_func: WriteBlob
+    crash_file: MagickCore/blob.c
+    signature: [stack-buffer-overflow, READ, WriteBlob, blob.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42525880"
+  - oss_id: 42526590
+    harness: encoder_label_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 69c4513a4fb5f71421a21643edb53de53d3864a6
+    fix_date: 2018-03-07
+    crash_func: FxEvaluateSubexpression
+    crash_file: MagickCore/fx.c
+    signature: [stack-buffer-overflow, WRITE, FxEvaluateSubexpression, fx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526590"
+  - oss_id: 42526757
+    harness: encoder_ps_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ba9e36555434ebe9da38a1341cfd9f304a326348
+    fix_date: 2018-02-08
+    crash_func: NewXMLTree
+    crash_file: MagickCore/xml-tree.c
+    signature: [heap-buffer-overflow, READ, NewXMLTree, xml-tree.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42526757"
+  - oss_id: 42527789
+    harness: encoder_miff_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ff0cea4290cb1421cb174f2f26ca03789377a6fb
+    fix_date: 2018-02-10
+    crash_func: QueryColorCompliance
+    crash_file: MagickCore/color.c
+    signature: [stack-buffer-overflow, READ, QueryColorCompliance, color.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42527789"
+  - oss_id: 42528428
+    harness: encoder_label_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ea98b2a00c742f3a2a9a1c4deb5f02eb54cd5a78
+    fix_date: 2023-09-22
+    crash_func: ExecuteRPN
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, READ, ExecuteRPN, fx.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528428"
+  - oss_id: 42528661
+    harness: encoder_heic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b56a48eb78a10063c308120302f2496db6488369
+    fix_date: 2023-10-04
+    crash_func: "jpeg2000_get_SIZ_segment(HeifFile const&, unsigned int)"
+    crash_file: libheif/libheif/jpeg2000.cc
+    signature: [heap-buffer-overflow, READ, jpeg2000_get_SIZ_segment, jpeg2000.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42528661"
+  - oss_id: 42529312
+    harness: encoder_bmp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8eb046dbf6bad8d2752a7465d17637ce68245712
+    fix_date: 2023-10-20
+    crash_func: ReadBMPImage
+    crash_file: coders/bmp.c
+    signature: [heap-buffer-overflow, READ, ReadBMPImage, bmp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529312"
+  - oss_id: 42529804
+    harness: encoder_png00_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fb02f76da911581ad728cb830f5ebb1660692879
+    fix_date: 2023-11-05
+    crash_func: mywcslen
+    crash_file: src/cmsnamed.c
+    signature: [heap-buffer-overflow, READ, mywcslen, cmsnamed.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529804"
+  - oss_id: 42531021
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b78a613f16150d6db3b055731211f467756bc412
+    fix_date: 2018-02-21
+    crash_func: TracePath
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, TracePath, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531021"
+  - oss_id: 42531988
+    harness: encoder_mpc_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e39f7ace21226021b095db562d6d46ef3c749784
+    fix_date: 2018-02-27
+    crash_func: ReadMPCImage
+    crash_file: coders/mpc.c
+    signature: [heap-buffer-overflow, WRITE, ReadMPCImage, mpc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42531988"
+  - oss_id: 42532339
+    harness: encoder_gif_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ce9b069cc1ad9748e91b9d37be54cfbb6a714ac5
+    fix_date: 2024-01-30
+    crash_func: FormatLocaleStringList
+    crash_file: MagickCore/locale.c
+    signature: [stack-buffer-overflow, WRITE, FormatLocaleStringList, locale.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532339"
+  - oss_id: 42534433
+    harness: encoder_label_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 262b6ecd39c26dd0c87f3857a9e1e0495eba7773
+    fix_date: 2018-03-09
+    crash_func: FxGetSymbol
+    crash_file: MagickCore/fx.c
+    signature: [heap-buffer-overflow, READ, FxGetSymbol, fx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534433"
+  - oss_id: 42534541
+    harness: encoder_jpg_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: eb224a5545ba0e11a04dcb45b7a3abceeba3ec45
+    fix_date: 2024-04-20
+    crash_func: LocaleNCompare
+    crash_file: MagickCore/locale.c
+    signature: [heap-use-after-free, READ, LocaleNCompare, locale.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534541"
+  - oss_id: 42534921
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7a03766efc1f45cf13cbd435902d86c3f321368e
+    fix_date: 2018-03-11
+    crash_func: DrawDashPolygon
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, DrawDashPolygon, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534921"
+  - oss_id: 42535005
+    harness: encoder_dng_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2f106146a2744b77d8676a5d635b11b6077b9364
+    fix_date: 2024-03-31
+    crash_func: "LibRaw::process_Sony_0x2010(unsigned char*, unsigned short)"
+    crash_file: src/metadata/sony.cpp
+    signature: [heap-buffer-overflow, READ, "LibRaw::process_Sony_0x2010", sony.cpp]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535005"
+  - oss_id: 42535522
+    harness: ping_wpg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 534e8fc78388955af5fc1594fa884e505a7c60fd
+    fix_date: 2018-03-16
+    crash_func: SetPixelIndex
+    crash_file: ./MagickCore/pixel-accessor.h
+    signature: [heap-buffer-overflow, WRITE, SetPixelIndex, pixel-accessor.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535522"
+  - oss_id: 42537543
+    harness: encoder_ttf_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c301208f29210aa4d646f3dbbc21a17b5118cb90
+    fix_date: 2024-07-31
+    crash_func: ft_var_readpackedpoints
+    crash_file: src/truetype/ttgxvar.c
+    signature: [heap-buffer-overflow, READ, ft_var_readpackedpoints, ttgxvar.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42537543"
+  - oss_id: 42538000
+    harness: encoder_ptif_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fd00146bfc98f9d72cadbbc5f5e4fde5ba0de725
+    fix_date: 2018-03-25
+    crash_func: gtStripContig
+    crash_file: libtiff/libtiff/tif_getimage.c
+    signature: [heap-buffer-overflow, READ, gtStripContig, tif_getimage.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538000"
+  - oss_id: 42538444
+    harness: encoder_label_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fb249609d447af88f0a2ef1b953d4be1184513ca
+    fix_date: 2018-03-28
+    crash_func: FxGetSymbol
+    crash_file: MagickCore/fx.c
+    signature: [stack-buffer-overflow, WRITE, FxGetSymbol, fx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538444"
+  - oss_id: 42538714
+    harness: ping_webp_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0401a0a36ff6911d7889aeb7eba74d5df1d52b13
+    fix_date: 2018-04-01
+    crash_func: ReadWebPLSBWord
+    crash_file: coders/webp.c
+    signature: [heap-buffer-overflow, READ, ReadWebPLSBWord, webp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538714"
+  - oss_id: 42538770
+    harness: ping_heic_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 44100bd645d526400cb8f96c90a92ab8aa6f5e02
+    fix_date: 2018-04-02
+    crash_func: ParseHvcCAtom
+    crash_file: coders/heic.c
+    signature: [heap-buffer-overflow, WRITE, ParseHvcCAtom, heic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538770"
+  - oss_id: 42538787
+    harness: ping_heic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 79ee4b96b5dbb8785bec26e0162600268aa095b6
+    fix_date: 2018-04-03
+    crash_func: ParseIpcoAtom
+    crash_file: coders/heic.c
+    signature: [heap-buffer-overflow, READ, ParseIpcoAtom, heic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538787"
+  - oss_id: 42538928
+    harness: rotate_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bef3f2475cd8bbc1bda25699ff94e18c938a8e84
+    fix_date: 2018-04-08
+    crash_func: "LibRaw::identify()"
+    crash_file: libraw/internal/dcraw_common.cpp
+    signature: [stack-buffer-overflow, READ, "LibRaw::identify", dcraw_common.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538928"
+  - oss_id: 42538985
+    harness: encoder_heic_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4b59bf5c8277c93dec0a3eab6ce30b00237adf0d
+    fix_date: 2018-04-09
+    crash_func: ReadBlob
+    crash_file: MagickCore/blob.c
+    signature: [heap-buffer-overflow, WRITE, ReadBlob, blob.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538985"
+  - oss_id: 42538986
+    harness: encoder_heic_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4c52a8adc4d9a0f03d501021b3f751f5f02fe62e
+    fix_date: 2018-04-09
+    crash_func: ParseHvcCAtom
+    crash_file: coders/heic.c
+    signature: [stack-buffer-overflow, WRITE, ParseHvcCAtom, heic.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42538986"
+  - oss_id: 42539004
+    harness: encoder_heic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 23144676a129a92a84f1ee9d0e648a1c311a1d26
+    fix_date: 2018-04-01
+    crash_func: "ref_pic_set::compute_derived_values()"
+    crash_file: libde265/libde265/refpic.cc
+    signature: [heap-buffer-overflow, READ, "ref_pic_set::compute_derived_values", refpic.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539004"
+  - oss_id: 42539015
+    harness: ping_png_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 7e662c07c762dc8a0ee653f0fc5f36a10499ed0e
+    fix_date: 2018-04-10
+    crash_func: read_user_chunk_callback
+    crash_file: coders/png.c
+    signature: [heap-use-after-free, WRITE, read_user_chunk_callback, png.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539015"
+  - oss_id: 42539142
+    harness: encoder_heic_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 23144676a129a92a84f1ee9d0e648a1c311a1d26
+    fix_date: 2018-04-01
+    crash_func: "decoder_context::process_slice_segment_header(slice_segment_header*, de265_error*, long, nal_header*, void*)"
+    crash_file: libde265/libde265/decctx.cc
+    signature: [heap-buffer-overflow, WRITE, "decoder_context::process_slice_segment_header", decctx.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539142"
+  - oss_id: 42539206
+    harness: encoder_heic_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 23144676a129a92a84f1ee9d0e648a1c311a1d26
+    fix_date: 2018-04-01
+    crash_func: "decoder_context::process_reference_picture_set(slice_segment_header*)"
+    crash_file: libde265/libde265/decctx.cc
+    signature: [heap-buffer-overflow, WRITE, "decoder_context::process_reference_picture_set", decctx.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539206"
+  - oss_id: 42539437
+    harness: ping_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 4a9f1e7fb3ea45dcc70db2319820593373e65e35
+    fix_date: 2018-04-21
+    crash_func: ConvertPrimitiveToPath
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, ConvertPrimitiveToPath, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539437"
+  - oss_id: 42539553
+    harness: encoder_heic_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cd4a399351d69abbe21c675fb3d38f151a187a63
+    fix_date: 2018-04-19
+    crash_func: "ff_hevc_put_hevc_qpel_pixels_8_sse(short*, long, unsigned char const*, long, int, int, short*)"
+    crash_file: libde265/libde265/x86/sse-motion.cc
+    signature: [heap-buffer-overflow, READ, ff_hevc_put_hevc_qpel_pixels_8_sse, sse-motion.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539553"
+  - oss_id: 42539983
+    harness: ping_mvg_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2254b1d5389718067e72fd130db652ee9e2fcb30
+    fix_date: 2018-06-02
+    crash_func: TracePoint
+    crash_file: MagickCore/draw.c
+    signature: [heap-use-after-free, WRITE, TracePoint, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42539983"
+  - oss_id: 42540328
+    harness: ping_mng_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9fad1d41f8f20287887ef2077182ad4ecba05c80
+    fix_date: 2018-06-03
+    crash_func: MngInfoDiscardObject
+    crash_file: coders/png.c
+    signature: [heap-use-after-free, READ, MngInfoDiscardObject, png.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540328"
+  - oss_id: 42540426
+    harness: encoder_dng_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 05d3ff5471a577d3489c345e15607f0a37f7db95
+    fix_date: 2018-06-29
+    crash_func: "stread(char*, unsigned long, LibRaw_abstract_datastream*)"
+    crash_file: libraw/internal/dcraw_common.cpp
+    signature: [stack-buffer-overflow, WRITE, stread, dcraw_common.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540426"
+  - oss_id: 42540443
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9db0506ffeb85be80ce66fe84a7f296fc80129fb
+    fix_date: 2018-06-10
+    crash_func: CheckPrimitiveExtent
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, READ, CheckPrimitiveExtent, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540443"
+  - oss_id: 42540497
+    harness: encoder_heic_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ac28e5143cd1f9e8337a2a0c6830df87a43addef
+    fix_date: 2018-04-28
+    crash_func: "heif::HeifContext::decode_and_paste_tile_image(unsigned int, std::__1::shared_ptr<heif::HeifPixelImage>, int, int) const"
+    crash_file: src/heif_context.cc
+    signature: [negative-size-param, -, "heif::HeifContext::decode_and_paste_tile_image", heif_context.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42540497"
+  - oss_id: 42541041
+    harness: encoder_mvg_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9e53a942c9c972954c33b7effbafa5197f539265
+    fix_date: 2018-07-11
+    crash_func: GetMVGMacros
+    crash_file: MagickCore/draw.c
+    signature: [heap-buffer-overflow, WRITE, GetMVGMacros, draw.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541041"
+  - oss_id: 371683518
+    harness: encoder_tiff_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e96022d5f377f2a4c0780be9f60ed44535dc5488
+    fix_date: 2024-10-07
+    crash_func: putcontig8bitYCbCr22tile
+    crash_file: libtiff/libtiff/tif_getimage.c
+    signature: [heap-buffer-overflow, READ, putcontig8bitYCbCr22tile, tif_getimage.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/371683518"
+  - oss_id: 432058932
+    harness: encoder_jxl_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1ced145536456c8bb68cfefc7262a1ff53551f62
+    fix_date: 2025-07-15
+    crash_func: FastAdd
+    crash_file: libjxl/lib/jxl/enc_ans_params.h
+    signature: [heap-buffer-overflow, READ, FastAdd, enc_ans_params.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/432058932"
+rejected:
+  - oss_id: 42479563
+    reason: commit_missing
+  - oss_id: 42481753
+    reason: commit_missing
+  - oss_id: 42482232
+    reason: commit_missing
+  - oss_id: 42499146
+    reason: commit_missing
+  - oss_id: 42518171
+    reason: commit_missing
+  - oss_id: 42538455
+    reason: commit_missing
+  - oss_id: 42538984
+    reason: commit_missing
+  - oss_id: 42539098
+    reason: commit_missing
+  - oss_id: 42539211
+    reason: commit_missing
+  - oss_id: 42539440
+    reason: commit_missing
+  - oss_id: 42540400
+    reason: commit_missing
+  - oss_id: 377748129
+    reason: commit_missing
+error: null

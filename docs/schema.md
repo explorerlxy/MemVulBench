@@ -1,5 +1,11 @@
 # `bug.yaml` 契约
 
+> **状态：未物化的逐漏洞文件设计。**
+>
+> 现行身份账本是 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`
+> 的五元组，不是本文件里的四元组 `signature`。准入见
+> `data/measure/admission/2026-09-18.json`。本文保留作字段草案。
+
 每个漏洞一个目录，目录里的 `bug.yaml` 是该漏洞的全部真值。
 **原则：这个文件里的每个字段要么是从上游元数据抄来的出处信息，要么是本地实测出来的观测值。没有"人工判断"字段。**
 
@@ -64,7 +70,7 @@ verified:
 
 纯考古路线下，`bug.yaml` 里**没有** pin 表、保真 manifest、存活窗口、开关名、
 负对照与隔离对照字段——这些都是文件级 pin 方案的产物，随该方案一并搁置
-（[methodology.md](methodology.md) §9）。若日后启用机会主义 pin，再补 `pins` 段。
+若日后启用机会主义 pin，再补 `pins` 段。
 
 ## 1. 为什么 `signature` 不含行号
 
@@ -73,11 +79,11 @@ verified:
 
 指纹有三个用途，都是机械判定：
 
-1. **sweep 判活**：候选基线上"PoC 开火 **且** 指纹匹配 ARVO 参考"才算该漏洞在此基线上潜伏。
+1. **人工判活**：候选基线上"PoC 开火 **且** 指纹匹配 ARVO 参考"才算该漏洞在此基线上潜伏。
    只看开火不看指纹会把撞到别的漏洞算成成功——这是 Magma 病的入口。
 2. **目标内可区分**：两个漏洞 signature 相同则在评测中不可区分，
    按 D4 闸门 3 合并为同一个 ID（`merged_from` 记录被合并的 OSS-Fuzz issue）。
-3. **战役归因**：把工具的 `crashes/` 灌进 recover build，按指纹映射到 bug ID。
+3. **结果归因**：按人工记录的崩溃指纹映射到 bug ID。
 
 ## 2. 准入由 `oracle` 推导，不手填
 
@@ -103,4 +109,28 @@ ASan 沉默但 MSan/Valgrind 开火的，记 `reject_reason: not_observable`
 | `all_oracles_silent` | 无任何 oracle 见证 → Magma 的 `canary_only` 类 |
 
 `not_latent` 会是占比最大的一类，这是纯考古路线的正常代价：
-它换来的是剩下那批漏洞的 100% 可信度。各原因的占比随数据一并记录在 `data/sweeps/`。
+它换来的是剩下那批漏洞的 100% 可信度。各原因随人工测量数据一并记录。
+
+## 4. 手工回放中的 `known_real`
+
+`known_real` 计的是 **expected 集合之外的 unique 漏洞**，不是 PoC 条数。
+完整口径与 2026-09-14 核验见 [known-real.md](known-real.md)。
+
+`data/measure/manual/<project>/<base>.json` 的
+`known_real_vulnerabilities` 只登记通过下列全部条件的指纹：
+
+1. 固定基线上可复现的 ASan/SEGV 内存安全故障。
+2. 实测指纹不在该项目本轮 expected 集合（目录 ARVO 指纹匹配，含 D4 合并）。
+3. 不是 expected 指纹的再命中、不是 `same_as_catalogued` 的类别/栈漂移、
+   也不是同一目录走路上的更早 ASan 中止。
+4. 源码与修复提交能证明这是独立缺陷。
+
+条目必须带实测 `signature`、`catalog_signature`、`unique_outside_expected: true`、
+`fix_commit_reviewed`（或明确写清无法用目录修复闭环的理由）与 `basis`。
+对应 observation 的 `verdict` 为 `known_real`。不得把这类结果写成目录指纹的
+精确匹配。
+
+同洞漂移、撞上已计入 expected 的洞、同走更早中止，分别记
+`same_as_catalogued`（仍留在 expected）、`collides_with_expected`、
+`catalog_earlier_abort`。它们可以留在 `known_real_vulnerabilities` 里作否决记录
+（`unique_outside_expected: false`），但 **`known_real_unique_count` 不加**。

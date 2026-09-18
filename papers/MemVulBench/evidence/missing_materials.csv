@@ -1,0 +1,14 @@
+project,kind,oss_id,detail
+ghostpdl,type_hint_conflict,42514830,CWE-125 vs segv|-|i_free_object|gsalloc.c
+ndpi,type_hint_conflict,42487144,CWE-125 vs stack-use-after-scope|READ|ndpi_search_kerberos|kerberos.c
+upx,type_hint_conflict,42531654,CWE-125 vs unknown-crash|READ|ucl_nrv2b_decompress_safe_le32|n2b_d.c
+upx,type_hint_conflict,42531668,CWE-125 vs unknown-crash|READ|PackLinuxElf64::unpack|p_lx_elf.cpp
+upx,type_hint_conflict,42531927,CWE-416 vs SEGV|READ|N_BELE_RTP::LEPolicy::get64|bele_policy.h
+upx,type_hint_conflict,42532037,CWE-125 vs unknown-crash|READ|ucl_nrv2e_decompress_safe_le32|n2e_d.c
+upx,type_hint_conflict,42532364,CWE-125 vs unknown-crash|READ|PackLinuxElf32::unpack|p_lx_elf.cpp
+libavc,type_hint_conflict,42530559,CWE-125 vs SEGV|READ|null|isvcd_parse_epslice.c:isvcd_parse_inter_slice_data_cavlc_enh_lyr
+libavc,type_hint_conflict,42530568,CWE-125 vs SEGV|READ|null|isvcd_parse_epslice.c:isvcd_parse_inter_slice_data_cavlc_enh_lyr
+libxml2,association_count_mismatch,,reconstructed 7 != recorded 9
+libraw,type_hint_conflict,42534178,CWE-125 vs SEGV|READ|libraw_sget4_static|read_utils.cpp
+libraw,type_hint_conflict,399138502,CWE-416 vs heap-buffer-overflow|READ|LibRaw::phase_one_correct|load_mfbacks.cpp
+librawspeed,type_hint_conflict,42507708,"CWE-125 vs segv|-|void rawspeed::DngOpcodes::PixelOpcode::applyOP<unsigned short, rawspeed::DngOpcodes::OffsetPerRowOrCol<>::apply|DngOpcodes.cpp"

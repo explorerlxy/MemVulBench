@@ -1,0 +1,223 @@
+project: lwan
+repo: "https://github.com/lpereira/lwan.git"
+n_sites: 12
+n_issues: 12
+harnesses: [config_fuzzer, h2_huffman_fuzzer, request_fuzzer, template_fuzzer]
+base:
+  commit: 341dca6b2594eea98df73dcdb96bb80b6ccc9fb9
+  date: 2019-04-29
+  method: wave_eve
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 2
+  note: "eve of 2019-04-30 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2019-04-30
+    n: 2
+    eve: 341dca6b2594eea98df73dcdb96bb80b6ccc9fb9
+    n_latent_upper: 9
+    oss_ids: [42474994, 42474997]
+  - day: 2019-10-23
+    n: 2
+    eve: 3289a66db7145c081ff1d5fa987f0cfec0563dc5
+    n_latent_upper: 5
+    oss_ids: [42479369, 42479378]
+  - day: 2019-04-17
+    n: 1
+    eve: f435dfd867f825d68b6dc931929c76415a4afba4
+    n_latent_upper: 11
+    oss_ids: [42474687]
+  - day: 2019-04-26
+    n: 1
+    eve: abf6eda654c8336e2ffe4e5c1a5179576da185c5
+    n_latent_upper: 10
+    oss_ids: [42474934]
+  - day: 2019-05-03
+    n: 1
+    eve: 2bf15453c639c194d840a26ff2122d12b8190d8a
+    n_latent_upper: 7
+    oss_ids: [42475016]
+  - day: 2019-05-05
+    n: 1
+    eve: 139c94fc8f8cf509f5dae3108b86a596d52a2276
+    n_latent_upper: 6
+    oss_ids: [42475075]
+  - day: 2019-10-25
+    n: 1
+    eve: a66a5418cb1da037747b28c5266f9214dc42c04b
+    n_latent_upper: 3
+    oss_ids: [42479370]
+  - day: 2019-11-16
+    n: 1
+    eve: 1ddaed371f4711f12ad8c6092d38df782091f9b0
+    n_latent_upper: 2
+    oss_ids: [42479930]
+  - day: 2019-11-17
+    n: 1
+    eve: f7b91535da39550693214dbe7ae2c16d83d70a4f
+    n_latent_upper: 1
+    oss_ids: [42479969]
+  - day: 2022-04-10
+    n: 1
+    eve: 4272b886241688021ddc5f938d21e4830b447bed
+    n_latent_upper: 1
+    oss_ids: [42510536]
+bugs:
+  - oss_id: 42474687
+    harness: request_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7e08e1f1fd8d220f16d347e5c351ddeb56ef5524
+    fix_date: 2019-04-17
+    crash_func: string_as_int32
+    crash_file: src/lib/lwan.h
+    signature: [global-buffer-overflow, READ, string_as_int32, lwan.h]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474687"
+  - oss_id: 42474934
+    harness: request_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b506275b36827f194bc15d77bd6d2f8f7b3b935f
+    fix_date: 2019-04-26
+    crash_func: parse_proxy_protocol_v2
+    crash_file: src/lib/lwan-request.c
+    signature: [negative-size-param, -, parse_proxy_protocol_v2, lwan-request.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42474934"
+  - oss_id: 42474994
+    harness: request_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6be9574a2d80457a5bfc16b23b67905d8f68e827
+    fix_date: 2019-04-30
+    crash_func: strsep_char
+    crash_file: src/lib/lwan-request.c
+    signature: [global-buffer-overflow, READ, strsep_char, lwan-request.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42474994"
+  - oss_id: 42474997
+    harness: request_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 898399937a1afe937edba5137c51ffb4f7054056
+    fix_date: 2019-04-30
+    crash_func: string_as_int16
+    crash_file: src/lib/lwan.h
+    signature: [global-buffer-overflow, READ, string_as_int16, lwan.h]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42474997"
+  - oss_id: 42475016
+    harness: request_fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8feaf5303d43cad4d057a51722713213d3c9732c
+    fix_date: 2019-05-03
+    crash_func: parse_headers
+    crash_file: src/lib/lwan-request.c
+    signature: [global-buffer-overflow, WRITE, parse_headers, lwan-request.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475016"
+  - oss_id: 42475075
+    harness: request_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9ad6eb501b55f27a17d6383fa5bdcb2328147685
+    fix_date: 2019-05-05
+    crash_func: ignore_leading_whitespace
+    crash_file: src/lib/lwan-request.c
+    signature: [global-buffer-overflow, READ, ignore_leading_whitespace, lwan-request.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42475075"
+  - oss_id: 42479369
+    harness: config_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ab882fe013ec880425bd918e0bcbf9e798361585
+    fix_date: 2019-10-23
+    crash_func: backup
+    crash_file: src/lib/lwan-config.c
+    signature: [global-buffer-overflow, READ, backup, lwan-config.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479369"
+  - oss_id: 42479370
+    harness: config_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 742ecf1c535b0b3b1350253faef6289fdc8f8e12
+    fix_date: 2019-10-25
+    crash_func: lwan_strbuf_append_str
+    crash_file: src/lib/lwan-strbuf.c
+    signature: [global-buffer-overflow, READ, lwan_strbuf_append_str, lwan-strbuf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479370"
+  - oss_id: 42479378
+    harness: config_fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ab882fe013ec880425bd918e0bcbf9e798361585
+    fix_date: 2019-10-23
+    crash_func: lex_multiline_string
+    crash_file: src/lib/lwan-config.c
+    signature: [global-buffer-overflow, READ, lex_multiline_string, lwan-config.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479378"
+  - oss_id: 42479930
+    harness: template_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f7b91535da39550693214dbe7ae2c16d83d70a4f
+    fix_date: 2019-11-16
+    crash_func: post_process_template
+    crash_file: src/lib/lwan-template.c
+    signature: [heap-buffer-overflow, READ, post_process_template, lwan-template.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479930"
+  - oss_id: 42479969
+    harness: template_fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: d7fc0d27fbea5c68d61444033517d0e962e822e6
+    fix_date: 2019-11-17
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: fuzz/template_fuzzer.cc
+    signature: [global-buffer-overflow, WRITE, LLVMFuzzerTestOneInput, template_fuzzer.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479969"
+  - oss_id: 42510536
+    harness: h2_huffman_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 44283f701359c7b0bcf5e0b5466591c7442d081a
+    fix_date: 2022-04-10
+    crash_func: read64be
+    crash_file: src/lib/lwan-h2-huffman.c
+    signature: [heap-buffer-overflow, READ, read64be, lwan-h2-huffman.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510536"
+rejected: []
+error: null

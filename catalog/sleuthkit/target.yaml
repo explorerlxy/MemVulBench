@@ -1,0 +1,305 @@
+project: sleuthkit
+repo: "https://github.com/sleuthkit/sleuthkit"
+n_sites: 23
+n_issues: 23
+harnesses: [sleuthkit_fls_apfs_fuzzer, sleuthkit_fls_ext_fuzzer, sleuthkit_fls_fat_fuzzer, sleuthkit_fls_hfs_fuzzer, sleuthkit_fls_iso9660_fuzzer, sleuthkit_fls_ntfs_fuzzer]
+base:
+  commit: 5eabe4d554f09bf31f8a375735c096b1df4de0e8
+  date: 2021-04-26
+  method: wave_eve
+  n_latent: 14
+  n_latent_upper: 14
+  n_wave: 2
+  note: "eve of 2021-04-28 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-04-30
+    n: 4
+    eve: 9e68084d50b4734ab6c5c96e8df14c8660958b87
+    n_latent_upper: 12
+    oss_ids: [42489626, 42489627, 42486571, 42496517]
+  - day: 2021-04-28
+    n: 2
+    eve: 5eabe4d554f09bf31f8a375735c096b1df4de0e8
+    n_latent_upper: 14
+    oss_ids: [42486540, 42486531]
+  - day: 2021-06-28
+    n: 2
+    eve: a429252c66edf0d1d25fc35f495c15080807a0be
+    n_latent_upper: 7
+    oss_ids: [42486529, 42489624]
+  - day: 2022-08-17
+    n: 2
+    eve: e2c2570a456fb2ca5635e613bfd89d1fac9cb063
+    n_latent_upper: 2
+    oss_ids: [42498895, 42498979]
+  - day: 2020-09-10
+    n: 1
+    eve: b5bdca074daa9edb20e954c5055ef766f88330fd
+    n_latent_upper: 16
+    oss_ids: [42486539]
+  - day: 2021-04-22
+    n: 1
+    eve: 69db0dc4fdcc03b9b764fd1864ed433402e4fcaa
+    n_latent_upper: 15
+    oss_ids: [42486541]
+  - day: 2021-06-23
+    n: 1
+    eve: 634c3ceaa9405c434867d9516bb4fc211fb7acdb
+    n_latent_upper: 8
+    oss_ids: [42496725]
+  - day: 2021-09-15
+    n: 1
+    eve: 9f960bfca4add2f86e1edc7672b1736ff1f7f181
+    n_latent_upper: 5
+    oss_ids: [42498519]
+  - day: 2021-09-18
+    n: 1
+    eve: ebdaf6ddd59f4181750596af110bbf97c4665af1
+    n_latent_upper: 4
+    oss_ids: [42502057]
+  - day: 2021-12-29
+    n: 1
+    eve: 47b6cb50c5deca05847e0f60a8f909188dc74cb9
+    n_latent_upper: 3
+    oss_ids: [42498350]
+  - day: 2024-09-05
+    n: 1
+    eve: b22da608b0f4c547ea0dc60b441930e46e467e8f
+    n_latent_upper: 1
+    oss_ids: [42534995]
+bugs:
+  - oss_id: 42486529
+    harness: sleuthkit_fls_ext_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5feda0aed227695c2fbf37a498410715f54c7b05
+    fix_date: 2021-06-28
+    crash_func: ext2fs_inode_walk
+    crash_file: tsk/fs/ext2fs.c
+    signature: [heap-buffer-overflow, READ, ext2fs_inode_walk, ext2fs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486529"
+  - oss_id: 42486531
+    harness: sleuthkit_fls_hfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d4fe8a8130b77b3601fbd167a7a4884d097aa97d
+    fix_date: 2021-04-28
+    crash_func: hfs_load_extended_attrs
+    crash_file: tsk/fs/hfs.c
+    signature: [heap-buffer-overflow, READ, hfs_load_extended_attrs, hfs.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42486531"
+  - oss_id: 42486539
+    harness: sleuthkit_fls_ntfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 243274a82cc506507bc59083d63a0d3b7ced611e
+    fix_date: 2020-09-10
+    crash_func: ntfs_make_data_run
+    crash_file: tsk/fs/ntfs.c
+    signature: [heap-buffer-overflow, READ, ntfs_make_data_run, ntfs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486539"
+  - oss_id: 42486540
+    harness: sleuthkit_fls_hfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2701739f8ad80d14c36de1e3a7a35bd792fceabb
+    fix_date: 2021-04-28
+    crash_func: hfs_cat_traverse
+    crash_file: tsk/fs/hfs.c
+    signature: [heap-buffer-overflow, READ, hfs_cat_traverse, hfs.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42486540"
+  - oss_id: 42486541
+    harness: sleuthkit_fls_ntfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4d379cb12e67f5bc690d2e2e4d6ce752c2b41e67
+    fix_date: 2021-04-22
+    crash_func: ntfs_dinode_lookup
+    crash_file: tsk/fs/ntfs.c
+    signature: [heap-buffer-overflow, READ, ntfs_dinode_lookup, ntfs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42486541"
+  - oss_id: 42486571
+    harness: sleuthkit_fls_iso9660_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 75c1263abbfe52f45d26f7af29a55cc4c96cf398
+    fix_date: 2021-04-30
+    crash_func: parse_susp
+    crash_file: tsk/fs/iso9660.c
+    signature: [stack-buffer-overflow, READ, parse_susp, iso9660.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42486571"
+  - oss_id: 42489624
+    harness: sleuthkit_fls_ext_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5feda0aed227695c2fbf37a498410715f54c7b05
+    fix_date: 2021-06-28
+    crash_func: ext4_load_attrs_extents
+    crash_file: tsk/fs/ext2fs.c
+    signature: [heap-buffer-overflow, READ, ext4_load_attrs_extents, ext2fs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489624"
+  - oss_id: 42489626
+    harness: sleuthkit_fls_hfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0954034dc1ac757cfc125539c41cc2b42525b303
+    fix_date: 2021-04-30
+    crash_func: hfs_unicode_compare_int
+    crash_file: tsk/fs/hfs_unicompare.c
+    signature: [heap-buffer-overflow, READ, hfs_unicode_compare_int, hfs_unicompare.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489626"
+  - oss_id: 42489627
+    harness: sleuthkit_fls_hfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0954034dc1ac757cfc125539c41cc2b42525b303
+    fix_date: 2021-04-30
+    crash_func: hfs_cat_compare_keys
+    crash_file: tsk/fs/hfs.c
+    signature: [heap-buffer-overflow, READ, hfs_cat_compare_keys, hfs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42489627"
+  - oss_id: 42496517
+    harness: sleuthkit_fls_iso9660_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 75c1263abbfe52f45d26f7af29a55cc4c96cf398
+    fix_date: 2021-04-30
+    crash_func: parse_susp
+    crash_file: tsk/fs/iso9660.c
+    signature: [negative-size-param, -, parse_susp, iso9660.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496517"
+  - oss_id: 42496725
+    harness: sleuthkit_fls_hfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e4f8252079d277548d7194c510e27536928c4f4f
+    fix_date: 2021-06-23
+    crash_func: hfs_dir_open_meta_cb
+    crash_file: tsk/fs/hfs_dent.c
+    signature: [heap-buffer-overflow, READ, hfs_dir_open_meta_cb, hfs_dent.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42496725"
+  - oss_id: 42498350
+    harness: sleuthkit_fls_ntfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3cf945255ae546e507ee4c884dd83a4d3f669c72
+    fix_date: 2021-12-29
+    crash_func: ntfs_proc_attrseq
+    crash_file: tsk/fs/ntfs.c
+    signature: [heap-buffer-overflow, READ, ntfs_proc_attrseq, ntfs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498350"
+  - oss_id: 42498519
+    harness: sleuthkit_fls_fat_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 3a32d25c88a771892c9db1d2055395ae4523a682
+    fix_date: 2021-09-15
+    crash_func: tsk_fs_attr_set_run
+    crash_file: tsk/fs/fs_attr.c
+    signature: [heap-use-after-free, READ, tsk_fs_attr_set_run, fs_attr.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498519"
+  - oss_id: 42498895
+    harness: sleuthkit_fls_apfs_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4518aa4e2397957959c280e50010f843d6e6107e
+    fix_date: 2022-08-17
+    crash_func: "std::__1::enable_if<true, void>::type APFSBtreeNodeIterator<APFSBtreeNode<apfs_omap_key, apfs_omap_value> >::init_value<void>()"
+    crash_file: tsk/pool/./../img/../fs/tsk_apfs.hpp
+    signature: [heap-buffer-overflow, READ, "std::__1::enable_if<>::type APFSBtreeNodeIterator<APFSBtreeNode<> >::init_value<>", tsk_apfs.hpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498895"
+  - oss_id: 42498979
+    harness: sleuthkit_fls_apfs_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 4518aa4e2397957959c280e50010f843d6e6107e
+    fix_date: 2022-08-17
+    crash_func: "APFSJObject::add_entry(APFSBtreeNodeIterator<APFSJObjBtreeNode>::value_type const&)"
+    crash_file: tsk/fs/apfs_fs.cpp
+    signature: [heap-use-after-free, READ, "APFSJObject::add_entry", apfs_fs.cpp]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498979"
+  - oss_id: 42502057
+    harness: sleuthkit_fls_ext_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 675093ee08b1cc970419946760ca6340edfca272
+    fix_date: 2021-09-18
+    crash_func: ext4_load_attrs_inline
+    crash_file: tsk/fs/ext2fs.c
+    signature: [heap-buffer-overflow, READ, ext4_load_attrs_inline, ext2fs.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502057"
+  - oss_id: 42534995
+    harness: sleuthkit_fls_ntfs_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: b105bc4a5cb01f0a21f191739eab63d832a7cc5d
+    fix_date: 2024-09-05
+    crash_func: tsk_fs_load_file_action
+    crash_file: tsk/fs/fs_load.c
+    signature: [memcpy-param-overlap, -, tsk_fs_load_file_action, fs_load.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534995"
+rejected:
+  - oss_id: 42498479
+    reason: commit_missing
+  - oss_id: 42498898
+    reason: commit_missing
+  - oss_id: 42499007
+    reason: commit_missing
+  - oss_id: 42499931
+    reason: commit_missing
+  - oss_id: 42502552
+    reason: commit_missing
+  - oss_id: 42507669
+    reason: commit_missing
+error: null

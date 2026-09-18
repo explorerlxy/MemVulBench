@@ -1,0 +1,366 @@
+project: matio
+repo: "https://github.com/tbeu/matio.git"
+n_sites: 29
+n_issues: 29
+harnesses: [matio_fuzzer]
+base:
+  commit: b783c3e234ceac1d933266707e453b085f1112c6
+  date: 2021-01-25
+  method: measured_sweep
+  n_latent: 7
+  n_latent_upper: 7
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-01-31
+    n: 3
+    eve: b783c3e234ceac1d933266707e453b085f1112c6
+    n_latent_upper: 5
+    oss_ids: [42491698, 42491667, 42492295]
+  - day: 2024-04-01
+    n: 3
+    eve: 711128127c47ed23d81e37c99461796f5e168c7d
+    n_latent_upper: 7
+    oss_ids: [42491737, 42529484, 42530069]
+  - day: 2021-01-09
+    n: 2
+    eve: 790a2801e1f479f91e824db95eb98842cab20b67
+    n_latent_upper: 8
+    oss_ids: [42479773, 42489565]
+  - day: 2021-02-06
+    n: 2
+    eve: 26a6c7177b179153f254f17f6d3b313a1e107a2f
+    n_latent_upper: 2
+    oss_ids: [42491649, 42492483]
+  - day: 2024-03-25
+    n: 2
+    eve: aed031f848967519f535a477fe9f86c103581908
+    n_latent_upper: 9
+    oss_ids: [42493030, 42530705]
+  - day: 2024-04-24
+    n: 2
+    eve: 5fa0e8065cb8ffaed90a03cf962410ccbdc47187
+    n_latent_upper: 3
+    oss_ids: [42534195, 42534305]
+  - day: 2019-08-30
+    n: 1
+    eve: 69f7141f5d47eae33ecdd8e88ca0b50e25ce883a
+    n_latent_upper: 11
+    oss_ids: [42477601]
+  - day: 2019-09-02
+    n: 1
+    eve: 02c3b46e1e41a8cd2534525968e7e4d86061af66
+    n_latent_upper: 10
+    oss_ids: [42477621]
+  - day: 2019-11-10
+    n: 1
+    eve: 99502cc3abccdb127eff3fa182f83cda67c73879
+    n_latent_upper: 9
+    oss_ids: [42477894]
+  - day: 2021-01-24
+    n: 1
+    eve: 905acda6b885b3971b75048b03aa91b2a893c98e
+    n_latent_upper: 6
+    oss_ids: [42491640]
+  - day: 2024-03-10
+    n: 1
+    eve: b19346abbf605bc449e6960ff239888a3205ea7e
+    n_latent_upper: 10
+    oss_ids: [42532885]
+  - day: 2024-04-15
+    n: 1
+    eve: 36aa91bb702a9217ec05c866f932c78f1e0b2647
+    n_latent_upper: 4
+    oss_ids: [42534483]
+bugs:
+  - oss_id: 42477601
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 651a8e28099edb5fbb9e4e1d4d3238848f446c9a
+    fix_date: 2019-08-30
+    crash_func: strdup_vprintf
+    crash_file: src/io.c
+    signature: [heap-buffer-overflow, READ, strdup_vprintf, io.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477601"
+  - oss_id: 42477621
+    harness: matio_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 7a9958485036ef37b4e88df5cbe32bd7ec4c0d25
+    fix_date: 2019-09-02
+    crash_func: Mat_VarRead4
+    crash_file: src/mat4.c
+    signature: [heap-buffer-overflow, WRITE, Mat_VarRead4, mat4.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477621"
+  - oss_id: 42477894
+    harness: matio_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8b3ee30a8d9cfdc3799252a4a42572fc6f8e205e
+    fix_date: 2019-11-10
+    crash_func: Mat_VarReadNextInfo5
+    crash_file: src/mat5.c
+    signature: [stack-buffer-overflow, READ, Mat_VarReadNextInfo5, mat5.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42477894"
+  - oss_id: 42479773
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1ce8f2d1845ecdde19a35605cabdbb884776d52d
+    fix_date: 2021-01-09
+    crash_func: H5O_fill_new_decode
+    crash_file: src/H5Ofill.c
+    signature: [heap-buffer-overflow, READ, H5O_fill_new_decode, H5Ofill.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42479773"
+  - oss_id: 42489565
+    harness: matio_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1ce8f2d1845ecdde19a35605cabdbb884776d52d
+    fix_date: 2021-01-09
+    crash_func: H5D__scatter_mem
+    crash_file: src/H5Dscatgath.c
+    signature: [heap-buffer-overflow, WRITE, H5D__scatter_mem, H5Dscatgath.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42489565"
+  - oss_id: 42491640
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8195e5d3e3c65ff6bcc0aae31a4a53eb609c4d7e
+    fix_date: 2021-01-24
+    crash_func: H5MM_strdup
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_strdup, H5MM.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491640"
+  - oss_id: 42491649
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36b8c01b1091ab51720ab6697c83534cfcf2e292
+    fix_date: 2021-02-06
+    crash_func: H5MM_memcpy
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_memcpy, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491649"
+  - oss_id: 42491667
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2f19958fade08de870257f099d88ecc813ab623f
+    fix_date: 2021-01-31
+    crash_func: H5O__sdspace_decode
+    crash_file: src/H5Osdspace.c
+    signature: [heap-buffer-overflow, READ, H5O__sdspace_decode, H5Osdspace.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491667"
+  - oss_id: 42491698
+    harness: matio_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b8156d287254b2fca00f266d4b5b12d982329625
+    fix_date: 2021-01-31
+    crash_func: H5MM_memcpy
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, WRITE, H5MM_memcpy, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491698"
+  - oss_id: 42491737
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 29e986fb1cfe09dacdbe386f441882025f652377
+    fix_date: 2024-04-01
+    crash_func: H5HL__fl_deserialize
+    crash_file: src/H5HLcache.c
+    signature: [heap-buffer-overflow, READ, H5HL__fl_deserialize, H5HLcache.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491737"
+  - oss_id: 42492295
+    harness: matio_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 2f19958fade08de870257f099d88ecc813ab623f
+    fix_date: 2021-01-31
+    crash_func: H5S_extent_get_dims
+    crash_file: src/H5S.c
+    signature: [stack-buffer-overflow, WRITE, H5S_extent_get_dims, H5S.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42492295"
+  - oss_id: 42492483
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36b8c01b1091ab51720ab6697c83534cfcf2e292
+    fix_date: 2021-02-06
+    crash_func: H5VM_memcpyvv
+    crash_file: src/H5VM.c
+    signature: [heap-buffer-overflow, READ, H5VM_memcpyvv, H5VM.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42492483"
+  - oss_id: 42493030
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 711128127c47ed23d81e37c99461796f5e168c7d
+    fix_date: 2024-03-25
+    crash_func: H5HG_read
+    crash_file: src/H5HG.c
+    signature: [heap-buffer-overflow, READ, H5HG_read, H5HG.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42493030"
+  - oss_id: 42529484
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 29e986fb1cfe09dacdbe386f441882025f652377
+    fix_date: 2024-04-01
+    crash_func: H5MM_xstrdup
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_xstrdup, H5MM.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42529484"
+  - oss_id: 42530069
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 29e986fb1cfe09dacdbe386f441882025f652377
+    fix_date: 2024-04-01
+    crash_func: H5MM_strdup
+    crash_file: src/H5MM.c
+    signature: [heap-buffer-overflow, READ, H5MM_strdup, H5MM.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530069"
+  - oss_id: 42530705
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 711128127c47ed23d81e37c99461796f5e168c7d
+    fix_date: 2024-03-25
+    crash_func: H5T__bit_copy
+    crash_file: src/H5Tbit.c
+    signature: [heap-buffer-overflow, READ, H5T__bit_copy, H5Tbit.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530705"
+  - oss_id: 42532885
+    harness: matio_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1565241343f00b203ee86810694d42992336b7f4
+    fix_date: 2024-03-10
+    crash_func: H5S_extent_get_dims
+    crash_file: src/H5S.c
+    signature: [stack-buffer-overflow, WRITE, H5S_extent_get_dims, H5S.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42532885"
+  - oss_id: 42534195
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9bfd9ffc1ce196cc27b96f2d9655992d72176c3
+    fix_date: 2024-04-24
+    crash_func: H5A__read
+    crash_file: src/H5Aint.c
+    signature: [heap-buffer-overflow, READ, H5A__read, H5Aint.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534195"
+  - oss_id: 42534305
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9bfd9ffc1ce196cc27b96f2d9655992d72176c3
+    fix_date: 2024-04-24
+    crash_func: H5T__conv_f_i
+    crash_file: src/H5Tconv.c
+    signature: [heap-buffer-overflow, READ, H5T__conv_f_i, H5Tconv.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534305"
+  - oss_id: 42534483
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3384795512c1a27ab15eca991f3c54fdad791e88
+    fix_date: 2024-04-15
+    crash_func: Mat_VarDuplicate
+    crash_file: src/mat.c
+    signature: [heap-buffer-overflow, READ, Mat_VarDuplicate, mat.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42534483"
+  - oss_id: 42535678
+    harness: matio_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4b0475661d9f0cadf210c4c3e5fd3533c10512fe
+    fix_date: 2024-10-19
+    crash_func: Mat_VarPrint
+    crash_file: src/mat.c
+    signature: [heap-buffer-overflow, READ, Mat_VarPrint, mat.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42535678"
+rejected:
+  - oss_id: 42477888
+    reason: commit_missing
+  - oss_id: 42491954
+    reason: commit_missing
+  - oss_id: 42493036
+    reason: commit_missing
+  - oss_id: 42500334
+    reason: commit_missing
+  - oss_id: 42501136
+    reason: commit_missing
+  - oss_id: 42501851
+    reason: commit_missing
+  - oss_id: 42503163
+    reason: commit_missing
+  - oss_id: 42518516
+    reason: commit_missing
+error: null

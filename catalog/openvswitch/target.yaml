@@ -1,0 +1,241 @@
+project: openvswitch
+repo: "https://github.com/openvswitch/ovs.git"
+n_sites: 13
+n_issues: 13
+harnesses: [expr_parse_target, flow_extract_fuzzer, odp_target, ofctl_parse_target, ofp_print_fuzzer, ofp_print_target]
+base:
+  commit: f5129153e3b12c0b9ca6b355f9062d91a67d2942
+  date: 2018-07-10
+  method: wave_eve
+  n_latent: 12
+  n_latent_upper: 12
+  n_wave: 2
+  note: "eve of 2018-07-10 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-07-10
+    n: 2
+    eve: f5129153e3b12c0b9ca6b355f9062d91a67d2942
+    n_latent_upper: 12
+    oss_ids: [42540959, 42540967]
+  - day: 2019-01-17
+    n: 2
+    eve: 2c2f4499a4365f1a5760a2cb97a95ef0e03ef9a2
+    n_latent_upper: 3
+    oss_ids: [42472056, 42472574]
+  - day: 2018-08-08
+    n: 1
+    eve: 51c6a5a3c869ca5327ccd7be73a6f585e0028875
+    n_latent_upper: 9
+    oss_ids: [42541135]
+  - day: 2018-10-02
+    n: 1
+    eve: 13efe4209b6ab3671c3afadbc10c9136d6cce221
+    n_latent_upper: 9
+    oss_ids: [42470784]
+  - day: 2018-10-08
+    n: 1
+    eve: bed941ba0f14854683c241fa9bff3d49dd2efeee
+    n_latent_upper: 8
+    oss_ids: [42470878]
+  - day: 2018-10-23
+    n: 1
+    eve: 7587e1daa673149575149716605ef78f260d9989
+    n_latent_upper: 7
+    oss_ids: [42470938]
+  - day: 2018-11-05
+    n: 1
+    eve: f31b8ae7a7a777dd9dc40997903a283409674eae
+    n_latent_upper: 6
+    oss_ids: [42471280]
+  - day: 2018-11-15
+    n: 1
+    eve: 581d3bec7b8c714a98744b0b5f48dd7c7c4db037
+    n_latent_upper: 5
+    oss_ids: [42470954]
+  - day: 2018-12-03
+    n: 1
+    eve: 1a47405b65ea5bcb2a0c48d3148693d86afb2e3c
+    n_latent_upper: 4
+    oss_ids: [42471555]
+  - day: 2019-01-18
+    n: 1
+    eve: b48aa1437df1d438d39d7c798ef93e0854911022
+    n_latent_upper: 1
+    oss_ids: [42471383]
+  - day: 2021-02-17
+    n: 1
+    eve: 5704a7f35cf54d74559caf5e2acb54d87a956820
+    n_latent_upper: 1
+    oss_ids: [42489816]
+bugs:
+  - oss_id: 42470784
+    harness: expr_parse_target
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b5967cb747416cc377a2b6f3073d270eab5c1291
+    fix_date: 2018-10-02
+    crash_func: lex_parse_hex_integer
+    crash_file: ovn/lib/lex.c
+    signature: [stack-buffer-underflow, READ, lex_parse_hex_integer, lex.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470784"
+  - oss_id: 42470878
+    harness: odp_target
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2c022949efff7f135686bd9007fffaaa6147f935
+    fix_date: 2018-10-08
+    crash_func: parse_odp_action
+    crash_file: lib/odp-util.c
+    signature: [heap-use-after-free, READ, parse_odp_action, odp-util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470878"
+  - oss_id: 42470938
+    harness: odp_target
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a1da3f297717c2de70dab88f7783117b78f85e89
+    fix_date: 2018-10-23
+    crash_func: format_generic_odp_key
+    crash_file: lib/odp-util.c
+    signature: [heap-buffer-overflow, READ, format_generic_odp_key, odp-util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470938"
+  - oss_id: 42470954
+    harness: odp_target
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 33a3ee6b39acd9799301ec6cc0069bc9e4b4428b
+    fix_date: 2018-11-15
+    crash_func: nullable_memcpy
+    crash_file: ./lib/util.h
+    signature: [stack-buffer-overflow, READ, nullable_memcpy, util.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42470954"
+  - oss_id: 42471280
+    harness: odp_target
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2d3deb58df05c4686f19ecf16ddbd76a79b2d5a5
+    fix_date: 2018-11-05
+    crash_func: parse_odp_key_mask_attr
+    crash_file: lib/odp-util.c
+    signature: [heap-buffer-overflow, READ, parse_odp_key_mask_attr, odp-util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471280"
+  - oss_id: 42471383
+    harness: ofctl_parse_target
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 39976b99178eaa4862c43eaf00959f2653a01a6f
+    fix_date: 2019-01-18
+    crash_func: ofpbuf_insert
+    crash_file: lib/ofpbuf.c
+    signature: [heap-buffer-overflow, WRITE, ofpbuf_insert, ofpbuf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471383"
+  - oss_id: 42471555
+    harness: ofctl_parse_target
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: 4d1ca7035df8d1688b7d85e6495722f57870726f
+    fix_date: 2018-12-03
+    crash_func: minimatch_destroy
+    crash_file: lib/match.c
+    signature: [attempting, -, minimatch_destroy, match.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42471555"
+  - oss_id: 42472056
+    harness: ofctl_parse_target
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ed9df00b6e4b8b3aadba4b552c27c0382d3508b
+    fix_date: 2019-01-17
+    crash_func: learn_check
+    crash_file: lib/learn.c
+    signature: [heap-buffer-overflow, READ, learn_check, learn.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472056"
+  - oss_id: 42472574
+    harness: ofctl_parse_target
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8ed9df00b6e4b8b3aadba4b552c27c0382d3508b
+    fix_date: 2019-01-17
+    crash_func: encode_LEARN
+    crash_file: lib/ofp-actions.c
+    signature: [heap-buffer-overflow, READ, encode_LEARN, ofp-actions.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42472574"
+  - oss_id: 42489816
+    harness: ofp_print_target
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 77cccc74deede443e8b9102299efc869a52b65b2
+    fix_date: 2021-02-17
+    crash_func: decode_NXAST_RAW_ENCAP
+    crash_file: lib/ofp-actions.c
+    signature: [heap-use-after-free, WRITE, decode_NXAST_RAW_ENCAP, ofp-actions.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42489816"
+  - oss_id: 42540959
+    harness: flow_extract_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4fe08016068514be7a8751d86f6ad30bde344949
+    fix_date: 2018-07-10
+    crash_func: parse_icmpv6
+    crash_file: lib/flow.c
+    signature: [heap-buffer-overflow, READ, parse_icmpv6, flow.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42540959"
+  - oss_id: 42540967
+    harness: ofp_print_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4fe08016068514be7a8751d86f6ad30bde344949
+    fix_date: 2018-07-10
+    crash_func: ofp_packet_to_string
+    crash_file: lib/ofp-print.c
+    signature: [heap-buffer-overflow, READ, ofp_packet_to_string, ofp-print.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42540967"
+  - oss_id: 42541135
+    harness: ofp_print_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7333c3b1ce02148c7e6c584edeeb505277fe1b7f
+    fix_date: 2018-08-08
+    crash_func: parse_intel_port_custom_property
+    crash_file: lib/ofp-port.c
+    signature: [heap-buffer-overflow, READ, parse_intel_port_custom_property, ofp-port.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541135"
+rejected: []
+error: null

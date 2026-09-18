@@ -1,0 +1,9 @@
+{
+  "tool": "nature-shared/check_consistency.py",
+  "files": [
+    "manuscript.md",
+    "supplement.md"
+  ],
+  "findings": [],
+  "scope": "Terminology and numeric-format scan, not proof of scientific validity; final citation addition does not change numeric results."
+}

@@ -1,0 +1,350 @@
+project: curl
+repo: "https://github.com/curl/curl.git"
+n_sites: 21
+n_issues: 21
+harnesses: [curl_fuzzer, curl_fuzzer_ftp, curl_fuzzer_http, curl_fuzzer_imap, curl_fuzzer_pop3, curl_fuzzer_rtmp, curl_fuzzer_rtsp, curl_fuzzer_smb, curl_fuzzer_ws]
+base:
+  commit: ba67f7d65a42e63eccfe0bcc87f82682d6e4cc9e
+  date: 2018-04-24
+  method: wave_eve
+  n_latent: 8
+  n_latent_upper: 8
+  n_wave: 4
+  note: "eve of 2018-04-25 wave (4 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2018-04-25
+    n: 4
+    eve: ba67f7d65a42e63eccfe0bcc87f82682d6e4cc9e
+    n_latent_upper: 8
+    oss_ids: [42539525, 42539527, 42539533, 42539540]
+  - day: 2019-08-24
+    n: 2
+    eve: 0a5d28fa2ec872de55c8d3f3b62675f17ca9cd45
+    n_latent_upper: 6
+    oss_ids: [42477423, 42477466]
+  - day: 2019-10-03
+    n: 2
+    eve: 13ecc0725f723ce7068c114610f6d1418945705a
+    n_latent_upper: 4
+    oss_ids: [42478820, 42478821]
+  - day: 2022-02-09
+    n: 2
+    eve: 77a9be6c5ed076a6e54cf8a8e320f39cf2465f56
+    n_latent_upper: 6
+    oss_ids: [42508326, 42508327]
+  - day: 2017-11-27
+    n: 1
+    eve: 9b5e12a5491d2e6b68e0c88ca56f3a9ef9fba400
+    n_latent_upper: 12
+    oss_ids: [42505099]
+  - day: 2017-12-22
+    n: 1
+    eve: a9b774a77348c2b94581f6140ba3e417f316a1ce
+    n_latent_upper: 11
+    oss_ids: [42512028]
+  - day: 2018-01-15
+    n: 1
+    eve: 84fcaa2e7300387e2565d3037bad637f5f6d8372
+    n_latent_upper: 10
+    oss_ids: [42516706]
+  - day: 2018-01-17
+    n: 1
+    eve: 25c40c9af97782c9d475e765d50eaac071fd7d91
+    n_latent_upper: 9
+    oss_ids: [42517205]
+  - day: 2020-05-31
+    n: 1
+    eve: 4bd09877e31845172b27d0d6af7d0adec009d41f
+    n_latent_upper: 4
+    oss_ids: [42484287]
+  - day: 2020-12-18
+    n: 1
+    eve: 92fe66c5109211519df1ef32d752dbecc34e53c7
+    n_latent_upper: 3
+    oss_ids: [42490798]
+  - day: 2023-03-17
+    n: 1
+    eve: ba1fba9cad7b92e0e1328468aef41436e1fcc050
+    n_latent_upper: 5
+    oss_ids: [42522403]
+  - day: 2023-09-01
+    n: 1
+    eve: 289cd4073c557f223e260eb53a82333efa714fef
+    n_latent_upper: 4
+    oss_ids: [42527642]
+bugs:
+  - oss_id: 42477423
+    harness: curl_fuzzer_rtmp
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 65fda739ee35c090b2e6d91229287de734f0fbae
+    fix_date: 2019-08-24
+    crash_func: "fuzz_tlv_to_string(tlv*)"
+    crash_file: curl_fuzzer/curl_fuzzer_tlv.cc
+    signature: [negative-size-param, -, fuzz_tlv_to_string, curl_fuzzer_tlv.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477423"
+  - oss_id: 42477466
+    harness: curl_fuzzer_smb
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65fda739ee35c090b2e6d91229287de734f0fbae
+    fix_date: 2019-08-24
+    crash_func: "to_u32(unsigned char const*)"
+    crash_file: curl_fuzzer/curl_fuzzer.cc
+    signature: [heap-buffer-overflow, READ, to_u32, curl_fuzzer.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42477466"
+  - oss_id: 42478820
+    harness: curl_fuzzer_http
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 02c6b984cb7a2e01f290544a53a24d30fc7ab32e
+    fix_date: 2019-10-03
+    crash_func: curl_dbg_strdup
+    crash_file: lib/memdebug.c
+    signature: [heap-use-after-free, READ, curl_dbg_strdup, memdebug.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478820"
+  - oss_id: 42478821
+    harness: curl_fuzzer_http
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 02c6b984cb7a2e01f290544a53a24d30fc7ab32e
+    fix_date: 2019-10-03
+    crash_func: seturl
+    crash_file: lib/urlapi.c
+    signature: [heap-use-after-free, READ, seturl, urlapi.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42478821"
+  - oss_id: 42484287
+    harness: curl_fuzzer_imap
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 8346c90b789e249e42cd1e9f4542f5c55a1cc917
+    fix_date: 2020-05-31
+    crash_func: Curl_pp_readresp
+    crash_file: lib/pingpong.c
+    signature: [stack-buffer-overflow, WRITE, Curl_pp_readresp, pingpong.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42484287"
+  - oss_id: 42490798
+    harness: curl_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: debf23eead5a67b82bae668929c798196a42adc3
+    fix_date: 2020-12-18
+    crash_func: mqtt_publish
+    crash_file: lib/mqtt.c
+    signature: [negative-size-param, -, mqtt_publish, mqtt.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42490798"
+  - oss_id: 42505099
+    harness: curl_fuzzer_ftp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0b664ba968437715819bfe4c7ada5679d16ebbc3
+    fix_date: 2017-11-27
+    crash_func: setcharset
+    crash_file: lib/curl_fnmatch.c
+    signature: [heap-buffer-overflow, READ, setcharset, curl_fnmatch.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42505099"
+  - oss_id: 42508326
+    harness: curl_fuzzer_http
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2a1951519e78c1aa404ec0201b9eaeae469d757b
+    fix_date: 2022-02-09
+    crash_func: nghttp2_http_record_request_method
+    crash_file: nghttp2/lib/nghttp2_http.c
+    signature: [heap-use-after-free, READ, nghttp2_http_record_request_method, nghttp2_http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508326"
+  - oss_id: 42508327
+    harness: curl_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2a1951519e78c1aa404ec0201b9eaeae469d757b
+    fix_date: 2022-02-09
+    crash_func: search_static_table
+    crash_file: nghttp2/lib/nghttp2_hd.c
+    signature: [heap-use-after-free, READ, search_static_table, nghttp2_hd.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508327"
+  - oss_id: 42512028
+    harness: curl_fuzzer_imap
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b399b04902c43f479b51b142505700edcfc34271
+    fix_date: 2017-12-22
+    crash_func: "fuzz_read_callback(char*, unsigned long, unsigned long, void*)"
+    crash_file: curl_fuzzer/curl_fuzzer_callback.cc
+    signature: [heap-buffer-overflow, WRITE, fuzz_read_callback, curl_fuzzer_callback.cc]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42512028"
+  - oss_id: 42516706
+    harness: curl_fuzzer_pop3
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8dd4edeb90ab7bb1df5339fd29422860bf86c585
+    fix_date: 2018-01-15
+    crash_func: pop3_get_message
+    crash_file: lib/pop3.c
+    signature: [heap-buffer-overflow, READ, pop3_get_message, pop3.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516706"
+  - oss_id: 42517205
+    harness: curl_fuzzer_ftp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: cb5accab9ee3abdee777b59b463b5e0ca05a490a
+    fix_date: 2018-01-17
+    crash_func: loop
+    crash_file: lib/curl_fnmatch.c
+    signature: [heap-buffer-overflow, READ, loop, curl_fnmatch.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42517205"
+  - oss_id: 42522403
+    harness: curl_fuzzer_rtsp
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f5e0f52dd3ba8152c0ec37c2113586ce2e6bcff3
+    fix_date: 2023-03-17
+    crash_func: rtsp_rtp_readwrite
+    crash_file: lib/rtsp.c
+    signature: [heap-buffer-overflow, READ, rtsp_rtp_readwrite, rtsp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522403"
+  - oss_id: 42527642
+    harness: curl_fuzzer_ws
+    label: double-free
+    cwe: CWE-415
+    group: temporal
+    fix_commit: b8dabfb1e1ec98b0d5be9369fc9a9c4b44b2c8cf
+    fix_date: 2023-09-01
+    crash_func: curl_dbg_free
+    crash_file: lib/memdebug.c
+    signature: [attempting, -, curl_dbg_free, memdebug.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527642"
+  - oss_id: 42527939
+    harness: curl_fuzzer_http
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a1532a33b3eb6276621996fb69a02c6477a4af12
+    fix_date: 2023-09-11
+    crash_func: canon_query
+    crash_file: lib/http_aws_sigv4.c
+    signature: [heap-buffer-overflow, READ, canon_query, http_aws_sigv4.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527939"
+  - oss_id: 42532203
+    harness: curl_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c2d973627bab12abc5486a3f37ce40ed16da0641
+    fix_date: 2024-01-25
+    crash_func: ftp_endofresp
+    crash_file: lib/ftp.c
+    signature: [heap-use-after-free, READ, ftp_endofresp, ftp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42532203"
+  - oss_id: 42539525
+    harness: curl_fuzzer_http
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3c630f9b0af097663a64e5c875c580aa9808a92b
+    fix_date: 2018-04-25
+    crash_func: addbyter
+    crash_file: lib/mprintf.c
+    signature: [heap-buffer-overflow, WRITE, addbyter, mprintf.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539525"
+  - oss_id: 42539527
+    harness: curl_fuzzer_rtsp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3c630f9b0af097663a64e5c875c580aa9808a92b
+    fix_date: 2018-04-25
+    crash_func: Curl_follow
+    crash_file: lib/transfer.c
+    signature: [heap-buffer-overflow, WRITE, Curl_follow, transfer.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539527"
+  - oss_id: 42539533
+    harness: curl_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3c630f9b0af097663a64e5c875c580aa9808a92b
+    fix_date: 2018-04-25
+    crash_func: concat_url
+    crash_file: lib/transfer.c
+    signature: [heap-buffer-overflow, WRITE, concat_url, transfer.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539533"
+  - oss_id: 42539540
+    harness: curl_fuzzer_rtsp
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3c630f9b0af097663a64e5c875c580aa9808a92b
+    fix_date: 2018-04-25
+    crash_func: curl_mvsnprintf
+    crash_file: lib/mprintf.c
+    signature: [heap-buffer-overflow, WRITE, curl_mvsnprintf, mprintf.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539540"
+  - oss_id: 402476456
+    harness: curl_fuzzer_http
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c9a1d3fcf14442a6a71651e3bd49a580abdd8fe
+    fix_date: 2025-03-12
+    crash_func: cr_buf_read
+    crash_file: lib/sendf.c
+    signature: [heap-buffer-overflow, READ, cr_buf_read, sendf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/402476456"
+rejected: []
+error: null

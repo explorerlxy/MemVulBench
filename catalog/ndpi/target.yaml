@@ -1,0 +1,984 @@
+project: ndpi
+repo: "https://github.com/ntop/nDPI.git"
+n_sites: 74
+n_issues: 74
+harnesses: [fuzz_alg_shoco, fuzz_filecfg_config, fuzz_filecfg_protocols, fuzz_ndpi_reader, fuzz_ndpi_reader_alloc_fail, fuzz_ndpi_reader_pl7m, fuzz_ndpi_reader_pl7m_64k, fuzz_ndpi_reader_pl7m_simplest_internal, fuzz_process_packet, fuzz_quic_get_crypto_data, fuzz_serialization]
+base:
+  commit: 65d526d8f6ae75f8d1a3f5c8dd19bf40ec03f320
+  date: 2019-12-09
+  method: wave_eve
+  n_latent: 31
+  n_latent_upper: 31
+  n_wave: 2
+  note: "eve of 2019-12-09 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2020-03-19
+    n: 4
+    eve: e9195589d29d86da1849ad0d195900e6567354cf
+    n_latent_upper: 21
+    oss_ids: [42482045, 42482491, 42482498, 42482526]
+  - day: 2019-12-09
+    n: 2
+    eve: 65d526d8f6ae75f8d1a3f5c8dd19bf40ec03f320
+    n_latent_upper: 31
+    oss_ids: [42479691, 42480282]
+  - day: 2020-01-16
+    n: 2
+    eve: 98d9f524f9ff7746d0345939fe543020f8057212
+    n_latent_upper: 28
+    oss_ids: [42481193, 42481196]
+  - day: 2020-02-18
+    n: 2
+    eve: fdf8dd724fc86c4d38daa66b62021ae2d34f1432
+    n_latent_upper: 25
+    oss_ids: [42481695, 42481886]
+  - day: 2020-03-12
+    n: 2
+    eve: 1e933e8b026f6f88f27d64ec2260013f38d268d0
+    n_latent_upper: 23
+    oss_ids: [42482207, 42482009]
+  - day: 2020-06-01
+    n: 2
+    eve: 669b7579ff93eb22ccf9324fd19444754b5612b8
+    n_latent_upper: 14
+    oss_ids: [42484314, 42484330]
+  - day: 2019-11-21
+    n: 1
+    eve: e98b994a39ee829058265353473d773642c889cf
+    n_latent_upper: 34
+    oss_ids: [42479685]
+  - day: 2019-11-26
+    n: 1
+    eve: ae9429408bded48ad71bb15df28745cc484d23f2
+    n_latent_upper: 33
+    oss_ids: [42480096]
+  - day: 2019-12-04
+    n: 1
+    eve: f26096ee4cf730244b3db577259f84b0cd37e521
+    n_latent_upper: 32
+    oss_ids: [42479687]
+  - day: 2020-01-01
+    n: 1
+    eve: 499c80535b572a0746d83dcbe2eb232e31434bc4
+    n_latent_upper: 29
+    oss_ids: [42480587]
+  - day: 2020-01-31
+    n: 1
+    eve: ff89a14b496f816b27d8a333bb022b3da34561d8
+    n_latent_upper: 27
+    oss_ids: [42480344]
+  - day: 2020-02-08
+    n: 1
+    eve: ff4f32ff48eaa9b1580bce42ab7352bb156f6300
+    n_latent_upper: 27
+    oss_ids: [42481277]
+bugs:
+  - oss_id: 42479685
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fc82cdfa4ac11e34725319620cdc549cb1b700d0
+    fix_date: 2019-11-21
+    crash_func: ndpi_search_mail_smtp_tcp
+    crash_file: src/lib/protocols/mail_smtp.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_mail_smtp_tcp, mail_smtp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479685"
+  - oss_id: 42479687
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 226a9abf2235fd9e87353ffe727babad71fb7274
+    fix_date: 2019-12-04
+    crash_func: getSSCertificateFingerprint
+    crash_file: src/lib/protocols/tls.c
+    signature: [heap-buffer-overflow, READ, getSSCertificateFingerprint, tls.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42479687"
+  - oss_id: 42479691
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6d7f3976f33b0d4fbbece60d6b7d549b13107674
+    fix_date: 2019-12-09
+    crash_func: ndpi_int_check_stun
+    crash_file: src/lib/protocols/stun.c
+    signature: [heap-buffer-overflow, READ, ndpi_int_check_stun, stun.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42479691"
+  - oss_id: 42480096
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c7efd0892f1f9299360956b740044a798123a773
+    fix_date: 2019-11-26
+    crash_func: ndpi_check_amazon_video
+    crash_file: src/lib/protocols/amazon_video.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_amazon_video, amazon_video.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42480096"
+  - oss_id: 42480282
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6d7f3976f33b0d4fbbece60d6b7d549b13107674
+    fix_date: 2019-12-09
+    crash_func: getTLScertificate
+    crash_file: src/lib/protocols/tls.c
+    signature: [heap-buffer-overflow, READ, getTLScertificate, tls.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42480282"
+  - oss_id: 42480344
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 579dd7dff9bcb973ab83d7b222d5250de5028794
+    fix_date: 2020-01-31
+    crash_func: ndpi_search_memcached
+    crash_file: src/lib/protocols/memcached.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_memcached, memcached.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480344"
+  - oss_id: 42480587
+    harness: fuzz_process_packet
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: daae1cc9b1ae6b7c6b4187003fabb2a6ffab44f0
+    fix_date: 2020-01-01
+    crash_func: getTLScertificate
+    crash_file: src/lib/protocols/tls.c
+    signature: [stack-buffer-overflow, WRITE, getTLScertificate, tls.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42480587"
+  - oss_id: 42481193
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 812505b56bb4508bc42e1615d6425ad26444d3f8
+    fix_date: 2020-01-16
+    crash_func: ndpi_workflow_process_packet
+    crash_file: example/reader_util.c
+    signature: [heap-buffer-overflow, READ, ndpi_workflow_process_packet, reader_util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481193"
+  - oss_id: 42481196
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 812505b56bb4508bc42e1615d6425ad26444d3f8
+    fix_date: 2020-01-16
+    crash_func: get_ndpi_flow_info6
+    crash_file: example/reader_util.c
+    signature: [heap-buffer-overflow, READ, get_ndpi_flow_info6, reader_util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481196"
+  - oss_id: 42481216
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b287dccecfecd32f114b043f395019eb3b000791
+    fix_date: 2020-02-14
+    crash_func: get_ndpi_flow_info
+    crash_file: example/reader_util.c
+    signature: [heap-buffer-overflow, READ, get_ndpi_flow_info, reader_util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481216"
+  - oss_id: 42481277
+    harness: fuzz_ndpi_reader
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 83bbb4cb694d1f305258d4c4a5dc4174ef6526d1
+    fix_date: 2020-02-08
+    crash_func: ndpi_workflow_process_packet
+    crash_file: example/reader_util.c
+    signature: [heap-buffer-overflow, READ, ndpi_workflow_process_packet, reader_util.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481277"
+  - oss_id: 42481695
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3eb9907dd7bfd21be4980632761852eaee5aec81
+    fix_date: 2020-02-18
+    crash_func: ndpi_search_oscar_tcp_connect
+    crash_file: src/lib/protocols/oscar.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_oscar_tcp_connect, oscar.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481695"
+  - oss_id: 42481886
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3eb9907dd7bfd21be4980632761852eaee5aec81
+    fix_date: 2020-02-18
+    crash_func: get16
+    crash_file: src/lib/protocols/dns.c
+    signature: [heap-buffer-overflow, READ, get16, dns.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42481886"
+  - oss_id: 42482009
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7a2bcd9c395f9fe554109e04add33e9e65564d82
+    fix_date: 2020-03-12
+    crash_func: ndpi_netbios_name_interpret
+    crash_file: src/lib/protocols/netbios.c
+    signature: [heap-buffer-overflow, READ, ndpi_netbios_name_interpret, netbios.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482009"
+  - oss_id: 42482045
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6acf97bfbe5ad26db3c2f5dd4d379ac674d6fb3
+    fix_date: 2020-03-19
+    crash_func: check_ymsg
+    crash_file: src/lib/protocols/yahoo.c
+    signature: [heap-buffer-overflow, READ, check_ymsg, yahoo.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482045"
+  - oss_id: 42482207
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4976d93d4e7ce5e63cb562fb7f0f916c3103e2de
+    fix_date: 2020-03-12
+    crash_func: ndpi_search_setup_capwap
+    crash_file: src/lib/protocols/capwap.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_setup_capwap, capwap.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482207"
+  - oss_id: 42482491
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6acf97bfbe5ad26db3c2f5dd4d379ac674d6fb3
+    fix_date: 2020-03-19
+    crash_func: concat_hash_string
+    crash_file: src/lib/protocols/ssh.c
+    signature: [heap-buffer-overflow, READ, concat_hash_string, ssh.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482491"
+  - oss_id: 42482498
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6acf97bfbe5ad26db3c2f5dd4d379ac674d6fb3
+    fix_date: 2020-03-19
+    crash_func: search_valid_dns
+    crash_file: src/lib/protocols/dns.c
+    signature: [heap-buffer-overflow, READ, search_valid_dns, dns.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482498"
+  - oss_id: 42482526
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c6acf97bfbe5ad26db3c2f5dd4d379ac674d6fb3
+    fix_date: 2020-03-19
+    crash_func: ndpi_search_fix
+    crash_file: src/lib/protocols/fix.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_fix, fix.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482526"
+  - oss_id: 42482590
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 98f2d3a73c0d4b09b1204e4cfc868ec258a3e478
+    fix_date: 2020-04-15
+    crash_func: ndpi_search_irc_tcp
+    crash_file: src/lib/protocols/irc.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_irc_tcp, irc.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42482590"
+  - oss_id: 42483004
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 25cd2a23a6b7057af0e898c613e5f4acf168a11c
+    fix_date: 2020-04-20
+    crash_func: ndpi_handle_ipv6_extension_headers
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, ndpi_handle_ipv6_extension_headers, ndpi_main.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483004"
+  - oss_id: 42483072
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 17235d234eb6a55fd0753ab4f3b6fc8f66eb7659
+    fix_date: 2020-05-12
+    crash_func: ndpi_search_oracle
+    crash_file: src/lib/protocols/oracle.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_oracle, oracle.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483072"
+  - oss_id: 42483342
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f8503da9e92e483c1d9839f5578646285b0dce6e
+    fix_date: 2020-05-09
+    crash_func: ndpi_strnstr
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, ndpi_strnstr, ndpi_main.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483342"
+  - oss_id: 42483502
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 61066fb106efa6d3d95b67e47b662de208b2b622
+    fix_date: 2020-05-29
+    crash_func: ndpi_parse_packet_line_info
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, ndpi_parse_packet_line_info, ndpi_main.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483502"
+  - oss_id: 42483588
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8e7b1ea7a136cc4e4aa9880072ec2d69900a825e
+    fix_date: 2020-05-15
+    crash_func: ndpi_search_openvpn
+    crash_file: src/lib/protocols/openvpn.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_openvpn, openvpn.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483588"
+  - oss_id: 42483697
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b7e666e465f138ae48ab81976726e67deed12701
+    fix_date: 2020-05-19
+    crash_func: ndpi_search_h323
+    crash_file: src/lib/protocols/h323.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_h323, h323.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483697"
+  - oss_id: 42483782
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b0bf66c436b829155662c27f59ab09dc6e9e7f3d
+    fix_date: 2020-05-31
+    crash_func: ndpi_search_kerberos
+    crash_file: src/lib/protocols/kerberos.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_kerberos, kerberos.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42483782"
+  - oss_id: 42484314
+    harness: fuzz_ndpi_reader
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 29d9c2d2c80289f31278f8717959a5718a2e6ce1
+    fix_date: 2020-06-01
+    crash_func: ndpi_http_check_content
+    crash_file: src/lib/protocols/http.c
+    signature: [heap-use-after-free, READ, ndpi_http_check_content, http.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484314"
+  - oss_id: 42484330
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 241af016e9e2a43d24cbdc2378d813ba523f5126
+    fix_date: 2020-06-01
+    crash_func: ndpi_check_spotify
+    crash_file: src/lib/protocols/spotify.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_spotify, spotify.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42484330"
+  - oss_id: 42485194
+    harness: fuzz_ndpi_reader
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: d6a97219ea14f0eb4d7d0831d4aefc971878caae
+    fix_date: 2020-06-28
+    crash_func: check_content_type_and_change_protocol
+    crash_file: src/lib/protocols/http.c
+    signature: [heap-use-after-free, READ, check_content_type_and_change_protocol, http.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42485194"
+  - oss_id: 42487144
+    harness: fuzz_process_packet
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 37abe0daea8c964dbd2e09058074bfc7ae053199
+    fix_date: 2020-09-10
+    crash_func: ndpi_search_kerberos
+    crash_file: src/lib/protocols/kerberos.c
+    signature: [stack-use-after-scope, READ, ndpi_search_kerberos, kerberos.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487144"
+  - oss_id: 42487587
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b70ad0e2f19aa1d6f4b3b64208e14c6e5839d60a
+    fix_date: 2021-02-03
+    crash_func: http_process_user_agent
+    crash_file: src/lib/protocols/http.c
+    signature: [heap-buffer-overflow, READ, http_process_user_agent, http.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42487587"
+  - oss_id: 42492641
+    harness: fuzz_process_packet
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 1ec621c85b9411cc611652fd57a892cfef478af3
+    fix_date: 2021-05-15
+    crash_func: processClientServerHello
+    crash_file: src/lib/protocols/tls.c
+    signature: [stack-buffer-overflow, WRITE, processClientServerHello, tls.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42492641"
+  - oss_id: 42497205
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ed51987e3a4838dd9aef27dfab2c0651f2f52836
+    fix_date: 2021-10-18
+    crash_func: processClientServerHello
+    crash_file: src/lib/protocols/tls.c
+    signature: [heap-buffer-overflow, READ, processClientServerHello, tls.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497205"
+  - oss_id: 42507667
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9dcc4a2334fa10d7d0a3c019ee35dfde4c06e044
+    fix_date: 2022-01-27
+    crash_func: packet_processing
+    crash_file: example/reader_util.c
+    signature: [heap-buffer-overflow, READ, packet_processing, reader_util.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507667"
+  - oss_id: 42508203
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 79968f3245ae7bf277e01d8c5a28349b75d9ac74
+    fix_date: 2022-02-04
+    crash_func: ndpi_strncasestr
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, ndpi_strncasestr, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42508203"
+  - oss_id: 42510527
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 06a0abb6fdf8fb7a446ef5aafdf2c7d24608977f
+    fix_date: 2022-04-10
+    crash_func: ndpi_check_tinc
+    crash_file: src/lib/protocols/tinc.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_tinc, tinc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510527"
+  - oss_id: 42510718
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4775be3d85434d4e385f43a47b783844bbfb2571
+    fix_date: 2022-04-13
+    crash_func: strncpy_lower
+    crash_file: src/lib/protocols/kerberos.c
+    signature: [heap-buffer-overflow, READ, strncpy_lower, kerberos.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42510718"
+  - oss_id: 42511086
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d5005f584c4baf67e084e3bc8b052ca27004550e
+    fix_date: 2022-04-25
+    crash_func: ndpi_search_raknet
+    crash_file: src/lib/protocols/raknet.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_raknet, raknet.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511086"
+  - oss_id: 42511889
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: c4f50b2cdac989cc89930564a88a5caab85c7214
+    fix_date: 2022-05-30
+    crash_func: ndpi_check_http_header
+    crash_file: src/lib/protocols/http.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_http_header, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511889"
+  - oss_id: 42511896
+    harness: fuzz_process_packet
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 9040bc74c94dbd44cd86b29ec3de40621df53467
+    fix_date: 2022-05-31
+    crash_func: tlsCheckUncommonALPN
+    crash_file: src/lib/protocols/tls.c
+    signature: [stack-buffer-overflow, WRITE, tlsCheckUncommonALPN, tls.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42511896"
+  - oss_id: 42514015
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8b6a00f84bff9c998643d823502ae9f924fce528
+    fix_date: 2022-07-30
+    crash_func: dissect_softether_ip_port
+    crash_file: src/lib/protocols/softether.c
+    signature: [heap-buffer-overflow, READ, dissect_softether_ip_port, softether.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42514015"
+  - oss_id: 42514542
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ac0d7ccb7e6ee1a9b67f07822dad66617d5ff75b
+    fix_date: 2022-08-22
+    crash_func: ndpi_search_florensia
+    crash_file: src/lib/protocols/florensia.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_florensia, florensia.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42514542"
+  - oss_id: 42516818
+    harness: fuzz_process_packet
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3c0021d6036532a6fdff9196b7ee7a614bdbd525
+    fix_date: 2022-10-06
+    crash_func: ndpi_check_http_server
+    crash_file: src/lib/protocols/http.c
+    signature: [stack-buffer-overflow, READ, ndpi_check_http_server, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42516818"
+  - oss_id: 42519752
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5a5e01a9e2b66e9238c40583baa70341e9ffc3a5
+    fix_date: 2023-01-05
+    crash_func: ndpi_search_ppstream
+    crash_file: src/lib/protocols/ppstream.c
+    signature: [use-after-poison, READ, ndpi_search_ppstream, ppstream.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42519752"
+  - oss_id: 42520214
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f95bdaf625a540cbd040508bfbb8808223f97aed
+    fix_date: 2023-01-19
+    crash_func: ndpi_search_bittorrent
+    crash_file: src/lib/protocols/bittorrent.c
+    signature: [heap-buffer-overflow, READ, ndpi_search_bittorrent, bittorrent.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42520214"
+  - oss_id: 42522601
+    harness: fuzz_ndpi_reader_alloc_fail
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 04a426feef3399a2354b4aa10ee2a28cf107fb45
+    fix_date: 2023-03-25
+    crash_func: ndpi_is_valid_vxlan
+    crash_file: fuzz/../example/reader_util.c
+    signature: [heap-buffer-overflow, READ, ndpi_is_valid_vxlan, reader_util.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42522601"
+  - oss_id: 42524849
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 82fa3a098632006cc8edffb647cabee08843524a
+    fix_date: 2023-05-29
+    crash_func: ndpi_check_punycode_string
+    crash_file: src/lib/ndpi_utils.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_punycode_string, ndpi_utils.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42524849"
+  - oss_id: 42525529
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 46aab35a296bfe059e60ea7aa3dc75ca6c0b88a8
+    fix_date: 2023-06-21
+    crash_func: ndpi_search_line
+    crash_file: src/lib/protocols/line.c
+    signature: [use-after-poison, READ, ndpi_search_line, line.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525529"
+  - oss_id: 42525603
+    harness: fuzz_ndpi_reader_alloc_fail
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3a1600ff26d02a3440186a6e8355521086a7e11f
+    fix_date: 2023-06-26
+    crash_func: thrift_set_method
+    crash_file: src/lib/protocols/thrift.c
+    signature: [heap-buffer-overflow, WRITE, thrift_set_method, thrift.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42525603"
+  - oss_id: 42526143
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bd0fcb2e62e5fa1fb3f4342e605e15f1f4920efc
+    fix_date: 2023-07-13
+    crash_func: check_content_type_and_change_protocol
+    crash_file: src/lib/protocols/http.c
+    signature: [negative-size-param, -, check_content_type_and_change_protocol, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42526143"
+  - oss_id: 42526197
+    harness: fuzz_ndpi_reader
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 5267858b3d09fbc6a70c4bdcabdd176ea26ee72c
+    fix_date: 2023-07-15
+    crash_func: check_content_type_and_change_protocol
+    crash_file: src/lib/protocols/http.c
+    signature: [negative-size-param, -, check_content_type_and_change_protocol, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42526197"
+  - oss_id: 42527613
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 19381f330ae735d361d9e765148be5e14478256d
+    fix_date: 2023-08-31
+    crash_func: ndpi_domain_classify_contains
+    crash_file: src/lib/ndpi_domain_classify.c
+    signature: [heap-buffer-overflow, READ, ndpi_domain_classify_contains, ndpi_domain_classify.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42527613"
+  - oss_id: 42529054
+    harness: fuzz_serialization
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 30fc89e556e5c09bf62b9548862cc3d924b9ec81
+    fix_date: 2023-10-11
+    crash_func: ndpi_vsnprintf
+    crash_file: src/lib/ndpi_utils.c
+    signature: [heap-buffer-overflow, WRITE, ndpi_vsnprintf, ndpi_utils.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529054"
+  - oss_id: 42529684
+    harness: fuzz_filecfg_protocols
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e399bd7e3d4cb4071e426ecb735084c6577a8644
+    fix_date: 2023-10-30
+    crash_func: ndpi_add_host_ip_subprotocol
+    crash_file: src/lib/ndpi_main.c
+    signature: [stack-buffer-overflow, WRITE, ndpi_add_host_ip_subprotocol, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42529684"
+  - oss_id: 42534646
+    harness: fuzz_alg_shoco
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a62679952c4fe51fead86f38c76eee8fbdd1f694
+    fix_date: 2024-04-22
+    crash_func: shoco_decompress
+    crash_file: src/shoco.c
+    signature: [stack-buffer-overflow, READ, shoco_decompress, shoco.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42534646"
+  - oss_id: 42535446
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a064261e854317bcc48aab31f86f3cbee67855c3
+    fix_date: 2024-05-11
+    crash_func: ndpi_http_parse_subprotocol
+    crash_file: src/lib/protocols/http.c
+    signature: [use-after-poison, READ, ndpi_http_parse_subprotocol, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42535446"
+  - oss_id: 374218971
+    harness: fuzz_ndpi_reader_pl7m
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: cd438e255428616c42a1fd2cacd733748700566c
+    fix_date: 2024-10-18
+    crash_func: ndpi_init_packet
+    crash_file: src/lib/ndpi_main.c
+    signature: [stack-buffer-overflow, WRITE, ndpi_init_packet, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/374218971"
+  - oss_id: 376786829
+    harness: fuzz_ndpi_reader_pl7m_64k
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 4e18a56d61e2c73e972bfd9d8a2ed72a57d2f0ee
+    fix_date: 2024-11-04
+    crash_func: ndpi_base64_decode
+    crash_file: src/lib/ndpi_utils.c
+    signature: [heap-buffer-overflow, READ, ndpi_base64_decode, ndpi_utils.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/376786829"
+  - oss_id: 379072455
+    harness: fuzz_ndpi_reader
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2e2f08cd87266afef888c8b539c1891b30a1cc1c
+    fix_date: 2024-11-18
+    crash_func: is_sfu_5
+    crash_file: src/lib/protocols/zoom.c
+    signature: [heap-buffer-overflow, READ, is_sfu_5, zoom.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/379072455"
+  - oss_id: 379180960
+    harness: fuzz_ndpi_reader_pl7m_simplest_internal
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 35f37c38d983108b55f38f62b7b58582c1909c39
+    fix_date: 2024-11-16
+    crash_func: check_ndpi_detection_func
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, check_ndpi_detection_func, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/379180960"
+  - oss_id: 388326072
+    harness: fuzz_quic_get_crypto_data
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 47569042224bc277454ba138d1033d8b334e6be8
+    fix_date: 2025-01-07
+    crash_func: quic_len
+    crash_file: src/lib/protocols/quic.c
+    signature: [heap-buffer-overflow, READ, quic_len, quic.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/388326072"
+  - oss_id: 397731139
+    harness: fuzz_ndpi_reader_pl7m
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 30c3613f2fae705a284284794b5367ad7c7374ae
+    fix_date: 2025-02-20
+    crash_func: process_ndpi_collected_info
+    crash_file: fuzz/../example/reader_util.c
+    signature: [heap-buffer-overflow, READ, process_ndpi_collected_info, reader_util.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/397731139"
+  - oss_id: 406446504
+    harness: fuzz_filecfg_config
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 428a5df2bc37d29ce2d3a340494e13872ab1094b
+    fix_date: 2025-03-27
+    crash_func: __get_flowrisk_id
+    crash_file: src/lib/ndpi_main.c
+    signature: [stack-buffer-overflow, READ, __get_flowrisk_id, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/406446504"
+  - oss_id: 422832557
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5e895f91ea94ee0465493e8d4a4837a5fc6deedf
+    fix_date: 2025-06-08
+    crash_func: ndpi_check_http_server
+    crash_file: src/lib/protocols/http.c
+    signature: [heap-buffer-overflow, READ, ndpi_check_http_server, http.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/422832557"
+  - oss_id: 426164365
+    harness: fuzz_filecfg_protocols
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 183b3be8be6331bb720939cf128b10bcf5f1b570
+    fix_date: 2025-06-22
+    crash_func: ndpi_handle_rule
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, READ, ndpi_handle_rule, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/426164365"
+  - oss_id: 429489010
+    harness: fuzz_filecfg_protocols
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 759910ffe524460e9dad31d61ffafae8f5429f35
+    fix_date: 2025-07-23
+    crash_func: ndpi_add_user_proto_id_mapping
+    crash_file: src/lib/ndpi_main.c
+    signature: [heap-buffer-overflow, WRITE, ndpi_add_user_proto_id_mapping, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/429489010"
+  - oss_id: 432880859
+    harness: fuzz_process_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6c581e1a63084b13ba0c00a7e985390b15428a38
+    fix_date: 2025-07-19
+    crash_func: ndpi_match_host_subprotocol
+    crash_file: src/lib/ndpi_main.c
+    signature: [use-after-poison, READ, ndpi_match_host_subprotocol, ndpi_main.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/432880859"
+  - oss_id: 437060541
+    harness: fuzz_ndpi_reader_pl7m_simplest_internal
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9af8e52ca56d4e36374db4cf89a4a546f94b331f
+    fix_date: 2025-08-07
+    crash_func: ndpi_is_valid_hostname
+    crash_file: src/lib/ndpi_utils.c
+    signature: [heap-buffer-overflow, READ, ndpi_is_valid_hostname, ndpi_utils.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/437060541"
+rejected:
+  - oss_id: 42479695
+    reason: commit_missing
+  - oss_id: 42479697
+    reason: commit_missing
+  - oss_id: 42481957
+    reason: commit_missing
+  - oss_id: 42485350
+    reason: commit_missing
+  - oss_id: 42514308
+    reason: commit_missing
+error: null

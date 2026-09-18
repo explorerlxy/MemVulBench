@@ -1,0 +1,194 @@
+project: ntopng
+repo: "https://github.com/ntop/ntopng.git"
+n_sites: 11
+n_issues: 11
+harnesses: [fuzz_dissect_packet]
+base:
+  commit: 47f248c8edbb0ba29179fa5fd74b3693c7e6489b
+  date: 2023-05-22
+  method: measured_sweep
+  n_latent: 5
+  n_latent_upper: 5
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2023-05-22
+    n: 2
+    eve: 47f248c8edbb0ba29179fa5fd74b3693c7e6489b
+    n_latent_upper: 10
+    oss_ids: [42524654, 42524653]
+  - day: 2023-06-07
+    n: 1
+    eve: 63e97ef2aed7257daf771b23166b4e20880e1a55
+    n_latent_upper: 8
+    oss_ids: [42525107]
+  - day: 2023-08-10
+    n: 1
+    eve: 809a4b4daaa42149fe88a906306085816e298247
+    n_latent_upper: 7
+    oss_ids: [42527035]
+  - day: 2023-08-18
+    n: 1
+    eve: f0e7a513f99692e668d9407c2e01151c41d8595d
+    n_latent_upper: 6
+    oss_ids: [42527231]
+  - day: 2023-08-21
+    n: 1
+    eve: fcf075bf3f1d67085665882ef9a62b1d32410671
+    n_latent_upper: 5
+    oss_ids: [42527353]
+  - day: 2023-08-25
+    n: 1
+    eve: 66f720787a771d7d32ea451e2bb3aaca4c029742
+    n_latent_upper: 4
+    oss_ids: [42527452]
+  - day: 2023-08-31
+    n: 1
+    eve: b03757639e8552e10dc56cae5bc6b9d44513b701
+    n_latent_upper: 3
+    oss_ids: [42527626]
+  - day: 2023-12-27
+    n: 1
+    eve: d0ade51858d5b5663bc8a756f1e50317f1bef062
+    n_latent_upper: 1
+    oss_ids: [42531447]
+  - day: 2024-01-02
+    n: 1
+    eve: c7cb4bf299d2010880eb39906f233504bd4e12aa
+    n_latent_upper: 1
+    oss_ids: [42531553]
+bugs:
+  - oss_id: 42524653
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 18315b80ba40e56fc2981c848d86e604d223bde6
+    fix_date: 2023-05-22
+    crash_func: "NetworkInterface::dissectPacket(unsigned int, bool, unsigned char*, pcap_pkthdr const*, unsigned char const*, unsigned short*, Host**, Host**, Flow**)"
+    crash_file: src/NetworkInterface.cpp
+    signature: [heap-buffer-overflow, READ, "NetworkInterface::dissectPacket", NetworkInterface.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524653"
+  - oss_id: 42524654
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bf61ca1bcd64f7a457a8290f2a119bf62ecbb8e8
+    fix_date: 2023-05-22
+    crash_func: "ICMPinfo::dissectICMP(unsigned short, unsigned char const*)"
+    crash_file: src/ICMPinfo.cpp
+    signature: [heap-buffer-overflow, READ, "ICMPinfo::dissectICMP", ICMPinfo.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42524654"
+  - oss_id: 42525107
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f95b4cdd852fca7052fc7a2b115e4958499f1df9
+    fix_date: 2023-06-07
+    crash_func: "IEC104Stats::processPacket(Flow*, bool, unsigned char const*, unsigned short, timeval*)"
+    crash_file: src/IEC104Stats.cpp
+    signature: [heap-buffer-overflow, READ, "IEC104Stats::processPacket", IEC104Stats.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42525107"
+  - oss_id: 42527035
+    harness: fuzz_dissect_packet
+    label: invalid-free
+    cwe: CWE-590
+    group: temporal
+    fix_commit: 139ac17a0c927224a87c4772bc5abaca1931e608
+    fix_date: 2023-08-10
+    crash_func: "Flow::~Flow()"
+    crash_file: src/Flow.cpp
+    signature: [attempting, -, "Flow::~Flow", Flow.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527035"
+  - oss_id: 42527231
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 49d51e7baaca1a61334a90e9c8d3a4c8f2c07742
+    fix_date: 2023-08-18
+    crash_func: "Flow::dissectMDNS(unsigned char*, unsigned short)"
+    crash_file: src/Flow.cpp
+    signature: [heap-buffer-overflow, READ, "Flow::dissectMDNS", Flow.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527231"
+  - oss_id: 42527353
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1b58d00fecf24f42ec6e771496076ac1d752baaa
+    fix_date: 2023-08-21
+    crash_func: "Flow::dissectNetBIOS(unsigned char*, unsigned short)"
+    crash_file: src/Flow.cpp
+    signature: [heap-buffer-overflow, READ, "Flow::dissectNetBIOS", Flow.cpp]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527353"
+  - oss_id: 42527452
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d31de871d3bc8e9a24bace37cf9b480867705ab3
+    fix_date: 2023-08-25
+    crash_func: "Flow::setBittorrentHash(char*)"
+    crash_file: src/Flow.cpp
+    signature: [heap-buffer-overflow, READ, "Flow::setBittorrentHash", Flow.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527452"
+  - oss_id: 42527626
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0eaeabba5aa7df2e85692ae914c7b1d9379496d9
+    fix_date: 2023-08-31
+    crash_func: "Flow::processPacket(pcap_pkthdr const*, unsigned char const*, unsigned short, unsigned long, unsigned char*, unsigned short, unsigned short)"
+    crash_file: src/Flow.cpp
+    signature: [heap-buffer-overflow, READ, "Flow::processPacket", Flow.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42527626"
+  - oss_id: 42531447
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: bfc67588eb3f60f1f24a4596e87edcdb7ec254ab
+    fix_date: 2023-12-27
+    crash_func: "NetworkInterface::dissectPacket(int, unsigned int, int, bool, unsigned char*, pcap_pkthdr const*, unsigned char const*, unsigned short*, Host**, Host**, Flow**)"
+    crash_file: src/NetworkInterface.cpp
+    signature: [heap-buffer-overflow, READ, "NetworkInterface::dissectPacket", NetworkInterface.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531447"
+  - oss_id: 42531553
+    harness: fuzz_dissect_packet
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fa57f7ba406b00c7d18f123529010f63ba8da6cf
+    fix_date: 2024-01-02
+    crash_func: "NetworkInterface::processPacket(int, unsigned int, int, bool, timeval const*, unsigned long, ndpi_ethhdr*, unsigned short, ndpi_iphdr*, ndpi_ipv6hdr*, unsigned short, unsigned short, unsigned int, pcap_pkthdr const*, unsigned char const*, unsigned short*, Host**, Host**, Flow**)"
+    crash_file: src/NetworkInterface.cpp
+    signature: [heap-buffer-overflow, READ, "NetworkInterface::processPacket", NetworkInterface.cpp]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42531553"
+rejected:
+  - oss_id: 42530471
+    reason: commit_missing
+error: null

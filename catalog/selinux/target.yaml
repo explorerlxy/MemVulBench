@@ -1,0 +1,337 @@
+project: selinux
+repo: "https://github.com/SELinuxProject/selinux"
+n_sites: 20
+n_issues: 20
+harnesses: [binpolicy-fuzzer, secilc-fuzzer]
+base:
+  commit: 38a09b74024bbe1c78639821f3cff3a5ceb73d0d
+  date: 2021-01-04
+  method: measured_sweep
+  n_latent: 14
+  n_latent_upper: 14
+  n_wave: 2
+  note: "PoC replay + signature match"
+waves:
+  - day: 2021-02-17
+    n: 4
+    eve: 038817036f36aadf762c8a3061500903b22b8213
+    n_latent_upper: 10
+    oss_ids: [42490491, 42490504, 42490512, 42491096]
+  - day: 2021-04-19
+    n: 3
+    eve: d1a34d3f1df5e90c9e01fcd9791c26db89064a7e
+    n_latent_upper: 5
+    oss_ids: [42490519, 42493388, 42494623]
+  - day: 2021-01-04
+    n: 2
+    eve: 38a09b74024bbe1c78639821f3cff3a5ceb73d0d
+    n_latent_upper: 13
+    oss_ids: [42490552, 42490708]
+  - day: 2025-07-03
+    n: 2
+    eve: 4e5de5460d62a1e7a9f8994e3ef1ed81545056bb
+    n_latent_upper: 2
+    oss_ids: [428057580, 428759822]
+  - day: 2021-01-05
+    n: 1
+    eve: a25d9104efa86f4980299fdd1b2dbba23c08ffb2
+    n_latent_upper: 13
+    oss_ids: [42490495]
+  - day: 2021-01-20
+    n: 1
+    eve: 5d021d6604cd60037936ac8b0f7d57d0e246a6a7
+    n_latent_upper: 12
+    oss_ids: [42490500]
+  - day: 2021-02-03
+    n: 1
+    eve: 1048f8d329a0e34a2529b3376fb085c5e6b3db0d
+    n_latent_upper: 11
+    oss_ids: [42492465]
+  - day: 2021-03-18
+    n: 1
+    eve: b839e9a1cb78d67c18df8b2e75e2fa53cca74392
+    n_latent_upper: 6
+    oss_ids: [42494529]
+  - day: 2021-05-04
+    n: 1
+    eve: 2d2c76fc613ba338476a3a1741c2a3af5e04d154
+    n_latent_upper: 2
+    oss_ids: [42491594]
+  - day: 2021-07-13
+    n: 1
+    eve: e45642441f853c6823d6a1b83ae41c463c627a53
+    n_latent_upper: 1
+    oss_ids: [42498306]
+  - day: 2023-08-04
+    n: 1
+    eve: 40674f48ad6676d88efd17bfb54b5d8f28aa52fb
+    n_latent_upper: 5
+    oss_ids: [42523397]
+  - day: 2023-11-21
+    n: 1
+    eve: 9b7d560a4a8770377cdac233243b369c5916b642
+    n_latent_upper: 4
+    oss_ids: [42526269]
+bugs:
+  - oss_id: 42490491
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0451adebdf153eee1f69914141311114a0130982
+    fix_date: 2021-02-17
+    crash_func: __cil_ordered_item_insert
+    crash_file: src/cil_resolve_ast.c
+    signature: [heap-use-after-free, READ, __cil_ordered_item_insert, cil_resolve_ast.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490491"
+  - oss_id: 42490495
+    harness: secilc-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 228c06d97a8a33b60b89ded17acbd0e92cca9cfe
+    fix_date: 2021-01-05
+    crash_func: cil_print_recursive_blockinherit
+    crash_file: src/cil_resolve_ast.c
+    signature: [heap-buffer-overflow, READ, cil_print_recursive_blockinherit, cil_resolve_ast.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490495"
+  - oss_id: 42490500
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f0d98f83d28a0cdf437b4cafe229e27cb91eb493
+    fix_date: 2021-01-20
+    crash_func: __class_reset_perm_values
+    crash_file: src/cil_reset_ast.c
+    signature: [heap-use-after-free, READ, __class_reset_perm_values, cil_reset_ast.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490500"
+  - oss_id: 42490504
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0451adebdf153eee1f69914141311114a0130982
+    fix_date: 2021-02-17
+    crash_func: cil_resolve_name
+    crash_file: src/cil_resolve_ast.c
+    signature: [heap-use-after-free, READ, cil_resolve_name, cil_resolve_ast.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490504"
+  - oss_id: 42490512
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0451adebdf153eee1f69914141311114a0130982
+    fix_date: 2021-02-17
+    crash_func: cil_tree_log
+    crash_file: src/cil_tree.c
+    signature: [heap-use-after-free, READ, cil_tree_log, cil_tree.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490512"
+  - oss_id: 42490519
+    harness: secilc-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e13c8162656665f9ec1c76a033cae5b011b8c658
+    fix_date: 2021-04-19
+    crash_func: cil_post_fc_fill_data
+    crash_file: src/cil_post.c
+    signature: [heap-buffer-overflow, READ, cil_post_fc_fill_data, cil_post.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490519"
+  - oss_id: 42490552
+    harness: secilc-fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 6c8fca10452e445edf52daffc69f2e9dfcdac54c
+    fix_date: 2021-01-04
+    crash_func: cil_list_destroy
+    crash_file: src/cil_list.c
+    signature: [stack-use-after-return, READ, cil_list_destroy, cil_list.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490552"
+  - oss_id: 42490708
+    harness: secilc-fuzzer
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 6c8fca10452e445edf52daffc69f2e9dfcdac54c
+    fix_date: 2021-01-04
+    crash_func: cil_copy_expr
+    crash_file: src/cil_copy_ast.c
+    signature: [stack-use-after-return, READ, cil_copy_expr, cil_copy_ast.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42490708"
+  - oss_id: 42491096
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 0451adebdf153eee1f69914141311114a0130982
+    fix_date: 2021-02-17
+    crash_func: cil_symtab_get_datum
+    crash_file: src/cil_symtab.c
+    signature: [heap-use-after-free, READ, cil_symtab_get_datum, cil_symtab.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491096"
+  - oss_id: 42491594
+    harness: secilc-fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 5681c6275b5ad9cf3d84af243a66b900a0628f72
+    fix_date: 2021-05-04
+    crash_func: cil_classorder_to_policydb
+    crash_file: src/cil_binary.c
+    signature: [heap-buffer-overflow, WRITE, cil_classorder_to_policydb, cil_binary.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42491594"
+  - oss_id: 42492465
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: eba0ffee01ee11bb4fc3f6505d9cf69693088621
+    fix_date: 2021-02-03
+    crash_func: cil_destroy_block
+    crash_file: src/cil_build_ast.c
+    signature: [heap-use-after-free, READ, cil_destroy_block, cil_build_ast.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42492465"
+  - oss_id: 42493388
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f34d3d30c8325e4847a6b696fe7a3936a8a361f3
+    fix_date: 2021-04-19
+    crash_func: __cil_verify_classperms
+    crash_file: src/cil_verify.c
+    signature: [heap-use-after-free, READ, __cil_verify_classperms, cil_verify.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42493388"
+  - oss_id: 42494529
+    harness: secilc-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d155b410d4bbc90d28f361b966f0429598da8188
+    fix_date: 2021-03-18
+    crash_func: ebitmap_match_any
+    crash_file: src/ebitmap.c
+    signature: [heap-buffer-overflow, READ, ebitmap_match_any, ebitmap.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494529"
+  - oss_id: 42494623
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: c49a8ea09501ad66e799ea41b8154b6770fec2c8
+    fix_date: 2021-04-19
+    crash_func: cil_reset_classpermission
+    crash_file: src/cil_reset_ast.c
+    signature: [heap-use-after-free, READ, cil_reset_classpermission, cil_reset_ast.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42494623"
+  - oss_id: 42498306
+    harness: secilc-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8470058934e89d1876b8e034d1ea818bde62b994
+    fix_date: 2021-07-13
+    crash_func: __cil_cat_expr_range_to_bitmap_helper
+    crash_file: src/cil_post.c
+    signature: [heap-buffer-overflow, READ, __cil_cat_expr_range_to_bitmap_helper, cil_post.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42498306"
+  - oss_id: 42523397
+    harness: secilc-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e81c466bca9a06e2ada7d783fe31dd44c9e04432
+    fix_date: 2023-08-04
+    crash_func: __cil_verify_classperms
+    crash_file: src/cil_verify.c
+    signature: [heap-buffer-overflow, READ, __cil_verify_classperms, cil_verify.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42523397"
+  - oss_id: 42526269
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 903e8cf26e2ab874618e0fdaef537bc3d9a8b69d
+    fix_date: 2023-11-21
+    crash_func: cil_list_destroy
+    crash_file: src/cil_list.c
+    signature: [heap-use-after-free, READ, cil_list_destroy, cil_list.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42526269"
+  - oss_id: 42530909
+    harness: binpolicy-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e54bedce80267b4fbd79b16f548a278c097bd675
+    fix_date: 2023-12-12
+    crash_func: is_decl_requires_met
+    crash_file: src/link.c
+    signature: [heap-buffer-overflow, READ, is_decl_requires_met, link.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42530909"
+  - oss_id: 428057580
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2f2742e98ca1a4ae6c242edfa1fa0d5d178121b8
+    fix_date: 2025-07-03
+    crash_func: cil_symtab_datum_remove_node
+    crash_file: src/cil_symtab.c
+    signature: [heap-use-after-free, READ, cil_symtab_datum_remove_node, cil_symtab.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/428057580"
+  - oss_id: 428759822
+    harness: secilc-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 2f2742e98ca1a4ae6c242edfa1fa0d5d178121b8
+    fix_date: 2025-07-03
+    crash_func: cil_copy_policycap
+    crash_file: src/cil_copy_ast.c
+    signature: [heap-use-after-free, READ, cil_copy_policycap, cil_copy_ast.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/428759822"
+rejected: []
+error: null

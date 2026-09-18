@@ -1,0 +1,333 @@
+project: libvips
+repo: "https://github.com/libvips/libvips"
+n_sites: 29
+n_issues: 29
+harnesses: [gifsave_buffer_fuzzer, heifsave_buffer_fuzzer, jpegsave_buffer_fuzzer, jpegsave_file_fuzzer, matrixsave_buffer_fuzzer, mosaic_fuzzer, pngsave_buffer_fuzzer, smartcrop_fuzzer, thumbnail_fuzzer, webpsave_buffer_fuzzer]
+base:
+  commit: 257e01ecefa04dfd2bc1726df9b3d69bb5f96fa8
+  date: 2021-05-17
+  method: wave_eve
+  n_latent: 10
+  n_latent_upper: 10
+  n_wave: 2
+  note: "eve of 2021-05-17 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2021-05-17
+    n: 2
+    eve: 257e01ecefa04dfd2bc1726df9b3d69bb5f96fa8
+    n_latent_upper: 10
+    oss_ids: [42496964, 42497224]
+  - day: 2019-09-05
+    n: 1
+    eve: f09bd91f69ffd21dd862d65fb91160666af81f61
+    n_latent_upper: 11
+    oss_ids: [42477278]
+  - day: 2020-02-23
+    n: 1
+    eve: 1a0e61510bd3b12463d1536d0b320d62bc23bec2
+    n_latent_upper: 12
+    oss_ids: [42482031]
+  - day: 2020-10-20
+    n: 1
+    eve: 0131d4d3ebb95e2fea4f5023f0bddbebe51acb9d
+    n_latent_upper: 13
+    oss_ids: [42488342]
+  - day: 2020-11-03
+    n: 1
+    eve: ae82bcc3e8797af4fdca8adf8ef73acac7718f7b
+    n_latent_upper: 12
+    oss_ids: [42488709]
+  - day: 2021-03-29
+    n: 1
+    eve: 77ccd04cbe3939c5680b1b4e0aeebbb71febd6d8
+    n_latent_upper: 11
+    oss_ids: [42495135]
+  - day: 2021-04-03
+    n: 1
+    eve: 07e73475c18e129e18825426b3071b99f6b6871a
+    n_latent_upper: 10
+    oss_ids: [42495376]
+  - day: 2021-06-01
+    n: 1
+    eve: 43efbde9951d24862aa2d6f711347e9c0cbf9292
+    n_latent_upper: 8
+    oss_ids: [42497552]
+  - day: 2021-07-03
+    n: 1
+    eve: d14d5eed25d6937f7ea9d66d92ac9a89d2386130
+    n_latent_upper: 7
+    oss_ids: [42498158]
+  - day: 2021-07-23
+    n: 1
+    eve: 11818e1caf42275a88da69ecb95624ce16a3f794
+    n_latent_upper: 6
+    oss_ids: [42499353]
+  - day: 2021-10-12
+    n: 1
+    eve: bd8fad842a1858eefdb61193cc7a19d7e47f9258
+    n_latent_upper: 5
+    oss_ids: [42502733]
+  - day: 2021-11-04
+    n: 1
+    eve: 3488c6b4102f39146e2bde188279be64cc5f8320
+    n_latent_upper: 4
+    oss_ids: [42504105]
+bugs:
+  - oss_id: 42477278
+    harness: jpegsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dd9eba9e26be51a687074c6dceddf7a4232c1e99
+    fix_date: 2019-09-05
+    crash_func: exif_entry_get_value
+    crash_file: libexif/libexif/exif-entry.c
+    signature: [heap-buffer-overflow, READ, exif_entry_get_value, exif-entry.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42477278"
+  - oss_id: 42482031
+    harness: jpegsave_file_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 175408733fcffed7aa0618c6d5ad5390ed5c4f88
+    fix_date: 2020-02-23
+    crash_func: vips_buf_vappendf
+    crash_file: iofuncs/buf.c
+    signature: [heap-use-after-free, READ, vips_buf_vappendf, buf.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482031"
+  - oss_id: 42488342
+    harness: smartcrop_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ae82bcc3e8797af4fdca8adf8ef73acac7718f7b
+    fix_date: 2020-10-20
+    crash_func: exif_data_load_data
+    crash_file: libexif/libexif/exif-data.c
+    signature: [heap-buffer-overflow, READ, exif_data_load_data, exif-data.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488342"
+  - oss_id: 42488709
+    harness: jpegsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 91d9610a55409d03b91d5ff0d2022aa1b7b58269
+    fix_date: 2020-11-03
+    crash_func: rtiff_parse_palette
+    crash_file: foreign/tiff2vips.c
+    signature: [heap-buffer-overflow, READ, rtiff_parse_palette, tiff2vips.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42488709"
+  - oss_id: 42495135
+    harness: webpsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9f15567f2cf9388aa0f180c3f33e4d24989f1edf
+    fix_date: 2021-03-29
+    crash_func: lzw_decode
+    crash_file: foreign/libnsgif/lzw.c
+    signature: [heap-buffer-overflow, READ, lzw_decode, lzw.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495135"
+  - oss_id: 42495376
+    harness: pngsave_buffer_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: f726edb7f71f05f2af6f08a7442354c1b70e9383
+    fix_date: 2021-04-03
+    crash_func: gif_internal_decode_frame
+    crash_file: foreign/libnsgif/libnsgif.c
+    signature: [heap-buffer-overflow, WRITE, gif_internal_decode_frame, libnsgif.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495376"
+  - oss_id: 42496964
+    harness: pngsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: fc8dbfdb441f618441eb7ccb3ea97e92ab445e60
+    fix_date: 2021-05-17
+    crash_func: "jxl::int_to_float(int const*, float*, unsigned long, int, int)"
+    crash_file: jpeg-xl/lib/jxl/dec_modular.cc
+    signature: [heap-buffer-overflow, READ, "jxl::int_to_float", dec_modular.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42496964"
+  - oss_id: 42497224
+    harness: pngsave_buffer_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fc8dbfdb441f618441eb7ccb3ea97e92ab445e60
+    fix_date: 2021-05-17
+    crash_func: "jxl::PerformAlphaWeightedAdd(float const*, float const*, float const*, float*, unsigned long, bool)"
+    crash_file: jpeg-xl/lib/jxl/alpha.cc
+    signature: [heap-buffer-overflow, WRITE, "jxl::PerformAlphaWeightedAdd", alpha.cc]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42497224"
+  - oss_id: 42497552
+    harness: jpegsave_file_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 3870baef334fc957f51e1df97af412366dd8e386
+    fix_date: 2021-06-01
+    crash_func: "Upsample<2, 2>"
+    crash_file: libjxl/lib/jxl/dec_upsample.cc
+    signature: [heap-use-after-free, WRITE, "Upsample<>", dec_upsample.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42497552"
+  - oss_id: 42498158
+    harness: jpegsave_buffer_fuzzer
+    label: container-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 6dd6fafa2a65310ca7cef7681a77a3d430261d6d
+    fix_date: 2021-07-03
+    crash_func: "jxl::DefaultSqueezeParameters(std::__1::vector<jxl::SqueezeParams, std::__1::allocator<jxl::SqueezeParams> >*, jxl::Image const&)"
+    crash_file: libjxl/lib/jxl/modular/transform/squeeze.cc
+    signature: [container-overflow, READ, "jxl::DefaultSqueezeParameters", squeeze.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42498158"
+  - oss_id: 42499353
+    harness: jpegsave_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3b2003a31aff9ad91b2f9665d12919fe3225368b
+    fix_date: 2021-07-23
+    crash_func: "Load<int>"
+    crash_file: libjxl/third_party/highway/hwy/ops/x86_256-inl.h
+    signature: [heap-buffer-overflow, READ, "Load<>", x86_256-inl.h]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42499353"
+  - oss_id: 42502733
+    harness: mosaic_fuzzer
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: b98366fcb1bf24491b0033eb21b3f6f5c33e453f
+    fix_date: 2021-10-12
+    crash_func: vips_foreign_load_jxl_fill_input
+    crash_file: foreign/jxlload.c
+    signature: [memcpy-param-overlap, -, vips_foreign_load_jxl_fill_input, jxlload.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502733"
+  - oss_id: 42504105
+    harness: jpegsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 30fdc3df779382e3e1857792c22fe363fff6cb31
+    fix_date: 2021-11-04
+    crash_func: exif_get_short
+    crash_file: libexif/libexif/exif-utils.c
+    signature: [heap-buffer-overflow, READ, exif_get_short, exif-utils.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42504105"
+  - oss_id: 42509256
+    harness: thumbnail_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2fdab9ba70f5ebf22588943e951339ceb19b184e
+    fix_date: 2022-03-08
+    crash_func: vips_rect_intersectrect
+    crash_file: build/../libvips/iofuncs/rect.c
+    signature: [heap-buffer-overflow, READ, vips_rect_intersectrect, rect.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42509256"
+  - oss_id: 42510312
+    harness: jpegsave_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 43db3985d0c0f0321434f2bd1cda36c7dd4fa1e5
+    fix_date: 2022-04-19
+    crash_func: "jxl::N_AVX2::BlendingStage::ProcessPaddingRow(std::__1::vector<std::__1::vector<float*, std::__1::allocator<float*> >, std::__1::allocator<std::__1::vector<float*, std::__1::allocator<float*> > > > const&, unsigned long, unsigned long, unsigned long) const"
+    crash_file: libjxl/lib/jxl/render_pipeline/stage_blending.cc
+    signature: [heap-buffer-overflow, READ, "jxl::N_AVX2::BlendingStage::ProcessPaddingRow", stage_blending.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42510312"
+  - oss_id: 42523472
+    harness: jpegsave_file_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e34cbae4b7162db783d3677ac09112394690ccb1
+    fix_date: 2023-04-18
+    crash_func: "RegionItem::parse(std::__1::vector<unsigned char, std::__1::allocator<unsigned char> > const&)"
+    crash_file: libheif/libheif/region.cc
+    signature: [heap-buffer-overflow, READ, "RegionItem::parse", region.cc]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42523472"
+  - oss_id: 387317434
+    harness: matrixsave_buffer_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b54cba45fad29398097857b5971eae349b93a19b
+    fix_date: 2025-01-11
+    crash_func: read_markers
+    crash_file: src/jdmarker.c
+    signature: [heap-buffer-overflow, READ, read_markers, jdmarker.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/387317434"
+  - oss_id: 396460413
+    harness: heifsave_buffer_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: dbe46d13db44a0e2baa703cd560d3f5661ab5c01
+    fix_date: 2025-01-13
+    crash_func: vips_foreign_save_heif_pack
+    crash_file: build/../libvips/foreign/heifsave.c
+    signature: [heap-buffer-overflow, WRITE, vips_foreign_save_heif_pack, heifsave.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/396460413"
+rejected:
+  - oss_id: 42476999
+    reason: commit_missing
+  - oss_id: 42477279
+    reason: commit_missing
+  - oss_id: 42477503
+    reason: commit_missing
+  - oss_id: 42477534
+    reason: commit_missing
+  - oss_id: 42498117
+    reason: commit_missing
+  - oss_id: 42504736
+    reason: commit_missing
+  - oss_id: 42510346
+    reason: commit_missing
+  - oss_id: 42510349
+    reason: commit_missing
+  - oss_id: 42510355
+    reason: commit_missing
+  - oss_id: 42510367
+    reason: commit_missing
+  - oss_id: 42510442
+    reason: commit_missing
+error: null

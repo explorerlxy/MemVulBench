@@ -1,0 +1,10 @@
+[
+  {
+    "path": "memvul/catalog.py",
+    "sha256": "6b6840fddad373ab2958fb776ad391b36e60d02b0a01cbb8606adfce2cfc0d94"
+  },
+  {
+    "path": "memvul/gitutil.py",
+    "sha256": "59aec519aeb2cb9d99095f1cd890f820df5a77c6ae6078b0876d3477ffdbb876"
+  }
+]

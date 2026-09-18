@@ -1,0 +1,85 @@
+{
+  "project": "hdf5",
+  "source_dir": "/src/hdf5",
+  "source_commit": "bd7616cf98ae52e77f710a16fb4d334be3cb5ce9",
+  "image": "n132/arvo:42520218-vul",
+  "harnesses": [
+    {
+      "name": "h5_read_fuzzer",
+      "source": "/src/h5_read_fuzzer.c",
+      "source_sha256": "674d8f8cb525c057bcfb5cca9e71faa48636bc0831a60f0fa9b8244e82d89e05",
+      "source_commit": "untracked builder artifact; commit unavailable",
+      "binary": "/out/h5_read_fuzzer_manual",
+      "binary_sha256": "0757793ce65992429e9c78117434f1a7f4649dca6e61402be6651f37d622c52d",
+      "notes": "The source has an implicit getpid() declaration and a dead else branch (decider % 1 == 0); it was compiled unchanged to preserve the builder harness."
+    },
+    {
+      "name": "h5_extended_fuzzer",
+      "status": "manual_recovered",
+      "source": "/out/h5_extended_fuzzer.c",
+      "source_commit": "google/oss-fuzz fa242ade7b753238c12df8ed110849d840850216",
+      "source_sha256": "a91ce12fe3227ebee257ca84416604ccb7b29205321e9fd9954d117c1eeff8e5",
+      "binary": "/out/h5_extended_fuzzer_manual",
+      "binary_sha256": "5f9b5a13645f5ece2442b25cda7b95fe0068f0815f1fef083338eb5832c8e0ba",
+      "notes": "Recovered from the historical OSS-Fuzz dataset-fuzzer commit and compiled unchanged against the exact HDF5 baseline."
+    }
+  ],
+  "build": {
+    "compiler": "clang 15",
+    "configuration": "production/NDEBUG, static HDF5, ASan",
+    "flags": "-O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address",
+    "static_library": "/src/hdf5/src/.libs/libhdf5.a",
+    "static_library_sha256": "8e630073ea1414b35ac13186acd0a5296e78212817950f1a5ba0ce051f3973e4",
+    "commands": [
+      "git -C /src/hdf5 checkout --detach bd7616cf98ae52e77f710a16fb4d334be3cb5ce9",
+      "autoreconf -fi",
+      "perl /src/hdf5/bin/make_vers /src/hdf5/src/H5vers.txt",
+      "perl /src/hdf5/bin/make_overflow /src/hdf5/src/H5overflow.txt",
+      "perl /src/hdf5/bin/make_err /src/hdf5/src/H5err.txt",
+      "CC=clang CFLAGS='<ASan flags>' LDFLAGS='-fsanitize=address' ./configure --disable-shared --enable-static --disable-cxx --disable-fortran --disable-java --disable-tools --disable-hl --enable-build-mode=production --with-zlib=/usr --prefix=/out/hdf5-manual",
+      "make -C /src/hdf5/src -j2 V=1",
+      "clang <ASan flags> -I/src/hdf5/src -I/src/hdf5 -I/src/hdf5/src/H5FDsubfiling -c /src/h5_read_fuzzer.c -o /out/h5_read_fuzzer_manual.o",
+      "clang -fsanitize=address,fuzzer -o /out/h5_read_fuzzer_manual /out/h5_read_fuzzer_manual.o /src/hdf5/src/.libs/libhdf5.a -lz -ldl -lm -pthread",
+      "clang <ASan flags> -I/src/hdf5/src -I/src/hdf5 -I/src/hdf5/src/H5FDsubfiling -c /tmp/h5_extended_fuzzer.c -o /out/h5_extended_fuzzer_manual.o",
+      "clang -fsanitize=address -c /src/libfuzzer/standalone/StandaloneFuzzTargetMain.c -o /out/StandaloneFuzzTargetMain-hdf5.o",
+      "clang -fsanitize=address /out/h5_extended_fuzzer_manual.o /out/StandaloneFuzzTargetMain-hdf5.o /src/hdf5/src/.libs/libhdf5.a -lz -ldl -lm -pthread -o /out/h5_extended_fuzzer_manual"
+    ],
+    "result": "The initial debug build hit the status_flags assertion before the vulnerable read. A production/NDEBUG rebuild was performed manually; it removed only the debug assertion and preserved ASan instrumentation."
+  },
+  "replay": {
+    "runner": "libFuzzer standalone main linked by clang -fsanitize=fuzzer",
+    "arguments": "one PoC path per process; no -runs option",
+    "asan_options": "abort_on_error=1:symbolize=1:detect_leaks=0 for the manual h5_extended_fuzzer replays; prior h5_read_fuzzer entries used detect_leaks=1",
+    "timeout_seconds": 30,
+    "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/hdf5/logs/bd7616cf98ae52e77f710a16fb4d334be3cb5ce9"
+  },
+  "manual_archive": {
+    "tag": "hdf5:bd7616-manual-extended",
+    "image_id": "sha256:4016606a1140bfde03c870ad82be9120ef829ac10906a544ea34cc3d6ca26dc3",
+    "path": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/hdf5/images/hdf5-bd7616-manual-extended.tar",
+    "size_bytes": 2723843072,
+    "sha256": "e5a5e92dc43aaaa5c27c470129d2d9cb6a72c46fd144b3c95cd0db1096c4fd80"
+  },
+  "aggregation": {
+    "method": "prefix_mod_2",
+    "binary": "/out/h5_agg_fuzzer",
+    "binary_sha256": "0e294724e174908a09fb6b5121e29d71535b5dba1da91bfb84515c56902e92b1",
+    "source": "/work/agg/h5_agg_fuzzer.c",
+    "source_sha256": "fef4585df9e6e59f112c3e09828ee59bec968cd4a1118b5b100258875682d5cd",
+    "mapping": {
+      "0": "h5_read_fuzzer",
+      "1": "h5_extended_fuzzer"
+    },
+    "coverage": "dispatcher and both original harness TUs compiled with -fsanitize=address,fuzzer-no-link",
+    "verified_expected": 12,
+    "verified_expected_matched": 12,
+    "pocs": "/work/agg-pocs and targets/hdf5/pocs/agg",
+    "image": "hdf5:bd7616-agg",
+    "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/hdf5/images/hdf5-bd7616-agg.tar",
+    "image_archive_sha256": "2312c65378da7cb0c887283d424fdebcc55cc3b7fb3e0c31af18a8d70198c1c8",
+    "image_id": "sha256:91afd49e41056dc144772a23765c6b9af3b497491566362af21c051939e28204",
+    "audited_at": "2026-09-15T23:28:00+08:00"
+  },
+  "_interpretation": "Verbatim recorded configuration fields, not an independently validated recipe.",
+  "_source": "data/measure/manual/hdf5/bd7616cf98ae52e77f710a16fb4d334be3cb5ce9.json"
+}

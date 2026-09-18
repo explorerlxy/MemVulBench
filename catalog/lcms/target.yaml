@@ -1,0 +1,298 @@
+project: lcms
+repo: "https://github.com/mm2/Little-CMS.git"
+n_sites: 17
+n_issues: 17
+harnesses: [cmsIT8_load_fuzzer, cms_postscript_fuzzer, cms_profile_fuzzer, cms_transform_all_fuzzer, cms_transform_fuzzer, cms_universal_transform_fuzzer, cms_virtual_profile_fuzzer]
+base:
+  commit: 3d3001f0118984570a162d0b239d739529920e12
+  date: 2022-07-24
+  method: wave_eve
+  n_latent: 14
+  n_latent_upper: 14
+  n_wave: 4
+  note: "eve of 2022-07-25 wave (4 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2022-07-25
+    n: 4
+    eve: 3d3001f0118984570a162d0b239d739529920e12
+    n_latent_upper: 14
+    oss_ids: [42513788, 42513797, 42513834, 42513868]
+  - day: 2022-08-25
+    n: 2
+    eve: 89b5f465e5e47d43209b09e4b577b6f09d597cc1
+    n_latent_upper: 8
+    oss_ids: [42513913, 42514547]
+  - day: 2024-04-11
+    n: 2
+    eve: af6c56558e35a645fa22a1a84f97d17a460b4ba1
+    n_latent_upper: 4
+    oss_ids: [42534374, 42530151]
+  - day: 2017-03-15
+    n: 1
+    eve: 4e2015dbb09be4e2ac710bbd00ff4254fdc170b8
+    n_latent_upper: 1
+    oss_ids: [42539043]
+  - day: 2021-12-12
+    n: 1
+    eve: b949a3840e0ae8ae05898fb96187b0d123693d92
+    n_latent_upper: 12
+    oss_ids: [42505785]
+  - day: 2022-07-23
+    n: 1
+    eve: a9796f61c682f5320ff572c888062ee34315b836
+    n_latent_upper: 15
+    oss_ids: [42513731]
+  - day: 2022-08-12
+    n: 1
+    eve: a6ef58ec3716bad934d0cacc063ef1a419f4668f
+    n_latent_upper: 10
+    oss_ids: [42513819]
+  - day: 2022-08-22
+    n: 1
+    eve: 7600d91699256c0b2929023700c41772e8b61a99
+    n_latent_upper: 9
+    oss_ids: [42514879]
+  - day: 2022-08-31
+    n: 1
+    eve: 682d84ccdc6d6f33b73557d8c2e2e73fc4c31025
+    n_latent_upper: 6
+    oss_ids: [42515342]
+  - day: 2023-11-05
+    n: 1
+    eve: 5262c5df0adab6ef1eb3f54675fc4dbd2b0883c5
+    n_latent_upper: 5
+    oss_ids: [42529812]
+  - day: 2024-04-16
+    n: 1
+    eve: 1176e61afea4b58c5f92c6f226cdb7b1c76797d5
+    n_latent_upper: 2
+    oss_ids: [42534463]
+  - day: 2024-07-15
+    n: 1
+    eve: 2daf5c5859e1b62b6633ca755074e4de02459241
+    n_latent_upper: 1
+    oss_ids: [42537072]
+bugs:
+  - oss_id: 42505785
+    harness: cmsIT8_load_fuzzer
+    label: global-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 32d19328855dd599bf7f15dcfd5fafd6f87fb0d5
+    fix_date: 2021-12-12
+    crash_func: StringAppend
+    crash_file: src/cmscgats.c
+    signature: [global-buffer-overflow, WRITE, StringAppend, cmscgats.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42505785"
+  - oss_id: 42513731
+    harness: cms_transform_all_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1394d740d96886b501e0ad04fe926a72eca3f01c
+    fix_date: 2022-07-23
+    crash_func: TetrahedralInterp16
+    crash_file: src/cmsintrp.c
+    signature: [heap-buffer-overflow, READ, TetrahedralInterp16, cmsintrp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42513731"
+  - oss_id: 42513788
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 77758b7f815f4ced91e088ce855b31c90ad0a406
+    fix_date: 2022-07-25
+    crash_func: Type_MLU_Write
+    crash_file: src/cmstypes.c
+    signature: [heap-buffer-overflow, READ, Type_MLU_Write, cmstypes.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42513788"
+  - oss_id: 42513797
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 77758b7f815f4ced91e088ce855b31c90ad0a406
+    fix_date: 2022-07-25
+    crash_func: WriteSeqID
+    crash_file: src/cmstypes.c
+    signature: [heap-buffer-overflow, READ, WriteSeqID, cmstypes.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42513797"
+  - oss_id: 42513819
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 959064542d2ea82f97bb409dda4df471efc53feb
+    fix_date: 2022-08-12
+    crash_func: Write16bitTables
+    crash_file: src/cmstypes.c
+    signature: [heap-buffer-overflow, READ, Write16bitTables, cmstypes.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513819"
+  - oss_id: 42513834
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 77758b7f815f4ced91e088ce855b31c90ad0a406
+    fix_date: 2022-07-25
+    crash_func: _cmsMLUgetWide
+    crash_file: src/cmsnamed.c
+    signature: [heap-buffer-overflow, READ, _cmsMLUgetWide, cmsnamed.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42513834"
+  - oss_id: 42513868
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 77758b7f815f4ced91e088ce855b31c90ad0a406
+    fix_date: 2022-07-25
+    crash_func: _cmsWriteXYZNumber
+    crash_file: src/cmsplugin.c
+    signature: [heap-buffer-overflow, READ, _cmsWriteXYZNumber, cmsplugin.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42513868"
+  - oss_id: 42513913
+    harness: cms_transform_all_fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: f3f6b7bceb629bc4b6f1dea3e45b44dc3f8674af
+    fix_date: 2022-08-25
+    crash_func: cmsFreeNamedColorList
+    crash_file: src/cmsnamed.c
+    signature: [heap-use-after-free, READ, cmsFreeNamedColorList, cmsnamed.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42513913"
+  - oss_id: 42514547
+    harness: cms_transform_all_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f3f6b7bceb629bc4b6f1dea3e45b44dc3f8674af
+    fix_date: 2022-08-25
+    crash_func: _cmsMAT3per
+    crash_file: src/cmsmtrx.c
+    signature: [heap-buffer-overflow, READ, _cmsMAT3per, cmsmtrx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514547"
+  - oss_id: 42514879
+    harness: cms_profile_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 54390818348493a88c43b0dadbad77bdc9750699
+    fix_date: 2022-08-22
+    crash_func: _cmsWriteUInt16Array
+    crash_file: src/cmsplugin.c
+    signature: [heap-buffer-overflow, READ, _cmsWriteUInt16Array, cmsplugin.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42514879"
+  - oss_id: 42515342
+    harness: cms_universal_transform_fuzzer
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e515daaa2259657319eb9f07181d02af24b4e7fe
+    fix_date: 2022-08-31
+    crash_func: PackChunkyBytes
+    crash_file: src/cmspack.c
+    signature: [negative-size-param, -, PackChunkyBytes, cmspack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42515342"
+  - oss_id: 42529812
+    harness: cms_transform_all_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 178d734163b315db3009fa473930688a9047656f
+    fix_date: 2023-11-05
+    crash_func: mywcslen
+    crash_file: src/cmsnamed.c
+    signature: [heap-buffer-overflow, READ, mywcslen, cmsnamed.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42529812"
+  - oss_id: 42530151
+    harness: cms_postscript_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1176e61afea4b58c5f92c6f226cdb7b1c76797d5
+    fix_date: 2024-04-11
+    crash_func: WriteCLUT
+    crash_file: src/cmsps2.c
+    signature: [heap-buffer-overflow, READ, WriteCLUT, cmsps2.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42530151"
+  - oss_id: 42534374
+    harness: cmsIT8_load_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: dbb4a1a4fbb4fe3708155cfa15947ccd2c3d290b
+    fix_date: 2024-04-11
+    crash_func: AllocTable
+    crash_file: src/cmscgats.c
+    signature: [heap-buffer-overflow, WRITE, AllocTable, cmscgats.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534374"
+  - oss_id: 42534463
+    harness: cmsIT8_load_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fe8d3839799adbaf2783ebf27f1433ff8d5abd69
+    fix_date: 2024-04-16
+    crash_func: SetDataFormat
+    crash_file: src/cmscgats.c
+    signature: [heap-buffer-overflow, WRITE, SetDataFormat, cmscgats.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534463"
+  - oss_id: 42537072
+    harness: cms_virtual_profile_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 1c9021be51ad9fbeabdd4f55d9453c394d8d52ae
+    fix_date: 2024-07-15
+    crash_func: UnrollChunkyBytes
+    crash_file: src/cmspack.c
+    signature: [stack-buffer-overflow, READ, UnrollChunkyBytes, cmspack.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537072"
+  - oss_id: 42539043
+    harness: cms_transform_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 76d1dccf3e5ce0c67125964d0908b322e7d1afb9
+    fix_date: 2017-03-15
+    crash_func: TetrahedralInterpFloat
+    crash_file: src/cmsintrp.c
+    signature: [heap-buffer-overflow, READ, TetrahedralInterpFloat, cmsintrp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42539043"
+rejected: []
+error: null

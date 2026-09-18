@@ -1,0 +1,50 @@
+{
+  "project": "assimp",
+  "source_dir": "/src/assimp",
+  "source_commit": "d34cd103f477fba496f09e3daf49d3ce671eb21a",
+  "image": "n132/arvo:42487028-vul",
+  "harnesses": [
+    {
+      "name": "assimp_fuzzer",
+      "binary": "/out/assimp_fuzzer_manual",
+      "notes": "ASan Ninja rebuild at d34cd103 after checkout from image HEAD 4c8b9fb96. Clang 12, StandaloneFuzzTargetMain.o, linked with libassimp.a + libzlibstatic.a. Image /out not used."
+    }
+  ],
+  "build": {
+    "compiler": "clang 12.0.0 ASan",
+    "configure": "cmake -G Ninja -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_ZLIB=ON -DASSIMP_BUILD_TESTS=OFF -DASSIMP_BUILD_ASSIMP_TOOLS=OFF -DASSIMP_BUILD_SAMPLES=OFF",
+    "asan_options": "abort_on_error=1:symbolize=1:detect_leaks=0:detect_stack_use_after_return=1",
+    "result": "libassimp.a 287MB; assimp_fuzzer_manual 100MB."
+  },
+  "replay": {
+    "runner": "standalone main",
+    "asan_options": "abort_on_error=1:symbolize=1:detect_leaks=0:detect_stack_use_after_return=1",
+    "symbolizer": "/usr/local/bin/llvm-symbolizer",
+    "timeout_seconds": 15,
+    "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/logs/d34cd103f477fba496f09e3daf49d3ce671eb21a"
+  },
+  "aggregation": {
+    "method": "identity_single_source",
+    "binary": "/out/assimp_agg_fuzzer",
+    "binary_sha256": "a388535d51c0d7b22ed6db1c98b09d02779091734e9daf16a2ed683642dc9b60",
+    "source": "/work/agg/assimp_fuzzer.cc",
+    "source_sha256": "1b99dda61eb8660b93680a1dd7285006367ce0449309d1b1e25796fd5abaecd4",
+    "mapping": {
+      "0": "assimp_fuzzer"
+    },
+    "note": "Single in-tree harness. No prefix dispatcher. Campaign binary is fuzz/assimp_fuzzer.cc rebuilt with -fsanitize=address,fuzzer-no-link against ASan libassimp.a + libzlibstatic.a at d34cd103. PoCs are unprefixed. 26/26 parse() equal to original standalone logs.",
+    "coverage": "single harness TU compiled with -fsanitize=address,fuzzer-no-link",
+    "verified_expected": 26,
+    "verified_expected_matched": 26,
+    "match_basis": "parser signature equal to original standalone-harness logs",
+    "pocs": "/work/agg-pocs and targets/assimp/pocs/agg",
+    "logs": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/logs/d34cd103-agg",
+    "image": "assimp:d34cd103-agg",
+    "image_archive": "/media/hahafish/Data/ForUbuntu/MemVulBench/targets/assimp/images/assimp-d34cd103-agg.tar",
+    "image_archive_sha256": "68a4dde4da3afa7c3a0fe0bc69fed01c0a13c9256c0cad4e5d424a0a9fdf8a90",
+    "image_id": "sha256:4dac3c83f58114d241189183334904911810d0dd1586042d7ede0c6f3aef9431",
+    "audited_at": "2026-09-16T00:19:00+08:00"
+  },
+  "_interpretation": "Verbatim recorded configuration fields, not an independently validated recipe.",
+  "_source": "data/measure/manual/assimp/d34cd103f477fba496f09e3daf49d3ce671eb21a.json"
+}

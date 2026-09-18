@@ -1,0 +1,75 @@
+{
+  "coverage_classification_rule": "Explicit library/core instrumentation stated in aggregation.coverage for fluent-bit, libxml2 and librawspeed; other 17 remain unestablished by this field, not proven uninstrumented.",
+  "expected_only": {
+    "groups": 291,
+    "max": 34,
+    "mean": 14.55,
+    "median": 12.0,
+    "min": 8,
+    "projects": 20,
+    "projects_at_least_8": 20
+  },
+  "extra_groups_removed": 4,
+  "field_presence_counts": {
+    "binary_sha256_recorded": 20,
+    "checked_matched_recorded": 20,
+    "core_instrumentation_explicitly_described": 3,
+    "image_archive_sha256_recorded": 20,
+    "route_mapping_recorded": 20,
+    "source_commit_40hex_recorded": 20,
+    "wrapper_sha256_recorded": 20
+  },
+  "interface_strata": [
+    {
+      "expected_groups": 140,
+      "mode": "identity",
+      "projects": 9,
+      "routes": 9
+    },
+    {
+      "expected_groups": 151,
+      "mode": "prefix",
+      "projects": 11,
+      "routes": 52
+    }
+  ],
+  "nonselected_recorded_projects": 17,
+  "notes": [
+    "Threshold sensitivity applies only to the fixed 20 selected projects and is not a new selection or admission decision.",
+    "Field presence does not prove artifact existence, hash correctness, reproducibility or functional feedback.",
+    "Core coverage description is a documentation category; none is promoted to campaign-ready."
+  ],
+  "observation_register_rows": 621,
+  "scope": "Existing selected-project metadata only; not independent vulnerability or binary validation.",
+  "selected_version_sources": {
+    "measured_sweep": 9,
+    "wave_eve": 11
+  },
+  "threshold_sensitivity": [
+    {
+      "all_recorded_projects": 20,
+      "expected_only_projects": 20,
+      "threshold": 8
+    },
+    {
+      "all_recorded_projects": 17,
+      "expected_only_projects": 17,
+      "threshold": 10
+    },
+    {
+      "all_recorded_projects": 14,
+      "expected_only_projects": 14,
+      "threshold": 12
+    },
+    {
+      "all_recorded_projects": 6,
+      "expected_only_projects": 6,
+      "threshold": 15
+    },
+    {
+      "all_recorded_projects": 3,
+      "expected_only_projects": 3,
+      "threshold": 20
+    }
+  ]
+}

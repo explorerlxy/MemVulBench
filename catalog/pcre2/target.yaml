@@ -1,0 +1,285 @@
+project: pcre2
+repo: "https://github.com/PCRE2Project/pcre2"
+n_sites: 16
+n_issues: 16
+harnesses: ["^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[B^[[B^[[B^[[B^[[Bpcre2_fuzzer", pcre2_fuzzer, pcre2_fuzzer_16, pcre2_fuzzer_32_3l, pcre2_fuzzer_32_4l, pcre2_fuzzer_3l]
+base:
+  commit: 69fee50e5fbcff87173a9ae09b4b3dc87f10d146
+  date: 2017-03-09
+  method: wave_eve
+  n_latent: 9
+  n_latent_upper: 9
+  n_wave: 2
+  note: "eve of 2017-03-10 wave (2 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2017-03-10
+    n: 2
+    eve: 69fee50e5fbcff87173a9ae09b4b3dc87f10d146
+    n_latent_upper: 9
+    oss_ids: [42539320, 42539342]
+  - day: 2017-10-29
+    n: 2
+    eve: 76e1ce08a6f804ededdf4d95121d22a16aa9bd02
+    n_latent_upper: 6
+    oss_ids: [42501667, 42502099]
+  - day: 2018-07-22
+    n: 2
+    eve: 5ea9f6b0f157886aca20fcd9e444abfddccd840f
+    n_latent_upper: 6
+    oss_ids: [42541221, 42541235]
+  - day: 2020-02-25
+    n: 2
+    eve: 3be538015bf4ab00becbb601f22cdc24af4222dc
+    n_latent_upper: 2
+    oss_ids: [42482052, 42482063]
+  - day: 2017-05-27
+    n: 1
+    eve: 3d80fa4fc293220dacd948abb96a2512042334db
+    n_latent_upper: 7
+    oss_ids: [42479527]
+  - day: 2019-02-07
+    n: 1
+    eve: 4d17f4b8562fa7237ba34dbdaa881c258e87f3e0
+    n_latent_upper: 4
+    oss_ids: [42473264]
+  - day: 2019-02-13
+    n: 1
+    eve: 8c8deae8ebb37774878ee402eac1d081c1d6c8d7
+    n_latent_upper: 3
+    oss_ids: [42473400]
+  - day: 2023-08-08
+    n: 1
+    eve: 5f77d022733a5b7e2ff1e3d80b547c0d89811efe
+    n_latent_upper: 5
+    oss_ids: [42526932]
+  - day: 2024-03-09
+    n: 1
+    eve: 6e5283c8499ecc3619722ab1effe7acac2bd7558
+    n_latent_upper: 4
+    oss_ids: [42533629]
+  - day: 2024-03-13
+    n: 1
+    eve: 929cd14d4afe1f01b3ac42725cfa723d02f2d3f1
+    n_latent_upper: 3
+    oss_ids: [42533723]
+  - day: 2024-11-07
+    n: 1
+    eve: 62b3ceca1787a01b365e75a2976520c91ec455bf
+    n_latent_upper: 2
+    oss_ids: [376515526]
+  - day: 2025-05-12
+    n: 1
+    eve: c987eb81e3a46d55b59b5fd90abbe53d63d4cb64
+    n_latent_upper: 1
+    oss_ids: [413078692]
+bugs:
+  - oss_id: 42473264
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 45959f1eecb9eb2a06ec492e8d989cc1a1dc1d97
+    fix_date: 2019-02-07
+    crash_func: read_name
+    crash_file: src/pcre2_compile.c
+    signature: [heap-buffer-overflow, READ, read_name, pcre2_compile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473264"
+  - oss_id: 42473400
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f2e1cea2884e93a0f27473c4e3db18936abed039
+    fix_date: 2019-02-13
+    crash_func: _pcre2_check_escape_8
+    crash_file: src/pcre2_compile.c
+    signature: [heap-buffer-overflow, READ, _pcre2_check_escape_8, pcre2_compile.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42473400"
+  - oss_id: 42479527
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 3f96e07e6b398cfc220a4997b5be20dd308b9381
+    fix_date: 2017-05-27
+    crash_func: internal_dfa_match
+    crash_file: src/pcre2_dfa_match.c
+    signature: [heap-buffer-overflow, READ, internal_dfa_match, pcre2_dfa_match.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42479527"
+  - oss_id: 42482052
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 68f9c495178a04e055cf1b25e63edd0e59461183
+    fix_date: 2020-02-25
+    crash_func: set_table_bit
+    crash_file: src/pcre2_study.c
+    signature: [heap-buffer-overflow, READ, set_table_bit, pcre2_study.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482052"
+  - oss_id: 42482063
+    harness: "^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[B^[[B^[[B^[[B^[[Bpcre2_fuzzer"
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 68f9c495178a04e055cf1b25e63edd0e59461183
+    fix_date: 2020-02-25
+    crash_func: set_start_bits
+    crash_file: src/pcre2_study.c
+    signature: [heap-buffer-overflow, READ, set_start_bits, pcre2_study.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42482063"
+  - oss_id: 42501667
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36366914f502a466de2349ce53239e1b20d0e586
+    fix_date: 2017-10-29
+    crash_func: match
+    crash_file: src/pcre2_match.c
+    signature: [heap-buffer-overflow, READ, match, pcre2_match.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42501667"
+  - oss_id: 42502099
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 36366914f502a466de2349ce53239e1b20d0e586
+    fix_date: 2017-10-29
+    crash_func: match_ref
+    crash_file: src/pcre2_match.c
+    signature: [heap-buffer-overflow, READ, match_ref, pcre2_match.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42502099"
+  - oss_id: 42526932
+    harness: pcre2_fuzzer
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: fb1c7d27db09a4d0a2b6e1486c4f1a4d332e8b8c
+    fix_date: 2023-08-08
+    crash_func: get_grouplength
+    crash_file: src/pcre2_compile.c
+    signature: [heap-buffer-overflow, WRITE, get_grouplength, pcre2_compile.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42526932"
+  - oss_id: 42533629
+    harness: pcre2_fuzzer_32_3l
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: dd0bc880bca3743bacf62e7f021a4eacd74b7fcd
+    fix_date: 2024-03-09
+    crash_func: LLVMFuzzerTestOneInput
+    crash_file: src/pcre2_fuzzsupport.c
+    signature: [heap-buffer-overflow, READ, LLVMFuzzerTestOneInput, pcre2_fuzzsupport.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533629"
+  - oss_id: 42533723
+    harness: pcre2_fuzzer_32_4l
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 72713d8b9b9958f9e37eee98519d0e687e4658da
+    fix_date: 2024-03-13
+    crash_func: ExecuteFilesOnyByOne
+    crash_file: aflplusplus/utils/aflpp_driver/aflpp_driver.c
+    signature: [use-after-poison, READ, ExecuteFilesOnyByOne, aflpp_driver.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42533723"
+  - oss_id: 42539320
+    harness: pcre2_fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 143c136ac6e566d95436c852686f9b1fd4084b5c
+    fix_date: 2017-03-10
+    crash_func: match
+    crash_file: src/pcre2_match.c
+    signature: [stack-buffer-overflow, READ, match, pcre2_match.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539320"
+  - oss_id: 42539342
+    harness: pcre2_fuzzer
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 26e92bc554db487f600a8178f9ad97b8b02e9345
+    fix_date: 2017-03-10
+    crash_func: pcre2_match_8
+    crash_file: src/pcre2_match.c
+    signature: [stack-buffer-overflow, WRITE, pcre2_match_8, pcre2_match.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42539342"
+  - oss_id: 42541221
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d97c226c72fd794295f311e101b3cdf67942092
+    fix_date: 2018-07-22
+    crash_func: get_chr_property_list
+    crash_file: src/pcre2_auto_possess.c
+    signature: [heap-buffer-overflow, READ, get_chr_property_list, pcre2_auto_possess.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541221"
+  - oss_id: 42541235
+    harness: pcre2_fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 7d97c226c72fd794295f311e101b3cdf67942092
+    fix_date: 2018-07-22
+    crash_func: _pcre2_auto_possessify_8
+    crash_file: src/pcre2_auto_possess.c
+    signature: [heap-buffer-overflow, READ, _pcre2_auto_possessify_8, pcre2_auto_possess.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42541235"
+  - oss_id: 376515526
+    harness: pcre2_fuzzer_16
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 037fb170336b7aa4a71beae89bd6761d49f23053
+    fix_date: 2024-11-07
+    crash_func: _pcre2_compile_class_not_nested_16
+    crash_file: src/pcre2_compile_class.c
+    signature: [stack-buffer-overflow, WRITE, _pcre2_compile_class_not_nested_16, pcre2_compile_class.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/376515526"
+  - oss_id: 413078692
+    harness: pcre2_fuzzer_3l
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: bcc12d905673533457a897d6362a816d1dbd366d
+    fix_date: 2025-05-12
+    crash_func: recurse_update_offsets
+    crash_file: src/pcre2_match.c
+    signature: [negative-size-param, -, recurse_update_offsets, pcre2_match.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/413078692"
+rejected: []
+error: null

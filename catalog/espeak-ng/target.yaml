@@ -1,0 +1,203 @@
+project: espeak-ng
+repo: "https://github.com/espeak-ng/espeak-ng"
+n_sites: 12
+n_issues: 12
+harnesses: [ssml-fuzzer]
+base:
+  commit: ccb1c31ba3cfa785d27c5974f3be65df2967e7a0
+  date: 2021-11-07
+  method: measured_sweep
+  n_latent: 11
+  n_latent_upper: 11
+  n_wave: 3
+  note: "PoC replay + signature match"
+waves:
+  - day: 2022-03-15
+    n: 3
+    eve: 43d07abec4abf07cc536e4fcf13088508231da76
+    n_latent_upper: 10
+    oss_ids: [42497018, 42497446, 42497478]
+  - day: 2022-03-16
+    n: 3
+    eve: 3fb4ba89e554135dc279781f8489c13772f13479
+    n_latent_upper: 7
+    oss_ids: [42496965, 42497197, 42504982]
+  - day: 2022-07-01
+    n: 3
+    eve: 1f76c4b8bd320714aa61ad8abb527c5d92cc5164
+    n_latent_upper: 3
+    oss_ids: [42496979, 42500245, 42500437]
+  - day: 2021-05-18
+    n: 1
+    eve: 0a3fd5ecd9249140afa913ecafe42c5b07fe54d1
+    n_latent_upper: 12
+    oss_ids: [42496980]
+  - day: 2021-11-11
+    n: 1
+    eve: ccb1c31ba3cfa785d27c5974f3be65df2967e7a0
+    n_latent_upper: 11
+    oss_ids: [42502247]
+  - day: 2022-03-20
+    n: 1
+    eve: b630a47a9c1ef876c2b377960ce1e432a43ea3f5
+    n_latent_upper: 4
+    oss_ids: [42508338]
+bugs:
+  - oss_id: 42496965
+    harness: ssml-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65cccab7420ae67178bfe710fee727d21581200a
+    fix_date: 2022-03-16
+    crash_func: TranslateNumber_1
+    crash_file: src/libespeak-ng/numbers.c
+    signature: [stack-buffer-overflow, READ, TranslateNumber_1, numbers.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496965"
+  - oss_id: 42496979
+    harness: ssml-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1da9ad10e80f2e2365c4c00b532fe908b4b8fe19
+    fix_date: 2022-07-01
+    crash_func: LookupDict2
+    crash_file: src/libespeak-ng/dictionary.c
+    signature: [heap-use-after-free, READ, LookupDict2, dictionary.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496979"
+  - oss_id: 42496980
+    harness: ssml-fuzzer
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: f6d092a9c13d864ede78c493f64a7d32cde41f09
+    fix_date: 2021-05-18
+    crash_func: string_decoder_getc_utf_8
+    crash_file: src/libespeak-ng/encoding.c
+    signature: [heap-buffer-overflow, READ, string_decoder_getc_utf_8, encoding.c]
+    status: not_latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42496980"
+  - oss_id: 42497018
+    harness: ssml-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ae18f9d4af637fcb2aa44193c0d330e0405e500
+    fix_date: 2022-03-15
+    crash_func: TranslateClause
+    crash_file: src/libespeak-ng/translate.c
+    signature: [stack-buffer-overflow, READ, TranslateClause, translate.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42497018"
+  - oss_id: 42497197
+    harness: ssml-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65cccab7420ae67178bfe710fee727d21581200a
+    fix_date: 2022-03-16
+    crash_func: IsLetterGroup
+    crash_file: src/libespeak-ng/dictionary.c
+    signature: [global-buffer-overflow, READ, IsLetterGroup, dictionary.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42497197"
+  - oss_id: 42497446
+    harness: ssml-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ae18f9d4af637fcb2aa44193c0d330e0405e500
+    fix_date: 2022-03-15
+    crash_func: DoEmbedded2
+    crash_file: src/libespeak-ng/setlengths.c
+    signature: [global-buffer-overflow, READ, DoEmbedded2, setlengths.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42497446"
+  - oss_id: 42497478
+    harness: ssml-fuzzer
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5ae18f9d4af637fcb2aa44193c0d330e0405e500
+    fix_date: 2022-03-15
+    crash_func: SubstitutePhonemes
+    crash_file: src/libespeak-ng/phonemelist.c
+    signature: [global-buffer-overflow, READ, SubstitutePhonemes, phonemelist.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42497478"
+  - oss_id: 42500245
+    harness: ssml-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1da9ad10e80f2e2365c4c00b532fe908b4b8fe19
+    fix_date: 2022-07-01
+    crash_func: TranslateLetter
+    crash_file: src/libespeak-ng/numbers.c
+    signature: [heap-use-after-free, READ, TranslateLetter, numbers.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42500245"
+  - oss_id: 42500437
+    harness: ssml-fuzzer
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 1da9ad10e80f2e2365c4c00b532fe908b4b8fe19
+    fix_date: 2022-07-01
+    crash_func: TranslateRules
+    crash_file: src/libespeak-ng/dictionary.c
+    signature: [heap-use-after-free, READ, TranslateRules, dictionary.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42500437"
+  - oss_id: 42502247
+    harness: ssml-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: be962b067b889852da6194342b26e1759e1d7952
+    fix_date: 2021-11-11
+    crash_func: CountVowelPosition
+    crash_file: src/libespeak-ng/synthdata.c
+    signature: [stack-buffer-underflow, READ, CountVowelPosition, synthdata.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42502247"
+  - oss_id: 42504982
+    harness: ssml-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 65cccab7420ae67178bfe710fee727d21581200a
+    fix_date: 2022-03-16
+    crash_func: IsLetterGroup
+    crash_file: src/libespeak-ng/dictionary.c
+    signature: [stack-buffer-overflow, READ, IsLetterGroup, dictionary.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42504982"
+  - oss_id: 42508338
+    harness: ssml-fuzzer
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a9f48fdb15f46d554aa107af3ae5a308d9f2cf84
+    fix_date: 2022-03-20
+    crash_func: LoadVoice
+    crash_file: src/libespeak-ng/voices.c
+    signature: [stack-buffer-overflow, READ, LoadVoice, voices.c]
+    status: latent
+    evidence: sweep
+    report: "https://issues.oss-fuzz.com/issues/42508338"
+rejected: []
+error: null

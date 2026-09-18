@@ -7,15 +7,13 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from . import arvo, basepick, bug as bugmod, emit, fetch, pin, reintroduce
-from . import select, slice as slmod, sweep, verify
+from . import arvo, basepick, bug as bugmod, candidates, catalog, fetch
+from . import measure, select, sweep
 from .gitutil import clone
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "census"
 SWEEPS = ROOT / "data" / "sweeps"
-PINS = ROOT / "data" / "pins"
-SLICES = ROOT / "data" / "slices"
 
 
 def _load(args) -> list[arvo.Candidate]:
@@ -109,61 +107,9 @@ def cmd_slices(args) -> None:
     print(f"wrote {out.relative_to(ROOT)}")
 
 
-def cmd_plan(args) -> None:
-    cands = _load(args)
-    bugs = [c for c in cands
-            if c.tier == "core" and c.buildable and c.project == args.project
-            and (args.harness is None or c.harness == args.harness)]
-    if not bugs:
-        raise SystemExit(f"no core bugs for {args.project}/{args.harness}")
-    repo_url = args.repo or next(c.repo for c in bugs if c.repo)
-
-    # One bug per crash site: duplicates cost build effort and buy nothing.
-    seen: set[str] = set()
-    refs: list[reintroduce.BugRef] = []
-    for c in sorted(bugs, key=lambda c: c.oss_id):
-        if c.site_key in seen:
-            continue
-        seen.add(c.site_key)
-        refs.append(reintroduce.BugRef(c.oss_id, c.fix_commit or "", c.label))
-
-    print(f"{args.project}/{args.harness}: {len(bugs)} issues -> "
-          f"{len(refs)} distinct crash sites")
-    print(f"cloning {repo_url} ...", flush=True)
-    res = reintroduce.plan_group(args.project, args.harness, repo_url, refs,
-                                 n_bases=args.bases, window_days=args.window)
-
-    print(f"fix commits resolved: {res['n_resolved']}/{res['n_bugs']}"
-          f"  (missing {res['n_missing_commit']}), "
-          f"intro estimated for {res['n_intro_estimated']}\n")
-    hdr = (f"{'base':<14}{'date':<12}{'present':>8}{'unk':>5}{'notyet':>7}"
-           f"{'rev-ok':>7}{'confl':>6}{'stack':>6}{'CAND':>6}")
-    print(hdr)
-    print("-" * len(hdr))
-    import datetime as _dt
-    for b in res["bases"]:
-        day = _dt.date.fromtimestamp(b["base_date"]).isoformat()
-        print(f"{b['base']:<14}{day:<12}{b['present']:>8}{b['intro_unknown']:>5}"
-              f"{b['not_yet']:>7}{b['revert_ok']:>7}{b['revert_conflict']:>6}"
-              f"{b['stacked']:>6}{b['candidates']:>6}")
-
-    out = DATA.parent / "plans" / f"{args.project}_{args.harness or 'all'}.json"
-    reintroduce.save(res, out)
-    print(f"\nwrote {out.relative_to(ROOT)}")
-    print("present = fix not landed and defect already introduced (SZZ estimate); "
-          "stack = revert applies on top of the others.\n"
-          "CAND = present + unk + stack, an upper bound. PoC replay and the "
-          "negative control decide admission.")
-
-
 def cmd_fetch(args) -> None:
     root = Path(args.dest)
     ids = args.ids
-    if args.plan:
-        plan = json.loads(Path(args.plan).read_text())
-        best = plan["bases"][0]
-        ids = sorted(best["ids"]["present"] + best["ids"]["stacked"])
-        print(f"base {best['base']}: {len(ids)} bugs from {args.plan}")
 
     ok, failed, total = [], [], 0
     for i, oss_id in enumerate(ids, 1):
@@ -191,6 +137,97 @@ def cmd_fetch(args) -> None:
         print(f"failed: {failed}")
 
 
+def cmd_candidates(args) -> None:
+    bugs, repo = _prepare(args)
+    plan = candidates.plan(repo, bugs, min_wave=args.min_wave)
+    print(f"{args.project}: {plan['n_dated']}/{plan['n_bugs']} dated, "
+          f"{plan['n_waves']} waves")
+    print(f"{'day':<12}{'n':>5}{'upper':>7}  eve")
+    print("-" * 52)
+    for w in plan["waves"][: args.limit]:
+        eve = (w.get("eve") or "—")[:12]
+        print(f"{w['day']:<12}{w['n']:5d}{w.get('n_latent_upper') or 0:7d}  {eve}")
+    if plan["best"]:
+        b = plan["best"]
+        print(f"\npick: {b['eve'][:12]}  day={b['day']}  "
+              f"wave={b['n']}  latent_upper={b['n_latent_upper']}")
+    out = DATA.parent / "candidates" / f"{args.project}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(plan, indent=1))
+    print(f"wrote {out.relative_to(ROOT)}")
+
+
+def cmd_catalog(args) -> None:
+    cands = _load(args)
+    names = catalog.projects_over(cands, min_sites=args.min_sites)
+    if args.only:
+        names = [p for p in names if p in args.only]
+    # Small trees first so one ffmpeg-sized clone cannot stall the directory.
+    names = list(reversed(names)) if not args.only else names
+    print(f"projects with >{args.min_sites} distinct core sites: {len(names)}")
+    rows: list[dict] = []
+    root = Path(args.dest)
+    for i, name in enumerate(names, 1):
+        bugs = catalog.group_project(cands, name)
+        repo_url = next((b.repo for b in bugs if b.repo), None)
+        print(f"[{i}/{len(names)}] {name}  sites={len(bugs)} ...", flush=True)
+        if not repo_url:
+            rec = {"project": name, "repo": None, "n_sites": len(bugs),
+                   "n_issues": len(bugs), "harnesses": [], "base": None,
+                   "waves": [], "bugs": [], "rejected": [],
+                   "error": "no repo URL"}
+        else:
+            try:
+                rec = catalog.analyse(name, bugs, repo_url)
+            except Exception as e:  # noqa: BLE001
+                rec = {"project": name, "repo": repo_url, "n_sites": len(bugs),
+                       "n_issues": len(bugs), "harnesses": sorted({b.harness or '?' for b in bugs}),
+                       "base": {"commit": None, "date": None, "method": "unresolved",
+                                "n_latent": 0, "n_latent_upper": 0, "n_wave": 0,
+                                "note": f"{type(e).__name__}: {e}"},
+                       "waves": [], "bugs": [], "rejected": [],
+                       "error": f"{type(e).__name__}: {e}"}
+        catalog.write_target(rec, root / name / "target.yaml")
+        rows.append(rec)
+        catalog.write_index(rows, root)
+        base = rec.get("base") or {}
+        print(f"    {base.get('method')}  latent={base.get('n_latent')}  "
+              f"base={(base.get('commit') or '—')[:12]}  "
+              f"{rec.get('error') or ''}", flush=True)
+    catalog.write_index(rows, root)
+    ok = sum(1 for r in rows if (r.get("base") or {}).get("commit"))
+    latent = sum((r.get("base") or {}).get("n_latent") or 0 for r in rows)
+    print(f"\n{ok}/{len(rows)} projects resolved, {latent} latent bugs recorded")
+    print(f"wrote {root / 'index.md'}")
+
+
+def cmd_measure(args) -> None:
+    cands = _load(args)
+    if args.project and not args.queue:
+        names = [args.project]
+    else:
+        q = measure.queue(min_sites=args.min_sites,
+                          min_latent=getattr(args, "min_latent", 8))
+        take = q if args.limit <= 0 else q[: args.limit]
+        if args.project:
+            names = [args.project] + [p for p in take if p != args.project]
+            if args.limit > 0:
+                names = names[: args.limit]
+        else:
+            names = take
+    if not names:
+        print("queue empty (everything measured or unresolved)")
+        return
+    # Preparation only: PoCs and a builder image. All target work is manual.
+    print(f"prepare queue: {names}", flush=True)
+    name = names[0]
+    print(f"\n=== prepare {name} ===", flush=True)
+    out = measure.prepare_project(name)
+    print(f"  ready {name}: {out.get('container')} {out.get('builder')} "
+          f"pocs={out.get('n_poc')} base={(out.get('base') or '—')[:12]}",
+          flush=True)
+
+
 def _prepare(args) -> tuple[list[bugmod.Bug], Path]:
     cands = _load(args)
     bugs = bugmod.load_group(cands, args.project, getattr(args, "harness", None))
@@ -210,111 +247,11 @@ def _sweep_path(args) -> Path:
     return SWEEPS / f"{args.project}_{args.harness or 'all'}.json"
 
 
-def _annotate_and_store(sw: sweep.Sweep, bugs: list[bugmod.Bug],
-                        probe: sweep.Probe, shots: dict[str, sweep.Shot],
-                        status: str) -> None:
-    sweep.annotate_matches(bugs, shots)
-    sw.matrix[probe.sha] = {oid: {
-        "verdict": s.verdict, "kind": s.kind,
-        "signature": s.signature, "match": s.match,
-    } for oid, s in shots.items()}
-    rec = {"sha": probe.sha, "date": probe.date, "reason": probe.reason,
-           "status": status, "n_live": sum(1 for s in shots.values() if s.match)}
-    sw.probes = [p for p in sw.probes if p["sha"] != probe.sha] + [rec]
-
-
-def cmd_sweep(args) -> None:
-    bugs, repo = _prepare(args)
-    out = _sweep_path(args)
-    sw = sweep.load(out)
-    if sw is None:
-        sw = sweep.Sweep(
-            project=args.project, harness=args.harness,
-            repo=next(b.repo for b in bugs if b.repo) or "",
-            srcdir=args.srcdir, container=args.container,
-            bugs=[{"oss_id": b.oss_id, "label": b.label,
-                   "signature": list(b.signature or []),
-                   "fix": b.fix_resolved, "fix_date": b.fix_date,
-                   "arvo_vuln": b.arvo_vuln, "has_poc": bool(b.poc)}
-                  for b in bugs],
-        )
-    probes = sweep.propose_probes(repo, bugs, every_days=args.every_days)
-    if args.mode == "refine" and sw.matrix:
-        matrix_shots = {
-            sha: {oid: sweep._as_shot(s) for oid, s in row.items()}
-            for sha, row in sw.matrix.items()
-        }
-        probes = probes + sweep.propose_refine(
-            repo, bugs,
-            [sweep.Probe(p["sha"], p["date"], p.get("reason", "")) for p in sw.probes],
-            matrix_shots,
-        )
-    if args.max_probes:
-        probes = probes[:args.max_probes]
-    print(f"{args.project}/{args.harness}: {len(bugs)} sites, "
-          f"{sum(1 for b in bugs if b.poc)} PoCs, {len(probes)} probes",
-          flush=True)
-    if args.dry_run:
-        for p in probes:
-            day = __import__("datetime").date.fromtimestamp(p.date).isoformat()
-            print(f"  {p.short}  {day}  {p.reason}")
-        return
-
-    if args.container:
-        n = sweep.sync_pocs(args.container, Path(args.pocs))
-        if n:
-            print(f"synced {n} PoCs into {args.container}", flush=True)
-        sweep.install_scripts(args.container, ROOT)
-
-    done = {p["sha"] for p in sw.probes if p.get("status") in ("ok", "fail")}
-    for i, probe in enumerate(probes, 1):
-        if probe.sha in done and not args.refresh:
-            print(f"[{i}/{len(probes)}] {probe.short} cached", flush=True)
-            continue
-        if not args.container:
-            print(f"[{i}/{len(probes)}] {probe.short} SKIP (no --container)",
-                  flush=True)
-            continue
-        print(f"[{i}/{len(probes)}] {probe.short} {probe.reason} ...",
-              flush=True)
-        harness = args.harness or bugs[0].harness or "fuzzer"
-        try:
-            shots = sweep.run_probe(args.container, probe.sha, args.srcdir,
-                                    harness, timeout=args.timeout)
-            status = "fail" if not shots and _probe_failed(args.container, probe.sha) else "ok"
-            if status == "fail":
-                print(f"    BUILD_FAIL", flush=True)
-            else:
-                sweep.annotate_matches(bugs, shots)
-                print(f"    live={sum(1 for s in shots.values() if s.match)}"
-                      f"/{len(shots)}", flush=True)
-            _annotate_and_store(sw, bugs, probe, shots, status)
-        except Exception as e:  # noqa: BLE001
-            print(f"    ERROR {type(e).__name__}: {e}", flush=True)
-            _annotate_and_store(sw, bugs, probe, {}, "error")
-        sweep.save(sw, out)
-
-    all_probes = [sweep.Probe(p["sha"], p["date"], p.get("reason", ""))
-                  for p in sw.probes]
-    sweep.reconstruct(bugs, all_probes or probes, sw.matrix)
-    sw.windows = {str(b.oss_id): (b.window.to_dict() if b.window else None)
-                  for b in bugs}
-    sweep.save(sw, out)
-    measured = sum(1 for b in bugs if b.window)
-    print(f"\nwindows measured: {measured}/{len(bugs)}")
-    print(f"wrote {out.relative_to(ROOT)}")
-
-
-def _probe_failed(container: str, sha: str) -> bool:
-    p = sweep.docker("exec", container, "cat", f"/reports/sweep/{sha}/status")
-    return "BUILD_FAIL" in p.stdout
-
-
 def cmd_base(args) -> None:
     bugs, repo = _prepare(args)
     sw = sweep.load(_sweep_path(args))
     if sw is None:
-        raise SystemExit("run `memvul sweep` first")
+        raise SystemExit("provide a manually recorded sweep JSON with --sweep")
     sweep.attach_windows(bugs, sw)
     probe_cands = [(p["sha"], p["date"]) for p in sw.probes if p.get("status") == "ok"]
     extra = basepick.candidates_from_windows(bugs)
@@ -335,112 +272,6 @@ def cmd_base(args) -> None:
         print(f"pick: {ranked[0].sha}  latent={ranked[0].n_latent}")
 
 
-def cmd_pin(args) -> None:
-    bugs, repo = _prepare(args)
-    sw = sweep.load(_sweep_path(args))
-    if sw is None:
-        raise SystemExit("run `memvul sweep` first")
-    sweep.attach_windows(bugs, sw)
-    base = args.base
-    if not base:
-        probe_cands = [(p["sha"], p["date"]) for p in sw.probes
-                       if p.get("status") == "ok"]
-        ranked = basepick.rank(bugs, probe_cands, n=1)
-        if not ranked:
-            raise SystemExit("no scored base; pass --base")
-        base = ranked[0].sha
-        print(f"using best base {base[:12]} (latent={ranked[0].n_latent})")
-    dates = {p["sha"]: p["date"] for p in sw.probes}
-    plan = pin.plan(repo, bugs, base, dates)
-    print(f"base {plan.base[:12]}")
-    print(f"  latent {len(plan.latent)}  mosaic {len(plan.mosaic)}  "
-          f"rejected {len(plan.rejected)}")
-    print(f"  file pins {len(plan.pins)}  "
-          f"function-pin candidates {len(plan.function_pin_candidates)}")
-    if plan.rejected:
-        from collections import Counter
-        print("  rejects:", dict(Counter(plan.rejected.values())))
-    out = PINS / f"{args.project}_{args.harness or 'all'}.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(plan.to_dict(), indent=1))
-    print(f"wrote {out.relative_to(ROOT)}")
-
-
-def cmd_slice(args) -> None:
-    bugs, repo = _prepare(args)
-    pin_path = Path(args.pin) if args.pin else PINS / f"{args.project}_{args.harness or 'all'}.json"
-    raw = json.loads(pin_path.read_text())
-    sw = sweep.load(_sweep_path(args))
-    if sw:
-        sweep.attach_windows(bugs, sw)
-    # Recompute claims so the slice graph matches the pin plan.
-    plan = pin.PinPlan(
-        project=raw["project"], harness=raw.get("harness"),
-        base=raw["base"], base_date=raw["base_date"],
-        latent=raw.get("latent", []), mosaic=raw.get("mosaic", []),
-        rejected=raw.get("rejected", {}),
-        pins=[pin.FilePin(**p) for p in raw.get("pins", [])],
-        function_pin_candidates=raw.get("function_pin_candidates", []),
-    )
-    for b in bugs:
-        if str(b.oss_id) in plan.rejected:
-            b.reject = plan.rejected[str(b.oss_id)]
-        elif not b.claim and b.fix_resolved and not b.reject:
-            b.claim = pin.claim_e0(repo, b)
-    slices = slmod.partition(bugs, plan)
-    print(f"{len(slices)} slices from {pin_path.name}")
-    for s in slices:
-        print(f"  {s.name}: {s.purity} {s.kind}  bugs={len(s.bugs)}  "
-              f"pins={s.mosaic_files}  dropped={len(s.dropped)}")
-    dest = SLICES / f"{args.project}_{args.harness or 'all'}.json"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps([s.to_dict() for s in slices], indent=1))
-    print(f"wrote {dest.relative_to(ROOT)}")
-
-
-def cmd_emit(args) -> None:
-    bugs, repo = _prepare(args)
-    bundle = json.loads(Path(args.slice_json).read_text())
-    slices = [slmod.Slice.from_dict(s) for s in (bundle if isinstance(bundle, list) else [bundle])]
-    sl = slices[args.index]
-    dest = Path(args.dest) if args.dest else Path("/tmp/memvul/trees") / sl.name
-    # Apply on the host clone, then the caller can rsync. Manifest is the
-    # source of truth; the worktree is a convenience.
-    enabled = set(int(x) for x in args.enable.split(",")) if args.enable else None
-    emit.apply(repo, sl.base, sl.pins, enabled)
-    fails = emit.fidelity(repo, sl.base, sl.pins, enabled)
-    stats = emit.mosaic_stats(repo, sl.base, sl.pins)
-    dest.mkdir(parents=True, exist_ok=True)
-    emit.write_manifest(sl, dest / "pins.yaml", extra={"mosaic": stats,
-                                                       "fidelity_fail": fails})
-    emit.write_toggles(sl, dest / "toggles.cmake")
-    print(f"{sl.name}: mosaic_ratio={stats['mosaic_ratio']} "
-          f"pinned={stats['files_pinned']}/{stats['source_files']}")
-    print(f"fidelity failures: {len(fails)}")
-    print(f"wrote {dest}")
-
-
-def cmd_verify(args) -> None:
-    bugs, repo = _prepare(args)
-    bundle = json.loads(Path(args.slice_json).read_text())
-    slices = [slmod.Slice.from_dict(s) for s in (bundle if isinstance(bundle, list) else [bundle])]
-    sl = slices[args.index]
-    results = verify.verify_slice(
-        repo, sl, bugs, container=args.container,
-        srcdir=args.srcdir, harness=args.harness or bugs[0].harness or "fuzzer",
-        expand=not args.no_expand,
-    )
-    admitted = sum(1 for r in results if r.status == "admitted")
-    print(f"{sl.name}: {admitted}/{len(results)} admitted")
-    from collections import Counter
-    reasons = Counter(r.reject_reason for r in results if r.reject_reason)
-    if reasons:
-        print("rejects:", dict(reasons))
-    out = SLICES / f"{sl.name}_verify.json"
-    out.write_text(json.dumps([r.to_dict() for r in results], indent=1))
-    print(f"wrote {out.relative_to(ROOT)}")
-
-
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="memvul")
     p.add_argument("--db", default=str(arvo.DEFAULT_DB), help="ARVO-Meta sqlite")
@@ -457,63 +288,51 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--labels", action="store_true")
     s.set_defaults(func=cmd_slices)
 
-    q = sub.add_parser("plan", help="find the best base commit for a slice")
-    q.add_argument("--project", required=True)
-    q.add_argument("--harness")
-    q.add_argument("--repo", help="override the repo URL from ARVO")
-    q.add_argument("--bases", type=int, default=12)
-    q.add_argument("--window", type=int, default=730,
-                   help="max age in days of a fix still worth reverting")
-    q.set_defaults(func=cmd_plan)
-
     f = sub.add_parser("fetch", help="pull PoCs from ARVO images via the registry")
     f.add_argument("ids", nargs="*", type=int)
-    f.add_argument("--plan", help="take the bug list from a plan JSON's best base")
     f.add_argument("--dest", default="/tmp/memvul/pocs")
     f.add_argument("--binary", action="store_true",
                    help="also save the prebuilt reference ASan harness")
     f.add_argument("--refresh", action="store_true")
     f.set_defaults(func=cmd_fetch)
 
-    for name, help_, fn in (
-        ("sweep", "measure observability windows by building + replaying", cmd_sweep),
-        ("base", "rank bases by how many measured windows they stab", cmd_base),
-        ("pin", "solve claim sets and vul/fix pin pairs", cmd_pin),
-        ("slice", "carve pin plans into conflict-free slices", cmd_slice),
-        ("emit", "materialise a slice (checkout + pin + manifest)", cmd_emit),
-        ("verify", "run admission gates 1–6 on a slice", cmd_verify),
-    ):
-        sp = sub.add_parser(name, help=help_)
-        sp.add_argument("--project", required=True)
-        sp.add_argument("--harness")
-        sp.add_argument("--repo")
-        sp.add_argument("--pocs", default="/tmp/memvul/pocs")
-        sp.add_argument("--sweep", help="path to a sweep JSON")
-        if name == "sweep":
-            sp.add_argument("--container")
-            sp.add_argument("--srcdir", default="/src/assimp")
-            sp.add_argument("--every-days", type=int, default=40)
-            sp.add_argument("--mode", choices=("coarse", "refine"), default="coarse")
-            sp.add_argument("--max-probes", type=int)
-            sp.add_argument("--timeout", type=int, default=1200)
-            sp.add_argument("--dry-run", action="store_true")
-        if name == "base":
-            sp.add_argument("--limit", type=int, default=12)
-        if name == "pin":
-            sp.add_argument("--base", help="base commit; default = best from sweep")
-        if name == "slice":
-            sp.add_argument("--pin", help="path to a pin-plan JSON")
-        if name in ("emit", "verify"):
-            sp.add_argument("--slice-json", required=True, dest="slice_json")
-            sp.add_argument("--index", type=int, default=0)
-        if name == "emit":
-            sp.add_argument("--dest")
-            sp.add_argument("--enable", help="comma-separated oss_ids to turn ON")
-        if name == "verify":
-            sp.add_argument("--container")
-            sp.add_argument("--srcdir", default="/src/assimp")
-            sp.add_argument("--no-expand", action="store_true")
-        sp.set_defaults(func=fn)
+    cand = sub.add_parser("candidates",
+                          help="fix-date waves → archaeological candidate bases")
+    cand.add_argument("--project", required=True)
+    cand.add_argument("--harness")
+    cand.add_argument("--repo")
+    cand.add_argument("--pocs", default="/tmp/memvul/pocs")
+    cand.add_argument("--min-wave", type=int, default=2)
+    cand.add_argument("--limit", type=int, default=12)
+    cand.set_defaults(func=cmd_candidates)
+
+    cat = sub.add_parser("catalog",
+                         help="walk every project with >N sites, write catalog/")
+    cat.add_argument("--min-sites", type=int, default=10)
+    cat.add_argument("--dest", default=str(catalog.CATALOG))
+    cat.add_argument("--only", nargs="*", help="restrict to these project names")
+    cat.set_defaults(func=cmd_catalog)
+
+    m = sub.add_parser("measure",
+                       help="fetch PoCs + load one ARVO builder; compile/replay are manual")
+    m.add_argument("--project", help="measure this project (repeatable via --queue)")
+    m.add_argument("--queue", action="store_true",
+                   help="continue with the next unmeasured projects")
+    m.add_argument("--limit", type=int, default=0,
+                   help="how many projects to run; 0 = all remaining")
+    m.add_argument("--min-sites", type=int, default=10)
+    m.add_argument("--min-latent", type=int, default=8,
+                   help="skip catalog targets whose n_latent is below this")
+    m.set_defaults(func=cmd_measure)
+
+    b = sub.add_parser("base", help="rank bases by how many measured windows they stab")
+    b.add_argument("--project", required=True)
+    b.add_argument("--harness")
+    b.add_argument("--repo")
+    b.add_argument("--pocs", default="/tmp/memvul/pocs")
+    b.add_argument("--sweep", help="path to a sweep JSON")
+    b.add_argument("--limit", type=int, default=12)
+    b.set_defaults(func=cmd_base)
 
     args = p.parse_args(argv)
     args.func(args)

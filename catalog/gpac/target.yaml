@@ -1,0 +1,714 @@
+project: gpac
+repo: "https://github.com/gpac/gpac"
+n_sites: 49
+n_issues: 49
+harnesses: [fuzz_m2ts_probe, fuzz_parse, fuzz_probe_analyze, fuzz_route]
+base:
+  commit: b890f1c443dbe1f941cd326d4473ce7ddef8e256
+  date: 2024-01-17
+  method: wave_eve
+  n_latent: 42
+  n_latent_upper: 42
+  n_wave: 5
+  note: "eve of 2024-01-17 wave (5 same-day fixes); n_latent is fix-not-landed upper bound"
+waves:
+  - day: 2024-01-22
+    n: 6
+    eve: c9aba42fa2b8bc96dbba22de337a37ccc2f597dd
+    n_latent_upper: 37
+    oss_ids: [42532226, 42532144, 42532171, 42532225, 42532195, 42532234]
+  - day: 2024-01-17
+    n: 5
+    eve: b890f1c443dbe1f941cd326d4473ce7ddef8e256
+    n_latent_upper: 42
+    oss_ids: [42531304, 42531317, 42531310, 42531371, 42531925]
+  - day: 2024-01-30
+    n: 2
+    eve: 6d964cb9a91c81dc8edf478ca12c431eefcecc69
+    n_latent_upper: 28
+    oss_ids: [42532396, 42532406]
+  - day: 2024-01-31
+    n: 2
+    eve: 93d65653ac6401227fd264f98e1a4bc8c084bd3b
+    n_latent_upper: 28
+    oss_ids: [42532309, 42532326]
+  - day: 2024-03-08
+    n: 2
+    eve: d9da11ec2e3b5f223b303bdcd3f208c000958987
+    n_latent_upper: 20
+    oss_ids: [42533590, 42533592]
+  - day: 2024-04-16
+    n: 2
+    eve: 22d72277f805778042de07826952a510918b93a7
+    n_latent_upper: 16
+    oss_ids: [42534218, 42534235]
+  - day: 2021-04-08
+    n: 1
+    eve: 05f453ec48710066582e3c3f4b71f6a9dc849f2a
+    n_latent_upper: 7
+    oss_ids: [42494318]
+  - day: 2021-05-20
+    n: 1
+    eve: fb32b2d112686f4c300d36428033b307c84eed3b
+    n_latent_upper: 6
+    oss_ids: [42494354]
+  - day: 2022-01-27
+    n: 1
+    eve: c53866d3a9ded92ce99fce185ef49067d7fc52a4
+    n_latent_upper: 16
+    oss_ids: [42494345]
+  - day: 2022-02-10
+    n: 1
+    eve: fe8430a3095f38a2a50ef6fd9ae04e80de18e1a5
+    n_latent_upper: 20
+    oss_ids: [42494822]
+  - day: 2022-04-19
+    n: 1
+    eve: 1773b7a34bc08734aee7d3f5dfe65d06389fe15a
+    n_latent_upper: 32
+    oss_ids: [42507999]
+  - day: 2022-11-04
+    n: 1
+    eve: 6beeb3c65d811a7fb08018eef13b4776ee40bca3
+    n_latent_upper: 41
+    oss_ids: [42495681]
+bugs:
+  - oss_id: 42494318
+    harness: fuzz_parse
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 758135e91e623d7dfe7f6aaad7aeb3f791b7a4e5
+    fix_date: 2021-04-08
+    crash_func: gf_strdup
+    crash_file: src/utils/alloc.c
+    signature: [heap-buffer-overflow, READ, gf_strdup, alloc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494318"
+  - oss_id: 42494345
+    harness: fuzz_parse
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 322c8a92e3d37c9632a5db584e8100fcc9704344
+    fix_date: 2022-01-27
+    crash_func: stsz_box_read
+    crash_file: src/isomedia/box_code_base.c
+    signature: [heap-buffer-overflow, READ, stsz_box_read, box_code_base.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494345"
+  - oss_id: 42494354
+    harness: fuzz_parse
+    label: stack-use-after-return
+    cwe: CWE-562
+    group: temporal
+    fix_commit: 82396cfa523b4b7ef16e720d6c353fc85d91841d
+    fix_date: 2021-05-20
+    crash_func: on_aom_av1_eos
+    crash_file: src/media_tools/av_parsers.c
+    signature: [stack-use-after-return, WRITE, on_aom_av1_eos, av_parsers.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494354"
+  - oss_id: 42494822
+    harness: fuzz_parse
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: b1a2e4127c1242a0fbb5d9b652d678b6508919dc
+    fix_date: 2022-02-10
+    crash_func: gf_isom_box_del
+    crash_file: src/isomedia/box_funcs.c
+    signature: [heap-use-after-free, READ, gf_isom_box_del, box_funcs.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42494822"
+  - oss_id: 42495681
+    harness: fuzz_parse
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 74e53280dad7b29f85386c6a1286fb92643465da
+    fix_date: 2022-11-04
+    crash_func: gf_strdup
+    crash_file: src/utils/alloc.c
+    signature: [stack-buffer-overflow, READ, gf_strdup, alloc.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42495681"
+  - oss_id: 42507999
+    harness: fuzz_parse
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 3dbe11b37d65c8472faf0654410068e5500b3adb
+    fix_date: 2022-04-19
+    crash_func: diST_box_read
+    crash_file: src/isomedia/box_code_3gpp.c
+    signature: [stack-buffer-overflow, WRITE, diST_box_read, box_code_3gpp.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42507999"
+  - oss_id: 42518828
+    harness: fuzz_parse
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 9971fb125cf91cefd081a080c417b90bbe4a467b
+    fix_date: 2023-01-17
+    crash_func: gf_odf_vvc_cfg_read_bs
+    crash_file: src/odf/descriptors.c
+    signature: [heap-use-after-free, READ, gf_odf_vvc_cfg_read_bs, descriptors.c]
+    status: not_latent
+    evidence: fix_landed
+    report: "https://issues.oss-fuzz.com/issues/42518828"
+  - oss_id: 42531304
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 538b229cab5e6317053c15c66417a9d053681ad0
+    fix_date: 2024-01-17
+    crash_func: xml_sax_append_string
+    crash_file: src/utils/xml_parser.c
+    signature: [heap-buffer-overflow, READ, xml_sax_append_string, xml_parser.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531304"
+  - oss_id: 42531310
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9b3d814db48ba2262e58dc83c44bacf2c82236c4
+    fix_date: 2024-01-17
+    crash_func: BS_ReadByte
+    crash_file: src/utils/bitstream.c
+    signature: [heap-buffer-overflow, READ, BS_ReadByte, bitstream.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531310"
+  - oss_id: 42531317
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 8a6e53e5231354b52feaffc02eae48204303157d
+    fix_date: 2024-01-17
+    crash_func: gf_url_to_fs_path
+    crash_file: src/utils/url.c
+    signature: [heap-buffer-overflow, READ, gf_url_to_fs_path, url.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531317"
+  - oss_id: 42531371
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 067bef9548698847fe9126308626e672e1ecab75
+    fix_date: 2024-01-17
+    crash_func: gf_token_get_line
+    crash_file: src/utils/token.c
+    signature: [stack-buffer-overflow, WRITE, gf_token_get_line, token.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531371"
+  - oss_id: 42531925
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 0ff40625b602590afffb383ab03d155e0ba509ed
+    fix_date: 2024-01-17
+    crash_func: gf_sk_connect
+    crash_file: src/utils/os_net.c
+    signature: [stack-buffer-overflow, WRITE, gf_sk_connect, os_net.c]
+    status: latent
+    evidence: wave_member
+    report: "https://issues.oss-fuzz.com/issues/42531925"
+  - oss_id: 42532144
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 593d9afa9db74a83909c4c1f1d27c9f4289e96c7
+    fix_date: 2024-01-22
+    crash_func: gf_props_assign_value
+    crash_file: src/filter_core/filter_props.c
+    signature: [heap-buffer-overflow, READ, gf_props_assign_value, filter_props.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532144"
+  - oss_id: 42532171
+    harness: fuzz_probe_analyze
+    label: overlapping-memcpy
+    cwe: CWE-475
+    group: spatial
+    fix_commit: 25ca355f14a28baeb6afd911ca7ae66deb37a1ac
+    fix_date: 2024-01-22
+    crash_func: null
+    crash_file: ""
+    signature: null
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532171"
+  - oss_id: 42532195
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 52da2ef6b33c26d4ffd72d1d4ae6c42631ea433f
+    fix_date: 2024-01-22
+    crash_func: RTSP_UnpackURL
+    crash_file: src/ietf/rtsp_session.c
+    signature: [stack-buffer-overflow, WRITE, RTSP_UnpackURL, rtsp_session.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532195"
+  - oss_id: 42532225
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a26fcd953ccd71b4171672c6bc14acf04454e61f
+    fix_date: 2024-01-22
+    crash_func: my_strstr
+    crash_file: src/filters/load_bt_xmt.c
+    signature: [heap-buffer-overflow, READ, my_strstr, load_bt_xmt.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532225"
+  - oss_id: 42532226
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: b6749e529b3677850aebd508afd2e01f2877ec9a
+    fix_date: 2024-01-22
+    crash_func: gf_inspect_dump_nalu_internal
+    crash_file: src/filters/inspect.c
+    signature: [heap-buffer-overflow, READ, gf_inspect_dump_nalu_internal, inspect.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532226"
+  - oss_id: 42532234
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 964e268f0bf975b881f322ff6d9dd53957fa837d
+    fix_date: 2024-01-22
+    crash_func: gf_m3u8_parse_sub_playlist
+    crash_file: src/media_tools/m3u8.c
+    signature: [heap-buffer-overflow, READ, gf_m3u8_parse_sub_playlist, m3u8.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532234"
+  - oss_id: 42532309
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 17d14c6a4f2c3f904a2065a07ef3ae915f78c2df
+    fix_date: 2024-01-31
+    crash_func: mp3_dmx_process
+    crash_file: src/filters/reframe_mp3.c
+    signature: [heap-buffer-overflow, READ, mp3_dmx_process, reframe_mp3.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532309"
+  - oss_id: 42532326
+    harness: fuzz_probe_analyze
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: fe46265eda4375086374ed41a4bb7f3906ced4ca
+    fix_date: 2024-01-31
+    crash_func: oggdmx_get_stream_info
+    crash_file: src/filters/dmx_ogg.c
+    signature: [heap-use-after-free, READ, oggdmx_get_stream_info, dmx_ogg.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532326"
+  - oss_id: 42532396
+    harness: fuzz_probe_analyze
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: a616b4fa0a73ff57eff65fcc6beba6b79260a4fd
+    fix_date: 2024-01-30
+    crash_func: gf_text_get_utf8_line
+    crash_file: src/filters/load_text.c
+    signature: [stack-buffer-overflow, READ, gf_text_get_utf8_line, load_text.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532396"
+  - oss_id: 42532406
+    harness: fuzz_probe_analyze
+    label: global-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 9efb5977c5b7a45e52acd83533076c18bc8f294a
+    fix_date: 2024-01-30
+    crash_func: gf_mp3_bit_rate
+    crash_file: src/media_tools/av_parsers.c
+    signature: [global-buffer-overflow, READ, gf_mp3_bit_rate, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532406"
+  - oss_id: 42532480
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 523f9e5bb8a7a6e82977f8e7c3cf20ee039edfdd
+    fix_date: 2024-01-29
+    crash_func: filter_solve_prop_template
+    crash_file: src/filter_core/filter.c
+    signature: [stack-buffer-overflow, WRITE, filter_solve_prop_template, filter.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532480"
+  - oss_id: 42532587
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e95b4f1815c6e70a92953d464eab30c8457a9ad8
+    fix_date: 2024-02-12
+    crash_func: mpgviddmx_check_pid
+    crash_file: src/filters/reframe_mpgvid.c
+    signature: [heap-buffer-overflow, READ, mpgviddmx_check_pid, reframe_mpgvid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532587"
+  - oss_id: 42532845
+    harness: fuzz_probe_analyze
+    label: stack-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 2aa2b4362e44aa4bcbd1e2086aab6d2aa82df506
+    fix_date: 2024-02-13
+    crash_func: gf_token_get_line
+    crash_file: src/utils/token.c
+    signature: [stack-buffer-overflow, WRITE, gf_token_get_line, token.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532845"
+  - oss_id: 42532961
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 07c6c799e741a3a7466fc80964703e6f604f38e4
+    fix_date: 2024-02-14
+    crash_func: gf_opus_parse_packet_header
+    crash_file: src/media_tools/av_parsers.c
+    signature: [heap-buffer-overflow, READ, gf_opus_parse_packet_header, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42532961"
+  - oss_id: 42533061
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 08d2d3128f17bd83d534efd708bdaf1248005e9e
+    fix_date: 2024-02-19
+    crash_func: gf_m2ts_get_adaptation_field
+    crash_file: src/media_tools/mpegts.c
+    signature: [stack-buffer-overflow, WRITE, gf_m2ts_get_adaptation_field, mpegts.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533061"
+  - oss_id: 42533223
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5a83f50fe9a6cd513029e37cc723ae53c01807c3
+    fix_date: 2024-02-23
+    crash_func: inspect_get_nal_size
+    crash_file: src/filters/inspect.c
+    signature: [heap-buffer-overflow, READ, inspect_get_nal_size, inspect.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533223"
+  - oss_id: 42533348
+    harness: fuzz_parse
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ff627002687235bc6c585fc7ce24137cc6eeb73b
+    fix_date: 2024-02-27
+    crash_func: gf_gz_decompress_payload_ex
+    crash_file: src/utils/base_encoding.c
+    signature: [heap-buffer-overflow, WRITE, gf_gz_decompress_payload_ex, base_encoding.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533348"
+  - oss_id: 42533590
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 5a7b8954b0f2c16fae4b414cdb4fdb74b73df934
+    fix_date: 2024-03-08
+    crash_func: gf_strmemstr
+    crash_file: src/utils/error.c
+    signature: [heap-buffer-overflow, READ, gf_strmemstr, error.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533590"
+  - oss_id: 42533592
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b5dc2164d7456bd61bfa3a8415f468bab1dc517e
+    fix_date: 2024-03-08
+    crash_func: rtpin_satip_get_server_ip
+    crash_file: src/filters/in_rtp.c
+    signature: [stack-buffer-overflow, WRITE, rtpin_satip_get_server_ip, in_rtp.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42533592"
+  - oss_id: 42534138
+    harness: fuzz_probe_analyze
+    label: negative-size
+    cwe: CWE-787
+    group: spatial
+    fix_commit: b74b19923564644fc1fbd132ef472a9d79c1417f
+    fix_date: 2024-04-08
+    crash_func: mpgviddmx_process
+    crash_file: src/filters/reframe_mpgvid.c
+    signature: [negative-size-param, -, mpgviddmx_process, reframe_mpgvid.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534138"
+  - oss_id: 42534218
+    harness: fuzz_route
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: e7b07d465f821a86d7ab6fb950ddc54d29238ec4
+    fix_date: 2024-04-16
+    crash_func: gf_route_dmx_process_service_signaling
+    crash_file: src/media_tools/route_dmx.c
+    signature: [heap-buffer-overflow, WRITE, gf_route_dmx_process_service_signaling, route_dmx.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534218"
+  - oss_id: 42534235
+    harness: fuzz_route
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e7b07d465f821a86d7ab6fb950ddc54d29238ec4
+    fix_date: 2024-04-16
+    crash_func: default_log_callback_color
+    crash_file: src/utils/error.c
+    signature: [heap-buffer-overflow, READ, default_log_callback_color, error.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534235"
+  - oss_id: 42534289
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 38b8c96c4795bc1e1d5f9d7d25d550ab298bf6ee
+    fix_date: 2024-04-15
+    crash_func: dump_udta_m2v
+    crash_file: src/filters/inspect.c
+    signature: [heap-buffer-overflow, READ, dump_udta_m2v, inspect.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534289"
+  - oss_id: 42534553
+    harness: fuzz_route
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: 176b123cc5aaf5230046d8d5bdf9a8f0e216e4ac
+    fix_date: 2024-04-17
+    crash_func: gf_netcap_load_pck
+    crash_file: src/utils/os_net.c
+    signature: [heap-use-after-free, READ, gf_netcap_load_pck, os_net.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42534553"
+  - oss_id: 42535673
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: d376b0413acde04c2672fe0e0964effd0df86803
+    fix_date: 2024-05-21
+    crash_func: swf_def_bits_jpeg
+    crash_file: src/scene_manager/swf_parse.c
+    signature: [heap-buffer-overflow, READ, swf_def_bits_jpeg, swf_parse.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535673"
+  - oss_id: 42535883
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 52066200e0a59ab5ef0d6800426f1520eea48cba
+    fix_date: 2024-07-01
+    crash_func: gf_odf_vvc_cfg_write_bs
+    crash_file: src/odf/descriptors.c
+    signature: [heap-buffer-overflow, READ, gf_odf_vvc_cfg_write_bs, descriptors.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42535883"
+  - oss_id: 42536591
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: e325fdfc7e36477667134cca7ec508e24437720d
+    fix_date: 2024-06-29
+    crash_func: filter_parse_dyn_args
+    crash_file: src/filter_core/filter.c
+    signature: [heap-buffer-overflow, READ, filter_parse_dyn_args, filter.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536591"
+  - oss_id: 42536751
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: ed8719aff48815983ca2ca52f9379e8c4ed9e171
+    fix_date: 2024-07-10
+    crash_func: gf_hevc_compute_ref_list
+    crash_file: src/media_tools/av_parsers.c
+    signature: [heap-buffer-overflow, READ, gf_hevc_compute_ref_list, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42536751"
+  - oss_id: 42537014
+    harness: fuzz_probe_analyze
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 03ca9ca984a649bbb13289f2b7445a4651c39704
+    fix_date: 2024-07-16
+    crash_func: gf_dash_group_get_template
+    crash_file: src/media_tools/dash_client.c
+    signature: [heap-buffer-overflow, WRITE, gf_dash_group_get_template, dash_client.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537014"
+  - oss_id: 42537243
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: 85a04010fc360a22bd332502460445cc2cd75f4e
+    fix_date: 2024-07-29
+    crash_func: vvc_push_ref_poc
+    crash_file: src/media_tools/av_parsers.c
+    signature: [stack-buffer-overflow, WRITE, vvc_push_ref_poc, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537243"
+  - oss_id: 42537622
+    harness: fuzz_probe_analyze
+    label: heap-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: ca6a0a36e52baae6f7159860b232c54241305b17
+    fix_date: 2024-08-05
+    crash_func: hevc_ref_pic_lists_modification
+    crash_file: src/media_tools/av_parsers.c
+    signature: [heap-buffer-overflow, WRITE, hevc_ref_pic_lists_modification, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537622"
+  - oss_id: 42537907
+    harness: fuzz_probe_analyze
+    label: stack-oob-write
+    cwe: CWE-787
+    group: spatial
+    fix_commit: deb5bc655ebb6dbd63653e159a260a8a2c8c13de
+    fix_date: 2024-08-20
+    crash_func: gf_hevc_compute_ref_list
+    crash_file: src/media_tools/av_parsers.c
+    signature: [stack-buffer-overflow, WRITE, gf_hevc_compute_ref_list, av_parsers.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/42537907"
+  - oss_id: 368076877
+    harness: fuzz_probe_analyze
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: fc8eb6b044d59b69ed40dbf6743f0e5dfa76ca1c
+    fix_date: 2024-09-25
+    crash_func: gsfdmx_finalize
+    crash_file: src/filters/dmx_gsf.c
+    signature: [heap-use-after-free, READ, gsfdmx_finalize, dmx_gsf.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/368076877"
+  - oss_id: 372994344
+    harness: fuzz_m2ts_probe
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: a40c0dede301c1c0db9458b6a401fba6c199ebd4
+    fix_date: 2024-10-14
+    crash_func: gf_m2ts_demux_del
+    crash_file: src/media_tools/mpegts.c
+    signature: [heap-use-after-free, READ, gf_m2ts_demux_del, mpegts.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/372994344"
+  - oss_id: 383825169
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 0e8373eaad0fe69ab615f2c7d1a806362d611d9b
+    fix_date: 2024-12-16
+    crash_func: gf_fwrite
+    crash_file: src/utils/os_file.c
+    signature: [heap-buffer-overflow, READ, gf_fwrite, os_file.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/383825169"
+  - oss_id: 415855132
+    harness: fuzz_probe_analyze
+    label: heap-oob-read
+    cwe: CWE-125
+    group: spatial
+    fix_commit: 650e0cf7de61770ac9ae40e90c55c4842a7e5e66
+    fix_date: 2025-05-07
+    crash_func: m2tsdmx_declare_pid
+    crash_file: src/filters/dmx_m2ts.c
+    signature: [heap-buffer-overflow, READ, m2tsdmx_declare_pid, dmx_m2ts.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/415855132"
+  - oss_id: 431448415
+    harness: fuzz_probe_analyze
+    label: use-after-free
+    cwe: CWE-416
+    group: temporal
+    fix_commit: ac2e285f94d58c8d9d91ee4ec3a2564f99d43194
+    fix_date: 2025-04-01
+    crash_func: gf_odf_ac4_cfg_clean_list
+    crash_file: src/odf/descriptors.c
+    signature: [heap-use-after-free, READ, gf_odf_ac4_cfg_clean_list, descriptors.c]
+    status: latent
+    evidence: fix_not_landed
+    report: "https://issues.oss-fuzz.com/issues/431448415"
+rejected: []
+error: null
