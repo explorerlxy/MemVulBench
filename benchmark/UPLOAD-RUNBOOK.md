@@ -1,75 +1,77 @@
-# MemVulBench v1.0.0 上传执行手册（ScienceDB 为主）
+# MemVulBench v1.0.0 上传执行手册（Hugging Face 为主）
 
-状态：**软件层已完成**——GitHub `explorerlxy/MemVulBench`（master + 标签
-`memvulbench-v1.0.0` 已推送）。剩余：ScienceDB 21 条记录 + DOI 回填。
-Zenodo 作为可选国际镜像，流程附在末尾。
+状态：**软件层已完成**（GitHub `explorerlxy/MemVulBench`，标签
+`memvulbench-v1.0.0`）。数据层改为 **Hugging Face 数据集仓库**：零审核、
+发布即时、公开数据集免费（单文件上限约 50 GB，最大单元 tar 6.1 GB）、
+国内读者经 <https://hf-mirror.com> 免代理免账号下载。
+DOI 需要时再补 Zenodo 镜像（附 D）；ScienceDB 卡片保留备用（附 E）。
 
 ## A. 软件层（已完成 ✅）
 
-- 仓库：<https://github.com/explorerlxy/MemVulBench>
-- 冻结标签：`memvulbench-v1.0.0`
-- 可选补充：在该标签上建 GitHub Release，附件挂
-  `benchmark/fingerprint-index.json`；国内访问可再推一份 Gitee 镜像
-  （仓库 ~10 MB，低于 500 MB 限制；开源仓库需实名审核 1–2 天；
-  Release 附件限 100 MB，不放镜像）。
+<https://github.com/explorerlxy/MemVulBench>，标签 `memvulbench-v1.0.0`。
 
-## B. ScienceDB：21 条记录（20 单元 + 1 索引）
+## B. Hugging Face（主通道）
 
 **一次性准备**
 
-1. 注册/登录 <https://www.scidb.cn>（sciencedb.cn，中科院通行证可登）。
-2. 先传一个最小单元（如 libxml2）试探单文件上限；帮助中心确认 GB 级
-   单文件可直传。若有上限：改分卷压缩，或把 logs/ 与 image 拆成两条记录。
-3. 生成全部 21 张提交卡片（标题/摘要/关键词/许可逐字段可复制）：
-
 ```bash
-python3 scripts/make_unit_tars.py --cards
-ls benchmark/checks/sciencedb-metadata/   # 20 张单元卡 + _index.md
+# 1. HF 账号 -> Settings -> Access Tokens -> New token（write 权限）
+# 2. 登录（huggingface_hub 已装到用户目录，hf 在 ~/.local/bin）
+hf auth login
+# 3. 建私有数据集仓库并上传主页卡片/指纹索引/manifest/核查文件
+python3 scripts/hf_upload.py --create
 ```
 
-**逐单元执行**（一条记录约 10 分钟操作 + 上传时间）：
+**逐单元上传（tar 自动生成→上传→清理；断点可续，重跑即续传）**
 
 ```bash
-# 1. 生成该单元的 tar（放 /tmp/memvul/release-upload/，最大 6.1 GB）
-python3 scripts/make_unit_tars.py --unit ghostpdl
-
-# 2. 网页操作：提交数据 → 按卡片 benchmark/checks/sciencedb-metadata/ghostpdl.md
-#    逐字段粘贴（标题/作者/摘要/关键词 CC BY 4.0 / 版本 v1.0.0），
-#    上传 3 个文件：tar + benchmark/units/ghostpdl/manifest.json + run-config.json
-#    → 提交审核 → 通过后发布，记下 DOI/CSTR
-
-# 3. 删除本地 tar，释放空间
-python3 scripts/make_unit_tars.py --clean ghostpdl
+python3 scripts/hf_upload.py --unit arrow
+# ……对 20 个单元依次执行：
+for p in arrow assimp espeak-ng fluent-bit ghostpdl gpac hdf5 libavc libdwarf \
+         libraw libxml2 ndpi openh264 opensc openvswitch PcapPlusPlus pcl \
+         selinux sleuthkit upx; do
+    python3 scripts/hf_upload.py --unit $p
+done
 ```
 
-20 个单元依次：arrow assimp espeak-ng fluent-bit ghostpdl gpac hdf5 libavc
-libdwarf libraw libxml2 ndpi openh264 opensc openvswitch PcapPlusPlus pcl
-selinux sleuthkit upx。最后传**索引记录**（卡片 `_index.md`，文件为
-`benchmark/fingerprint-index.json` + `manifest.json` + `README.md`）。
+`/tmp` 仅 26 GB 空闲：脚本逐单元生成并删除 tar（峰值 6.1 GB），勿同时
+手工生成多个 tar。
 
-**登记 DOI**：每条发布后在 `benchmark/checks/zenodo-dois.json` 同级新建
-`benchmark/checks/sciencedb-dois.json`，格式：
-
-```json
-{ "<记录标识>": {"record": "ghostpdl", "doi": "10.11922/…", "cstr": "…"} }
-```
-
-## C. 回填（全部发布后）
-
-1. `benchmark/manifest.json` 增加 `unit_dois` 字段；仓库根 `README.md` 与
-   `papers/MemVulBench/manuscript.md` 数据可用性声明写入 ScienceDB DOI
-   （投国际 venue 可并列 Zenodo 镜像 DOI）。
-2. ScienceDB 各记录描述里已含 GitHub 链接，无需回改。
-3. `git add <涉及文件> && git commit -m "回填 v1.0.0 ScienceDB DOI"` 并
-   `git push`。**不要移动 `memvulbench-v1.0.0` 标签**——回填进 master。
-
-## 附：Zenodo 可选镜像
+**发布**
 
 ```bash
+# 全部传完、在网页上抽查文件树无误后：
+python3 scripts/hf_upload.py --public
+```
+
+主页卡片 `benchmark/HF-CARD.md` 已写好（含国内 hf-mirror 下载说明与引用
+BibTeX）。
+
+**匿名验证**（发布后）：
+
+```bash
+HF_ENDPOINT=https://hf-mirror.com huggingface-cli download \
+    explorerlxy/MemVulBench --repo-type dataset \
+    --include "units/arrow/*" --local-dir /tmp/hf-check
+```
+
+## C. 回填（发布后）
+
+1. 仓库根 `README.md` 与 `papers/MemVulBench/manuscript.md` 数据可用性声明
+   写入数据集地址 `https://huggingface.co/datasets/explorerlxy/MemVulBench`
+   （及 hf-mirror 提示）；HF 卡片的 Citation 指回 GitHub 与论文。
+2. `git add <涉及文件> && git commit -m "回填 v1.0.0 数据集地址" && git push`。
+   **不要移动 `memvulbench-v1.0.0` 标签**。
+
+## 附 D：Zenodo（可选，补 DOI 用）
+
+```bash
+export HTTPS_PROXY=http://127.0.0.1:17891     # 走本机 Clash
 export ZENODO_TOKEN=<token>
-python3 scripts/zenodo_upload.py --unit libxml2 --sandbox   # 演练
-python3 scripts/zenodo_upload.py --unit <p>                 # 正式（支持 --deposit-id 续传）
-python3 scripts/zenodo_upload.py --index
+python3 scripts/zenodo_upload.py --unit <p>   # 21 条同布局；秒发无审核
 ```
 
-软件仓库地址已在脚本元数据中指向 `explorerlxy/MemVulBench`。
+## 附 E：ScienceDB（可选，国内期刊生态）
+
+卡片在 `benchmark/checks/sciencedb-metadata/`；需人工审核（约 1–3 个
+工作日），投稿目标明确后再做不迟。
