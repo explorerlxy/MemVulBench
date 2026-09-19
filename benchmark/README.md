@@ -27,12 +27,13 @@
    ASan 首错应与 `logs/final-entry/<oss_id>.log` 一致，其五元组应能在
    `fingerprint-index.json` 中按 `mvb:` 指纹号定位。
 
-## 上传约定（待执行）
+## 发布状态（2026-09-19）
 
-- 每个单元一个归档记录（Zenodo 单记录上限 50 GB / 100 文件；本版单元镜像
-  1.69–6.07 GB，均适用）。镜像不做 GitHub Release 资产（单文件 <2 GiB 限制）。
-- 软件层推送公开 git 仓库后，在归档记录与本 README 回填双向链接与持久标识。
-- 在真实地址与持久标识建立前，论文只陈述发布计划，不声称材料已公开。
+- 数据层已整体发布于 Hugging Face：
+  https://huggingface.co/datasets/Fisho0/MemVulBench （公开，66 文件，
+  20 单元 + 索引；上传通道仅保留 HF，`scripts/hf_upload.py`）。
+- 软件层：GitHub explorerlxy/MemVulBench，标签 memvulbench-v1.0.0。
+- 镜像不做 GitHub Release 资产（单文件 <2 GiB 限制）。
 
 ## 复现打包
 

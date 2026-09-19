@@ -143,7 +143,7 @@ harness、PoC ID、退出状态和原始日志一起记录。
 ```
 MemVulBench/
 ├── docs/            design.md（本文）/ schema.md / determinism.md / adr/
-├── memvul/          Python 包：census / candidates / catalog / base；pin / slice / emit 在 deferred/
+├── memvul/          Python 包：census / candidates / catalog / base（deferred/ 已于 2026-09-19 删除）
 ├── catalog/         第一阶段考古目录（进 git）：每项目一份 target.yaml + 总表
 │   ├── index.md
 │   ├── index.json

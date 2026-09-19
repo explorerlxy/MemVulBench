@@ -24,7 +24,6 @@ python3 -m memvul measure --project assimp         # 准备 PoC 与 ARVO builder
 python3 -m memvul base --project assimp            # 分析已有的人工测量记录
 ```
 
-搁置的 pin / slice / emit 在 `memvul.deferred`，不注册到 `python3 -m memvul`。
 
 进入前台编译和回放的项目必须在项目级（跨 harness）拥有至少 8 个 PoC；少于 6 个直接 pass，6–7 个暂缓除非明确复核。最终准入计数是 unique expected 五元组 + unique `known_real` 五元组。
 

@@ -12,3 +12,5 @@ data/measure/
 build/
 out/
 benchmark/units/
+.~lock.*#
+papers/MemVulBench/*.jpg

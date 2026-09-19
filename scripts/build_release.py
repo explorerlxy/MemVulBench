@@ -216,7 +216,7 @@ def main() -> None:
         "unit_manifests": [f"units/{m['project']}/manifest.json" for m in unit_records],
         "layers": {
             "software": "git repository at tag memvulbench-v1.0.0",
-            "unit_data": "benchmark/units/<project>/ (per-unit Zenodo records)",
+            "unit_data": "benchmark/units/<project>/ (published on https://huggingface.co/datasets/Fisho0/MemVulBench)",
             "process_archive": "benchmark/process-archive/README.md",
         },
     }

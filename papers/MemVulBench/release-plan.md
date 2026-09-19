@@ -1,6 +1,6 @@
 # MemVulBench 公开发布方案
 
-状态：待实施。本文以 `data/measure/admission/2026-09-18.json` 为准，发布范围为 20 个准入测试单元及 292 个经核验的独立漏洞指纹；arrow 纳入，librawspeed 不纳入本版发布集合。
+状态：已实施（2026-09-19）。数据层实际落地为 Hugging Face 数据集（Zenodo/ScienceDB 方案按操作员决定裁撤）；软件层为 GitHub 标签 memvulbench-v1.0.0。本文以 `data/measure/admission/2026-09-18.json` 为准，发布范围为 20 个准入测试单元及 292 个经核验的独立漏洞指纹；arrow 纳入，librawspeed 不纳入本版发布集合。
 
 ## 1. 冻结可引用版本
 

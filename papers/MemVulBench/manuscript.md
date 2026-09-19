@@ -472,7 +472,7 @@ MemVulBench将较为充足的已核验漏洞组织在单个测试单元内，为
 
 本文统计结果依据本地仓库中的 `data/census/`、`catalog/` 和 `data/measure/manual/` 元数据，以及 `data/measure/rereplay/2026-09-17/`、`data/measure/rereplay/2026-09-18/` 中的最终测试驱动复验记录。其中，2026年9月18日的记录对应arrow替换批次。最终测试单元名单以 `data/measure/admission/2026-09-18.json` 为准，该文件取代前一日的准入记录。漏洞身份账本保存于 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`。
 
-论文配套目录保存源文件哈希清单、逐项目CSV文件、记录摘录及图表生成代码。大体积镜像、PoC和日志分别保存在项目外部归档或对应材料目录中。目前尚未确认公开下载地址及完整再分发条件；公开仓库地址、版本标签和长期归档标识将在正式发布时补充。
+源码、目录与证据索引随固定版本标签 `memvulbench-v1.0.0` 公开于 https://github.com/explorerlxy/MemVulBench （代码 MIT，数据与文档 CC BY 4.0）。20 个测试单元的最终镜像、计分 PoC、最终入口日志、逐文件 SHA-256 清单与 292 个指纹的机器可读索引发布于 Hugging Face 数据集 https://huggingface.co/datasets/Fisho0/MemVulBench （镜像内嵌上游源码，遵循其原始许可）。各单元复验与准入记录随仓库一同公开。
 
 ## 作者、资助及利益冲突声明
 
@@ -483,14 +483,6 @@ MemVulBench将较为充足的已核验漏洞组织在单个测试单元内，为
 资助来源：[待补充]。
 
 利益冲突声明：[待作者确认并填写]。
-
-## 数据与代码可用性
-
-本稿统计依据本地仓库中的 `data/census/`、`catalog/`、`data/measure/manual/` 元数据，`data/measure/rereplay/2026-09-17/` 及 `data/measure/rereplay/2026-09-18/`（arrow替换批次）的最终入口复验记录，以及 `data/measure/admission/2026-09-18.json` 的准入决定（取代 `2026-09-17.json`）。身份账本见 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`。论文配套目录保存源文件哈希清单、逐项目 CSV、记录摘录和图表生成代码。大体积镜像、PoC 和日志保存在项目外部归档或目标材料目录，尚未确认公开下载地址及完整再分发条件。公开仓库地址、版本标签和长期归档标识将在正式发布时补充；本文不声明这些材料已经公开。
-
-## 作者、资助及利益冲突声明
-
-作者与单位、作者贡献、资助来源及利益冲突声明由作者在投稿前填写。没有获得的信息不在初稿中推断为“无”。
 
 ## 参考文献
 

@@ -45,5 +45,6 @@
 ## 5. 版本冻结
 
 - git 提交与标签 `memvulbench-v1.0.0`（本地；仓库尚无远程，推送地址待定）。
-- Zenodo 逐单元记录、软件仓库公开地址与持久标识：待按 `UPLOAD-RUNBOOK.md`
-  执行后回填 `benchmark/manifest.json` 与论文数据可用性声明。
+- 软件层（GitHub tag memvulbench-v1.0.0）与数据层（Hugging Face 数据集
+  Fisho0/MemVulBench，2026-09-19 公开）已发布并回填论文可用性声明。
+  DOI 类持久标识通道（Zenodo）按操作员决定裁撤，仅保留 HF。

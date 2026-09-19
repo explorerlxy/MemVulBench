@@ -16,23 +16,39 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import sys
+import tarfile
 from pathlib import Path
 
+from huggingface_hub import HfApi
+
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "scripts"))
-import make_unit_tars  # noqa: E402
-
-from huggingface_hub import HfApi  # noqa: E402
-
 BENCH = ROOT / "benchmark"
-STAGE = Path("/tmp/memvul/release-upload/hf-stage")
+TAR_TMP = Path("/tmp/memvul/release-upload")
+STAGE = TAR_TMP / "hf-stage"
 DEFAULT_REPO = "Fisho0/MemVulBench"
+
+
+def tar_path(project: str) -> Path:
+    commit = json.loads(
+        (BENCH / f"units/{project}/manifest.json").read_text())["source_commit"]
+    return TAR_TMP / f"{project}-{commit[:12]}-v1.0.0.tar"
+
+
+def make_tar(project: str) -> Path:
+    tar = tar_path(project)
+    if tar.exists():
+        print(f"reusing {tar}")
+        return tar
+    TAR_TMP.mkdir(parents=True, exist_ok=True)
+    print(f"tarring {project} -> {tar.name} ...", flush=True)
+    with tarfile.open(tar, "w") as tf:
+        tf.add(BENCH / "units" / project, arcname=project)
+    return tar
 
 
 def stage_unit(repo_layout: Path, project: str) -> Path:
     """Materialise units/<p>/{tar,manifest.json,run-config.json} in the stage."""
-    tar = make_unit_tars.make_tar(project)
+    tar = make_tar(project)
     dest = repo_layout / "units" / project
     dest.mkdir(parents=True, exist_ok=True)
     shutil.copy(tar, dest / tar.name)
@@ -83,9 +99,7 @@ def main() -> int:
         stage_unit(STAGE, args.unit)
         api.upload_large_folder(args.repo, folder_path=STAGE, repo_type="dataset")
         if not args.keep_tar:
-            m = json.loads(
-                (BENCH / f"units/{args.unit}/manifest.json").read_text())
-            t = make_unit_tars.tar_path(args.unit, m["source_commit"])
+            t = tar_path(args.unit)
             t.unlink(missing_ok=True)
             shutil.rmtree(STAGE / "units" / args.unit, ignore_errors=True)
             print(f"cleaned {t}")
