@@ -99,7 +99,7 @@ def main() -> int:
         checks.mkdir()
         shutil.copy(BENCH / "checks" / "hash-verification.json", checks)
         shutil.copy(BENCH / "checks" / "path-scan.json", checks)
-        upload("README.md", "README.md", repo, token)
+        upload(STAGE / "README.md", "README.md", repo, token)
         for f in ("fingerprint-index.json", "manifest.json"):
             upload(STAGE / f, f, repo, token)
         for f in sorted(checks.iterdir()):
@@ -110,8 +110,15 @@ def main() -> int:
     if args.unit:
         stage_unit(args.unit)
         d = STAGE / "units" / args.unit
-        for f in sorted(d.iterdir()):
-            upload(f, f"units/{args.unit}/{f.name}", token)
+        try:
+            for f in sorted(d.iterdir()):
+                upload(f, f"units/{args.unit}/{f.name}", repo, token)
+        except Exception:
+            if not args.keep_tar:
+                tar_path(args.unit).unlink(missing_ok=True)
+                shutil.rmtree(d, ignore_errors=True)
+                print(f"cleaned after failure")
+            raise
         if not args.keep_tar:
             t = tar_path(args.unit)
             t.unlink(missing_ok=True)
