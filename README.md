@@ -9,6 +9,8 @@
 - 核心源码是上游某个未经修改的 commit；聚合包装器单独保存，不写入核心树。
 - 编译、PoC 回放、指纹裁决和准入由操作者逐条执行，仓库脚本不代替这些步骤。
 
+- 数据集(66 文件 = 20 单元镜像 + 292 指纹索引)已公开发布：
+  [Hugging Face](https://huggingface.co/datasets/Fisho0/MemVulBench) | [ModelScope 国内镜像](https://www.modelscope.cn/datasets/hahafisho0/MemVulBench)。
 论文修订稿见 [`papers/MemVulBench/`](papers/MemVulBench/)。早期设计备忘见 [`docs/design.md`](docs/design.md)（已加状态说明，不覆盖现行账本）。
 
 ## 现状

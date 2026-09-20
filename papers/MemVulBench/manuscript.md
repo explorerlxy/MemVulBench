@@ -472,7 +472,7 @@ MemVulBench将较为充足的已核验漏洞组织在单个测试单元内，为
 
 本文统计结果依据本地仓库中的 `data/census/`、`catalog/` 和 `data/measure/manual/` 元数据，以及 `data/measure/rereplay/2026-09-17/`、`data/measure/rereplay/2026-09-18/` 中的最终测试驱动复验记录。其中，2026年9月18日的记录对应arrow替换批次。最终测试单元名单以 `data/measure/admission/2026-09-18.json` 为准，该文件取代前一日的准入记录。漏洞身份账本保存于 `papers/MemVulBench/evidence/rereplay_fingerprint_ledger.json`。
 
-源码、目录与证据索引随固定版本标签 `memvulbench-v1.0.0` 公开于 https://github.com/explorerlxy/MemVulBench （代码 MIT，数据与文档 CC BY 4.0）。20 个测试单元的最终镜像、计分 PoC、最终入口日志、逐文件 SHA-256 清单与 292 个指纹的机器可读索引发布于 Hugging Face 数据集 https://huggingface.co/datasets/Fisho0/MemVulBench （镜像内嵌上游源码，遵循其原始许可）。各单元复验与准入记录随仓库一同公开。
+源码、目录与证据索引随固定版本标签 `memvulbench-v1.0.0` 公开于 https://github.com/explorerlxy/MemVulBench （代码 MIT，数据与文档 CC BY 4.0）。20 个测试单元的最终镜像、计分 PoC、最终入口日志、逐文件 SHA-256 清单与 292 个指纹的机器可读索引发布于 Hugging Face 数据集 https://huggingface.co/datasets/Fisho0/MemVulBench 及其国内镜像 ModelScope 数据集 https://www.modelscope.cn/datasets/hahafisho0/MemVulBench （镜像内嵌上游源码，遵循其原始许可）。各单元复验与准入记录随仓库一同公开。
 
 ## 作者、资助及利益冲突声明
 

@@ -59,6 +59,11 @@ Mainland-China users can download without a VPN by prepending:
 export HF_ENDPOINT=https://hf-mirror.com
 ```
 
+## Mirrors
+
+The same content is mirrored on ModelScope (recommended for mainland-China
+readers): https://www.modelscope.cn/datasets/hahafisho0/MemVulBench
+
 ## Provenance & license
 
 - Software, catalog and evidence: <https://github.com/explorerlxy/MemVulBench>

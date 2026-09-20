@@ -31,7 +31,10 @@
 
 - 数据层已整体发布于 Hugging Face：
   https://huggingface.co/datasets/Fisho0/MemVulBench （公开，66 文件，
-  20 单元 + 索引；上传通道仅保留 HF，`scripts/hf_upload.py`）。
+  20 单元 + 索引；上传通道：`scripts/hf_upload.py`）。
+- 国内镜像同步发布于 ModelScope（公开，内容一致）:
+  https://www.modelscope.cn/datasets/hahafisho0/MemVulBench
+  （上传通道：`scripts/ms_upload.py`；ModelScope 无断点续传，逐单元批次上传）。
 - 软件层：GitHub explorerlxy/MemVulBench，标签 memvulbench-v1.0.0。
 - 镜像不做 GitHub Release 资产（单文件 <2 GiB 限制）。
 

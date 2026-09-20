@@ -1,8 +1,12 @@
 # MemVulBench v1.0.0 上传手册（仅 Hugging Face）
 
-状态：**已执行完毕（2026-09-19）**。数据集公开地址：
-https://huggingface.co/datasets/Fisho0/MemVulBench（66 文件 = 20 单元×3 + 索引）。
-本手册保留作再发布/增量发布的操作参考。
+状态：**已执行完毕**。数据集公开地址：
+- Hugging Face（2026-09-19）：https://huggingface.co/datasets/Fisho0/MemVulBench
+- ModelScope 国内镜像（2026-09-20）：https://www.modelscope.cn/datasets/hahafisho0/MemVulBench
+
+两通道内容一致（66 文件 = 20 单元×3 + 索引）。HF 用 `scripts/hf_upload.py`，
+ModelScope 用 `scripts/ms_upload.py`（无断点续传，失败单元重跑即可，
+--use-cache 会跳过未变化的文件）。本手册保留作再发布/增量发布参考。
 
 ## 流程（如需重做或新增单元）
 
